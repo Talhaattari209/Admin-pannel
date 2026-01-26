@@ -72,6 +72,7 @@
   --radius-lg: var(--radius);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-michroma: var(--font-michroma);
 }
 
 body {

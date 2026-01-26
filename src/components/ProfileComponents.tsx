@@ -377,11 +377,11 @@ interface InternalCardProps {
 }
 
 const GroupInfoRow = ({ label, value }: { label: string, value: React.ReactNode }) => (
-    <div className="flex flex-row items-center justify-between w-full h-[1.38vw]">
-        <span className="font-['SF_Pro_Text'] font-normal text-[0.69vw] leading-[150%] text-[#CCCCCC]">
+    <div className="flex flex-row items-center justify-between w-full h-[1.43vw]">
+        <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">
             {label}
         </span>
-        <div className="flex items-center gap-[0.35vw]">
+        <div className="flex items-center gap-[0.42vw]">
             {value}
         </div>
     </div>
@@ -395,20 +395,20 @@ const InternalDetailCard = ({
     members
 }: InternalCardProps) => {
     return (
-        <div className="flex flex-col p-[0.69vw] gap-[0.69vw] w-[28.33vw] h-fit bg-[#111111] backdrop-blur-[6px] rounded-[1.04vw] border border-white/5 shrink-0 font-['SF_Pro_Text']">
+        <div className="flex flex-col p-[0.71vw] gap-[0.71vw] w-[28.33vw] h-[14.09vw] bg-[#111111] backdrop-blur-[6px] rounded-[1.25vw] border border-white/5 shrink-0 font-['SF_Pro_Text']">
 
             {/* Rows */}
-            <div className="flex flex-col gap-[0.69vw] w-full">
+            <div className="flex flex-col gap-[0.71vw] w-full">
                 {/* Created By */}
                 <GroupInfoRow
                     label="Created By"
                     value={
                         <>
                             <div
-                                className="w-[1.04vw] h-[1.04vw] rounded-full bg-cover bg-center border border-white/10"
+                                className="w-[1.25vw] h-[1.25vw] rounded-full bg-cover bg-center border border-white/10"
                                 style={{ backgroundImage: `url(${createdBy.avatar})` }}
                             />
-                            <span className="font-['SF_Pro_Text'] font-normal text-white text-[0.69vw] leading-[150%] text-right">{createdBy.name}</span>
+                            <span className="font-['SF_Pro_Text'] font-normal text-white text-[0.83vw] leading-[150%] text-right">{createdBy.name}</span>
                         </>
                     }
                 />
@@ -416,31 +416,31 @@ const InternalDetailCard = ({
                 {/* Created On */}
                 <GroupInfoRow
                     label="Created On"
-                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.69vw] leading-[150%] text-right">{createdOn}</span>}
+                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.83vw] leading-[150%] text-right">{createdOn}</span>}
                 />
 
                 {/* Joined On */}
                 <GroupInfoRow
                     label="Joined On"
-                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.69vw] leading-[150%] text-right">{joined}</span>}
+                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.83vw] leading-[150%] text-right">{joined}</span>}
                 />
 
                 {/* Group Members Count */}
                 <GroupInfoRow
                     label="Group Members"
-                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.69vw] leading-[150%] text-right">{memberCount}</span>}
+                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.83vw] leading-[150%] text-right">{memberCount}</span>}
                 />
             </div>
 
             {/* Row 3: Avatar Grid with Names Below */}
-            <div className="flex flex-row justify-between items-start w-full pt-[0.35vw]">
+            <div className="flex flex-row justify-between items-start w-full">
                 {members.map((member, i) => (
-                    <div key={i} className="flex flex-col items-center gap-[0.35vw] w-[3.46vw]">
+                    <div key={i} className="flex flex-col items-center gap-[0.42vw] w-[6.04vw]">
                         <div
-                            className="w-[2.76vw] h-[2.76vw] rounded-full border-2 border-[#111111] bg-cover bg-center shadow-lg"
+                            className="w-[2.84vw] h-[2.84vw] rounded-full border-[2px] border-[#111111] bg-cover bg-center"
                             style={{ backgroundImage: `url(${member.image})` }}
                         />
-                        <span className="font-['SF_Pro_Text'] font-normal text-[#EEEEEE] text-[0.61vw] leading-[150%] text-center truncate w-full">
+                        <span className="font-['SF_Pro_Text'] font-normal text-[#EEEEEE] text-[0.73vw] leading-[150%] text-center truncate w-full">
                             {member.name}
                         </span>
                     </div>
@@ -454,7 +454,7 @@ const InternalDetailCard = ({
 
 export const FullGroupCard = () => {
     const groupData = {
-        createdBy: { name: "John Doe", avatar: "/8.png" }, // Using dummy image for now
+        createdBy: { name: "John Doe", avatar: "/8.png" },
         createdOn: "Nov 01, 2025 • 8:42 PM",
         joined: "Nov 01, 2025 • 8:42 PM",
         memberCount: "5",
@@ -467,19 +467,19 @@ export const FullGroupCard = () => {
     };
 
     return (
-        <div className="flex flex-col items-start p-[0.69vw] gap-[1.38vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw]">
-            {/* Header */}
-            <div className="w-full relative pb-[0.69vw]">
-                <div className="flex flex-col gap-[0.69vw]">
-                    <h3 className="font-['SF_Pro_Text'] font-bold text-[1.21vw] leading-[120%] tracking-[-0.04em] text-white">Groups</h3>
-                    <p className="font-['SF_Pro_Text'] font-normal text-[0.69vw] leading-[150%] text-[#CCCCCC]">List of all groups the user belongs to or has created.</p>
+        <div className="flex flex-col items-start p-[0.71vw] gap-[0.71vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[27.68vw]">
+            {/* Header Section */}
+            <div className="w-full relative pb-[0.71vw]">
+                <div className="flex flex-col gap-[0.71vw]">
+                    <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Groups</h3>
+                    <p className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">List of all groups the user belongs to or has created.</p>
                 </div>
-                {/* Gradient Line */}
-                <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, #FFFFFF 100%)' }} />
+                {/* Gradient Divider Line */}
+                <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, rgba(255, 255, 255, 0.1) 100%)' }} />
             </div>
 
-            {/* Grid of Cards - Using flex-wrap to allow multiple rows */}
-            <div className="flex flex-row flex-wrap gap-[0.69vw] w-full">
+            {/* Change: Flex replaced with Grid for 2-column layout */}
+            <div className="grid grid-cols-2 gap-[0.71vw] w-full">
                 <InternalDetailCard {...groupData} />
                 <InternalDetailCard {...groupData} />
                 <InternalDetailCard {...groupData} />
