@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import BaseCard from '../BaseCard';
+import BaseCard from '../pop-cards/BaseCard';
 
 interface ExportDataCardProps {
   onCancel: () => void;
@@ -79,11 +79,10 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onCancel, onDownload })
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-full text-[14px] transition-all duration-200 ${
-                activeFilter === filter 
-                ? 'bg-[#5F00DB] text-white' 
-                : 'bg-white/5 text-white/70 hover:bg-white/10'
-              }`}
+              className={`px-4 py-2 rounded-full text-[14px] transition-all duration-200 ${activeFilter === filter
+                  ? 'bg-[#5F00DB] text-white'
+                  : 'bg-white/5 text-white/70 hover:bg-white/10'
+                }`}
             >
               {filter}
             </button>

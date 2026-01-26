@@ -41,54 +41,54 @@ const MatchesOverTimeCard: React.FC = () => {
       {/* Chart Section */}
       <div className="flex-grow w-full px-4 md:px-6 pt-8 pb-4">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart 
-            data={data} 
+          <BarChart
+            data={data}
             margin={{ top: 10, right: 10, left: 20, bottom: 0 }}
             barGap={0}
           >
-            <CartesianGrid 
-              strokeDasharray="4 4" 
-              vertical={true} 
-              horizontal={true} 
-              stroke="rgba(217, 217, 255, 0.25)" 
+            <CartesianGrid
+              strokeDasharray="4 4"
+              vertical={true}
+              horizontal={true}
+              stroke="rgba(217, 217, 255, 0.25)"
             />
-            <XAxis 
-              dataKey="month" 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }} 
+            <XAxis
+              dataKey="month"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }}
               dy={10}
             />
             {/* Added explicit any casting for domain and ticks to solve Recharts type overload issues where number[] is mistakenly compared to string | number */}
-            <YAxis 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }} 
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }}
               domain={[0, 200000] as any}
               ticks={[0, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000] as any}
               width={60}
             />
-            <Tooltip 
+            <Tooltip
               cursor={{ fill: 'transparent' }}
-              contentStyle={{ 
-                backgroundColor: '#16003F', 
-                border: '1px solid rgba(255,255,255,0.1)', 
+              contentStyle={{
+                backgroundColor: '#16003F',
+                border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: '8px',
                 color: 'white'
-              }} 
+              }}
               itemStyle={{ color: 'white' }}
               labelStyle={{ color: 'rgba(255,255,255,0.6)' }}
             />
-            <Bar 
-              dataKey="matches" 
-              fill="#5F00DB" 
+            <Bar
+              dataKey="matches"
+              fill="#5F00DB"
               radius={[20, 20, 0, 0]}
               barSize={50}
-              background={{ fill: 'rgba(214, 219, 237, 0.08)', radius: [20, 20, 0, 0] }}
+              background={{ fill: 'rgba(214, 219, 237, 0.08)' }}
             />
-            <Legend 
-              verticalAlign="bottom" 
-              align="center" 
+            <Legend
+              verticalAlign="bottom"
+              align="center"
               height={36}
               content={({ payload }) => (
                 <div className="flex items-center justify-center gap-2 mt-4">
