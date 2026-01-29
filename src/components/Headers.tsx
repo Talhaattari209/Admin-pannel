@@ -6,28 +6,35 @@ import { ArrowLeft, MapPin, Navigation, GraduationCap, Briefcase, Check } from '
 interface PageHeaderProps {
     title?: string;
     description?: string;
+    action?: React.ReactNode;
     className?: string; // Allow minimal overrides
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
     title = "Users Management",
     description = "View, verify, and manage all registered users — including KYC status, bans, and account details.",
+    action,
     className
 }) => {
     return (
         <div
-            className={`flex flex-col justify-center items-start gap-[0.83vw] w-[79.17vw] h-[4.17vw] font-['SF_Pro_Text'] ${className || ''}`}
+            className={`flex flex-row justify-between items-end gap-[0.83vw] w-[79.17vw] h-[6.20vw] font-['SF_Pro_Text'] ${className || ''}`}
             style={{ fontFamily: "'SF Pro Text', sans-serif" }}
         >
-            {/* Title */}
-            <h1 className="flex items-center text-white font-bold text-[1.875vw] leading-[110%] tracking-[-0.04em] h-[2.08vw]">
-                {title}
-            </h1>
+            <div className="flex flex-col justify-center items-start gap-[0.83vw]">
+                {/* Title */}
+                <h1 className="flex items-center text-white font-bold text-[3.75vw] leading-[110%] tracking-[-0.04em]">
+                    {title}
+                </h1>
 
-            {/* Description */}
-            <p className="flex items-center text-[#CCCCCC] font-normal text-[0.83vw] leading-[150%] h-[1.25vw]">
-                {description}
-            </p>
+                {/* Description */}
+                <p className="flex items-center text-[#CCCCCC] font-normal text-[0.83vw] leading-[150%]">
+                    {description}
+                </p>
+            </div>
+
+            {/* Action Button */}
+            {action}
         </div>
     );
 };

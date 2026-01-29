@@ -5,13 +5,16 @@ import LoginForm from '@/components/login/LoginForm';
 import ForgotPasswordCard from '@/components/login/ForgotPasswordCard';
 import LinkSentCard from '@/components/login/LinkSentCard';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
     const [currentView, setCurrentView] = useState<'login' | 'forgot' | 'sent'>('login');
+    const router = useRouter();
 
     const handleLogin = (data: any) => {
         console.log("Login data:", data);
         // Add authentication logic here
+        router.push('/dashboard');
     };
 
     const handleSendLink = (email: string) => {

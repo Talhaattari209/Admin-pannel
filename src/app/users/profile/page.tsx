@@ -4,11 +4,19 @@ import React, { useState } from 'react';
 import SideNavigation from '@/components/SideNavigation';
 import { UserProfileHeader } from '@/components/Headers';
 import { ProfileOverview, ProfileInfoCard, ProfileTabs } from '@/components/ProfileComponents';
+import { DeactivationCard, SuccessCard } from '@/components/PopCards';
 import { useRouter } from 'next/navigation';
 
 export default function UserProfilePage() {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState("Overview");
+    const [isDeactivateOpen, setIsDeactivateOpen] = useState(false);
+    const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+
+    const handleDeactivate = () => {
+        setIsDeactivateOpen(false);
+        setTimeout(() => setIsSuccessOpen(true), 300);
+    };
 
     return (
         <div className="relative min-h-screen w-full bg-[#111111] overflow-hidden font-['SF_Pro_Text'] text-white">
@@ -47,7 +55,7 @@ export default function UserProfilePage() {
                             age={24}
                             avatarUrl="/8.png"
                             onBack={() => router.back()}
-                            onDeactivate={() => { }}
+                            onDeactivate={() => setIsDeactivateOpen(true)}
                         />
                     </div>
 
@@ -66,6 +74,19 @@ export default function UserProfilePage() {
                     </div>
 
                 </div>
+
+                <DeactivationCard
+                    isOpen={isDeactivateOpen}
+                    onClose={() => setIsDeactivateOpen(false)}
+                    onConfirm={handleDeactivate}
+                />
+
+                <SuccessCard
+                    isOpen={isSuccessOpen}
+                    onClose={() => setIsSuccessOpen(false)}
+                    title="User Deactivated"
+                    description="The account has been successfully deactivated. You can reactivate it anytime from the user’s detail page."
+                />
             </main>
         </div>
     );

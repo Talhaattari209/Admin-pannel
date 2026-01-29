@@ -1,4 +1,8 @@
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
     Home,
     Users,
@@ -62,6 +66,12 @@ const sections: SideNavSection[] = [
 ];
 
 export default function SideNavigation({ activeId = 'user-management' }: SideNavigationProps) {
+    const router = useRouter();
+
+    const handleLogout = () => {
+        router.push('/login');
+    };
+
     return (
         <aside className="fixed left-[0.83vw] top-[0.83vw] bottom-[0.83vw] w-[15vw] flex flex-col bg-transparent z-50 font-['SF_Pro_Text']">
             {/* Side Menu Container */}
@@ -104,10 +114,25 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                             <div className="flex flex-col">
                                 {section.items.map((item) => {
                                     const isActive = activeId === item.id;
+                                    const getPath = (id: string) => {
+                                        switch (id) {
+                                            case 'dashboard': return '/dashboard';
+                                            case 'users': return '/users';
+                                            case 'app-content': return '/app-content';
+                                            case 'support-requests': return '/support';
+                                            case 'reported-problems': return '/reported-problems';
+                                            case 'app-settings': return '/settings';
+                                            case 'team-roles': return '/team-roles';
+                                            case 'system-logs': return '/system-logs';
+                                            case 'account-settings': return '/account-settings';
+                                            default: return '#';
+                                        }
+                                    };
 
                                     return (
-                                        <button
+                                        <Link
                                             key={item.id}
+                                            href={getPath(item.id)}
                                             className={cn(
                                                 "flex flex-row items-center px-[0.83vw] gap-[0.83vw] w-full h-[2.5vw] transition-all shrink-0",
                                                 isActive
@@ -132,7 +157,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                                                     className={cn("opacity-50 w-[0.83vw] h-[0.83vw]", isActive && "opacity-100")}
                                                 />
                                             )}
-                                        </button>
+                                        </Link>
                                     );
                                 })}
                             </div>
@@ -143,6 +168,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                 {/* Bottom Div (Logout) - Reduced height further to show last item */}
                 <div className="w-full h-[8vw] shrink-0 flex flex-col justify-end pb-[0.83vw]">
                     <button
+                        onClick={handleLogout}
                         className={cn(
                             "flex flex-row items-center px-[0.83vw] gap-[0.83vw] w-full h-[2.5vw] transition-all text-[#FFFFFF] hover:bg-white/5"
                         )}

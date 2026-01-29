@@ -20,13 +20,13 @@ const renderCustomizedLabel = (props: any) => {
   const radius = outerRadius * 1.3;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  
+
   const sx = cx + outerRadius * Math.cos(-midAngle * RADIAN);
   const sy = cy + outerRadius * Math.sin(-midAngle * RADIAN);
-  
+
   const mx = cx + (outerRadius + 15) * Math.cos(-midAngle * RADIAN);
   const my = cy + (outerRadius + 15) * Math.sin(-midAngle * RADIAN);
-  
+
   const isRight = x > cx;
 
   return (
@@ -61,19 +61,19 @@ const SubscriptionsBreakdownCard: React.FC = () => {
 
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Tooltip 
-              contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }} 
+            <Tooltip
+              contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
               itemStyle={{ color: 'white' }}
             />
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={90}
-              outerRadius={120}
-              paddingAngle={0} 
-              startAngle={90}  
-              endAngle={-270} 
+              innerRadius="30%"
+              outerRadius="40%"
+              paddingAngle={0}
+              startAngle={90}
+              endAngle={-270}
               dataKey="value"
               labelLine={false}
               label={renderCustomizedLabel}
@@ -84,9 +84,9 @@ const SubscriptionsBreakdownCard: React.FC = () => {
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Legend 
-              verticalAlign="bottom" 
-              align="center" 
+            <Legend
+              verticalAlign="bottom"
+              align="center"
               content={({ payload }) => (
                 <div className="flex items-center justify-center gap-6 mt-4">
                   {payload?.map((entry: any, index: number) => (

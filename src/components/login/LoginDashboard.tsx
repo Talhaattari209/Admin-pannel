@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import SideNavigation from '@/components/SideNavigation';
 import { PageHeader } from '@/components/Headers';
-import { ArrowUp, ArrowDown } from 'lucide-react';
+import { ArrowUp, ArrowDown, Download } from 'lucide-react';
 import { cn } from "@/lib/utils";
+import ExportModal from '@/components/shared/ExportModal';
 
 // Chart Components from Dashboard
 import DAUChartCard from '@/components/dashboard/DAUChartCard';
@@ -70,7 +71,7 @@ const StatRow = () => {
     ];
 
     return (
-        <div className="flex flex-row items-center gap-[0.83vw] w-[79.17vw] h-[5.68vw]">
+        <div className="flex flex-row flex-wrap items-center gap-[0.83vw] w-full min-h-[5.68vw]">
             {stats.map((stat, index) => (
                 <StatCard key={index} {...stat} />
             ))}
@@ -85,6 +86,7 @@ const FILTERS = [
 
 export default function LoginDashboard() {
     const [activeFilter, setActiveFilter] = useState('Last 7 days');
+    const [showExportModal, setShowExportModal] = useState(false);
 
     return (
         <div className="relative min-h-screen w-full bg-[#111111] overflow-hidden font-['SF_Pro_Text'] text-white">
@@ -98,54 +100,73 @@ export default function LoginDashboard() {
             {/* 2. Reusable Sidebar (fixed position) */}
             <SideNavigation activeId="dashboard" />
 
-            {/* 3. Main Content Container (positioned at left 320px/16.67vw) with Scroll */}
-            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto custom-scrollbar">
+            {/* 3. Main Content Container - Flex Column Layout for Sticky Header effect */}
+            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen flex flex-col overflow-hidden">
 
-                {/* Content Wrapper */}
+                {/* --- TOP FIXED SECTION (Header, Stats, Filters) --- */}
                 <div
-                    className="flex flex-col items-start w-full max-w-[83.33vw]"
+                    className="flex flex-col items-start w-full shrink-0 z-20 transition-all text-white"
                     style={{
-                        paddingLeft: '2.92vw',   // 56px from Nav (left)
-                        paddingTop: '2.08vw',    // 40px Top
-                        paddingBottom: '2.08vw', // 40px Bottom
-                        paddingRight: '2.08vw'   // 40px Right
+                        paddingLeft: '2.92vw',   // 56px
+                        paddingTop: '2.08vw',    // 40px
+                        paddingRight: '3.75vw',  // Increased by 32px (1.67vw) -> 2.08 + 1.67 = 3.75
+                        paddingBottom: '1.04vw'
                     }}
                 >
-
-                    {/* Page Header (Title/Subtitle) */}
-                    <div className="w-[79.17vw]">
+                    {/* Page Header */}
+                    <div className="w-full">
                         <PageHeader
                             title="Dashboard"
-                            description="Overview of your system performance, user activity, and key metrics."
+                            description="Get a quick overview of user activity, group interactions, and overall platform performance."
+                            action={
+                                <button
+                                    onClick={() => setShowExportModal(true)}
+                                    className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] w-[7.03vw] h-[2.92vw] border border-white backdrop-blur-[6px] rounded-full shadow-[0px_12px_40px_rgba(0,0,0,0.05)] hover:bg-white/10 transition-colors"
+                                >
+                                    <span className="font-medium text-[0.83vw] leading-[1.25vw] text-white">
+                                        Export
+                                    </span>
+                                    <Download className="text-white w-[1.25vw] h-[1.25vw]" />
+                                </button>
+                            }
                         />
                     </div>
 
-                    {/* Gap of 40px (2.08vw) */}
                     <div className="h-[2.08vw]" />
 
-                    {/* Stat Cards Row */}
+                    {/* Stat Cards */}
                     <StatRow />
 
                     <div className="h-[2.08vw]" />
 
-                    {/* Dashboard Charts Section */}
-                    <div className="flex flex-col w-[79.17vw] animate-in fade-in duration-700">
-                        {/* Filters Row */}
-                        <div className="flex flex-wrap items-center gap-2 mb-6">
-                            {FILTERS.map((filter) => (
-                                <button
-                                    key={filter}
-                                    onClick={() => setActiveFilter(filter)}
-                                    className={`px-6 py-2 rounded-full text-[14px] font-medium transition-all duration-300 border ${activeFilter === filter
-                                            ? 'bg-[#5F00DB] border-[#5F00DB] text-white shadow-[0_0_15px_rgba(95,0,219,0.4)]'
-                                            : 'bg-[#16003F] border-[#5F00DB]/30 text-white/70 hover:border-[#5F00DB] hover:text-white'
-                                        }`}
-                                >
-                                    {filter}
-                                </button>
-                            ))}
-                        </div>
+                    {/* Filters Row (Timeline) - Moved to sticky section */}
+                    <div className="flex flex-wrap items-center gap-2">
+                        {FILTERS.map((filter) => (
+                            <button
+                                key={filter}
+                                onClick={() => setActiveFilter(filter)}
+                                className={`px-6 py-2 rounded-full text-[14px] font-medium transition-all duration-300 border ${activeFilter === filter
+                                    ? 'bg-[#5F00DB] border-[#5F00DB] text-white shadow-[0_0_15px_rgba(95,0,219,0.4)]'
+                                    : 'bg-[#16003F] border-[#5F00DB]/30 text-white/70 hover:border-[#5F00DB] hover:text-white'
+                                    }`}
+                            >
+                                {filter}
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
+                {/* --- BOTTOM SCROLLABLE SECTION (Charts) --- */}
+                <div
+                    className="flex-grow w-full overflow-y-auto custom-scrollbar"
+                    style={{
+                        paddingLeft: '2.92vw',
+                        paddingRight: '3.75vw',    // Same increased right padding
+                        paddingBottom: '2.08vw',
+                        paddingTop: '1.04vw'
+                    }}
+                >
+                    <div className="flex flex-col w-full animate-in fade-in duration-700">
                         {/* Analytics Grid */}
                         <div className="grid grid-cols-12 gap-6 w-full">
                             {/* Row 1 */}
@@ -181,9 +202,19 @@ export default function LoginDashboard() {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </main>
+
+            {/* Export Modal */}
+            {showExportModal && (
+                <ExportModal
+                    onCancel={() => setShowExportModal(false)}
+                    onDownload={(config) => {
+                        console.log("Exporting Dashboard with config:", config);
+                        setShowExportModal(false);
+                    }}
+                />
+            )}
         </div>
     );
 }

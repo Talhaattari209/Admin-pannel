@@ -27,7 +27,7 @@ const data = [
 
 const MatchesOverTimeCard: React.FC = () => {
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[16px] w-full max-w-[1008px] h-[580px] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[16px] w-full h-[580px] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading Section */}
       <div className="flex flex-col items-start p-4 md:p-6 gap-2 w-full h-[93px]">
         <h4 className="text-white text-[24px] font-bold leading-[120%] tracking-[-0.04em]">
