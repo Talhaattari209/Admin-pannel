@@ -29,7 +29,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
       </h2>
 
       {/* Form Fields */}
-      <div className="flex flex-col gap-[0.83vw] w-full">
+      {/* Form Section */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onLogin({ email, password });
+        }}
+        className="flex flex-col gap-[0.83vw] w-full"
+      >
         {/* Email Field */}
         <div className="flex flex-col items-start gap-[0.2vw] w-full border-b border-white py-[0.42vw]">
           <label className="text-white text-[0.625vw] font-bold uppercase tracking-wider opacity-100 font-['SF_Pro_Text']">Email</label>
@@ -74,19 +81,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
             Forgot Password?
           </button>
         </div>
-      </div>
 
-      {/* Action Button */}
-      <div className="w-full mt-[0.5vw]">
-        <button
-          onClick={() => onLogin({ email, password })}
-          className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25),0px_-8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] transition-all hover:brightness-110 active:scale-[0.98]"
-        >
-          <span className="font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.5] text-white text-center">
-            Login
-          </span>
-        </button>
-      </div>
+        {/* Action Button */}
+        <div className="w-full mt-[0.5vw]">
+          <button
+            type="submit"
+            className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25),0px_-8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] transition-all hover:brightness-110 active:scale-[0.98]"
+          >
+            <span className="font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.5] text-white text-center">
+              Login
+            </span>
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

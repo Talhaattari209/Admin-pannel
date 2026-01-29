@@ -11,10 +11,14 @@ const LoginPage = () => {
     const [currentView, setCurrentView] = useState<'login' | 'forgot' | 'sent'>('login');
     const router = useRouter();
 
-    const handleLogin = (data: any) => {
-        console.log("Login data:", data);
-        // Add authentication logic here
-        router.push('/dashboard');
+    const handleLogin = async (data: any) => {
+        try {
+            console.log("Login data:", data);
+            // Add authentication logic here
+            router.push('/dashboard');
+        } catch (error) {
+            console.error("Login failed:", error);
+        }
     };
 
     const handleSendLink = (email: string) => {
