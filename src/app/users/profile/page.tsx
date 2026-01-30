@@ -54,8 +54,23 @@ export default function UserProfilePage() {
                             name="M. Abubakar"
                             age={24}
                             avatarUrl="/8.png"
+                            sex="Straight"
+                            religion="Muslim"
+                            location="Austin, TX"
+                            distance="2 miles"
+                            university="Stanford University"
+                            occupation="Software Engineer"
                             onBack={() => router.back()}
-                            onDeactivate={() => setIsDeactivateOpen(true)}
+                            action={
+                                <button
+                                    onClick={() => setIsDeactivateOpen(true)}
+                                    className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
+                                >
+                                    <span className="font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
+                                        Deactivate User
+                                    </span>
+                                </button>
+                            }
                         />
                     </div>
 

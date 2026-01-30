@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import SearchInput from './SearchInput';
 import AddRoleModal from './modals/AddRoleModal';
 import RemoveConfirmModal from './modals/RemoveConfirmModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
+import { TableFrame, SearchBar } from '../shared/TableComponents';
 
 const MOCK_ROLES = [
     { id: '1', role: 'Admin', description: 'Full access to all system features, data, and configurations.', memberCount: 2 },
@@ -39,12 +39,10 @@ const RolesTable: React.FC = () => {
     );
 
     return (
-        <div className="flex flex-col w-full pb-[8.33vw]">
-            {/* Table Header: Search bar only */}
-            <div className="p-[0.83vw] bg-[#1a1a1a]/30 border-b border-white/10">
-                <SearchInput value={search} onChange={setSearch} placeholder="Search" />
-            </div>
-
+        <TableFrame
+            searchBar={<SearchBar value={search} onChange={setSearch} placeholder="Search" />}
+            className="w-full h-full"
+        >
             {/* Column Headers: Fluid Width */}
             <div className="flex flex-row items-center w-full h-[2vw] bg-[#1a1a1a]/50">
                 <ColumnHeader label="Role" width="w-[12%]" />
@@ -105,7 +103,7 @@ const RolesTable: React.FC = () => {
             {modal === 'DELETE_ROLE' && <RemoveConfirmModal type="role" onCancel={() => setModal(null)} onConfirm={() => setModal('SUCCESS_DELETE')} />}
             {modal === 'SUCCESS_EDIT' && <TeamRolesSuccessModal title="Role Updated" onDone={() => setModal(null)} />}
             {modal === 'SUCCESS_DELETE' && <TeamRolesSuccessModal title="Role Deleted" onDone={() => setModal(null)} />}
-        </div>
+        </TableFrame>
     );
 };
 

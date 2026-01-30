@@ -4,10 +4,17 @@ import RolesTable from './RolesTable';
 import AddMemberModal from './modals/AddMemberModal';
 import AddRoleModal from './modals/AddRoleModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
+import { Button } from '../shared/Button';
+import { Tabs } from '../shared/TableComponents';
 
 const TeamRolesView: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'members' | 'roles'>('members');
+    const [activeTab, setActiveTab] = useState('members');
     const [modal, setModal] = useState<null | 'ADD_MEMBER' | 'ADD_ROLE' | 'SUCCESS_INVITE' | 'SUCCESS_ROLE'>(null);
+
+    const tabs = [
+        { id: 'members', label: 'Team Members', count: 5 },
+        { id: 'roles', label: 'Roles', count: 5 }
+    ];
 
     return (
         <div className="flex flex-col w-full h-full animate-in fade-in duration-500">
@@ -19,38 +26,22 @@ const TeamRolesView: React.FC = () => {
                         Manage admin accounts, assign permissions, and define moderator or reviewer roles.
                     </p>
                 </div>
-                <button
+                <Button
                     onClick={() => setModal(activeTab === 'members' ? 'ADD_MEMBER' : 'ADD_ROLE')}
-                    className="px-[1.67vw] py-[0.83vw] bg-[#5F00DB] text-white rounded-[2.7vw] font-medium shadow-[0px_0.21vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text'] text-[0.83vw]"
+                    variant="filled"
+                    className="!px-[1.67vw] font-['SF_Pro_Text'] text-[0.83vw]"
                 >
                     {activeTab === 'members' ? 'Add Team Member' : 'Add Role'}
-                </button>
+                </Button>
             </div>
 
             {/* Tabs */}
-            <div className="flex flex-row gap-[0.42vw] w-full mb-[-1px] z-10">
-                {[
-                    { id: 'members', label: 'Team Members', count: 5 },
-                    { id: 'roles', label: 'Roles', count: 5 }
-                ].map((tab) => (
-                    <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id as any)}
-                        className={`flex flex-row items-center justify-center px-[1.67vw] py-[0.63vw] gap-[0.63vw] h-[2.5vw] rounded-t-[0.63vw] transition-all font-medium font-['SF_Pro_Text'] border border-b-0 border-white/5 text-[0.83vw] ${activeTab === tab.id
-                            ? 'bg-[#5F00DB] text-white border-[#5F00DB]'
-                            : 'bg-[#222222] text-white/60 hover:text-white hover:bg-white/5'
-                            }`}
-                    >
-                        <span>{tab.label}</span>
-                        <div className="bg-[#FF4E4E] text-white text-[0.57vw] font-bold px-[0.42vw] py-[0.1vw] rounded-full min-w-[1.04vw] font-['SF_Pro_Text'] flex items-center justify-center h-[1.1vw]">
-                            {tab.count}
-                        </div>
-                    </button>
-                ))}
+            <div className="w-full mb-[-1px] z-10 flex flex-row">
+                <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
             </div>
 
-            {/* Table Container - fluid width */}
-            <div className="w-full bg-[#222222] rounded-b-[0.83vw] rounded-tr-[0.83vw] border border-white/5 shadow-2xl flex-grow overflow-hidden flex flex-col">
+            {/* Table Content */}
+            <div className="w-full flex-grow flex flex-col">
                 {activeTab === 'members' ? <TeamMembersTable /> : <RolesTable />}
             </div>
 
@@ -84,3 +75,4 @@ const TeamRolesView: React.FC = () => {
 };
 
 export default TeamRolesView;
+

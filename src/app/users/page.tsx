@@ -289,7 +289,7 @@ export default function UserManagementPage() {
                 <div
                     className="flex flex-col items-start w-full max-w-[83.33vw]"
                     style={{
-                        paddingLeft: '2.92vw',   // 56px from Nav (left)
+                        paddingLeft: '2.08vw',   // 40px Left
                         paddingTop: '2.08vw',    // 40px Top
                         paddingBottom: '2.08vw', // 40px Bottom
                         paddingRight: '2.08vw'   // 40px Right

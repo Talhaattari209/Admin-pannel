@@ -18,7 +18,7 @@ export default function AccountSettingsPage() {
 
             {/* Main Content */}
             <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto">
-                <div className="flex flex-col items-start w-full max-w-[83.33vw] py-[2.08vw] px-[2.08vw] pl-[2.92vw]">
+                <div className="flex flex-col items-start w-full max-w-[83.33vw] px-[2.08vw] py-[2.08vw]">
                     <AccountSettingsView />
                 </div>
             </main>

@@ -21,7 +21,7 @@ export default function AppContentPage() {
                 <div
                     className="flex flex-col items-start w-full max-w-[83.33vw]"
                     style={{
-                        paddingLeft: '2.92vw',   // 56px
+                        paddingLeft: '2.08vw',   // 40px
                         paddingTop: '2.08vw',    // 40px
                         paddingBottom: '2.08vw', // 40px
                         paddingRight: '2.08vw'   // 40px

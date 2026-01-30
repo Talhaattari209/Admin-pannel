@@ -12,30 +12,20 @@ const AppSettingsView: React.FC = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [resetKey, setResetKey] = useState(0);
 
-  const headerActions = (
-    <>
-      <button
-        onClick={() => setResetKey(prev => prev + 1)}
-        className="px-[1.67vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white font-medium backdrop-blur-[0.31vw] hover:bg-white/10 transition-all active:scale-95 font-inter text-[0.83vw]"
-      >
-        Discard Changes
-      </button>
-      <button
-        onClick={() => setShowSuccess(true)}
-        className="px-[1.67vw] py-[0.83vw] bg-[#5F00DB] text-white rounded-[2.71vw] font-medium shadow-[0px_0.21vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all font-inter text-[0.83vw]"
-      >
-        Save Changes
-      </button>
-    </>
-  );
-
   return (
     <div key={resetKey} className="flex flex-col w-full h-screen overflow-hidden animate-in fade-in duration-500">
       <div className="w-full px-[2.08vw] pt-[2.08vw]">
         <PageHeader
           title="App Settings"
           description="Control platform-wide configurations, feature toggles, and notification templates."
-          action={headerActions}
+          primaryAction={{
+            label: "Save Changes",
+            onClick: () => setShowSuccess(true)
+          }}
+          secondaryAction={{
+            label: "Discard Changes",
+            onClick: () => setResetKey(prev => prev + 1)
+          }}
         />
       </div>
 
@@ -57,7 +47,7 @@ const AppSettingsView: React.FC = () => {
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
-    </div>
+    </div >
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Plus, Download } from 'lucide-react';
+import { Button } from '../shared/Button';
 
 interface PromptsHeaderProps {
     onAddPrompt: () => void;
@@ -23,22 +24,23 @@ const PromptsHeader: React.FC<PromptsHeaderProps> = ({ onAddPrompt, onExport, ad
             {/* Actions Section */}
             <div className="flex flex-row items-center gap-[0.83vw] h-[2.92vw]">
                 {/* Export Button */}
-                <button
+                <Button
                     onClick={onExport}
-                    className="flex flex-row items-center justify-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-full border border-white rounded-[2.71vw] backdrop-blur-[6px] transition-all hover:bg-white/10 group"
+                    variant="glass"
+                    className="h-full group"
+                    iconRight={<Download className="w-[1.25vw] h-[1.25vw] text-white" />}
                 >
-                    <span className="text-white text-[0.83vw] font-medium leading-[1.25vw]">Export</span>
-                    <Download className="w-[1.25vw] h-[1.25vw] text-white" />
-                </button>
+                    Export
+                </Button>
 
                 {/* Add Button */}
-                <button
+                <Button
                     onClick={onAddPrompt}
-                    className="flex flex-row items-center justify-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-full bg-[#5F00DB] shadow-[0px_0.21vw_0.63vw_rgba(95,0,219,0.25)] rounded-[2.71vw] transition-all hover:brightness-110 active:scale-95"
+                    variant="filled"
+                    className="h-full"
                 >
-                    <span className="text-white text-[0.83vw] font-medium leading-[1.25vw]">{addLabel}</span>
-                    {/* Add icon if needed, though simple label is fine */}
-                </button>
+                    {addLabel}
+                </Button>
             </div>
         </div>
     );

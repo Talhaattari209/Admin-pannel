@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import SearchInput from './SearchInput';
 import ChangeRoleModal from './modals/ChangeRoleModal';
 import RemoveConfirmModal from './modals/RemoveConfirmModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
+import { TableFrame, SearchBar } from '../shared/TableComponents';
 
 const MOCK_MEMBERS = [
     { id: '1', name: 'Liam Martinez', email: 'liammartinez@email.com', role: 'Admin', status: 'Active', addedOn: 'Jun 30, 2025 • 3:30 PM', lastActive: 'Jun 30, 2025 • 3:30 PM' },
@@ -57,12 +57,10 @@ const TeamMembersTable: React.FC = () => {
     );
 
     return (
-        <div className="flex flex-col w-full pb-[8.33vw]">
-            {/* Table Header: Search bar only */}
-            <div className="p-[0.83vw] bg-[#1a1a1a]/30 border-b border-white/10">
-                <SearchInput value={search} onChange={setSearch} placeholder="Search" />
-            </div>
-
+        <TableFrame
+            searchBar={<SearchBar value={search} onChange={setSearch} placeholder="Search" />}
+            className="w-full h-full"
+        >
             {/* Column Headers: Adjusted Fluid Widths */}
             <div className="flex flex-row items-center w-full h-[2vw] bg-[#1a1a1a]/50">
                 <ColumnHeader label="Name" width="flex-1 min-w-[10vw]" />
@@ -148,8 +146,9 @@ const TeamMembersTable: React.FC = () => {
             {modal === 'REMOVE_CONFIRM' && <RemoveConfirmModal type="member" onCancel={() => setModal(null)} onConfirm={() => setModal('SUCCESS_REMOVE')} />}
             {modal === 'SUCCESS_REMOVE' && <TeamRolesSuccessModal title="Team Member Removed" onDone={() => setModal(null)} />}
             {modal === 'SUCCESS_UPDATED' && <TeamRolesSuccessModal title="Role Updated" onDone={() => setModal(null)} />}
-        </div>
+        </TableFrame>
     );
 };
 
 export default TeamMembersTable;
+

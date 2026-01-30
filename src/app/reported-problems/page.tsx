@@ -76,27 +76,29 @@ export default function ReportedProblemsPage() {
 
             {/* Main Content */}
             <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto">
-                {viewState === 'list' && (
-                    <ReportedProblemView
-                        onViewReportDetail={handleViewUserReport}
-                        onViewBugDetail={handleViewBugReport}
-                        onExport={() => setIsExportModalOpen(true)}
-                    />
-                )}
-                {viewState === 'user-detail' && (
-                    <UserReportDetailsView
-                        report={selectedUserReport}
-                        onBack={handleBack}
-                        onDeactivate={handleDeactivateUser}
-                        onUpdateStatus={handleUpdateStatus}
-                    />
-                )}
-                {viewState === 'bug-detail' && (
-                    <BugReportDetailsView
-                        bug={selectedBugReport}
-                        onBack={handleBack}
-                    />
-                )}
+                <div className="w-full px-[2.08vw] py-[2.08vw]">
+                    {viewState === 'list' && (
+                        <ReportedProblemView
+                            onViewReportDetail={handleViewUserReport}
+                            onViewBugDetail={handleViewBugReport}
+                            onExport={() => setIsExportModalOpen(true)}
+                        />
+                    )}
+                    {viewState === 'user-detail' && (
+                        <UserReportDetailsView
+                            report={selectedUserReport}
+                            onBack={handleBack}
+                            onDeactivate={handleDeactivateUser}
+                            onUpdateStatus={handleUpdateStatus}
+                        />
+                    )}
+                    {viewState === 'bug-detail' && (
+                        <BugReportDetailsView
+                            bug={selectedBugReport}
+                            onBack={handleBack}
+                        />
+                    )}
+                </div>
             </main>
 
             {/* Export Modal */}

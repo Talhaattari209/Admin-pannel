@@ -107,9 +107,9 @@ export default function LoginDashboard() {
                 <div
                     className="flex flex-col items-start w-full shrink-0 z-20 transition-all text-white"
                     style={{
-                        paddingLeft: '2.92vw',   // 56px
-                        paddingTop: '2.08vw',    // 40px
-                        paddingRight: '3.75vw',  // Increased by 32px (1.67vw) -> 2.08 + 1.67 = 3.75
+                        paddingLeft: '2.08vw',
+                        paddingTop: '2.08vw',
+                        paddingRight: '2.08vw',
                         paddingBottom: '1.04vw'
                     }}
                 >
@@ -118,18 +118,13 @@ export default function LoginDashboard() {
                         <PageHeader
                             title="Dashboard"
                             description="Get a quick overview of user activity, group interactions, and overall platform performance."
-                            action={
-                                <button
-                                    onClick={() => setShowExportModal(true)}
-                                    className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] w-[7.03vw] h-[2.92vw] border border-white backdrop-blur-[6px] rounded-full shadow-[0px_12px_40px_rgba(0,0,0,0.05)] hover:bg-white/10 transition-colors"
-                                >
-                                    <span className="font-medium text-[0.83vw] leading-[1.25vw] text-white">
-                                        Export
-                                    </span>
-                                    <Download className="text-white w-[1.25vw] h-[1.25vw]" />
-                                </button>
-                            }
+                            secondaryAction={{
+                                label: "Export",
+                                onClick: () => setShowExportModal(true),
+                                icon: <Download className="text-white w-[1.25vw] h-[1.25vw]" />
+                            }}
                         />
+
                     </div>
 
                     <div className="h-[2.08vw]" />
@@ -160,8 +155,8 @@ export default function LoginDashboard() {
                 <div
                     className="flex-grow w-full overflow-y-auto custom-scrollbar"
                     style={{
-                        paddingLeft: '2.92vw',
-                        paddingRight: '3.75vw',    // Same increased right padding
+                        paddingLeft: '2.08vw',
+                        paddingRight: '2.08vw',
                         paddingBottom: '2.08vw',
                         paddingTop: '1.04vw'
                     }}
