@@ -22,39 +22,39 @@ const renderCustomizedLabel = (props: any) => {
   const radius = outerRadius * 1.3;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  
+
   const sx = cx + outerRadius * Math.cos(-midAngle * RADIAN);
   const sy = cy + outerRadius * Math.sin(-midAngle * RADIAN);
-  
+
   const mx = cx + (outerRadius + 20) * Math.cos(-midAngle * RADIAN);
   const my = cy + (outerRadius + 20) * Math.sin(-midAngle * RADIAN);
-  
+
   const isRight = x > cx;
 
   return (
     <g>
-      <path 
-        d={`M${sx},${sy} Q${mx},${my} ${x},${y}`} 
-        stroke={color} 
-        fill="none" 
+      <path
+        d={`M${sx},${sy} Q${mx},${my} ${x},${y}`}
+        stroke={color}
+        fill="none"
         strokeWidth={1}
         opacity={0.6}
       />
-      <text 
-        x={x} 
-        y={y} 
-        fill="rgba(255, 255, 255, 0.8)" 
-        textAnchor={isRight ? 'start' : 'end'} 
+      <text
+        x={x}
+        y={y}
+        fill="rgba(255, 255, 255, 0.8)"
+        textAnchor={isRight ? 'start' : 'end'}
         dominantBaseline="central"
         fontSize={12}
       >
         {name}
       </text>
-      <text 
-        x={x} 
-        y={y + 16} 
-        fill={color} 
-        textAnchor={isRight ? 'start' : 'end'} 
+      <text
+        x={x}
+        y={y + 16}
+        fill={color}
+        textAnchor={isRight ? 'start' : 'end'}
         dominantBaseline="central"
         fontSize={12}
         fontWeight="bold"
@@ -87,8 +87,8 @@ const BugsReportedCard: React.FC = () => {
 
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }} 
+              <Tooltip
+                contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
                 itemStyle={{ color: 'white' }}
                 labelStyle={{ display: 'none' }}
               />
@@ -98,9 +98,9 @@ const BugsReportedCard: React.FC = () => {
                 cy="50%"
                 innerRadius={110}
                 outerRadius={140}
-                paddingAngle={0} 
-                startAngle={90}  
-                endAngle={-270} 
+                paddingAngle={0}
+                startAngle={90}
+                endAngle={-270}
                 dataKey="value"
                 labelLine={false}
                 label={renderCustomizedLabel}

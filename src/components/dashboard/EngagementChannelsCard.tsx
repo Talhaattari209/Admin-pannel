@@ -38,8 +38,8 @@ const EngagementChannelsCard: React.FC = () => {
 
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Tooltip 
-              contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }} 
+            <Tooltip
+              contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
               itemStyle={{ color: 'white' }}
               labelStyle={{ display: 'none' }}
             />
@@ -49,9 +49,9 @@ const EngagementChannelsCard: React.FC = () => {
               cy="50%"
               innerRadius={110}
               outerRadius={140}
-              paddingAngle={0} 
-              startAngle={90}  
-              endAngle={-270} 
+              paddingAngle={0}
+              startAngle={90}
+              endAngle={-270}
               dataKey="value"
               cornerRadius={20}
               stroke="none"
@@ -60,9 +60,9 @@ const EngagementChannelsCard: React.FC = () => {
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Legend 
-              verticalAlign="bottom" 
-              align="center" 
+            <Legend
+              verticalAlign="bottom"
+              align="center"
               content={({ payload }) => (
                 <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-4 px-8">
                   {payload?.map((entry: any, index: number) => (

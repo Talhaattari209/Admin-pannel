@@ -43,6 +43,7 @@ interface PageHeaderProps {
     primaryAction?: ActionButton;
     secondaryAction?: ActionButton; // If provided, creates the "Double Button" layout
     className?: string;
+    variant?: 'default' | 'dashboard';
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -50,19 +51,23 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     description,
     primaryAction,
     secondaryAction,
-    className
+    className,
+    variant = 'default'
 }) => {
     // Determine the type based on props for internal logic if needed, 
     // but flexbox handles the "Text Only", "Single", and "Double" cases naturally if structured correctly.
 
+    const heightClass = variant === 'dashboard' ? 'h-[6.20vw]' : 'h-[4.17vw]';
+    const titleSizeClass = variant === 'dashboard' ? 'text-[3.75vw]' : 'text-[1.875vw]';
+
     return (
         <div
-            className={`flex flex-row items-end p-0 gap-[0.83vw] w-full h-[4.17vw] font-['SF_Pro_Text'] ${className || ''}`}
+            className={`flex flex-row items-end p-0 gap-[0.83vw] w-full ${heightClass} font-['SF_Pro_Text'] ${className || ''}`}
         >
             {/* Text Column - Grows to fill space */}
             <div className="flex flex-col justify-center items-start gap-[0.83vw] flex-grow h-full">
                 {/* Title */}
-                <h1 className="flex items-center text-white font-bold text-[1.875vw] leading-[110%] tracking-[-0.04em]">
+                <h1 className={`flex items-center text-white font-bold ${titleSizeClass} leading-[110%] tracking-[-0.04em]`}>
                     {title}
                 </h1>
 

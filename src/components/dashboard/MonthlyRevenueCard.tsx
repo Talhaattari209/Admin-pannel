@@ -53,8 +53,8 @@ const MonthlyRevenueCard: React.FC = () => {
       {/* Chart */}
       <div className="flex-grow w-full px-4 md:px-6 pt-8 pb-4">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart 
-            data={data} 
+          <AreaChart
+            data={data}
             margin={{ top: 10, right: 10, left: 20, bottom: 0 }}
           >
             <defs>
@@ -63,50 +63,50 @@ const MonthlyRevenueCard: React.FC = () => {
                 <stop offset="95%" stopColor="#5F00DB" stopOpacity={0.05} />
               </linearGradient>
             </defs>
-            <CartesianGrid 
-              strokeDasharray="4 4" 
-              vertical={true} 
-              horizontal={true} 
-              stroke="rgba(217, 217, 255, 0.15)" 
+            <CartesianGrid
+              strokeDasharray="4 4"
+              vertical={true}
+              horizontal={true}
+              stroke="rgba(217, 217, 255, 0.15)"
             />
-            <XAxis 
-              dataKey="month" 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }} 
+            <XAxis
+              dataKey="month"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }}
               dy={10}
             />
-            <YAxis 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }} 
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }}
               domain={[0, 40000]}
               ticks={[0, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000]}
               width={60}
             />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: '#16003F', 
-                border: '1px solid rgba(255,255,255,0.1)', 
+            <Tooltip
+              contentStyle={{
+                backgroundColor: '#16003F',
+                border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: '8px',
                 color: 'white'
-              }} 
+              }}
               itemStyle={{ color: 'white' }}
               labelStyle={{ color: 'rgba(255,255,255,0.6)' }}
             />
-            <Area 
-              type="monotone" 
-              dataKey="revenue" 
-              stroke="#FFFFFF" 
+            <Area
+              type="monotone"
+              dataKey="revenue"
+              stroke="#FFFFFF"
               strokeWidth={1.5}
-              fillOpacity={1} 
-              fill="url(#colorRev)" 
+              fillOpacity={1}
+              fill="url(#colorRev)"
               dot={<CustomDot />}
               activeDot={{ r: 6, strokeWidth: 0, fill: '#FFFFFF' }}
             />
-            <Legend 
-              verticalAlign="bottom" 
-              align="center" 
+            <Legend
+              verticalAlign="bottom"
+              align="center"
               height={36}
               content={({ payload }) => (
                 <div className="flex items-center justify-center gap-3 mt-4">

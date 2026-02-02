@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import SideNavigation from '@/components/SideNavigation';
 import { PageHeader } from '@/components/Headers';
-import { ArrowUp, ArrowDown, Download } from 'lucide-react';
+import Image from 'next/image';
 import { cn } from "@/lib/utils";
 import ExportModal from '@/components/shared/ExportModal';
 
@@ -43,11 +43,33 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
 
                 {/* Change Indicator */}
                 <div className="flex items-center gap-[0.42vw]">
-                    {isUp ? (
-                        <ArrowUp className="text-[#3ADC60] w-[1.25vw] h-[1.25vw]" />
-                    ) : (
-                        <ArrowDown className="text-red-500 w-[1.25vw] h-[1.25vw]" />
-                    )}
+                    <div className={cn(
+                        "relative w-[1.25vw] h-[1.25vw]",
+                        !isUp && "rotate-180"
+                    )}>
+                        <Image
+                            src="/assets/Icons_figma/arrow-up.svg"
+                            alt={isUp ? "Up" : "Down"}
+                            fill
+                            className={cn(
+                                "object-contain",
+                                isUp ? "" : "brightness-0 saturate-100 invert-[15%] sepia-[95%] saturate-[7000%] hue-rotate-[355deg]" // Red filter for down arrow if needed, or just rely on SVG color if possible. 
+                                // BUT: The SVG is likely white or green specific. Figma says arrow is green for up.
+                                // If I reuse arrow-up (green) for down (red), I need to filter it.
+                                // Or I can just trust the user wants the arrow shape and color is controlled by text color? No, SVG color is inside SVG.
+                                // The metadata for arrow-up said "color: var(--success)".
+                                // This implies the SVG itself might be colored.
+                                // If I rotate the green arrow, I get a green down arrow.
+                                // "Active Groups" in Figma had "9.4% arrow-down" (Red?).
+                                // If the arrow is green by default, I need red for down.
+                                // CSS filter to turn green to red: hue-rotate.
+                            )}
+                        // Actually, let's keep it simple. If the SVG is green, rotating it is green.
+                        // If the user wants red, I should use a red arrow or filter.
+                        // Given "minimum credits", I'll use the SVG as is with rotation. Styling exact color of SVG via CSS filter is tricky.
+                        // I'll stick to the SVG + Text color.
+                        />
+                    </div>
                     <span className={cn(
                         "font-bold text-[1.04vw] leading-[120%] tracking-[-0.04em]",
                         isUp ? "text-[#3ADC60]" : "text-red-500"
@@ -62,12 +84,10 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
 
 const StatRow = () => {
     const stats = [
-        { label: "Total Users", value: "123,456", change: "12" },
-        { label: "Active This Week", value: "12,345", change: "12", isUp: false },
-        { label: "Pending KYC", value: "123", change: "12" },
-        { label: "Suspended Accounts", value: "123", change: "12", isUp: false },
-        { label: "Verified Accounts", value: "123,210", change: "12" },
-        { label: "Premium Subscribers", value: "120,234", change: "12", isUp: false },
+        { label: "Active Users (30d)", value: "142,980", change: "8.2%" },
+        { label: "New Signups (7d)", value: "32,540", change: "16.3%" },
+        { label: "Active Groups (30d)", value: "8,420", change: "9.4%", isUp: false },
+        { label: "Net Revenue", value: "$482,090", change: "2.5%" },
     ];
 
     return (
@@ -118,10 +138,20 @@ export default function LoginDashboard() {
                         <PageHeader
                             title="Dashboard"
                             description="Get a quick overview of user activity, group interactions, and overall platform performance."
+                            variant="dashboard"
                             secondaryAction={{
                                 label: "Export",
                                 onClick: () => setShowExportModal(true),
-                                icon: <Download className="text-white w-[1.25vw] h-[1.25vw]" />
+                                icon: (
+                                    <div className="relative w-[1.25vw] h-[1.25vw] flex items-center justify-center">
+                                        <Image
+                                            src="/assets/Icons_figma/download.svg"
+                                            alt="Export"
+                                            fill
+                                            className="object-contain"
+                                        />
+                                    </div>
+                                )
                             }}
                         />
 

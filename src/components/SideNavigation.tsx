@@ -16,12 +16,13 @@ import {
     LogOut,
     ChevronRight
 } from 'lucide-react';
+import Image from 'next/image';
 import { cn } from "@/lib/utils";
 
 type SideNavItem = {
     id: string;
     label: string;
-    icon: React.ElementType;
+    icon: string;
     hasChevron?: boolean;
 };
 
@@ -37,30 +38,30 @@ interface SideNavigationProps {
 const sections: SideNavSection[] = [
     {
         items: [
-            { id: 'dashboard', label: 'Dashboard', icon: Home, hasChevron: true },
-            { id: 'users', label: 'Users Management', icon: Users, hasChevron: true },
+            { id: 'dashboard', label: 'Dashboard', icon: '/assets/Icons_figma/home.svg', hasChevron: true },
+            { id: 'users', label: 'Users Management', icon: '/assets/Icons_figma/users.svg', hasChevron: true },
         ]
     },
     {
         title: 'CONTENT MANAGEMENT',
         items: [
-            { id: 'app-content', label: 'App Content', icon: FileText, hasChevron: true },
+            { id: 'app-content', label: 'App Content', icon: '/assets/Icons_figma/file-text.svg', hasChevron: true },
         ]
     },
     {
         title: 'SUPPORT & REPORTS',
         items: [
-            { id: 'support-requests', label: 'Support Requests', icon: MessageSquare, hasChevron: true },
-            { id: 'reported-problems', label: 'Reported Problems', icon: HelpCircle, hasChevron: true },
+            { id: 'support-requests', label: 'Support Requests', icon: '/assets/Icons_figma/message-square.svg', hasChevron: true },
+            { id: 'reported-problems', label: 'Reported Problems', icon: '/assets/Icons_figma/help-circle.svg', hasChevron: true },
         ]
     },
     {
         title: 'SETTINGS & ADMIN',
         items: [
-            { id: 'app-settings', label: 'App Settings', icon: Smartphone, hasChevron: true },
-            { id: 'team-roles', label: 'Team & Roles', icon: UserCog, hasChevron: true },
-            { id: 'system-logs', label: 'System Logs', icon: Clock, hasChevron: true },
-            { id: 'account-settings', label: 'Account Settings', icon: Settings, hasChevron: true },
+            { id: 'app-settings', label: 'App Settings', icon: '/assets/Icons_figma/smartphone.svg', hasChevron: true },
+            { id: 'team-roles', label: 'Team & Roles', icon: '/assets/Icons_figma/users.svg', hasChevron: true },
+            { id: 'system-logs', label: 'System Logs', icon: '/assets/Icons_figma/clock.svg', hasChevron: true },
+            { id: 'account-settings', label: 'Account Settings', icon: '/assets/Icons_figma/settings.svg', hasChevron: true },
         ]
     }
 ];
@@ -141,10 +142,14 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                                             )}
                                         >
                                             {/* Icon */}
-                                            <item.icon
-                                                className="shrink-0 w-[1.25vw] h-[1.25vw]"
-                                                strokeWidth={1.5}
-                                            />
+                                            <div className="relative shrink-0 w-[1.25vw] h-[1.25vw]">
+                                                <Image
+                                                    src={item.icon}
+                                                    alt={item.label}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
 
                                             {/* Label */}
                                             <span className="flex-grow text-left font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[1.25vw]">
@@ -173,7 +178,14 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                             "flex flex-row items-center px-[0.83vw] gap-[0.83vw] w-full h-[2.5vw] transition-all text-[#FFFFFF] hover:bg-white/5"
                         )}
                     >
-                        <LogOut className="w-[1.25vw] h-[1.25vw]" strokeWidth={1.5} />
+                        <div className="relative w-[1.25vw] h-[1.25vw]">
+                            <Image
+                                src="/assets/Icons_figma/log-out.svg"
+                                alt="Logout"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
                         <span className="flex-grow text-left font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[1.25vw]">
                             Logout
                         </span>

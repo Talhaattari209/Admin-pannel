@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   AreaChart,
@@ -40,17 +39,17 @@ const CustomDot = (props: any) => {
 
 const DAUChartCard: React.FC = () => {
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[16px] w-full h-[580px] shadow-2xl overflow-hidden border border-white/5 transition-all hover:border-white/10">
-      <div className="flex flex-col items-start p-6 gap-2 w-full">
-        <h4 className="text-white text-[24px] font-bold leading-[120%] tracking-[-0.04em] font-michroma">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[30.2vw] shadow-2xl overflow-hidden border border-white/5 transition-all hover:border-white/10">
+      <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full">
+        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-michroma">
           Daily Active Users (DAU)
         </h4>
-        <p className="text-[#CCCCCC] opacity-50 text-[16px] leading-[150%] max-w-[800px]">
+        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] max-w-[41.66vw]">
           Shows the number of users active each day, helping track engagement trends and overall platform health.
         </p>
       </div>
 
-      <div className="flex-grow w-full px-4 md:px-8 pt-4 pb-6">
+      <div className="flex-grow w-full px-[0.83vw] md:px-[1.66vw] pt-[0.83vw] pb-[1.25vw]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
             <defs>
@@ -59,49 +58,49 @@ const DAUChartCard: React.FC = () => {
                 <stop offset="95%" stopColor="#5F00DB" stopOpacity={0.05} />
               </linearGradient>
             </defs>
-            <CartesianGrid 
-              strokeDasharray="4 4" 
-              vertical={true} 
-              horizontal={true} 
-              stroke="rgba(217, 217, 255, 0.1)" 
+            <CartesianGrid
+              strokeDasharray="4 4"
+              vertical={true}
+              horizontal={true}
+              stroke="rgba(217, 217, 255, 0.1)"
             />
-            <XAxis 
-              dataKey="day" 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }} 
+            <XAxis
+              dataKey="day"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }}
               dy={15}
             />
-            <YAxis 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }} 
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }}
               domain={[0, 20000]}
               ticks={[0, 5000, 10000, 15000, 20000]}
               width={60}
             />
-            <Tooltip 
-              contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }} 
+            <Tooltip
+              contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
               itemStyle={{ color: 'white' }}
             />
-            <Area 
-              type="monotone" 
-              dataKey="dau" 
-              stroke="#FFFFFF" 
+            <Area
+              type="monotone"
+              dataKey="dau"
+              stroke="#FFFFFF"
               strokeWidth={2.5}
-              fillOpacity={1} 
-              fill="url(#colorDauFull)" 
+              fillOpacity={1}
+              fill="url(#colorDauFull)"
               dot={<CustomDot />}
               activeDot={{ r: 6, fill: '#5F00DB' }}
             />
-            <Legend 
-              verticalAlign="bottom" 
-              align="center" 
+            <Legend
+              verticalAlign="bottom"
+              align="center"
               content={() => (
-                <div className="flex items-center justify-center gap-3 mt-8">
-                   <div className="w-[16px] h-[2px] bg-[#5F00DB]" />
-                   <div className="w-[8px] h-[8px] bg-[#5F00DB] rounded-full -ml-3" />
-                  <span className="text-white/60 text-[12px] font-inter">DAU</span>
+                <div className="flex items-center justify-center gap-[0.62vw] mt-[1.66vw]">
+                  <div className="w-[0.83vw] h-[0.1vw] bg-[#5F00DB]" />
+                  <div className="w-[0.41vw] h-[0.41vw] bg-[#5F00DB] rounded-full -ml-[0.62vw]" />
+                  <span className="text-white/60 text-[0.62vw] font-inter">DAU</span>
                 </div>
               )}
             />
