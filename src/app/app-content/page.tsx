@@ -22,7 +22,7 @@ export default function AppContentPage() {
                     className="flex flex-col items-start w-full max-w-[83.33vw]"
                     style={{
                         paddingLeft: '2.08vw',   // 40px
-                        paddingTop: '2.08vw',    // 40px
+                        paddingTop: '1.77vw',    // Adjusted Top
                         paddingBottom: '2.08vw', // 40px
                         paddingRight: '2.08vw'   // 40px
                     }}

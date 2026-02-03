@@ -39,23 +39,23 @@ const CustomDot = (props: any) => {
 
 const MonthlyRevenueCard: React.FC = () => {
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[16px] w-full max-w-[1008px] h-[580px] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-[52.5vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading */}
-      <div className="flex flex-col items-start p-4 md:p-6 gap-2 w-full h-[93px]">
-        <h4 className="text-white text-[24px] font-bold leading-[120%] tracking-[-0.04em] font-michroma">
+      <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
+        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Monthly Revenue
         </h4>
-        <p className="text-[#CCCCCC] opacity-50 text-[16px] leading-[150%]">
+        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
           Visualizes revenue generated each month from subscriptions and poke pack purchases, indicating financial performance.
         </p>
       </div>
 
       {/* Chart */}
-      <div className="flex-grow w-full px-4 md:px-6 pt-8 pb-4">
+      <div className="flex-grow w-full pl-[0.66vw] pr-[0.62vw] pt-0 pb-[0.28vw]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}
-            margin={{ top: 10, right: 10, left: 20, bottom: 0 }}
+            margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
           >
             <defs>
               <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
@@ -73,16 +73,16 @@ const MonthlyRevenueCard: React.FC = () => {
               dataKey="month"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }}
+              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: '0.62vw' }}
               dy={10}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }}
+              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: '0.62vw' }}
               domain={[0, 40000]}
               ticks={[0, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000]}
-              width={60}
+              width={45}
             />
             <Tooltip
               contentStyle={{
@@ -98,7 +98,7 @@ const MonthlyRevenueCard: React.FC = () => {
               type="monotone"
               dataKey="revenue"
               stroke="#FFFFFF"
-              strokeWidth={1.5}
+              strokeWidth="0.20vw"
               fillOpacity={1}
               fill="url(#colorRev)"
               dot={<CustomDot />}
@@ -109,7 +109,7 @@ const MonthlyRevenueCard: React.FC = () => {
               align="center"
               height={36}
               content={({ payload }) => (
-                <div className="flex items-center justify-center gap-3 mt-4">
+                <div className="flex items-center justify-center gap-3 mt-[0.02vw]">
                   <div className="relative flex items-center justify-center w-[20px] h-[20px]">
                     <div className="absolute w-full h-[2px] bg-[#5F00DB]" />
                     <div className="relative w-[10px] h-[10px] bg-[#5F00DB] rounded-full border-2 border-[#1A1F26]" />

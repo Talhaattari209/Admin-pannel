@@ -10,10 +10,10 @@ interface PromptsHeaderProps {
 
 const PromptsHeader: React.FC<PromptsHeaderProps> = ({ onAddPrompt, onExport, addLabel = "Add Prompt" }) => {
     return (
-        <div className="flex flex-row items-end justify-between w-full h-[4.17vw] mb-[2.08vw] animate-in fade-in slide-in-from-top-4 duration-700">
+        <div className="flex flex-row items-end justify-between w-full h-[3.47vw] mb-[1.49vw] animate-in fade-in slide-in-from-top-4 duration-700">
             {/* Text Section */}
             <div className="flex flex-col justify-center items-start gap-[0.42vw] max-w-[63.18vw]">
-                <h1 className="text-white text-[1.88vw] font-bold leading-[110%] tracking-[-0.04em] font-['Michroma']">
+                <h1 className="text-white text-[2.25vw] font-bold leading-[110%] tracking-[-0.04em] font-['SF Pro Text']">
                     App Content
                 </h1>
                 <p className="text-[#CCCCCC] text-[0.83vw] leading-[150%]">

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import SearchInput from '@/components/app-content/shared/SearchInput';
 import FilterSelect from '@/components/app-content/shared/FilterSelect';
 import BugsReportedTableRow, { BugReportData } from './BugsReportedTableRow';
+import { Pagination } from '@/components/shared/TableComponents';
 
 const MOCK_BUGS: BugReportData[] = [
     {
@@ -32,6 +33,7 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
     const [search, setSearch] = useState('');
     const [issueTypeFilter, setIssueTypeFilter] = useState('Select');
     const [statusFilter, setStatusFilter] = useState('Select');
+    const [currentPage, setCurrentPage] = useState(1);
 
     const ColumnHeader = ({ label, grow = false, width = "auto" }: { label: string, grow?: boolean, width?: string }) => (
         <div className={`flex flex-row items-center gap-2 px-4 h-[38px] group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
@@ -68,7 +70,17 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
                 {MOCK_BUGS.map((bug) => (
                     <BugsReportedTableRow key={bug.id} data={bug} onAction={() => onViewDetail(bug)} />
                 ))}
-                <div className="flex-grow bg-[#222222]" />
+
+                {/* Gap */}
+                <div className="w-full h-[2.60vw]" />
+
+                {/* Pagination */}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={10}
+                    onPageChange={setCurrentPage}
+                    className="w-full px-[1.25vw] pb-[1.25vw]"
+                />
             </div>
         </div>
     );

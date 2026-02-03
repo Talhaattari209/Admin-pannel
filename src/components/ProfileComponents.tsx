@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, FreeMode, EffectFade } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { RemoveMediaCard, RemovePromptResponseCard, SuccessCard } from './PopCards';
+import { Pagination } from './shared/TableComponents';
 
 
 // Import Swiper styles
@@ -956,12 +957,17 @@ export const ProfilePokesActivity = () => {
         }
     ];
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+    const totalPages = Math.ceil((subTab === 'Sent' ? sentPokes.length : receivedPokes.length) / itemsPerPage);
+
     const activeList = subTab === 'Sent' ? sentPokes : receivedPokes;
+    const currentData = activeList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
         <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[47.58vw]">
             {/* Header Section */}
-            <div className="w-full relative pb-[0.83vw]">
+            <div className="w-full relative pb-[0.83vw] flex-shrink-0">
                 <div className="flex flex-col gap-[0.83vw]">
                     <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Pokes Activity</h3>
                     <p className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">Track sent and received pokes, along with their context and outcomes.</p>
@@ -971,11 +977,11 @@ export const ProfilePokesActivity = () => {
             </div>
 
             {/* Content Area */}
-            <div className="flex flex-col w-full h-full overflow-hidden">
+            <div className="flex flex-col w-full flex-grow overflow-hidden">
                 {/* Tabs - with specific styling and gap adjustments */}
-                <div className="flex flex-row gap-[0.42vw] ml-[0.83vw]">
+                <div className="flex flex-row gap-[0.42vw] ml-[0.83vw] flex-shrink-0">
                     <button
-                        onClick={() => setSubTab('Sent')}
+                        onClick={() => { setSubTab('Sent'); setCurrentPage(1); }}
                         className={`flex flex-row justify-center items-center px-[1.25vw] h-[2.5vw] min-w-[5.52vw] gap-[0.42vw] rounded-t-[0.63vw] transition-colors ${subTab === 'Sent' ? 'bg-[#5F00DB]' : 'bg-[#111111] hover:bg-[#333333]'}`}
                     >
                         <span className="font-['Lato'] font-normal text-[0.83vw] leading-[1.0vw] text-white">Sent</span>
@@ -984,7 +990,7 @@ export const ProfilePokesActivity = () => {
                         </div>
                     </button>
                     <button
-                        onClick={() => setSubTab('Received')}
+                        onClick={() => { setSubTab('Received'); setCurrentPage(1); }}
                         className={`flex flex-row justify-center items-center px-[1.25vw] h-[2.5vw] min-w-[5.52vw] gap-[0.42vw] rounded-t-[0.63vw] transition-colors ${subTab === 'Received' ? 'bg-[#5F00DB]' : 'bg-[#111111] hover:bg-[#333333]'}`}
                     >
                         <span className="font-['Lato'] font-normal text-[0.83vw] leading-[1.0vw] text-white">Received</span>
@@ -995,9 +1001,9 @@ export const ProfilePokesActivity = () => {
                 </div>
 
                 {/* Table */}
-                <div className="flex flex-col w-full h-full border border-[rgba(255,255,255,0.1)] rounded-[0.83vw] overflow-hidden bg-[#1a1a1a]">
+                <div className="flex flex-col w-full flex-grow border border-[rgba(255,255,255,0.1)] rounded-[0.83vw] overflow-hidden bg-[#1a1a1a] mb-[1.25vw] pb-[1.25vw]">
                     {/* Table Header */}
-                    <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1a1a1a] border-b border-[#333333] px-[0.83vw]">
+                    <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1a1a1a] border-b border-[#333333] px-[0.83vw] flex-shrink-0">
                         <div className="flex flex-row items-center gap-[0.42vw] w-[10.42vw]">
                             <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">User</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
@@ -1021,16 +1027,27 @@ export const ProfilePokesActivity = () => {
                     </div>
 
                     {/* Table Body */}
-                    <div className="flex flex-col w-full overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    <div className="flex flex-col w-full flex-grow overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                         <style>{`
                             div::-webkit-scrollbar {
                                 display: none;
                             }
                         `}</style>
-                        {activeList.map((item, index) => (
+                        {currentData.map((item, index) => (
                             <PokeActivityRow key={index} item={item} />
                         ))}
                     </div>
+
+                    {/* Gap */}
+                    <div className="w-full h-[2.60vw] shrink-0" />
+
+                    {/* Pagination */}
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                        className="w-full px-[1.25vw]"
+                    />
                 </div>
             </div>
         </div>
@@ -1095,8 +1112,13 @@ export const ProfileSubscription = () => {
         { type: "Premium Subscription", amount: "$29.99", status: "Successful", timestamp: "Dec 31, 2025 • 11:59 PM" },
     ];
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+    const totalPages = Math.ceil(transactions.length / itemsPerPage);
+    const currentData = transactions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-fit min-h-[47.58vw]">
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[47.58vw]">
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw]">
                 <div className="flex flex-col gap-[0.83vw]">
@@ -1124,37 +1146,49 @@ export const ProfileSubscription = () => {
                 </div>
             </div>
 
-            {/* Transactions Table */}
-            <div className="flex flex-col w-full border border-[rgba(255,255,255,0.1)] rounded-[0.83vw] overflow-hidden">
-                {/* Header */}
-                <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1a1a1a] border-b border-[#333333] px-[0.63vw]">
-                    <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Type</span>
-                        <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+            {/* Transactions Table Wrapper to fill space */}
+            <div className="flex flex-col flex-grow w-full justify-between">
+                {/* Transactions Table */}
+                <div className="flex flex-col w-full border border-[rgba(255,255,255,0.1)] rounded-[0.83vw] overflow-hidden mb-[1.25vw]">
+                    {/* Header */}
+                    <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1a1a1a] border-b border-[#333333] px-[0.63vw]">
+                        <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
+                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Type</span>
+                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                        </div>
+                        <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
+                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Amount</span>
+                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                        </div>
+                        <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
+                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Status</span>
+                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                        </div>
+                        <div className="flex flex-row items-center w-[14.37vw] justify-end gap-[0.42vw]">
+                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC] mr-[0.5vw]">Timestamp</span>
+                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                        </div>
                     </div>
-                    <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Amount</span>
-                        <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
-                    </div>
-                    <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Status</span>
-                        <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
-                    </div>
-                    <div className="flex flex-row items-center w-[14.37vw] justify-end gap-[0.42vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC] mr-[0.5vw]">Timestamp</span>
-                        <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                    {/* Body */}
+                    <div className="flex flex-col w-full min-h-[25vw] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                        <style>{`
+                                div::-webkit-scrollbar {
+                                    display: none;
+                                }
+                            `}</style>
+                        {currentData.map((tx, i) => (
+                            <TransactionRow key={i} item={tx} />
+                        ))}
                     </div>
                 </div>
-                {/* Body */}
-                <div className="flex flex-col w-full h-[25vw] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                    <style>{`
-                            div::-webkit-scrollbar {
-                                display: none;
-                            }
-                        `}</style>
-                    {transactions.map((tx, i) => (
-                        <TransactionRow key={i} item={tx} />
-                    ))}
+
+                {/* Pagination */}
+                <div className="w-full flex justify-center pb-[0.25vw]">
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                    />
                 </div>
             </div>
 

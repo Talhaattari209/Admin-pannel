@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 // --- Utility for consistent VW ---
 // Assuming 1920px design width
@@ -30,7 +31,7 @@ interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, placeholder = "Search", className }) => {
     return (
         <div
-            className={`flex flex-row items-center isolation-isolate ${className}`}
+            className={`flex flex-row items-center relative ${className}`}
             style={{
                 width: toVw(412),
                 height: toVw(56),
@@ -52,17 +53,27 @@ export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, placehold
                 placeholder={placeholder}
                 className="bg-transparent border-none outline-none text-white placeholder-white placeholder-opacity-40"
                 style={{
-                    width: toVw(340),
-                    height: toVw(24),
+                    width: '100%',
+                    height: '100%',
                     fontFamily: '"SF Pro Text", sans-serif',
                     fontWeight: 400,
                     fontSize: toVw(16),
                     lineHeight: toVw(24),
-                    flex: 'none',
-                    order: 1,
-                    flexGrow: 1,
+                    flex: '1',
+                    paddingRight: toVw(24), // Space for X icon
+                    position: 'relative',
+                    zIndex: 10,
                 }}
             />
+            {value.length > 0 && (
+                <button
+                    onClick={() => onChange('')}
+                    className="absolute right-[0.83vw] flex items-center justify-center hover:bg-white/10 rounded-full p-1 transition-colors"
+                    style={{ width: toVw(24), height: toVw(24), zIndex: 20 }}
+                >
+                    <X className="text-white w-full h-full" />
+                </button>
+            )}
         </div>
     );
 };
@@ -303,24 +314,133 @@ export const TableFrame: React.FC<TableFrameProps> = ({ children, searchBar, fil
                 </div>
             )}
 
-            {/* Main Table Content - Scalable, Internal Scroll */}
+            {/* Main Table Content - Scalable, No Internal Scroll */}
             <div
-                className="w-full relative custom-scrollbar"
+                className="w-full relative flex-grow flex flex-col"
                 style={{
-                    // Height is dynamic as per user request, but when rows increase > screen, overflow hidden (with invisible scroll)
-                    maxHeight: '70vh', // Reasonable default limit
-                    overflowY: 'auto',
-                    scrollbarWidth: 'none',   // Firefox
-                    msOverflowStyle: 'none',  // IE/Edge
+                    // Height is DYNAMIC (content based), no internal scroll
+                    width: '100%',
                 }}
             >
-                <style>{`
-            .custom-scrollbar::-webkit-scrollbar {
-                display: none;
-            }
-         `}</style>
                 {children}
             </div>
+        </div>
+    );
+};
+
+// --- 5. Pagination ---
+interface PaginationProps {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+    className?: string;
+}
+
+export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange, className }) => {
+
+    // Helper for circular buttons
+    const PageButton = ({ page, isActive, onClick, disabled, isNav }: { page?: number | string | React.ReactNode, isActive?: boolean, onClick?: () => void, disabled?: boolean, isNav?: boolean }) => (
+        <button
+            onClick={onClick}
+            disabled={disabled}
+            className={`flex items-center justify-center rounded-full transition-all duration-200 ${isNav
+                ? 'bg-[#5F00DB] hover:bg-[#4a00aa] disabled:opacity-50 disabled:hover:bg-[#5F00DB]'
+                : isActive
+                    ? 'bg-[#16003F] border border-[#5F00DB] text-[#5F00DB]'
+                    : 'bg-[#120D1D] text-white hover:bg-white/10'
+                }`}
+            style={{
+                width: toVw(40),
+                height: toVw(40),
+                fontSize: toVw(14),
+                fontFamily: '"SF Pro Text", sans-serif',
+                gap: toVw(10)
+            }}
+        >
+            {page}
+        </button>
+    );
+
+    return (
+        <div className={`flex flex-row items-center justify-center w-full ${className}`} style={{ gap: toVw(10) }}>
+
+            {/* Previous */}
+            <PageButton
+                isNav
+                onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                page={<ChevronLeft className="text-white" style={{ width: toVw(20), height: toVw(20) }} />}
+            />
+
+            {/* Page Numbers */}
+            {(() => {
+                const pages = [];
+                // Always show 1
+                pages.push(
+                    <PageButton
+                        key={1}
+                        page={1}
+                        isActive={currentPage === 1}
+                        onClick={() => onPageChange(1)}
+                    />
+                );
+
+                // Start ellipsis
+                if (currentPage > 3) {
+                    pages.push(<span key="start-ellipsis" className="text-white">...</span>);
+                }
+
+                // Range
+                let start = Math.max(2, currentPage - 1);
+                let end = Math.min(totalPages - 1, currentPage + 1);
+
+                // Adjust if near start
+                if (currentPage <= 3) {
+                    end = Math.min(totalPages - 1, 4); // Show up to 4 if possible
+                }
+                // Adjust if near end
+                if (currentPage >= totalPages - 2) {
+                    start = Math.max(2, totalPages - 3);
+                }
+
+                for (let i = start; i <= end; i++) {
+                    pages.push(
+                        <PageButton
+                            key={i}
+                            page={i}
+                            isActive={currentPage === i}
+                            onClick={() => onPageChange(i)}
+                        />
+                    );
+                }
+
+                // End ellipsis
+                if (currentPage < totalPages - 2) {
+                    pages.push(<span key="end-ellipsis" className="text-white">...</span>);
+                }
+
+                // Always show Last (if > 1)
+                if (totalPages > 1) {
+                    pages.push(
+                        <PageButton
+                            key={totalPages}
+                            page={totalPages}
+                            isActive={currentPage === totalPages}
+                            onClick={() => onPageChange(totalPages)}
+                        />
+                    );
+                }
+
+                return pages;
+            })()}
+
+            {/* Next */}
+            <PageButton
+                isNav
+                onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                page={<ChevronRight className="text-white" style={{ width: toVw(20), height: toVw(20) }} />}
+            />
         </div>
     );
 };

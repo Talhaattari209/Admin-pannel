@@ -71,38 +71,38 @@ const UsersReportedCard: React.FC = () => {
   const total = data.reduce((acc, item) => acc + item.value, 0);
 
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[16px] w-full max-w-[752px] h-[580px] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading */}
-      <div className="flex flex-col items-start p-6 gap-2 w-full h-[117px]">
-        <h4 className="text-white text-[24px] font-bold leading-[120%] tracking-[-0.04em] font-michroma">
+      <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw]">
+        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Users Reported
         </h4>
-        <p className="text-[#CCCCCC] opacity-50 text-[16px] leading-[150%]">
+        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
           Highlights the distribution of user-related reports (harassment, fake profiles, inappropriate media, etc.) to help prioritize moderation focus.
         </p>
       </div>
 
       {/* Main Chart Area */}
-      <div className="relative flex flex-row w-full h-[463px] px-2 py-6">
+      <div className="relative flex flex-row w-full h-[24.11vw] px-[0.41vw] py-[1.25vw]">
         <div className="relative flex-grow h-full flex items-center justify-center">
           {/* Central Total */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-            <span className="text-white text-[32px] font-bold">{total}</span>
+            <span className="text-white text-[1.66vw] font-bold">{total}</span>
           </div>
 
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip
-                contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.41vw' }}
                 itemStyle={{ color: 'white' }}
                 labelStyle={{ display: 'none' }}
               />
               <Pie
                 data={data}
-                cx="50%"
+                cx="55%"
                 cy="50%"
-                innerRadius={100}
-                outerRadius={130}
+                innerRadius={65}
+                outerRadius={85}
                 paddingAngle={0}
                 startAngle={90}
                 endAngle={-270}
@@ -121,11 +121,11 @@ const UsersReportedCard: React.FC = () => {
         </div>
 
         {/* Legend */}
-        <div className="w-[180px] flex flex-col justify-center gap-4 pr-6">
+        <div className="w-[9.37vw] flex flex-col justify-center gap-[0.83vw] pr-[1.25vw]">
           {data.map((item, index) => (
-            <div key={index} className="flex items-center gap-3">
-              <div className="w-3 h-3 rounded-full border border-black/20" style={{ backgroundColor: item.color }} />
-              <span className="text-white/80 text-[12px] font-inter">{item.name}</span>
+            <div key={index} className="flex items-center gap-[0.62vw]">
+              <div className="w-[0.62vw] h-[0.62vw] rounded-full border border-black/20" style={{ backgroundColor: item.color }} />
+              <span className="text-white/80 text-[0.62vw] font-inter">{item.name}</span>
             </div>
           ))}
         </div>

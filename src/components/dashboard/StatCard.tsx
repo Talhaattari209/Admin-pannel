@@ -2,7 +2,9 @@
 import React from 'react';
 import Image from 'next/image';
 
-interface StatCardProps {
+import { cn } from "@/lib/utils";
+
+export interface StatCardProps {
     title: string;
     value: string;
     change: string;
@@ -10,28 +12,45 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ title, value, change, isPositive }) => {
+    // Mapping props to match the internal style used in LoginDashboard
+    const label = title;
+    const isUp = isPositive;
+
     return (
-        <div className="flex flex-col justify-between items-start p-[0.83vw] w-full bg-[#1A1F26] border border-white/5 rounded-[0.83vw] hover:border-white/10 transition-colors duration-300">
-            <h3 className="text-[0.83vw] font-medium text-white/50 font-inter">
-                {title}
-            </h3>
-            <div className="flex flex-row items-baseline gap-[0.83vw] mt-[1.25vw]">
-                <span className="text-[1.66vw] font-bold text-white font-inter tracking-tight">
+        <div className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.6vw] w-full h-[4.09vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
+            {/* Label - H6 (16px -> 0.83vw), #CCCCCC, Bold */}
+            <h6 className="w-full text-[#CCCCCC] font-bold text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
+                {label}
+            </h6>
+
+            {/* Value and Change Row */}
+            <div className="flex flex-row justify-end items-center w-full h-[1.77vw]">
+                {/* Main Number - H3 (28px -> 1.46vw), White, Bold, Flex-grow */}
+                <span className="flex-grow text-white font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em]">
                     {value}
                 </span>
-                <div className="flex items-center gap-[0.2vw]">
-                    <div className="relative w-[1.25vw] h-[1.25vw]">
+
+                {/* Arrow and Change - Gap 8px (0.41vw) */}
+                <div className="flex items-center gap-[0.42vw]">
+                    {/* Arrow - 24px (1.25vw) */}
+                    <div className={cn(
+                        "relative w-[1.25vw] h-[1.25vw]",
+                        !isUp && "rotate-180"
+                    )}>
                         <Image
                             src="/assets/Icons_figma/arrow-up.svg"
-                            alt={isPositive ? "Increase" : "Decrease"}
+                            alt={isUp ? "Up" : "Down"}
                             fill
-                            className={`object-contain ${!isPositive ? 'rotate-180' : ''} ${!isPositive ? 'grayscale hue-rotate-180 brightness-75' : ''}`}
-                        // Note: Adjusting filter for color if the icon is white by default. 
-                        // The SVG is likely white or colored. Figma XML implies it's an instance.
-                        // Assuming white/default is correct or applying simple rotation.
+                            className={cn(
+                                "object-contain",
+                            )}
                         />
                     </div>
-                    <span className={`text-[1.04vw] font-medium ${isPositive ? 'text-[#00C853]' : 'text-[#FF3D00]'}`}>
+                    {/* Change % - H5 (20px -> 1.04vw), #3ADC60, Bold */}
+                    <span className={cn(
+                        "font-bold text-[1.04vw] leading-[120%] tracking-[-0.04em]",
+                        isUp ? "text-[#3ADC60]" : "text-[#FF3D00]"
+                    )}>
                         {change}
                     </span>
                 </div>

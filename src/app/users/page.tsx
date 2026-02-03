@@ -3,7 +3,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SideNavigation from '@/components/SideNavigation';
 import { PageHeader } from '@/components/Headers';
-import { ArrowUp, ArrowDown, Search, ChevronDown, MoreVertical, UserCircle, UserX } from 'lucide-react';
+import { SearchBar, Pagination } from '@/components/shared/TableComponents';
+import { ArrowUp, ArrowDown, ChevronDown, MoreVertical, UserCircle, UserX } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
 
@@ -18,7 +19,7 @@ interface StatCardProps {
 
 const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
     return (
-        <div className="flex flex-col justify-end items-start p-[0.83vw] gap-[1.25vw] w-[12.5vw] h-[5.68vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] shrink-0 font-['SF_Pro_Text']">
+        <div className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.6vw] w-full h-[4.54vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
 
             {/* Label */}
             <h6 className="w-full text-[#CCCCCC] font-bold text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
@@ -34,14 +35,19 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
 
                 {/* Change Indicator */}
                 <div className="flex items-center gap-[0.42vw]">
-                    {isUp ? (
-                        <ArrowUp className="text-[#3ADC60] w-[1.25vw] h-[1.25vw]" />
-                    ) : (
-                        <ArrowDown className="text-red-500 w-[1.25vw] h-[1.25vw]" />
-                    )}
+                    <div className={cn(
+                        "relative w-[1.25vw] h-[1.25vw]",
+                        !isUp && "rotate-180"
+                    )}>
+                        <img
+                            src="/assets/Icons_figma/arrow-up.svg"
+                            alt={isUp ? "Up" : "Down"}
+                            className="object-contain w-full h-full"
+                        />
+                    </div>
                     <span className={cn(
                         "font-bold text-[1.04vw] leading-[120%] tracking-[-0.04em]",
-                        isUp ? "text-[#3ADC60]" : "text-red-500"
+                        isUp ? "text-[#3ADC60]" : "text-[#FF3D00]"
                     )}>
                         {change}
                     </span>
@@ -62,9 +68,11 @@ const StatRow = () => {
     ];
 
     return (
-        <div className="flex flex-row items-center gap-[0.83vw] w-[79.17vw] h-[5.68vw]">
+        <div className="flex flex-wrap items-center gap-[0.83vw] w-full min-h-[4.54vw]">
             {stats.map((stat, index) => (
-                <StatCard key={index} {...stat} />
+                <div key={index} className="flex-1">
+                    <StatCard {...stat} />
+                </div>
             ))}
         </div>
     );
@@ -72,16 +80,7 @@ const StatRow = () => {
 
 // --- New Table Components ---
 
-const TableSearchBar = () => (
-    <div className="flex flex-row items-center p-[0.83vw] gap-[0.83vw] w-[21.46vw] h-[2.92vw] bg-[#111111]/50 border border-[#666666]/50 rounded-[0.83vw]">
-        <Search className="text-[#FFFFFF] opacity-40 w-[1.25vw] h-[1.25vw] shrink-0" strokeWidth={1.5} />
-        <input
-            type="text"
-            placeholder="Search"
-            className="bg-transparent border-none outline-none text-white font-['SF_Pro_Text'] text-[0.83vw] leading-[1.25vw] w-full placeholder:text-[#FFFFFF]/40"
-        />
-    </div>
-);
+// Local TableSearchBar removed in favor of shared component
 
 interface TableFilterProps {
     label: string;
@@ -99,10 +98,14 @@ const TableFilter = ({ label }: TableFilterProps) => (
     </div>
 );
 
-const TableHeaderActions = () => (
-    <div className="flex flex-row items-center justify-between w-[79.17vw] h-[4.58vw] bg-[#1C1C1E] rounded-t-[0.83vw] p-[0.83vw]">
-        {/* Left: Search */}
-        <TableSearchBar />
+const TableHeaderActions = ({ searchValue, onSearchChange }: { searchValue: string, onSearchChange: (val: string) => void }) => (
+    <div className="flex flex-row items-center justify-between w-full h-[4.58vw] bg-[#1C1C1E] rounded-t-[0.83vw] p-[0.83vw]">
+        {/* Left: Search (Reusable) */}
+        <SearchBar
+            value={searchValue}
+            onChange={onSearchChange}
+            className="!bg-[#111111]/50 !border-[#666666]/50 !w-[21.46vw] !h-[2.92vw] !p-[0.83vw] !rounded-[0.83vw]"
+        />
 
         {/* Right: Filters */}
         <div className="flex flex-row gap-[0.83vw]">
@@ -173,7 +176,7 @@ const RowActions = ({ userId }: { userId: string }) => {
 };
 
 const UserTableRow = () => (
-    <div className="flex flex-row items-center w-[79.17vw] h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors">
+    <div className="flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors">
         {/* User ID - 130px */}
         <div className="flex items-center px-[0.63vw] w-[6.77vw] h-full shrink-0">
             <span className="text-white font-['SF_Pro_Text'] font-normal text-[0.73vw]">U-00***24543</span>
@@ -220,10 +223,13 @@ const UserTableRow = () => (
 );
 
 const UserTableSection = () => {
+    const [searchValue, setSearchValue] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+
     return (
-        <div className="flex flex-col w-[79.17vw]">
+        <div className="flex flex-col w-full">
             {/* 1. Header with Filters */}
-            <TableHeaderActions />
+            <TableHeaderActions searchValue={searchValue} onSearchChange={setSearchValue} />
 
             {/* 2. Table Column Headers */}
             <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1C1C1E] border-b border-[#333333] mt-0">
@@ -259,11 +265,25 @@ const UserTableSection = () => {
                 <div className="w-[2.5vw] shrink-0" />
             </div>
 
-            {/* 3. Table Rows */}
-            <div className="flex flex-col w-full bg-[#222222] rounded-b-[0.83vw] overflow-hidden">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <UserTableRow key={i} />
-                ))}
+            {/* 3. Table Wrapper: Rows + Gap + Pagination */}
+            <div className="flex flex-col w-full bg-[#222222] rounded-b-[0.83vw] overflow-hidden pb-[1.25vw]">
+                {/* Rows */}
+                <div className="flex flex-col w-full">
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <UserTableRow key={i} />
+                    ))}
+                </div>
+
+                {/* Gap: 50px -> 2.60vw */}
+                <div className="w-full h-[2.60vw]" />
+
+                {/* 4. Pagination (Inside) */}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={10}
+                    onPageChange={setCurrentPage}
+                    className="w-full px-[1.25vw]"
+                />
             </div>
         </div>
     );
@@ -283,14 +303,14 @@ export default function UserManagementPage() {
             <SideNavigation activeId="users" />
 
             {/* 3. Main Content Container (positioned at left 320px/16.67vw) */}
-            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto">
+            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto scrollbar-hide">
 
                 {/* Content Wrapper */}
                 <div
                     className="flex flex-col items-start w-full max-w-[83.33vw]"
                     style={{
                         paddingLeft: '2.08vw',   // 40px Left
-                        paddingTop: '2.08vw',    // 40px Top
+                        paddingTop: '1.77vw',    // Adjusted Top
                         paddingBottom: '2.08vw', // 40px Bottom
                         paddingRight: '2.08vw'   // 40px Right
                     }}
@@ -305,12 +325,12 @@ export default function UserManagementPage() {
                     </div>
 
                     {/* Gap of 40px (2.08vw) */}
-                    <div className="h-[2.08vw]" />
+                    <div className="h-[1.49vw]" />
 
                     {/* Stat Cards Row */}
                     <StatRow />
 
-                    <div className="h-[2.08vw]" />
+                    <div className="h-[1.25vw]" />
 
                     {/* Table Section */}
                     <UserTableSection />

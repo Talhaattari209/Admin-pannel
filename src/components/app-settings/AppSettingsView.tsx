@@ -14,7 +14,7 @@ const AppSettingsView: React.FC = () => {
 
   return (
     <div key={resetKey} className="flex flex-col w-full h-screen overflow-hidden animate-in fade-in duration-500">
-      <div className="w-full px-[2.08vw] pt-[2.08vw]">
+      <div className="w-full">
         <PageHeader
           title="App Settings"
           description="Control platform-wide configurations, feature toggles, and notification templates."
@@ -29,7 +29,7 @@ const AppSettingsView: React.FC = () => {
         />
       </div>
 
-      <div className="flex flex-row gap-[1.25vw] h-full overflow-hidden pb-[2.08vw] px-[2.08vw] mt-[2.08vw]">
+      <div className="flex flex-row gap-[1.25vw] h-full overflow-hidden pb-[2.08vw] mt-[1.49vw]">
         <div className="flex-[2] flex flex-col gap-[1.25vw] overflow-y-auto no-scrollbar pr-[0.42vw]">
           <MobileAppsCard />
           <ContentModerationCard />

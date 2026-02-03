@@ -69,26 +69,26 @@ const BugsReportedCard: React.FC = () => {
   const total = data.reduce((acc, item) => acc + item.value, 0);
 
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[16px] w-full max-w-[752px] h-[580px] shadow-2xl overflow-hidden border border-white/5">
-      <div className="flex flex-col items-start p-6 gap-2 w-full h-[117px]">
-        <h4 className="text-white text-[24px] font-bold leading-[120%] tracking-[-0.04em]">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
+      <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw]">
+        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Bugs Reported
         </h4>
-        <p className="text-[#CCCCCC] opacity-50 text-[16px] leading-[150%]">
+        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
           Shows how reported bugs are categorized by severity, aiding development teams in assessing impact and response priority.
         </p>
       </div>
 
-      <div className="relative flex flex-row w-full h-[463px] px-2 py-6">
+      <div className="relative flex flex-row w-full h-[24.11vw] px-[0.41vw] py-[1.25vw]">
         <div className="relative flex-grow h-full flex items-center justify-center">
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-            <span className="text-white text-[32px] font-bold">{total}</span>
+            <span className="text-white text-[1.66vw] font-bold">{total}</span>
           </div>
 
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip
-                contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.41vw' }}
                 itemStyle={{ color: 'white' }}
                 labelStyle={{ display: 'none' }}
               />
@@ -96,8 +96,8 @@ const BugsReportedCard: React.FC = () => {
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={110}
-                outerRadius={140}
+                innerRadius={72}
+                outerRadius={91}
                 paddingAngle={0}
                 startAngle={90}
                 endAngle={-270}
@@ -115,11 +115,11 @@ const BugsReportedCard: React.FC = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="w-[120px] flex flex-col justify-center gap-4 pr-6">
+        <div className="w-[6.25vw] flex flex-col justify-center gap-[0.83vw] pr-[1.25vw]">
           {data.map((item, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-              <span className="text-white/80 text-[12px]">{item.name}</span>
+            <div key={index} className="flex items-center gap-[0.41vw]">
+              <div className="w-[0.62vw] h-[0.62vw] rounded-full" style={{ backgroundColor: item.color }} />
+              <span className="text-white/80 text-[0.62vw]">{item.name}</span>
             </div>
           ))}
         </div>

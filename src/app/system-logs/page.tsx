@@ -2,7 +2,7 @@
 
 import React from 'react';
 import SideNavigation from '@/components/SideNavigation';
-import SystemLogsView from '../../../google_build/components/system-logs/SystemLogsView';
+import SystemLogsView from '@/components/system-logs/SystemLogsView';
 
 export default function SystemLogsPage() {
     return (

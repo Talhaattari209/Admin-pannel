@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ChangeRoleModal from './modals/ChangeRoleModal';
 import RemoveConfirmModal from './modals/RemoveConfirmModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
-import { TableFrame, SearchBar } from '../shared/TableComponents';
+import { TableFrame, SearchBar, Pagination } from '../shared/TableComponents';
 
 const MOCK_MEMBERS = [
     { id: '1', name: 'Liam Martinez', email: 'liammartinez@email.com', role: 'Admin', status: 'Active', addedOn: 'Jun 30, 2025 • 3:30 PM', lastActive: 'Jun 30, 2025 • 3:30 PM' },
@@ -14,6 +14,7 @@ const MOCK_MEMBERS = [
 
 const TeamMembersTable: React.FC = () => {
     const [search, setSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
     const [openMenuId, setOpenMenuId] = useState<string | null>(null);
     const [modal, setModal] = useState<null | 'CHANGE_ROLE' | 'REMOVE_CONFIRM' | 'SUCCESS_REMOVE' | 'SUCCESS_UPDATED'>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -73,7 +74,12 @@ const TeamMembersTable: React.FC = () => {
             </div>
 
             {/* Rows */}
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-grow overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style>{`
+                    div::-webkit-scrollbar {
+                        display: none;
+                    }
+                `}</style>
                 {MOCK_MEMBERS.map((member) => (
                     <div
                         key={member.id}
@@ -142,11 +148,22 @@ const TeamMembersTable: React.FC = () => {
                 ))}
             </div>
 
+            {/* Gap */}
+            <div className="w-full h-[2.60vw]" />
+
+            {/* Pagination */}
+            <Pagination
+                currentPage={currentPage}
+                totalPages={10}
+                onPageChange={setCurrentPage}
+                className="w-full px-[1.25vw] pb-[1.25vw]"
+            />
+
             {modal === 'CHANGE_ROLE' && <ChangeRoleModal onCancel={() => setModal(null)} onUpdate={() => setModal('SUCCESS_UPDATED')} />}
             {modal === 'REMOVE_CONFIRM' && <RemoveConfirmModal type="member" onCancel={() => setModal(null)} onConfirm={() => setModal('SUCCESS_REMOVE')} />}
             {modal === 'SUCCESS_REMOVE' && <TeamRolesSuccessModal title="Team Member Removed" onDone={() => setModal(null)} />}
             {modal === 'SUCCESS_UPDATED' && <TeamRolesSuccessModal title="Role Updated" onDone={() => setModal(null)} />}
-        </TableFrame>
+        </TableFrame >
     );
 };
 

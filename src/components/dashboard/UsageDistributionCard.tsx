@@ -17,7 +17,7 @@ const data = [
 const renderCustomizedLabel = (props: any) => {
   const { cx, cy, midAngle, innerRadius, outerRadius, value, name } = props;
   const RADIAN = Math.PI / 180;
-  const radius = outerRadius * 1.3;
+  const radius = outerRadius * 1.25;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -26,8 +26,8 @@ const renderCustomizedLabel = (props: any) => {
   const sy = cy + outerRadius * Math.sin(-midAngle * RADIAN);
 
   // Control point for the curve
-  const mx = cx + (outerRadius + 20) * Math.cos(-midAngle * RADIAN);
-  const my = cy + (outerRadius + 20) * Math.sin(-midAngle * RADIAN);
+  const mx = cx + (outerRadius + 15) * Math.cos(-midAngle * RADIAN);
+  const my = cy + (outerRadius + 15) * Math.sin(-midAngle * RADIAN);
 
   const isRight = x > cx;
 
@@ -48,7 +48,7 @@ const renderCustomizedLabel = (props: any) => {
         fill="rgba(255, 255, 255, 0.8)"
         textAnchor={isRight ? 'start' : 'end'}
         dominantBaseline="central"
-        fontSize={12}
+        fontSize="0.62vw"
       >
         {name}
       </text>
@@ -58,7 +58,7 @@ const renderCustomizedLabel = (props: any) => {
         fill="white"
         textAnchor={isRight ? 'start' : 'end'}
         dominantBaseline="central"
-        fontSize={12}
+        fontSize="0.62vw"
         fontWeight="bold"
       >
         {value.toLocaleString()}
@@ -102,8 +102,8 @@ const UsageDistributionCard: React.FC = () => {
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius="40%"
-              outerRadius="50%"
+              innerRadius={72}
+              outerRadius={91}
               paddingAngle={0}
               startAngle={90}
               endAngle={-270}

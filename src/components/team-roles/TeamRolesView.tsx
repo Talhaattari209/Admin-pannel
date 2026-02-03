@@ -19,9 +19,10 @@ const TeamRolesView: React.FC = () => {
     return (
         <div className="flex flex-col w-full h-full animate-in fade-in duration-500">
             {/* Page Header */}
-            <div className="flex flex-row items-end justify-between w-full h-[4.17vw] mb-[2.08vw] shrink-0">
-                <div className="flex flex-col justify-center items-start gap-[0.83vw]">
-                    <h1 className="text-white text-[1.875vw] font-bold tracking-tight font-['SF_Pro_Text']">Team & Roles</h1>
+            {/* Page Header */}
+            <div className="flex flex-row items-end justify-between w-full h-[3.47vw] mb-[1.49vw] shrink-0">
+                <div className="flex flex-col justify-center items-start gap-[0.23vw]">
+                    <h1 className="text-white text-[2.25vw] font-bold tracking-tight font-['SF_Pro_Text']">Team & Roles</h1>
                     <p className="text-[#CCCCCC] text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
                         Manage admin accounts, assign permissions, and define moderator or reviewer roles.
                     </p>

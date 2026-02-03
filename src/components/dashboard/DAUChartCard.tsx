@@ -39,19 +39,19 @@ const CustomDot = (props: any) => {
 
 const DAUChartCard: React.FC = () => {
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[30.2vw] shadow-2xl overflow-hidden border border-white/5 transition-all hover:border-white/10">
-      <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full">
-        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-michroma">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-[52.5vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5 transition-all hover:border-white/10">
+      <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
+        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Daily Active Users (DAU)
         </h4>
-        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] max-w-[41.66vw]">
+        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] max-w-[50.83vw] font-['SF_Pro_Text']">
           Shows the number of users active each day, helping track engagement trends and overall platform health.
         </p>
       </div>
 
-      <div className="flex-grow w-full px-[0.83vw] md:px-[1.66vw] pt-[0.83vw] pb-[1.25vw]">
+      <div className="flex flex-grow w-full pl-[0.66vw] pr-[1.62vw] pt-[0.62vw] pb-[0.28vw]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
+          <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
             <defs>
               <linearGradient id="colorDauFull" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#5F00DB" stopOpacity={0.4} />
@@ -68,16 +68,17 @@ const DAUChartCard: React.FC = () => {
               dataKey="day"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }}
+              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: '0.62vw' }}
               dy={15}
+              height={50}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }}
+              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: '0.62vw' }}
               domain={[0, 20000]}
               ticks={[0, 5000, 10000, 15000, 20000]}
-              width={60}
+              width={45}
             />
             <Tooltip
               contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
@@ -87,7 +88,7 @@ const DAUChartCard: React.FC = () => {
               type="monotone"
               dataKey="dau"
               stroke="#FFFFFF"
-              strokeWidth={2.5}
+              strokeWidth="0.1vw"
               fillOpacity={1}
               fill="url(#colorDauFull)"
               dot={<CustomDot />}
@@ -97,7 +98,7 @@ const DAUChartCard: React.FC = () => {
               verticalAlign="bottom"
               align="center"
               content={() => (
-                <div className="flex items-center justify-center gap-[0.62vw] mt-[1.66vw]">
+                <div className="flex items-center justify-center gap-[0.62vw] mt-[0.02vw]">
                   <div className="w-[0.83vw] h-[0.1vw] bg-[#5F00DB]" />
                   <div className="w-[0.41vw] h-[0.41vw] bg-[#5F00DB] rounded-full -ml-[0.62vw]" />
                   <span className="text-white/60 text-[0.62vw] font-inter">DAU</span>

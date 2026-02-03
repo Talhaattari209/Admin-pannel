@@ -57,8 +57,8 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     // Determine the type based on props for internal logic if needed, 
     // but flexbox handles the "Text Only", "Single", and "Double" cases naturally if structured correctly.
 
-    const heightClass = variant === 'dashboard' ? 'h-[6.20vw]' : 'h-[4.17vw]';
-    const titleSizeClass = variant === 'dashboard' ? 'text-[3.75vw]' : 'text-[1.875vw]';
+    const heightClass = variant === 'dashboard' ? 'h-[2.78vw]' : 'h-[3.0vw]';
+    const titleSizeClass = variant === 'dashboard' ? 'text-[2.25vw]' : 'text-[2.0vw]';
 
     return (
         <div

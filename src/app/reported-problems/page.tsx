@@ -76,7 +76,7 @@ export default function ReportedProblemsPage() {
 
             {/* Main Content */}
             <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto">
-                <div className="w-full px-[2.08vw] py-[2.08vw]">
+                <div className="w-full px-[2.08vw] pt-[1.77vw] pb-[2.08vw]">
                     {viewState === 'list' && (
                         <ReportedProblemView
                             onViewReportDetail={handleViewUserReport}

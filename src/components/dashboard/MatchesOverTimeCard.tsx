@@ -27,24 +27,24 @@ const data = [
 
 const MatchesOverTimeCard: React.FC = () => {
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[16px] w-full h-[580px] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-[52.5vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading Section */}
-      <div className="flex flex-col items-start p-4 md:p-6 gap-2 w-full h-[93px]">
-        <h4 className="text-white text-[24px] font-bold leading-[120%] tracking-[-0.04em]">
+      <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
+        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Matches Over Time
         </h4>
-        <p className="text-[#CCCCCC] opacity-50 text-[16px] leading-[150%]">
+        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
           Displays weekly match volume to visualize growth in user interaction and compatibility success.
         </p>
       </div>
 
       {/* Chart Section */}
-      <div className="flex-grow w-full px-4 md:px-6 pt-8 pb-4">
+      <div className="flex-grow w-full pl-[0.66vw] pr-[0.62vw] pt-[0.62vw] pb-[0.28vw]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
-            margin={{ top: 10, right: 10, left: 20, bottom: 0 }}
-            barGap={0}
+            margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+            barCategoryGap={0}
           >
             <CartesianGrid
               strokeDasharray="4 4"
@@ -56,17 +56,17 @@ const MatchesOverTimeCard: React.FC = () => {
               dataKey="month"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }}
+              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: '0.62vw' }}
               dy={10}
             />
             {/* Added explicit any casting for domain and ticks to solve Recharts type overload issues where number[] is mistakenly compared to string | number */}
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: 12 }}
+              tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: '0.62vw' }}
               domain={[0, 200000] as any}
               ticks={[0, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000] as any}
-              width={60}
+              width={45}
             />
             <Tooltip
               cursor={{ fill: 'transparent' }}
@@ -91,7 +91,7 @@ const MatchesOverTimeCard: React.FC = () => {
               align="center"
               height={36}
               content={({ payload }) => (
-                <div className="flex items-center justify-center gap-2 mt-4">
+                <div className="flex items-center justify-center gap-2 mt-[0.02vw]">
                   <div className="w-[12px] h-[12px] bg-[#5F00DB] border border-[#1A1F26]" />
                   <span className="text-white/80 text-[12px] font-normal">Matches</span>
                 </div>

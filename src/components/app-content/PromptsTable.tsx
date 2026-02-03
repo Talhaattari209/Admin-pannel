@@ -4,6 +4,7 @@ import PromptsHeader from './PromptsHeader';
 import SearchInput from './shared/SearchInput';
 import FilterSelect from './shared/FilterSelect';
 import PromptsTableRow, { PromptRowData } from './PromptsTableRow';
+import { Pagination } from '@/components/shared/TableComponents';
 
 // Modals
 import AddPromptModal from './modals/AddPromptModal';
@@ -48,6 +49,7 @@ const PromptsTable: React.FC = () => {
     const [activeTab, setActiveTab] = useState('individual');
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState('Published');
+    const [currentPage, setCurrentPage] = useState(1);
     const [activeModal, setActiveModal] = useState<any>(null);
     const [selectedPrompt, setSelectedPrompt] = useState<any | null>(null);
 
@@ -181,6 +183,17 @@ const PromptsTable: React.FC = () => {
                     <div className="flex flex-col w-full">
                         {renderTableContent()}
                     </div>
+
+                    {/* Gap */}
+                    <div className="w-full h-[2.60vw]" />
+
+                    {/* Pagination */}
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={10}
+                        onPageChange={setCurrentPage}
+                        className="w-full px-[1.25vw] pb-[1.25vw]"
+                    />
                 </div>
             </div>
         </div>

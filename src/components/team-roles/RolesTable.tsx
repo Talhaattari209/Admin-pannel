@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import AddRoleModal from './modals/AddRoleModal';
 import RemoveConfirmModal from './modals/RemoveConfirmModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
-import { TableFrame, SearchBar } from '../shared/TableComponents';
+import { TableFrame, SearchBar, Pagination } from '../shared/TableComponents';
 
 const MOCK_ROLES = [
     { id: '1', role: 'Admin', description: 'Full access to all system features, data, and configurations.', memberCount: 2 },
@@ -14,6 +14,7 @@ const MOCK_ROLES = [
 
 const RolesTable: React.FC = () => {
     const [search, setSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
     const [openMenuId, setOpenMenuId] = useState<string | null>(null);
     const [modal, setModal] = useState<null | 'EDIT_ROLE' | 'DELETE_ROLE' | 'SUCCESS_EDIT' | 'SUCCESS_DELETE'>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,12 @@ const RolesTable: React.FC = () => {
             </div>
 
             {/* Rows */}
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-grow overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style>{`
+                    div::-webkit-scrollbar {
+                        display: none;
+                    }
+                `}</style>
                 {MOCK_ROLES.map((role) => (
                     <div
                         key={role.id}
@@ -98,6 +104,17 @@ const RolesTable: React.FC = () => {
                     </div>
                 ))}
             </div>
+
+            {/* Gap */}
+            <div className="w-full h-[2.60vw]" />
+
+            {/* Pagination */}
+            <Pagination
+                currentPage={currentPage}
+                totalPages={10}
+                onPageChange={setCurrentPage}
+                className="w-full px-[1.25vw] pb-[1.25vw]"
+            />
 
             {modal === 'EDIT_ROLE' && <AddRoleModal onCancel={() => setModal(null)} onAdd={() => setModal('SUCCESS_EDIT')} initialData={{ role: 'Admin', description: 'Full access to all system features.' }} />}
             {modal === 'DELETE_ROLE' && <RemoveConfirmModal type="role" onCancel={() => setModal(null)} onConfirm={() => setModal('SUCCESS_DELETE')} />}

@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 import SideNavigation from '@/components/SideNavigation';
 // Relative imports to access components in google_build from src/app/support
 // src/app/support -> ../ -> src/app -> ../ -> src -> ../ -> root -> google_build
-import SupportRequestsView from '../../../google_build/components/support/SupportRequestsView';
-import SupportTicketDetailView from '../../../google_build/components/support/SupportTicketDetailView';
-import { SupportTicketData } from '../../../google_build/components/support/SupportTableRow';
+import SupportRequestsView from '@/components/support/SupportRequestsView';
+import SupportTicketDetailView from '@/components/support/SupportTicketDetailView';
+import { SupportTicketData } from '@/components/support/SupportTableRow';
 import ExportModal from '@/components/shared/ExportModal';
 
 export default function SupportPage() {

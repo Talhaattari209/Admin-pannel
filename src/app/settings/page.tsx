@@ -18,7 +18,7 @@ export default function AppSettingsPage() {
 
             {/* Main Content */}
             <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-hidden">
-                <div className="w-full h-full px-[2.08vw] py-[2.08vw] overflow-y-auto">
+                <div className="w-full h-full px-[2.08vw] pt-[1.77vw] pb-[2.08vw] overflow-y-auto">
                     <AppSettingsView />
                 </div>
             </main>

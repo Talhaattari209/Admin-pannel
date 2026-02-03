@@ -28,7 +28,7 @@ interface StatCardProps {
 
 const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
     return (
-        <div className="flex flex-col justify-end items-start p-[0.83vw] gap-[1.25vw] w-[12.5vw] h-[5.68vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] shrink-0 font-['SF_Pro_Text']">
+        <div className="flex flex-col justify-end items-start p-[0.83vw] gap-[0.68vw] w-full h-[5.11vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
             {/* Label */}
             <h6 className="w-full text-[#CCCCCC] font-bold text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
                 {label}
@@ -93,7 +93,9 @@ const StatRow = () => {
     return (
         <div className="flex flex-row flex-wrap items-center gap-[0.83vw] w-full min-h-[5.68vw]">
             {stats.map((stat, index) => (
-                <StatCard key={index} {...stat} />
+                <div key={index} className="flex-1">
+                    <StatCard {...stat} />
+                </div>
             ))}
         </div>
     );
@@ -120,17 +122,17 @@ export default function LoginDashboard() {
             {/* 2. Reusable Sidebar (fixed position) */}
             <SideNavigation activeId="dashboard" />
 
-            {/* 3. Main Content Container - Flex Column Layout for Sticky Header effect */}
-            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen flex flex-col overflow-hidden">
+            {/* 3. Main Content Container - Single Scroll Flow */}
+            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto scrollbar-hide">
 
-                {/* --- TOP FIXED SECTION (Header, Stats, Filters) --- */}
+                {/* Content Wrapper */}
                 <div
-                    className="flex flex-col items-start w-full shrink-0 z-20 transition-all text-white"
+                    className="flex flex-col items-start w-full text-white"
                     style={{
                         paddingLeft: '2.08vw',
                         paddingTop: '2.08vw',
                         paddingRight: '2.08vw',
-                        paddingBottom: '1.04vw'
+                        paddingBottom: '2.08vw'
                     }}
                 >
                     {/* Page Header */}
@@ -157,20 +159,20 @@ export default function LoginDashboard() {
 
                     </div>
 
-                    <div className="h-[2.08vw]" />
+                    <div className="h-[1.66vw]" />
 
                     {/* Stat Cards */}
                     <StatRow />
 
-                    <div className="h-[2.08vw]" />
+                    <div className="h-[1.66vw]" />
 
-                    {/* Filters Row (Timeline) - Moved to sticky section */}
-                    <div className="flex flex-wrap items-center gap-2">
+                    {/* Filters Row (Timeline) */}
+                    <div className="flex flex-nowrap items-center gap-[0.41vw] mb-[0.83vw] w-[70%] overflow-x-auto scrollbar-hide">
                         {FILTERS.map((filter) => (
                             <button
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
-                                className={`px-6 py-2 rounded-full text-[14px] font-medium transition-all duration-300 border ${activeFilter === filter
+                                className={`flex-shrink-0 px-[1.25vw] py-[0.26vw] rounded-full text-[0.72vw] font-medium transition-all duration-300 border ${activeFilter === filter
                                     ? 'bg-[#5F00DB] border-[#5F00DB] text-white shadow-[0_0_15px_rgba(95,0,219,0.4)]'
                                     : 'bg-[#16003F] border-[#5F00DB]/30 text-white/70 hover:border-[#5F00DB] hover:text-white'
                                     }`}
@@ -179,20 +181,9 @@ export default function LoginDashboard() {
                             </button>
                         ))}
                     </div>
-                </div>
 
-                {/* --- BOTTOM SCROLLABLE SECTION (Charts) --- */}
-                <div
-                    className="flex-grow w-full overflow-y-auto custom-scrollbar"
-                    style={{
-                        paddingLeft: '2.08vw',
-                        paddingRight: '2.08vw',
-                        paddingBottom: '2.08vw',
-                        paddingTop: '1.04vw'
-                    }}
-                >
+                    {/* Analytics Grid */}
                     <div className="flex flex-col w-full animate-in fade-in duration-700">
-                        {/* Analytics Grid */}
                         <div className="grid grid-cols-12 gap-6 w-full">
                             {/* Row 1 */}
                             <div className="col-span-12 lg:col-span-8">

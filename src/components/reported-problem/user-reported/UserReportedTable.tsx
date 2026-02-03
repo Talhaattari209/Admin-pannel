@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import SearchInput from '@/components/app-content/shared/SearchInput';
 import FilterSelect from '@/components/app-content/shared/FilterSelect';
 import UserReportedTableRow, { UserReportData } from './UserReportedTableRow';
+import { Pagination } from '@/components/shared/TableComponents';
 
 const MOCK_REPORTS: UserReportData[] = [
     {
@@ -36,6 +37,7 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
     const [catFilter, setCatFilter] = useState('Select');
     const [repFilter, setRepFilter] = useState('Select');
     const [statusFilter, setStatusFilter] = useState('Select');
+    const [currentPage, setCurrentPage] = useState(1);
 
     const ColumnHeader = ({ label, width = "auto", grow = false }: { label: string, width?: string, grow?: boolean }) => (
         <div className={`flex flex-row items-center gap-2 px-4 h-[38px] group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
@@ -50,7 +52,7 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
     );
 
     return (
-        <div className="flex flex-col w-full bg-[#222222] rounded-[16px] rounded-tl-none overflow-hidden border border-white/5 shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
+        <div className="flex flex-col w-full h-full bg-[#222222] rounded-[16px] rounded-tl-none overflow-hidden border border-white/5 shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
             <div className="flex flex-row items-center justify-between p-4 gap-4 bg-[#1a1a1a]/30 flex-wrap">
                 <SearchInput value={search} onChange={setSearch} />
                 <div className="flex gap-4 flex-wrap">
@@ -71,11 +73,30 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
                 <div className="w-[4.16vw] shrink-0" />
             </div>
 
-            <div className="flex flex-col min-h-[400px]">
-                {MOCK_REPORTS.map((report) => (
-                    <UserReportedTableRow key={report.id} data={report} onAction={() => onViewDetail(report)} />
-                ))}
-                <div className="flex-grow bg-[#222222]" />
+            <div className="flex flex-col flex-grow h-full overflow-hidden">
+                <div className="flex flex-col flex-grow overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    <style>{`
+                        div::-webkit-scrollbar {
+                            display: none;
+                        }
+                    `}</style>
+                    {MOCK_REPORTS.map((report) => (
+                        <UserReportedTableRow key={report.id} data={report} onAction={() => onViewDetail(report)} />
+                    ))}
+                </div>
+
+                {/* Gap */}
+                <div className="w-full h-[2.60vw] mt-auto shrink-0" />
+
+                {/* Pagination */}
+                <div className="shrink-0">
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={10}
+                        onPageChange={setCurrentPage}
+                        className="w-full px-[1.25vw] pb-[1.25vw]"
+                    />
+                </div>
             </div>
         </div>
     );
