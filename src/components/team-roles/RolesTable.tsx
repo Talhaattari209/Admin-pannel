@@ -44,6 +44,7 @@ const RolesTable: React.FC = () => {
     return (
         <TableFrame
             searchBar={<SearchBar value={search} onChange={setSearch} placeholder="Search" />}
+            hideHeaderBorder={true}
             className="w-full h-full"
         >
             {/* Column Headers: Fluid Width */}

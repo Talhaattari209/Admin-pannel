@@ -30,17 +30,17 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ label, isActive, onClick, ico
             )}
 
             {/* Icon */}
-            <div className={`flex items-center justify-center w-[1.25vw] h-[1.25vw] ${isActive ? 'text-white' : 'text-[#CCCCCC]'}`}>
+            <div className={`flex items-center justify-center w-[1.25vw] h-[1.25vw] text-white`}>
                 {icon}
             </div>
 
             {/* Label */}
-            <span className={`font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-left flex-grow ${isActive ? 'text-white' : 'text-[#CCCCCC]'}`}>
+            <span className={`font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-left flex-grow text-white`}>
                 {label}
             </span>
 
             {/* Chevron */}
-            <ChevronRight className={`w-[0.83vw] h-[0.83vw] ${isActive ? 'text-white' : 'text-[#CCCCCC] opacity-50'}`} />
+            <ChevronRight className="w-[0.83vw] h-[0.83vw] text-white" />
         </button>
     );
 };
@@ -80,7 +80,7 @@ const AccountSettingsView: React.FC = () => {
             <div className="flex flex-row flex-wrap items-start p-0 gap-[0.83vw] w-full">
 
                 {/* Left Column: Navigation Sidebar */}
-                <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[19.17vw] h-[7.5vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw]">
+                <div className="flex flex-col items-start py-[0.83vw] px-0 gap-[1.67vw] w-[19.17vw] h-[7.5vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw]">
                     <div className="flex flex-col p-0 w-full gap-[0.2vw]">
                         <SidebarItem
                             label="Edit Profile"

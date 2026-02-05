@@ -51,7 +51,7 @@ const SystemLogsTableRow: React.FC<SystemLogsTableRowProps> = ({ data }) => {
 
             {/* Details: 35% */}
             <div className="w-[35%] h-full px-[0.63vw] flex flex-col justify-center shrink-0">
-                <span className="text-white text-[0.73vw] leading-[0.83vw] truncate opacity-60">
+                <span className="text-white text-[0.73vw] leading-[0.83vw] truncate">
                     {data.details}
                 </span>
             </div>

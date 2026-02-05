@@ -272,9 +272,10 @@ interface TableFrameProps {
     filterBar?: React.ReactNode;
     headerContent?: React.ReactNode; // For extra header actions if needed
     className?: string; // Allow custom styling for the container
+    hideHeaderBorder?: boolean;
 }
 
-export const TableFrame: React.FC<TableFrameProps> = ({ children, searchBar, filterBar, headerContent, className }) => {
+export const TableFrame: React.FC<TableFrameProps> = ({ children, searchBar, filterBar, headerContent, className, hideHeaderBorder }) => {
     return (
         <div
             className={`flex flex-col items-start ${className || ''}`}
@@ -297,7 +298,7 @@ export const TableFrame: React.FC<TableFrameProps> = ({ children, searchBar, fil
                         padding: '0 0.83vw', // 16px horizontal padding
                         gap: '0.66vw',
                         backgroundColor: '#1C1C1E', // Standardized Header BG
-                        borderBottom: '1px solid rgba(102, 102, 102, 0.5)',
+                        borderBottom: hideHeaderBorder ? 'none' : '1px solid rgba(102, 102, 102, 0.5)',
                     }}
                 >
                     {/* Left: Search */}

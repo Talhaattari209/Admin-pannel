@@ -88,7 +88,7 @@ const EditProfileContent: React.FC<EditProfileContentProps> = ({ onSuccess }) =>
                 {/* Save Changes */}
                 <button
                     onClick={handleSave}
-                    className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] w-auto h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#4a00aa] transition-colors"
+                    className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] w-[8.23vw] h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#4a00aa] transition-colors"
                 >
                     <span className="font-medium not-italic text-[0.83vw] leading-[1.25vw] text-center text-white">Save Changes</span>
                 </button>
@@ -96,7 +96,7 @@ const EditProfileContent: React.FC<EditProfileContentProps> = ({ onSuccess }) =>
                 {/* Discard Changes */}
                 <button
                     onClick={handleDiscard}
-                    className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] w-auto h-[2.92vw] border border-white backdrop-blur-[6px] rounded-[2.71vw] hover:bg-white/10 transition-colors"
+                    className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] w-[9.375vw] h-[2.92vw] border border-white backdrop-blur-[6px] drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)] rounded-[2.71vw] hover:bg-white/10 transition-colors"
                 >
                     <span className="font-medium not-italic text-[0.83vw] leading-[1.25vw] text-center text-white">Discard Changes</span>
                 </button>

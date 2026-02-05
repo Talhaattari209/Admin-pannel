@@ -50,8 +50,9 @@ const SystemLogsTable: React.FC = () => {
                 </>
             }
             className="w-full h-full font-sans not-italic"
+            hideHeaderBorder={true}
         >
-            <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1C1C1E] border-b border-[#333333] shrink-0">
+            <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1C1C1E] shrink-0">
                 <ColumnHeader label="Timestamp" width="15%" />
                 <ColumnHeader label="User / System" width="15%" />
                 <ColumnHeader label="Role" width="15%" />
