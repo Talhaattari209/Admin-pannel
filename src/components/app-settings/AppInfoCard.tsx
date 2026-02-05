@@ -41,8 +41,8 @@ const AppInfoCard: React.FC<AppInfoCardProps> = ({ platform, version }) => {
 
       {/* Text Content */}
       <div className="flex flex-col flex-grow">
-        <h3 className="text-white text-[24px] font-bold font-inter leading-none mb-2">{platform}</h3>
-        <span className="text-white/40 text-[14px] font-inter font-light">Version {version}</span>
+        <h3 className="text-white text-[24px] font-bold not-italic font-inter not-italic leading-none mb-2">{platform}</h3>
+        <span className="text-white/40 text-[14px] font-inter not-italic font-light not-italic">Version {version}</span>
       </div>
 
       {/* Mascot & Button Container */}
@@ -61,7 +61,7 @@ const AppInfoCard: React.FC<AppInfoCardProps> = ({ platform, version }) => {
         </div>
 
         {/* Store Button */}
-        <button className="flex items-center justify-center gap-3 px-6 py-3 bg-[#5F00DB] rounded-full text-white font-medium hover:brightness-110 active:scale-95 transition-all shadow-[0_4px_12px_rgba(95,0,219,0.3)]">
+        <button className="flex items-center justify-center gap-3 px-6 py-3 bg-[#5F00DB] rounded-full text-white font-medium not-italic hover:brightness-110 active:scale-95 transition-all shadow-[0_4px_12px_rgba(95,0,219,0.3)]">
           <span className="text-[16px]">{isAndroid ? 'Play Store' : 'App Store'}</span>
           <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>

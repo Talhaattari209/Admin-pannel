@@ -33,13 +33,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, placehold
         <div
             className={`flex flex-row items-center relative ${className}`}
             style={{
-                width: toVw(412),
-                height: toVw(56),
-                padding: toVw(16),
-                gap: toVw(16),
+                width: '17.16vw', // Standardized
+                height: '2.92vw', // Matching Row Height (56px)
+                padding: '0.42vw 0.66vw', // Adjusted padding
+                gap: '0.66vw',
                 backgroundColor: 'rgba(17, 17, 17, 0.5)',
                 border: '1px solid rgba(102, 102, 102, 0.5)',
-                borderRadius: toVw(16),
+                borderRadius: '0.66vw',
                 boxSizing: 'border-box',
             }}
         >
@@ -51,12 +51,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, placehold
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                className="bg-transparent border-none outline-none text-white placeholder-white placeholder-opacity-40"
+                className="bg-transparent border-none outline-none text-white placeholder-white placeholder-opacity-40 font-normal not-italic font-['SF_Pro_Text']"
                 style={{
                     width: '100%',
                     height: '100%',
-                    fontFamily: '"SF Pro Text", sans-serif',
-                    fontWeight: 400,
                     fontSize: toVw(16),
                     lineHeight: toVw(24),
                     flex: '1',
@@ -90,42 +88,49 @@ interface FilterSelectProps {
     options: FilterOption[];
     onChange: (val: string) => void;
     required?: boolean;
+    className?: string; // Added
+    style?: React.CSSProperties; // Added
 }
 
-export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, options, onChange, required }) => {
+export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, options, onChange, required, className, style }) => {
+    // Add dummy options for display/demo purposes as requested
+    const displayOptions = [
+        ...options,
+        { label: 'Dummy Opt 1', value: 'dummy1' },
+        { label: 'Dummy Opt 2', value: 'dummy2' }
+    ];
+
     return (
         <div
-            className="flex flex-col items-start"
+            className={`flex flex-col items-start ${className || ''}`}
             style={{
-                width: toVw(200),
-                height: toVw(56),
+                width: '8.33vw', // Standardized (was 200px -> 10.42vw scaled 0.8)
+                height: '2.92vw', // Matching Row Height (56px)
                 padding: 0,
+                ...style // Allow overrides
             }}
         >
             {/* Label Row */}
-            <div className="flex flex-row items-start self-stretch" style={{ gap: toVw(4), height: toVw(16) }}>
+            <div className="flex flex-row items-start self-stretch" style={{ gap: '0.21vw', height: '0.66vw' }}>
                 <span
+                    className="font-sans font-bold not-italic text-white"
                     style={{
-                        height: toVw(16),
-                        fontFamily: '"SF Pro Text", sans-serif',
-                        fontWeight: 700,
-                        fontSize: toVw(12),
-                        lineHeight: toVw(16),
-                        color: '#FFFFFF',
+                        height: '0.66vw',
+                        fontSize: '0.52vw', // Scaled down text (approx 10px)
+                        lineHeight: '0.66vw',
                     }}
                 >
                     {label}
                 </span>
                 {required && (
                     <span
+                        className="font-medium not-italic text-[#E74C3C]"
                         style={{
-                            width: toVw(6),
-                            height: toVw(16),
+                            width: '0.31vw',
+                            height: '0.66vw',
                             fontFamily: '"Red Hat Display", sans-serif',
-                            fontWeight: 500,
-                            fontSize: toVw(12),
-                            lineHeight: toVw(16),
-                            color: '#E74C3C',
+                            fontSize: '0.52vw',
+                            lineHeight: '0.66vw',
                         }}
                     >
                         *
@@ -137,11 +142,11 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
             <div
                 className="flex flex-row items-center border-b border-white box-border relative"
                 style={{
-                    width: toVw(200),
-                    height: toVw(40),
-                    minHeight: toVw(40),
-                    padding: `${toVw(8)} 0px`, // 8px top/bottom
-                    gap: toVw(16),
+                    width: '8.33vw',
+                    height: '2.26vw', // Remaining height (2.92 - 0.66)
+                    minHeight: '2.26vw',
+                    padding: `0.63vw 0px`, // Increased padding
+                    gap: '0.66vw',
                 }}
             >
                 <select
@@ -150,7 +155,7 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
                     className="bg-transparent text-white appearance-none outline-none cursor-pointer w-full h-full absolute inset-0 z-10 opacity-0"
                 >
                     <option value="" disabled>Select</option>
-                    {options.map(opt => (
+                    {displayOptions.map(opt => (
                         <option key={opt.value} value={opt.value} className="bg-[#222222] text-white">
                             {opt.label}
                         </option>
@@ -159,13 +164,10 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
 
                 {/* Display Text */}
                 <span
-                    className="flex-grow min-w-0 truncate pointer-events-none"
+                    className="flex-grow min-w-0 truncate pointer-events-none font-sans not-italic font-normal not-italic text-white"
                     style={{
-                        fontFamily: '"SF Pro Text", sans-serif',
-                        fontWeight: 400,
-                        fontSize: toVw(16),
-                        lineHeight: toVw(24),
-                        color: '#FFFFFF',
+                        fontSize: '0.66vw', // Approx 12-13px
+                        lineHeight: '1vw',
                         opacity: value ? 1 : 0.4,
                         zIndex: 1,
                     }}
@@ -174,7 +176,7 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
                 </span>
 
                 {/* Chevron */}
-                <div style={{ width: toVw(24), height: toVw(24), flexShrink: 0, pointerEvents: 'none', zIndex: 1 }}>
+                <div style={{ width: '1vw', height: '1vw', flexShrink: 0, pointerEvents: 'none', zIndex: 1 }}>
                     <ChevronDownIcon />
                 </div>
             </div>
@@ -205,9 +207,9 @@ interface TabsProps {
     onTabChange: (id: string) => void;
 }
 
-export const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, onTabChange }) => {
+export const Tabs: React.FC<TabsProps & { className?: string; style?: React.CSSProperties }> = ({ tabs, activeTab, onTabChange, className, style }) => {
     return (
-        <div className="flex flex-row items-end" style={{ width: '100%' }}>
+        <div className={`flex flex-row items-end ${className || ''}`} style={{ width: '100%', ...style }}>
             {tabs.map((tab) => {
                 const isActive = activeTab === tab.id;
                 return (
@@ -225,36 +227,31 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, onTabChange }) => {
                         }}
                     >
                         <span
+                            className="font-normal not-italic text-white"
                             style={{
                                 fontFamily: '"Lato", sans-serif',
-                                fontWeight: 400,
                                 fontSize: toVw(16),
                                 lineHeight: toVw(19),
-                                color: '#FFFFFF',
                             }}
                         >
                             {tab.label}
                         </span>
                         {tab.count !== undefined && (
                             <div
-                                className="flex flex-row justify-center items-center"
+                                className="flex flex-row justify-center items-center bg-[#FF4E4E]"
                                 style={{
                                     minWidth: toVw(18),
                                     height: toVw(18),
                                     padding: `0px ${toVw(4)}`, // Correct padding
                                     gap: toVw(4),
-                                    backgroundColor: '#FF4E4E',
                                     borderRadius: toVw(24),
                                 }}
                             >
                                 <span
+                                    className="font-['SF_Pro_Text'] font-bold not-italic text-white text-center"
                                     style={{
-                                        fontFamily: '"SF Pro Text", sans-serif',
-                                        fontWeight: 700,
                                         fontSize: toVw(12),
                                         lineHeight: toVw(14),
-                                        color: '#FFFFFF',
-                                        textAlign: 'center',
                                     }}
                                 >
                                     {tab.count}
@@ -282,43 +279,46 @@ export const TableFrame: React.FC<TableFrameProps> = ({ children, searchBar, fil
         <div
             className={`flex flex-col items-start ${className || ''}`}
             style={{
-                width: '100%', // Flexible width, user can wrap or set explicit width
-                maxWidth: toVw(1520), // Default match css
+                width: '100%',
+                maxWidth: toVw(1520),
                 background: '#222222',
                 border: '1px solid rgba(102, 102, 102, 0.5)',
                 borderRadius: toVw(16),
-                overflow: 'hidden', // Ensure radius clips content
+                overflow: 'hidden',
             }}
         >
             {/* Top Section */}
             {(searchBar || filterBar || headerContent) && (
                 <div
-                    className="flex flex-row items-center"
+                    className="flex flex-row items-center justify-between"
                     style={{
                         width: '100%',
-                        height: toVw(88), // "Table - Top" height
-                        padding: toVw(16),
-                        gap: toVw(16),
-                        backgroundColor: '#222222',
-                        borderBottom: '1px solid rgba(102, 102, 102, 0.5)', // Optional separation
+                        height: '4.58vw', // Standardized Height 88px (16px top + 56px content + 16px bottom)
+                        padding: '0 0.83vw', // 16px horizontal padding
+                        gap: '0.66vw',
+                        backgroundColor: '#1C1C1E', // Standardized Header BG
+                        borderBottom: '1px solid rgba(102, 102, 102, 0.5)',
                     }}
                 >
-                    {searchBar}
-                    {filterBar && (
-                        <div className="flex-grow flex flex-row items-center gap-[1.25vw]">
-                            {filterBar}
+                    {/* Left: Search */}
+                    {searchBar && (
+                        <div className="shrink-0">
+                            {searchBar}
                         </div>
                     )}
-                    {/* Spacer if needed or extra content */}
-                    {headerContent}
+
+                    {/* Right: Filters & Extra Content */}
+                    <div className="flex flex-row items-center gap-[0.66vw]">
+                        {filterBar}
+                        {headerContent}
+                    </div>
                 </div>
             )}
 
-            {/* Main Table Content - Scalable, No Internal Scroll */}
+            {/* Main Table Content */}
             <div
                 className="w-full relative flex-grow flex flex-col"
                 style={{
-                    // Height is DYNAMIC (content based), no internal scroll
                     width: '100%',
                 }}
             >
@@ -348,7 +348,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 : isActive
                     ? 'bg-[#16003F] border border-[#5F00DB] text-[#5F00DB]'
                     : 'bg-[#120D1D] text-white hover:bg-white/10'
-                }`}
+                } not-italic`}
             style={{
                 width: toVw(40),
                 height: toVw(40),

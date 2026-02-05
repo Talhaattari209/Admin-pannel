@@ -30,7 +30,7 @@ const MatchesOverTimeCard: React.FC = () => {
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-[52.5vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading Section */}
       <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
-        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Matches Over Time
         </h4>
         <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
@@ -93,7 +93,7 @@ const MatchesOverTimeCard: React.FC = () => {
               content={({ payload }) => (
                 <div className="flex items-center justify-center gap-2 mt-[0.02vw]">
                   <div className="w-[12px] h-[12px] bg-[#5F00DB] border border-[#1A1F26]" />
-                  <span className="text-white/80 text-[12px] font-normal">Matches</span>
+                  <span className="text-white/80 text-[12px] font-normal not-italic">Matches</span>
                 </div>
               )}
             />

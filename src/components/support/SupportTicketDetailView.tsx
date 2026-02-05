@@ -23,7 +23,7 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
             'Closed': 'bg-[#FF4E4E] text-white',
         };
         return (
-            <div className={`h-[1.67vw] px-[0.83vw] rounded-full text-[0.68vw] font-bold flex items-center justify-center min-w-[4.38vw] leading-none text-center ${colors[s] || 'bg-white/10 text-white'}`}>
+            <div className={`h-[1.67vw] px-[0.83vw] rounded-full text-[0.68vw] font-bold not-italic flex items-center justify-center min-w-[4.38vw] leading-none text-center ${colors[s] || 'bg-white/10 text-white'}`}>
                 <span className="mt-[0.05vw]">{s}</span>
             </div>
         );
@@ -54,7 +54,7 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
 
                 <div className="flex flex-col flex-grow">
                     <div className="flex items-center gap-[0.42vw]">
-                        <h1 className="text-white text-[1.88vw] font-bold tracking-tight">{ticket.user.name}, {ticket.user.age}</h1>
+                        <h1 className="text-white text-[1.88vw] font-bold not-italic tracking-tight">{ticket.user.name}, {ticket.user.age}</h1>
                         <div className="flex items-center justify-center w-[1.67vw] h-[1.67vw] bg-white rounded-full">
                             <svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw] text-[#5F00DB]" fill="none" stroke="currentColor" strokeWidth="3">
                                 <polyline points="20 6 9 17 4 12" />
@@ -63,14 +63,14 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
                     </div>
                     <div className="flex flex-wrap gap-[0.42vw] mt-[0.42vw]">
                         {['Straight', 'He/Him', 'Austin, TX', '2 miles', 'Stanford University', 'Software Engineer'].map((chip, idx) => (
-                            <div key={chip} className="px-[0.63vw] py-[0.21vw] bg-[#5F00DB] rounded-full text-white text-[0.63vw] font-medium backdrop-blur-[6px]">
+                            <div key={chip} className="px-[0.63vw] py-[0.21vw] bg-[#5F00DB] rounded-full text-white text-[0.63vw] font-medium not-italic backdrop-blur-[6px]">
                                 {chip}
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <button className="px-[1.67vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white text-[0.83vw] font-medium hover:bg-white/10 transition-all">
+                <button className="px-[1.67vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic hover:bg-white/10 transition-all">
                     View User's Profile
                 </button>
             </div>
@@ -84,18 +84,18 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
                     {/* Support Ticket Details Card */}
                     <div className="flex flex-col p-[1.67vw] bg-[#222222] border border-[#666666]/30 rounded-[1.25vw]">
                         <div className="flex items-center justify-between">
-                            <h3 className="text-white text-[1.46vw] font-bold leading-tight">Support Ticket Details</h3>
+                            <h3 className="text-white text-[1.46vw] font-bold not-italic leading-tight">Support Ticket Details</h3>
                             {getStatusBadge(ticket.status)}
                         </div>
                         <GradientLine />
                         <div className="flex flex-col gap-[1.25vw]">
                             <div className="flex flex-col gap-[0.42vw]">
-                                <label className="text-white text-[0.63vw] font-bold uppercase tracking-wider opacity-60">Subject</label>
-                                <p className="text-white text-[0.94vw] font-normal">{ticket.subject}</p>
+                                <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider opacity-60">Subject</label>
+                                <p className="text-white text-[0.94vw] font-normal not-italic">{ticket.subject}</p>
                             </div>
                             <div className="flex flex-col gap-[0.42vw]">
-                                <label className="text-white text-[0.63vw] font-bold uppercase tracking-wider opacity-60">Message</label>
-                                <p className="text-white text-[0.94vw] font-normal leading-relaxed opacity-90">{ticket.message}</p>
+                                <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider opacity-60">Message</label>
+                                <p className="text-white text-[0.94vw] font-normal not-italic leading-relaxed opacity-90">{ticket.message}</p>
                             </div>
                         </div>
                     </div>
@@ -105,12 +105,12 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
                 {/* Right Column: Actions Sidebar */}
                 <div className="flex flex-col gap-[0.52vw] w-[19.17vw] shrink-0 sticky top-[1.67vw]">
                     <div className="flex flex-col p-[0.83vw] gap-[0.83vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] h-auto">
-                        <h3 className="text-white text-[1.46vw] font-bold">Actions</h3>
+                        <h3 className="text-white text-[1.46vw] font-bold not-italic">Actions</h3>
                         <GradientLine />
 
                         {/* Status Dropdown */}
                         <div className="flex flex-col gap-[0.42vw]">
-                            <label className="text-white text-[0.63vw] font-bold uppercase tracking-wider">Status</label>
+                            <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Status</label>
                             <div className="relative border-b border-white py-[0.42vw] group">
                                 <select
                                     value={status}
@@ -131,7 +131,7 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
 
                         {/* Notes Textarea */}
                         <div className="flex flex-col gap-[0.42vw] flex-grow mt-[0.83vw]">
-                            <label className="text-white text-[0.63vw] font-bold uppercase tracking-wider">Notes</label>
+                            <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Notes</label>
                             <textarea
                                 value={notes}
                                 onChange={(e) => setNotes(e.target.value)}
@@ -142,7 +142,7 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
 
                         {/* Update Button */}
                         <button
-                            className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw]"
+                            className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw]"
                         >
                             Update Status
                         </button>

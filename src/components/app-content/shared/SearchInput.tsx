@@ -8,10 +8,10 @@ interface SearchInputProps {
     width?: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, placeholder = "Search", width = "21.46vw" }) => {
+const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, placeholder = "Search", width = "17.16vw" }) => {
     return (
         <div
-            className="relative flex flex-row items-center h-[2.92vw] px-[0.83vw] gap-[0.83vw] bg-[#111111]/50 border border-[#666666]/50 rounded-[0.83vw] backdrop-blur-sm group focus-within:border-white/40 transition-all shrink-0"
+            className="relative flex flex-row items-center h-[2.92vw] px-[0.66vw] gap-[0.66vw] bg-[#111111]/50 border border-[#666666]/50 rounded-[0.66vw] backdrop-blur-sm group focus-within:border-white/40 transition-all shrink-0"
             style={{ width }}
         >
             <div className="w-[1.25vw] h-[1.25vw] shrink-0 flex items-center justify-center text-white">
@@ -25,7 +25,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, placeholder 
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                className="flex-grow bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/40 font-normal h-full relative z-10"
+                className="flex-grow bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/40 font-normal not-italic h-full relative z-10"
                 style={{ paddingRight: '1.25vw' }} // Space for X
             />
             {value.length > 0 && (

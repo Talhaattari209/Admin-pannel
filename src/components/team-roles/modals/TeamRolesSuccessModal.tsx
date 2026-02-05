@@ -7,7 +7,7 @@ interface TeamRolesSuccessModalProps {
 
 const TeamRolesSuccessModal: React.FC<TeamRolesSuccessModalProps> = ({ title, onDone }) => {
     return (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-300 font-inter">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-300 font-inter not-italic">
             <div className="relative flex flex-col items-center p-8 gap-8 w-[440px] bg-[#16003F] border border-white/20 rounded-[32px] shadow-2xl animate-in zoom-in-95 duration-300 backdrop-blur-[12px]">
 
                 {/* Animated Check Icon */}
@@ -21,11 +21,11 @@ const TeamRolesSuccessModal: React.FC<TeamRolesSuccessModalProps> = ({ title, on
                     </div>
                 </div>
 
-                <h2 className="text-white text-[32px] font-medium tracking-tight text-center font-['SF_Pro_Text']">{title}</h2>
+                <h2 className="text-white text-[32px] font-medium not-italic tracking-tight text-center font-['SF_Pro_Text']">{title}</h2>
 
                 <button
                     onClick={onDone}
-                    className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
+                    className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
                 >
                     Done
                 </button>

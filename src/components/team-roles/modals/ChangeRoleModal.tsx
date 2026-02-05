@@ -17,11 +17,11 @@ const ChangeRoleModal: React.FC<ChangeRoleModalProps> = ({ onCancel, onUpdate })
                     </div>
                 </div>
 
-                <h2 className="text-white text-[32px] font-medium tracking-tight text-center font-['SF_Pro_Text']">Change Role</h2>
+                <h2 className="text-white text-[32px] font-medium not-italic tracking-tight text-center font-['SF_Pro_Text']">Change Role</h2>
 
                 <div className="flex flex-col gap-1 border-b border-white py-2 relative group w-full">
-                    <label className="text-white text-[12px] font-bold uppercase tracking-wider font-['SF_Pro_Text']">Role</label>
-                    <select className="w-full bg-transparent text-white text-[18px] appearance-none focus:outline-none cursor-pointer font-['SF_Pro_Text']">
+                    <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider font-['SF_Pro_Text']">Role</label>
+                    <select className="w-full bg-transparent text-white text-[18px] appearance-none focus:outline-none cursor-pointer font-['SF_Pro_Text'] not-italic">
                         <option className="bg-[#222222]">Moderator</option>
                         <option className="bg-[#222222]">Admin</option>
                         <option className="bg-[#222222]">Viewer</option>
@@ -34,13 +34,13 @@ const ChangeRoleModal: React.FC<ChangeRoleModalProps> = ({ onCancel, onUpdate })
                 <div className="flex flex-col w-full gap-4">
                     <button
                         onClick={onUpdate}
-                        className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
+                        className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
                     >
                         Update Role
                     </button>
                     <button
                         onClick={onCancel}
-                        className="w-full h-[56px] border border-white rounded-[52px] text-white font-medium hover:bg-white/10 active:scale-95 transition-all font-['SF_Pro_Text']"
+                        className="w-full h-[56px] border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 active:scale-95 transition-all font-['SF_Pro_Text']"
                     >
                         Cancel
                     </button>

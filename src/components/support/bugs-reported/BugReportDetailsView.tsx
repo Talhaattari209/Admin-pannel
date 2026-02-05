@@ -22,7 +22,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
       'Closed': 'bg-[#FF4E4E] text-white',
     };
     return (
-      <div className={`h-[32px] px-4 rounded-full text-[13px] font-bold flex items-center justify-center min-w-[84px] leading-none text-center ${colors[s] || 'bg-white/10 text-white'}`}>
+      <div className={`h-[32px] px-4 rounded-full text-[13px] font-bold not-italic flex items-center justify-center min-w-[84px] leading-none text-center ${colors[s] || 'bg-white/10 text-white'}`}>
         <span className="mt-[1px]">{s}</span>
       </div>
     );
@@ -47,7 +47,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
         </button>
 
         <div className="flex flex-col flex-grow">
-          <h1 className="text-white text-[36px] font-bold tracking-tight">Bug Report Details</h1>
+          <h1 className="text-white text-[36px] font-bold not-italic tracking-tight">Bug Report Details</h1>
           <p className="text-[#CCCCCC] text-[16px] leading-[150%]">
             Review the report, inspect the bugs, and take appropriate action to maintain a smoother experience for your users.
           </p>
@@ -60,24 +60,24 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
           {/* Reported Bug Card - With Vertical Scrolling */}
           <div className="flex flex-col p-8 bg-[#222222] border border-[#666666]/30 rounded-[24px] max-h-[630px] overflow-y-auto no-scrollbar">
             <div className="flex items-center justify-between">
-              <h3 className="text-white text-[28px] font-bold leading-tight">Reported Bug</h3>
+              <h3 className="text-white text-[28px] font-bold not-italic leading-tight">Reported Bug</h3>
               {getStatusBadge(bug.status)}
             </div>
             <GradientLine />
             
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-2">
-                <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Subject</label>
-                <p className="text-white text-[18px] font-normal">{bug.subject}</p>
+                <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Subject</label>
+                <p className="text-white text-[18px] font-normal not-italic">{bug.subject}</p>
               </div>
               
               <div className="flex flex-col gap-2">
-                <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Message</label>
-                <p className="text-white text-[18px] font-normal leading-relaxed opacity-90">{bug.message}</p>
+                <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Message</label>
+                <p className="text-white text-[18px] font-normal not-italic leading-relaxed opacity-90">{bug.message}</p>
               </div>
 
               <div className="flex flex-col gap-3">
-                <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Attachments</label>
+                <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Attachments</label>
                 <div className="flex flex-wrap gap-4">
                   {(bug.attachments || ['https://picsum.photos/320/320']).map((img, i) => (
                     <div 
@@ -99,22 +99,22 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
           {/* Activity Card */}
           <div className="flex flex-col p-8 bg-[#222222] border border-[#666666]/30 rounded-[24px]">
-            <h3 className="text-white text-[28px] font-bold">Activity</h3>
+            <h3 className="text-white text-[28px] font-bold not-italic">Activity</h3>
             <GradientLine />
             <div className="flex flex-col relative pl-8 gap-10">
               <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-white/20 rounded-full" />
               
               <div className="relative flex flex-col items-start gap-3">
                 <div className="absolute -left-[30px] top-1 w-6 h-6 bg-[#5F00DB] rounded-full border-2 border-white z-10" />
-                <span className="text-white text-[12px] font-bold uppercase tracking-wider">Reported Submitted</span>
+                <span className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Reported Submitted</span>
                 <span className="text-white/60 text-[16px]">{bug.submittedOn}</span>
                 
                 <div className="flex flex-col p-4 bg-[#16003F] border border-white/5 rounded-[16px] w-[245px] gap-3 mt-2 hover:border-[#5F00DB]/40 transition-colors cursor-pointer group/card">
-                  <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Submitted By</label>
+                  <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Submitted By</label>
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full bg-cover bg-center" style={{ backgroundImage: `url(${bug.reportedBy.avatar})` }} />
                     <div className="flex flex-col flex-grow min-w-0">
-                      <span className="text-white text-[14px] font-semibold truncate">{bug.reportedBy.name}</span>
+                      <span className="text-white text-[14px] font-semibold not-italic truncate">{bug.reportedBy.name}</span>
                       <span className="text-white/40 text-[11px] truncate">{bug.reportedBy.email}</span>
                     </div>
                     <svg viewBox="0 0 24 24" className="w-5 h-5 text-white opacity-40 group-hover/card:opacity-100 transition-opacity" fill="none" stroke="currentColor" strokeWidth="2">
@@ -129,10 +129,10 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
         {/* Actions Sidebar */}
         <div className="flex-[1] flex flex-col gap-6 bg-[#222222] border border-[#666666]/30 rounded-[24px] p-8 sticky top-8 min-w-[320px]">
-          <h3 className="text-white text-[28px] font-bold">Actions</h3>
+          <h3 className="text-white text-[28px] font-bold not-italic">Actions</h3>
           <GradientLine />
           <div className="flex flex-col gap-2">
-            <label className="text-white text-[12px] font-bold uppercase tracking-wider">Status</label>
+            <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Status</label>
             <div className="relative border-b border-white py-2 group">
               <select 
                 value={status} 
@@ -150,7 +150,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
             </div>
           </div>
           <div className="flex flex-col gap-2 flex-grow mt-4">
-            <label className="text-white text-[12px] font-bold uppercase tracking-wider">Notes</label>
+            <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Notes</label>
             <textarea 
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -158,7 +158,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
               className="w-full h-[180px] bg-transparent text-white text-[16px] leading-[150%] focus:outline-none border-b border-white py-2 resize-none placeholder:text-white/40"
             />
           </div>
-          <button className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-4">
+          <button className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold not-italic text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-4">
             Update Status
           </button>
         </div>

@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
+import Link from 'next/link';
 import SearchInput from '../app-content/shared/SearchInput';
 import FilterSelect from '../app-content/shared/FilterSelect';
 import SystemLogsTableRow, { LogEntryData } from './SystemLogsTableRow';
-import { Pagination } from '@/components/shared/TableComponents';
+import { TableFrame, Pagination } from '@/components/shared/TableComponents';
 
 const MOCK_LOGS: LogEntryData[] = [
     { id: '1', timestamp: 'Dec 31, 2025 • 11:59 PM', user: 'System', role: '—', action: 'Scheduled Backup', details: 'Daily database backup completed successfully.' },
@@ -24,34 +24,34 @@ const SystemLogsTable: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const ColumnHeader = ({ label, width, sortable = true }: { label: string; width: string; sortable?: boolean }) => (
-        <div className="flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-[1.98vw] group cursor-pointer shrink-0" style={{ width }}>
-            <span className="text-white text-[0.63vw] font-normal font-['SF_Pro_Text'] whitespace-nowrap">
+        <div className="flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer shrink-0" style={{ width }}>
+            <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity whitespace-nowrap">
                 {label}
             </span>
             {sortable && (
-                <div className="flex flex-col opacity-[0.3] group-hover:opacity-100 transition-opacity shrink-0 space-y-[-0.2vw]">
-                    <svg viewBox="0 0 14 14" className="w-[0.73vw] h-[0.73vw]" fill="currentColor"><path d="M7 4L3.5 7.5L7 11L10.5 7.5L7 4Z" transform="rotate(180 7 7.5)" /></svg>
-                    <svg viewBox="0 0 14 14" className="w-[0.73vw] h-[0.73vw]" fill="currentColor"><path d="M7 4L3.5 7.5L7 11L10.5 7.5L7 4Z" /></svg>
-                </div>
+                <img
+                    src="/assets/chevron_up_down.png"
+                    alt="Sort"
+                    style={{ width: '0.73vw', height: '0.73vw', margin: '-0.21vw 0px' }}
+                    className="shrink-0 opacity-100"
+                />
             )}
         </div>
     );
 
     return (
-        <div className="flex flex-col w-full overflow-x-hidden font-['SF_Pro_Text']">
-            <div className="flex flex-row items-center px-[0.83vw] py-[0.83vw] gap-[0.83vw] bg-[#222222] border-b border-white/10 shrink-0 h-[4.58vw]">
-                <div className="w-[21.6vw] h-[2.92vw]">
-                    <SearchInput value={search} onChange={setSearch} placeholder="Search" />
-                </div>
-                <div className="flex-grow" />
-                <div className="flex gap-[0.83vw]">
-                    <div className="w-[10.42vw]"><FilterSelect label="User / System" value={userFilter} options={['System', 'John Doe', 'Sarah Li']} onChange={setUserFilter} /></div>
-                    <div className="w-[10.42vw]"><FilterSelect label="Role" value={roleFilter} options={['Admin', 'Moderator', 'Editor', '—']} onChange={setRoleFilter} /></div>
-                    <div className="w-[10.42vw]"><FilterSelect label="Action" value={actionFilter} options={['Backup', 'Suspension', 'Login', 'Removal', 'Creation']} onChange={setActionFilter} /></div>
-                </div>
-            </div>
-
-            <div className="flex flex-row items-center w-full h-[1.98vw] bg-[#222222] border-b border-white/10 shrink-0">
+        <TableFrame
+            searchBar={<SearchInput value={search} onChange={setSearch} placeholder="Search" />}
+            filterBar={
+                <>
+                    <FilterSelect label="User / System" value={userFilter} options={['System', 'John Doe', 'Sarah Li']} onChange={setUserFilter} />
+                    <FilterSelect label="Role" value={roleFilter} options={['Admin', 'Moderator', 'Editor', '—']} onChange={setRoleFilter} />
+                    <FilterSelect label="Action" value={actionFilter} options={['Backup', 'Suspension', 'Login', 'Removal', 'Creation']} onChange={setActionFilter} />
+                </>
+            }
+            className="w-full h-full font-sans not-italic"
+        >
+            <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1C1C1E] border-b border-[#333333] shrink-0">
                 <ColumnHeader label="Timestamp" width="15%" />
                 <ColumnHeader label="User / System" width="15%" />
                 <ColumnHeader label="Role" width="15%" />
@@ -75,7 +75,7 @@ const SystemLogsTable: React.FC = () => {
                 onPageChange={setCurrentPage}
                 className="w-full px-[1.25vw] pb-[1.25vw]"
             />
-        </div>
+        </TableFrame>
     );
 };
 

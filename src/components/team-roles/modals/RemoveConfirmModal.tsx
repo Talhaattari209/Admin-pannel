@@ -21,8 +21,8 @@ const RemoveConfirmModal: React.FC<RemoveConfirmModalProps> = ({ type, onCancel,
                 </div>
 
                 <div className="flex flex-col gap-4 text-center">
-                    <h2 className="text-white text-[32px] font-medium tracking-tight font-['SF_Pro_Text']">{isMember ? 'Remove Team Member?' : 'Delete Role?'}</h2>
-                    <p className="text-white/80 text-[16px] leading-relaxed font-['SF_Pro_Text'] px-4">
+                    <h2 className="text-white text-[32px] font-medium not-italic tracking-tight font-['SF_Pro_Text']">{isMember ? 'Remove Team Member?' : 'Delete Role?'}</h2>
+                    <p className="text-white/80 text-[16px] leading-relaxed font-['SF_Pro_Text'] not-italic px-4">
                         {isMember
                             ? 'Are you sure you want to deactivate this team member from accessing the admin panel?'
                             : 'Are you sure you want to delete this role? Team members with this role will not be able to access the admin panel until they are assigned to a new role.'
@@ -33,13 +33,13 @@ const RemoveConfirmModal: React.FC<RemoveConfirmModalProps> = ({ type, onCancel,
                 <div className="flex flex-row gap-6 w-full">
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-[56px] border border-white rounded-[52px] text-white font-medium hover:bg-white/10 transition-all font-['SF_Pro_Text']"
+                        className="flex-1 h-[56px] border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 transition-all font-['SF_Pro_Text']"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={onConfirm}
-                        className="flex-1 h-[56px] bg-[#FF4E4E] rounded-[52px] text-white font-medium shadow-[0px_4px_12px_rgba(255,78,78,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
+                        className="flex-1 h-[56px] bg-[#FF4E4E] rounded-[52px] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(255,78,78,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
                     >
                         {isMember ? 'Remove' : 'Delete'}
                     </button>

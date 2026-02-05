@@ -42,7 +42,7 @@ const MonthlyRevenueCard: React.FC = () => {
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-[52.5vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading */}
       <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
-        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Monthly Revenue
         </h4>
         <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
@@ -114,7 +114,7 @@ const MonthlyRevenueCard: React.FC = () => {
                     <div className="absolute w-full h-[2px] bg-[#5F00DB]" />
                     <div className="relative w-[10px] h-[10px] bg-[#5F00DB] rounded-full border-2 border-[#1A1F26]" />
                   </div>
-                  <span className="text-white/80 text-[12px] font-normal">Revenue</span>
+                  <span className="text-white/80 text-[12px] font-normal not-italic">Revenue</span>
                 </div>
               )}
             />

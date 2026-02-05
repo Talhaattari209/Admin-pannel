@@ -24,69 +24,69 @@ const MaintenanceModeCard: React.FC = () => {
   return (
     <div className="flex flex-col p-[1.25vw] bg-[#222222] border border-[#666666]/30 rounded-[0.83vw] gap-[1.67vw] shrink-0 shadow-lg min-h-[32.6vw]">
       <div className="flex flex-col gap-[0.42vw]">
-        <h3 className="text-white text-[1.46vw] font-bold font-inter leading-none tracking-tight">Maintenance Mode</h3>
-        <p className="text-[#CCCCCC] text-[0.83vw] opacity-60 leading-relaxed font-inter">Use this mode to temporarily disable public access while performing updates or backend maintenance.</p>
+        <h3 className="text-white text-[1.46vw] font-bold not-italic font-inter not-italic leading-none tracking-tight">Maintenance Mode</h3>
+        <p className="text-[#CCCCCC] text-[0.83vw] opacity-60 leading-relaxed font-inter not-italic">Use this mode to temporarily disable public access while performing updates or backend maintenance.</p>
       </div>
 
       <div className="flex flex-col gap-[1.25vw]">
         <div className="flex items-center justify-between">
-          <span className="text-white text-[0.83vw] font-inter">Enable Maintenance Mode</span>
+          <span className="text-white text-[0.83vw] font-inter not-italic">Enable Maintenance Mode</span>
           <Switch active={enabled} onClick={() => setEnabled(!enabled)} />
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-white text-[0.83vw] font-inter">Notify Users</span>
+          <span className="text-white text-[0.83vw] font-inter not-italic">Notify Users</span>
           <Switch active={notify} onClick={() => setNotify(!notify)} />
         </div>
       </div>
 
       <div className="flex flex-col gap-[0.42vw] border-b border-white py-[0.42vw]">
-        <label className="text-white text-[0.63vw] font-bold uppercase tracking-widest opacity-80 font-inter">Maintenance Message</label>
+        <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-widest opacity-80 font-inter not-italic">Maintenance Message</label>
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Custom message shown to users"
-          className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none resize-none h-[6.25vw] placeholder:text-white/40 font-inter py-[0.42vw]"
+          className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none resize-none h-[6.25vw] placeholder:text-white/40 font-inter not-italic py-[0.42vw]"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-[1.25vw]">
         <div className="flex flex-col gap-[0.42vw] border-b border-white py-[0.42vw]">
-          <label className="text-white text-[0.63vw] font-bold uppercase tracking-widest opacity-80 font-inter">Start Date</label>
+          <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-widest opacity-80 font-inter not-italic">Start Date</label>
           <input
             type="text"
             value={dates.start}
             onChange={(e) => setDates({ ...dates, start: e.target.value })}
-            className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none font-inter"
+            className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none font-inter not-italic"
           />
         </div>
         <div className="flex flex-col gap-[0.42vw] border-b border-white py-[0.42vw]">
-          <label className="text-white text-[0.63vw] font-bold uppercase tracking-widest opacity-80 font-inter">Start Time</label>
+          <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-widest opacity-80 font-inter not-italic">Start Time</label>
           <input
             type="text"
             value={dates.startTime}
             onChange={(e) => setDates({ ...dates, startTime: e.target.value })}
-            className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none font-inter"
+            className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none font-inter not-italic"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-[1.25vw]">
         <div className="flex flex-col gap-[0.42vw] border-b border-white py-[0.42vw]">
-          <label className="text-white text-[0.63vw] font-bold uppercase tracking-widest opacity-80 font-inter">End Date</label>
+          <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-widest opacity-80 font-inter not-italic">End Date</label>
           <input
             type="text"
             value={dates.end}
             onChange={(e) => setDates({ ...dates, end: e.target.value })}
-            className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none font-inter"
+            className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none font-inter not-italic"
           />
         </div>
         <div className="flex flex-col gap-[0.42vw] border-b border-white py-[0.42vw]">
-          <label className="text-white text-[0.63vw] font-bold uppercase tracking-widest opacity-80 font-inter">End Time</label>
+          <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-widest opacity-80 font-inter not-italic">End Time</label>
           <input
             type="text"
             value={dates.endTime}
             onChange={(e) => setDates({ ...dates, endTime: e.target.value })}
-            className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none font-inter"
+            className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none font-inter not-italic"
           />
         </div>
       </div>

@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SideNavigation from '@/components/SideNavigation';
 import { PageHeader } from '@/components/Headers';
-import { SearchBar, Pagination } from '@/components/shared/TableComponents';
+import { SearchBar, Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import { ArrowUp, ArrowDown, ChevronDown, MoreVertical, UserCircle, UserX } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
@@ -22,14 +22,14 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
         <div className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.6vw] w-full h-[4.54vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
 
             {/* Label */}
-            <h6 className="w-full text-[#CCCCCC] font-bold text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
+            <h6 className="w-full text-[#CCCCCC] font-bold not-italic text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
                 {label}
             </h6>
 
             {/* Value and Change Row */}
             <div className="flex flex-row justify-end items-center w-full h-[1.77vw]">
                 {/* Main Number */}
-                <span className="flex-grow text-white font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em]">
+                <span className="flex-grow text-white font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em]">
                     {value}
                 </span>
 
@@ -46,7 +46,7 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
                         />
                     </div>
                     <span className={cn(
-                        "font-bold text-[1.04vw] leading-[120%] tracking-[-0.04em]",
+                        "font-bold not-italic text-[1.04vw] leading-[120%] tracking-[-0.04em]",
                         isUp ? "text-[#3ADC60]" : "text-[#FF3D00]"
                     )}>
                         {change}
@@ -82,48 +82,18 @@ const StatRow = () => {
 
 // Local TableSearchBar removed in favor of shared component
 
-interface TableFilterProps {
-    label: string;
-}
-
-const TableFilter = ({ label }: TableFilterProps) => (
-    <div className="flex flex-col gap-[0.21vw] w-[10.42vw]">
-        <span className="text-[#FFFFFF] font-['SF_Pro_Text'] font-bold text-[0.63vw] leading-[133%]">
-            {label}
-        </span>
-        <div className="flex flex-row items-center justify-between py-[0.42vw] h-[2.08vw] border-b border-[#FFFFFF] cursor-pointer hover:border-white/80 transition-colors">
-            <span className="text-[#FFFFFF] opacity-40 font-['SF_Pro_Text'] text-[0.83vw] leading-[1.25vw]">Select</span>
-            <ChevronDown className="text-white w-[1.25vw] h-[1.25vw]" />
-        </div>
-    </div>
-);
-
-const TableHeaderActions = ({ searchValue, onSearchChange }: { searchValue: string, onSearchChange: (val: string) => void }) => (
-    <div className="flex flex-row items-center justify-between w-full h-[4.58vw] bg-[#1C1C1E] rounded-t-[0.83vw] p-[0.83vw]">
-        {/* Left: Search (Reusable) */}
-        <SearchBar
-            value={searchValue}
-            onChange={onSearchChange}
-            className="!bg-[#111111]/50 !border-[#666666]/50 !w-[21.46vw] !h-[2.92vw] !p-[0.83vw] !rounded-[0.83vw]"
-        />
-
-        {/* Right: Filters */}
-        <div className="flex flex-row gap-[0.83vw]">
-            <TableFilter label="Subscription" />
-            <TableFilter label="Joined Date Range" />
-            <TableFilter label="Last Active Date Range" />
-        </div>
-    </div>
-);
+// --- Table Rows & Structure ---
 
 // --- Table Rows & Structure ---
 
 // Sort Icon Component
 const SortIcon = () => (
-    <div className="flex flex-col gap-[0.1vw]">
-        <ArrowUp className="w-[0.42vw] h-[0.42vw] text-[#666666]" />
-        <ArrowDown className="w-[0.42vw] h-[0.42vw] text-[#666666]" />
-    </div>
+    <img
+        src="/assets/chevron_up_down.png"
+        alt="Sort"
+        style={{ width: '14px', height: '14px', margin: '-4px 0px' }}
+        className="shrink-0 opacity-100"
+    />
 );
 
 const RowActions = ({ userId }: { userId: string }) => {
@@ -177,45 +147,45 @@ const RowActions = ({ userId }: { userId: string }) => {
 
 const UserTableRow = () => (
     <div className="flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors">
-        {/* User ID - 130px */}
+        {/* User ID */}
         <div className="flex items-center px-[0.63vw] w-[6.77vw] h-full shrink-0">
-            <span className="text-white font-['SF_Pro_Text'] font-normal text-[0.73vw]">U-00***24543</span>
+            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">U-00***24543</span>
         </div>
 
-        {/* Name - 223.67px */}
+        {/* Name */}
         <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] h-full shrink-0">
             <div className="w-[1.875vw] h-[1.875vw] rounded-full bg-cover bg-center shrink-0" style={{ backgroundImage: "url('/8.png')" }} />
-            <span className="text-white font-['SF_Pro_Text'] font-normal text-[0.73vw]">John Doe</span>
+            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">John Doe</span>
         </div>
 
-        {/* Email - 223.67px */}
+        {/* Email */}
         <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <span className="text-white font-['SF_Pro_Text'] font-normal text-[0.73vw]">johndoe@email.com</span>
+            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">johndoe@email.com</span>
         </div>
 
-        {/* Phone - 223.67px */}
+        {/* Phone */}
         <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <span className="text-white font-['SF_Pro_Text'] font-normal text-[0.73vw]">+1 416-883-2410</span>
+            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">+1 416-883-2410</span>
         </div>
 
-        {/* Subscription - 223.67px */}
+        {/* Subscription */}
         <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
             <div className="flex items-center justify-center gap-[0.52vw] w-[4.32vw] h-[1.67vw] bg-[#5F00DB] rounded-[0.83vw]">
-                <span className="text-white font-['SF_Pro_Text'] font-normal text-[0.73vw]">Premium</span>
+                <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">Premium</span>
             </div>
         </div>
 
-        {/* Joined On - 223.67px */}
+        {/* Joined On */}
         <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <span className="text-white font-['SF_Pro_Text'] font-normal text-[0.73vw]">Dec 31, 2025 • 11:59 PM</span>
+            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">Dec 31, 2025 • 11:59 PM</span>
         </div>
 
-        {/* Last Active - 223.67px */}
+        {/* Last Active */}
         <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <span className="text-white font-['SF_Pro_Text'] font-normal text-[0.73vw]">Dec 31, 2025 • 11:59 PM</span>
+            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">Dec 31, 2025 • 11:59 PM</span>
         </div>
 
-        {/* Action - 48px */}
+        {/* Action */}
         <div className="flex justify-center items-center w-[2.5vw] h-full shrink-0">
             <RowActions userId="mock-id" />
         </div>
@@ -226,39 +196,84 @@ const UserTableSection = () => {
     const [searchValue, setSearchValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
+    // Filter states
+    const [subFilter, setSubFilter] = useState('');
+    const [joinedFilter, setJoinedFilter] = useState('');
+    const [activeFilter, setActiveFilter] = useState('');
+
     return (
         <div className="flex flex-col w-full">
             {/* 1. Header with Filters */}
-            <TableHeaderActions searchValue={searchValue} onSearchChange={setSearchValue} />
+            <div className="flex flex-row items-center justify-between w-full h-[4.58vw] bg-[#1C1C1E] rounded-t-[0.83vw] px-[0.83vw]">
+                {/* Left: Search (Reusable) - Scaled by 0.8 */}
+                {/* Original: 412x56. New: 17.16vw x 2.33vw */}
+                <SearchBar
+                    value={searchValue}
+                    onChange={setSearchValue}
+                    className="!bg-[#111111]/50 !border-[#666666]/50 !w-[17.16vw] !h-[2.92vw] !p-[0.66vw] !rounded-[0.66vw] !gap-[0.66vw]"
+                />
+
+                {/* Right: Filters - Scaled by 0.8 */}
+                {/* Each FilterSelect is originally ~10.42vw width. Scaled 0.8 -> ~8.33vw width. Canvas space needs to be explicit. */}
+                <div className="flex flex-row items-center gap-[0.66vw]">
+                    <div className="w-[8.33vw] h-[2.92vw] relative">
+                        <FilterSelect
+                            label="Subscription"
+                            value={subFilter}
+                            options={[{ label: 'Premium', value: 'premium' }, { label: 'Free', value: 'free' }]}
+                            onChange={setSubFilter}
+                            style={{ transform: 'scale(0.8)', transformOrigin: 'top left', width: '10.42vw' }}
+                        />
+                    </div>
+                    <div className="w-[8.33vw] h-[2.92vw] relative">
+                        <FilterSelect
+                            label="Joined Date Range"
+                            value={joinedFilter}
+                            options={[{ label: 'This Week', value: 'this-week' }, { label: 'This Month', value: 'this-month' }]}
+                            onChange={setJoinedFilter}
+                            style={{ transform: 'scale(0.8)', transformOrigin: 'top left', width: '10.42vw' }}
+                        />
+                    </div>
+                    <div className="w-[8.33vw] h-[2.92vw] relative">
+                        <FilterSelect
+                            label="Last Active"
+                            value={activeFilter}
+                            options={[{ label: 'Today', value: 'today' }, { label: '7 Days', value: '7-days' }]}
+                            onChange={setActiveFilter}
+                            style={{ transform: 'scale(0.8)', transformOrigin: 'top left', width: '10.42vw' }}
+                        />
+                    </div>
+                </div>
+            </div>
 
             {/* 2. Table Column Headers */}
-            <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1C1C1E] border-b border-[#333333] mt-0">
-                <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[6.77vw] shrink-0 group cursor-pointer">
-                    <span className="text-[#AAAAAA] font-['SF_Pro_Text'] font-medium text-[0.63vw]">User ID</span>
+            <div className="flex flex-row items-center w-full h-[48px] bg-[#1C1C1E] border-b border-[#333333] mt-0">
+                <div className="flex items-center gap-[8px] px-[12px] w-[6.77vw] shrink-0 group cursor-pointer">
+                    <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[12px]">User ID</span>
                     <SortIcon />
                 </div>
-                <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] shrink-0 group cursor-pointer">
-                    <span className="text-[#AAAAAA] font-['SF_Pro_Text'] font-medium text-[0.63vw]">Name</span>
+                <div className="flex items-center gap-[8px] px-[12px] w-[11.65vw] shrink-0 group cursor-pointer">
+                    <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[12px]">Name</span>
                     <SortIcon />
                 </div>
-                <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] shrink-0 group cursor-pointer">
-                    <span className="text-[#AAAAAA] font-['SF_Pro_Text'] font-medium text-[0.63vw]">Email</span>
+                <div className="flex items-center gap-[8px] px-[12px] w-[11.65vw] shrink-0 group cursor-pointer">
+                    <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[12px]">Email</span>
                     <SortIcon />
                 </div>
-                <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] shrink-0 group cursor-pointer">
-                    <span className="text-[#AAAAAA] font-['SF_Pro_Text'] font-medium text-[0.63vw]">Phone</span>
+                <div className="flex items-center gap-[8px] px-[12px] w-[11.65vw] shrink-0 group cursor-pointer">
+                    <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[12px]">Phone</span>
                     <SortIcon />
                 </div>
-                <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] shrink-0 group cursor-pointer">
-                    <span className="text-[#AAAAAA] font-['SF_Pro_Text'] font-medium text-[0.63vw]">Subscription</span>
+                <div className="flex items-center gap-[8px] px-[12px] w-[11.65vw] shrink-0 group cursor-pointer">
+                    <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[12px]">Subscription</span>
                     <SortIcon />
                 </div>
-                <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] shrink-0 group cursor-pointer">
-                    <span className="text-[#AAAAAA] font-['SF_Pro_Text'] font-medium text-[0.63vw]">Joined On</span>
+                <div className="flex items-center gap-[8px] px-[12px] w-[11.65vw] shrink-0 group cursor-pointer">
+                    <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[12px]">Joined On</span>
                     <SortIcon />
                 </div>
-                <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] shrink-0 group cursor-pointer">
-                    <span className="text-[#AAAAAA] font-['SF_Pro_Text'] font-medium text-[0.63vw]">Last Active</span>
+                <div className="flex items-center gap-[8px] px-[12px] w-[11.65vw] shrink-0 group cursor-pointer">
+                    <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[12px]">Last Active</span>
                     <SortIcon />
                 </div>
                 {/* Empty Header for Action Column */}

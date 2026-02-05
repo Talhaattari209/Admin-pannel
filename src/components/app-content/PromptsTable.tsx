@@ -57,15 +57,17 @@ const PromptsTable: React.FC = () => {
     const isFAQTab = activeTab === 'faq';
 
     const ColumnHeader = ({ label, sortable = true, width = "auto", grow = false }: { label: string, sortable?: boolean, width?: string, grow?: boolean }) => (
-        <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-[1.98vw] group cursor-pointer ${grow ? 'flex-grow min-w-0' : 'shrink-0'}`} style={{ width: !grow ? width : undefined }}>
-            <span className="text-[#AAAAAA] text-[0.63vw] font-normal font-['SF_Pro_Text'] opacity-100 group-hover:text-white transition-colors truncate">
+        <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow min-w-0' : 'shrink-0'}`} style={{ width: !grow ? width : undefined }}>
+            <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-colors truncate">
                 {label}
             </span>
             {sortable && (
-                <div className="flex flex-col opacity-30 group-hover:opacity-100 transition-opacity shrink-0">
-                    <svg viewBox="0 0 10 6" className="w-[0.52vw] h-[0.31vw] rotate-180 mb-[2px]" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-                    <svg viewBox="0 0 10 6" className="w-[0.52vw] h-[0.31vw]" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-                </div>
+                <img
+                    src="/assets/chevron_up_down.png"
+                    alt="Sort"
+                    style={{ width: '0.73vw', height: '0.73vw', margin: '-0.21vw 0px' }}
+                    className="shrink-0 opacity-100"
+                />
             )}
         </div>
     );
@@ -175,7 +177,7 @@ const PromptsTable: React.FC = () => {
                     </div>
 
                     {/* Header Row */}
-                    <div className="flex flex-row items-center w-full border-b border-white/10 bg-[#1a1a1a]/50 shrink-0">
+                    <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1C1C1E] border-b border-[#333333] shrink-0 mt-0">
                         {renderHeaders()}
                     </div>
 

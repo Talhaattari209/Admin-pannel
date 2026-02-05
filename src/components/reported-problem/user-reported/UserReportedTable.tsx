@@ -40,37 +40,39 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
     const [currentPage, setCurrentPage] = useState(1);
 
     const ColumnHeader = ({ label, width = "auto", grow = false }: { label: string, width?: string, grow?: boolean }) => (
-        <div className={`flex flex-row items-center gap-2 px-4 h-[38px] group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
-            <span className="text-white text-[12px] font-bold uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity font-['SF_Pro_Text']">
+        <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
+            <span className="text-[#AAAAAA] font-['SF_Pro_Text'] not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity truncate">
                 {label}
             </span>
-            <div className="flex flex-col opacity-20 group-hover:opacity-100 transition-opacity shrink-0">
-                <svg viewBox="0 0 10 6" className="w-[10px] h-[6px] rotate-180" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-                <svg viewBox="0 0 10 6" className="w-[10px] h-[6px]" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-            </div>
+            <img
+                src="/assets/chevron_up_down.png"
+                alt="Sort"
+                style={{ width: '0.73vw', height: '0.73vw', margin: '-0.21vw 0px' }}
+                className="shrink-0 opacity-100"
+            />
         </div>
     );
 
     return (
-        <div className="flex flex-col w-full h-full bg-[#222222] rounded-[16px] rounded-tl-none overflow-hidden border border-white/5 shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
-            <div className="flex flex-row items-center justify-between p-4 gap-4 bg-[#1a1a1a]/30 flex-wrap">
+        <div className="flex flex-col w-full h-full bg-[#222222] rounded-[1.25vw] overflow-hidden border border-white/5 shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
+            <div className="flex flex-row items-center justify-between w-full h-[4.58vw] px-[0.83vw] bg-[#1C1C1E]">
                 <SearchInput value={search} onChange={setSearch} />
-                <div className="flex gap-4 flex-wrap">
-                    <FilterSelect label="Category" value={catFilter} options={['Harassment', 'Spam', 'Nudity']} onChange={setCatFilter} />
-                    <FilterSelect label="Reports" value={repFilter} options={['1-2', '3-5', '5+']} onChange={setRepFilter} />
-                    <FilterSelect label="Status" value={statusFilter} options={['New', 'Pending', 'Resolved', 'Closed']} onChange={setStatusFilter} />
+                <div className="flex gap-[0.66vw]">
+                    <FilterSelect label="Reports" value={repFilter} options={['10+', '5-10', '1-5']} onChange={setRepFilter} />
+                    <FilterSelect label="Category" value={catFilter} options={['Inappropriate', 'Spam', 'Harassment']} onChange={setCatFilter} />
+                    <FilterSelect label="Status" value={statusFilter} options={['New', 'Pending', 'Resolved', 'Dismissed']} onChange={setStatusFilter} />
                 </div>
             </div>
 
-            <div className="flex flex-row items-center w-full border-b border-white/10 bg-[#1a1a1a]/50">
-                <ColumnHeader label="Reported By" width="16.66vw" />
-                <ColumnHeader label="Reported User" width="16.66vw" />
-                <ColumnHeader label="Category" width="12.5vw" />
-                <ColumnHeader label="Reports" width="8.33vw" />
+            <div className="flex flex-row items-center w-full h-[48px] bg-[#1C1C1E] shrink-0">
+                <ColumnHeader label="Reported By" width="12.5vw" />
+                <ColumnHeader label="Reported User" width="12.5vw" />
+                <ColumnHeader label="Category" width="9.38vw" />
+                <ColumnHeader label="Reports" width="6.25vw" />
                 <ColumnHeader label="Description" grow />
-                <ColumnHeader label="Status" width="8.33vw" />
-                <ColumnHeader label="Submitted On" width="13.88vw" />
-                <div className="w-[4.16vw] shrink-0" />
+                <ColumnHeader label="Status" width="6.25vw" />
+                <ColumnHeader label="Submitted On" width="10.42vw" />
+                <div className="w-[2.5vw] shrink-0" />
             </div>
 
             <div className="flex flex-col flex-grow h-full overflow-hidden">

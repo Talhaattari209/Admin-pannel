@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ChangeRoleModal from './modals/ChangeRoleModal';
 import RemoveConfirmModal from './modals/RemoveConfirmModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
-import { TableFrame, SearchBar, Pagination } from '../shared/TableComponents';
+import { TableFrame, SearchBar, Pagination, FilterSelect } from '../shared/TableComponents';
 
 const MOCK_MEMBERS = [
     { id: '1', name: 'Liam Martinez', email: 'liammartinez@email.com', role: 'Admin', status: 'Active', addedOn: 'Jun 30, 2025 • 3:30 PM', lastActive: 'Jun 30, 2025 • 3:30 PM' },
@@ -14,6 +14,8 @@ const MOCK_MEMBERS = [
 
 const TeamMembersTable: React.FC = () => {
     const [search, setSearch] = useState('');
+    const [roleFilter, setRoleFilter] = useState('');
+    const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [openMenuId, setOpenMenuId] = useState<string | null>(null);
     const [modal, setModal] = useState<null | 'CHANGE_ROLE' | 'REMOVE_CONFIRM' | 'SUCCESS_REMOVE' | 'SUCCESS_UPDATED'>(null);
@@ -46,24 +48,42 @@ const TeamMembersTable: React.FC = () => {
     };
 
     const ColumnHeader = ({ label, width }: { label: string; width: string }) => (
-        <div className={`flex flex-row items-center gap-[0.31vw] px-[0.42vw] h-[2vw] group cursor-pointer shrink-0 ${width}`}>
-            <span className="text-white text-[0.57vw] font-normal uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity font-['SF_Pro_Text']">
+        <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer shrink-0 ${width}`}>
+            <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity">
                 {label}
             </span>
-            <div className="flex flex-col opacity-20 group-hover:opacity-100 transition-opacity shrink-0">
-                <svg viewBox="0 0 10 6" className="w-[0.42vw] h-[0.26vw] rotate-180" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-                <svg viewBox="0 0 10 6" className="w-[0.42vw] h-[0.26vw]" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-            </div>
+            <img
+                src="/assets/chevron_up_down.png"
+                alt="Sort"
+                style={{ width: '0.73vw', height: '0.73vw', margin: '-0.21vw 0px' }}
+                className="shrink-0 opacity-100"
+            />
         </div>
     );
 
     return (
         <TableFrame
             searchBar={<SearchBar value={search} onChange={setSearch} placeholder="Search" />}
+            filterBar={
+                <>
+                    <FilterSelect
+                        label="Role"
+                        value={roleFilter}
+                        options={[{ label: 'Admin', value: 'Admin' }, { label: 'Moderator', value: 'Moderator' }, { label: 'Support Agent', value: 'Support Agent' }, { label: 'Editor', value: 'Editor' }, { label: 'Viewer', value: 'Viewer' }]}
+                        onChange={setRoleFilter}
+                    />
+                    <FilterSelect
+                        label="Status"
+                        value={statusFilter}
+                        options={[{ label: 'Active', value: 'Active' }, { label: 'Disabled', value: 'Disabled' }, { label: 'Invited', value: 'Invited' }]}
+                        onChange={setStatusFilter}
+                    />
+                </>
+            }
             className="w-full h-full"
         >
             {/* Column Headers: Adjusted Fluid Widths */}
-            <div className="flex flex-row items-center w-full h-[2vw] bg-[#1a1a1a]/50">
+            <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1C1C1E]">
                 <ColumnHeader label="Name" width="flex-1 min-w-[10vw]" />
                 <ColumnHeader label="Email" width="flex-1 min-w-[10vw]" />
                 <ColumnHeader label="Role" width="w-[10%]" />
@@ -83,16 +103,19 @@ const TeamMembersTable: React.FC = () => {
                 {MOCK_MEMBERS.map((member) => (
                     <div
                         key={member.id}
-                        className={`flex flex-row items-center w-full h-[2.92vw] border-b border-[#666666]/50 bg-[#222222] hover:bg-white/5 transition-colors relative ${openMenuId === member.id ? 'z-50' : 'z-10'}`}
+                        className={`flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors relative ${openMenuId === member.id ? 'z-50' : 'z-10'}`}
                     >
-                        <div className="flex-1 min-w-[10vw] px-[0.42vw] text-white text-[0.65vw] font-['SF_Pro_Text'] leading-[0.83vw] truncate shrink-0">{member.name}</div>
-                        <div className="flex-1 min-w-[10vw] px-[0.42vw] text-white text-[0.65vw] font-['SF_Pro_Text'] leading-[0.83vw] truncate shrink-0">{member.email}</div>
-                        <div className="w-[10%] px-[0.42vw] text-white text-[0.65vw] font-['SF_Pro_Text'] leading-[0.83vw] truncate shrink-0">{member.role}</div>
+                        <div className="flex-1 min-w-[10vw] px-[0.42vw] text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] shrink-0 truncate"
+                        >{member.name}</div>
+                        <div className="flex-1 min-w-[10vw] px-[0.42vw] text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] shrink-0 truncate"
+                        >{member.email}</div>
+                        <div className="w-[10%] px-[0.42vw] text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] shrink-0 truncate"
+                        >{member.role}</div>
 
                         {/* Status Cell */}
                         <div className="w-[10%] px-[0.42vw] flex items-center shrink-0">
                             <div
-                                className={`flex flex-row justify-center items-center px-[0.52vw] py-[0.31vw] h-[1.35vw] rounded-[0.83vw] text-[0.6vw] font-normal leading-[0.73vw] font-['SF_Pro_Text'] isolation-auto ${getStatusStyle(member.status)}`}
+                                className={`flex flex-row justify-center items-center px-[0.52vw] py-[0.31vw] h-[1.35vw] rounded-[0.83vw] text-[0.6vw] font-normal not-italic leading-[0.73vw] font-sans not-italic isolation-auto ${getStatusStyle(member.status)}`}
                                 style={{ width: getStatusWidth(member.status) }}
                             >
                                 <span className="flex items-center">{member.status}</span>
@@ -100,15 +123,15 @@ const TeamMembersTable: React.FC = () => {
                         </div>
 
                         <div className="w-[13%] px-[0.42vw] flex items-center gap-[0.31vw] shrink-0">
-                            <span className="text-white text-[0.65vw] font-['SF_Pro_Text'] leading-[0.83vw]">{member.addedOn.split(' • ')[0]}</span>
+                            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw]">{member.addedOn.split(' • ')[0]}</span>
                             <div className="w-[0.16vw] h-[0.16vw] bg-white rounded-[0.21vw] shrink-0" />
-                            <span className="text-white text-[0.65vw] font-['SF_Pro_Text'] leading-[0.83vw]">{member.addedOn.split(' • ')[1]}</span>
+                            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw]">{member.addedOn.split(' • ')[1]}</span>
                         </div>
 
                         <div className="w-[13%] px-[0.42vw] flex items-center gap-[0.31vw] shrink-0">
-                            <span className="text-white text-[0.65vw] font-['SF_Pro_Text'] leading-[0.83vw]">{member.lastActive.split(' • ')[0]}</span>
+                            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw]">{member.lastActive.split(' • ')[0]}</span>
                             <div className="w-[0.16vw] h-[0.16vw] bg-white rounded-[0.21vw] shrink-0" />
-                            <span className="text-white text-[0.65vw] font-['SF_Pro_Text'] leading-[0.83vw]">{member.lastActive.split(' • ')[1]}</span>
+                            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw]">{member.lastActive.split(' • ')[1]}</span>
                         </div>
 
                         <div className="w-[3.13vw] h-[2.92vw] flex items-center justify-center shrink-0">
@@ -131,14 +154,14 @@ const TeamMembersTable: React.FC = () => {
                                 <button onClick={() => { setModal('CHANGE_ROLE'); setOpenMenuId(null); }} className="flex items-center justify-between w-full px-[0.83vw] py-[0.63vw] hover:bg-white/5 group transition-colors">
                                     <div className="flex items-center gap-[0.83vw]">
                                         <svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw] text-white/60 group-hover:text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
-                                        <span className="text-white text-[0.83vw] font-['SF_Pro_Text']">Change Role</span>
+                                        <span className="text-white text-[0.83vw] font-['SF_Pro_Text'] not-italic">Change Role</span>
                                     </div>
                                     <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw] text-white/20" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
                                 </button>
                                 <button onClick={() => { setModal('REMOVE_CONFIRM'); setOpenMenuId(null); }} className="flex items-center justify-between w-full px-[0.83vw] py-[0.63vw] hover:bg-white/5 group transition-colors">
                                     <div className="flex items-center gap-[0.83vw] text-[#FF4E4E]">
                                         <svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
-                                        <span className="text-[0.83vw] font-['SF_Pro_Text']">Remove Team Member</span>
+                                        <span className="text-[0.83vw] font-['SF_Pro_Text'] not-italic">Remove Team Member</span>
                                     </div>
                                     <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw] text-[#FF4E4E]/20" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
                                 </button>

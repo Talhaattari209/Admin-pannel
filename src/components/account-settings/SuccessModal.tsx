@@ -38,7 +38,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, title, des
                         onClick={onClose}
                         className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#4a00aa] transition-colors"
                     >
-                        <span className="font-medium text-[0.83vw] leading-[1.25vw] text-white">Continue</span>
+                        <span className="font-medium not-italic text-[0.83vw] leading-[1.25vw] text-white">Continue</span>
                     </button>
                 }
                 iconGlowColor="#5F00DB"

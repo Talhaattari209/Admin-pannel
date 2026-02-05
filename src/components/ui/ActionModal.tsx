@@ -63,14 +63,14 @@ export const ActionModal = ({
 
             {/* Header and Descriptions */}
             <div className="flex flex-col items-center gap-4 text-center w-full">
-                <h2 className="text-white text-[32px] font-medium leading-[38px] tracking-[-0.02em] font-['SF_Pro_Text']">{title}</h2>
+                <h2 className="text-white text-[32px] font-medium not-italic leading-[38px] tracking-[-0.02em] font-['SF_Pro_Text']">{title}</h2>
                 {description && (
-                    <p className="text-[#DDDDDD] text-lg leading-[32px] font-normal font-['SF_Pro_Text']">
+                    <p className="text-[#DDDDDD] text-lg leading-[32px] font-normal not-italic font-['SF_Pro_Text']">
                         {description}
                     </p>
                 )}
                 {subDescription && (
-                    <p className="text-[#DDDDDD] text-sm leading-[150%] opacity-60 font-normal font-['SF_Pro_Text']">
+                    <p className="text-[#DDDDDD] text-sm leading-[150%] opacity-60 font-normal not-italic font-['SF_Pro_Text']">
                         {subDescription}
                     </p>
                 )}
@@ -84,14 +84,14 @@ export const ActionModal = ({
                 {showCancel && (
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-14 border border-white rounded-[52px] text-white font-medium text-base hover:bg-white/10 transition-all backdrop-blur-[6px] flex items-center justify-center font-['SF_Pro_Text']"
+                        className="flex-1 h-14 border border-white rounded-[52px] text-white font-medium not-italic text-base hover:bg-white/10 transition-all backdrop-blur-[6px] flex items-center justify-center font-['SF_Pro_Text']"
                     >
                         Cancel
                     </button>
                 )}
                 <button
                     onClick={onAction}
-                    className={`flex-1 h-14 rounded-[52px] text-white font-medium text-base transition-all active:scale-95 flex items-center justify-center font-['SF_Pro_Text'] ${variant === 'success'
+                    className={`flex-1 h-14 rounded-[52px] text-white font-medium not-italic text-base transition-all active:scale-95 flex items-center justify-center font-['SF_Pro_Text'] ${variant === 'success'
                         ? 'bg-[#5F00DB] shadow-[0px_-8px_12px_rgba(95,0,219,0.25),0px_8px_12px_rgba(95,0,219,0.25)]'
                         : 'bg-[#FF4E4E] shadow-[0px_-8px_12px_rgba(255,78,78,0.25),0px_8px_12px_rgba(255,78,78,0.25)]'
                         }`}

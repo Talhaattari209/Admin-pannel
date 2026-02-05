@@ -92,7 +92,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                         </div>
 
                         {/* Fennec Text */}
-                        <span className="font-['Michroma'] font-normal text-[1.4vw] leading-[2.1vw] text-[#EEEEEE]">
+                        <span className="font-['Michroma'] font-normal not-italic text-[1.4vw] leading-[2.1vw] text-[#EEEEEE]">
                             Fennec
                         </span>
                     </div>
@@ -105,7 +105,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                             {/* Section Heading - Decreased height and text size */}
                             {section.title && (
                                 <div className="flex items-center px-[0.83vw] w-full h-[2.15vw] shrink-0">
-                                    <span className="font-['SF_Pro_Text'] font-medium text-[0.65vw] leading-[0.82vw] uppercase text-white opacity-50">
+                                    <span className="font-['SF_Pro_Text'] font-medium not-italic text-[0.65vw] leading-[0.82vw] uppercase text-white opacity-50">
                                         {section.title}
                                     </span>
                                 </div>
@@ -153,7 +153,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                                             </div>
 
                                             {/* Label - Decreased size */}
-                                            <span className="flex-grow text-left font-['SF_Pro_Text'] font-normal text-[0.75vw] leading-[1.1vw]">
+                                            <span className="flex-grow text-left font-['SF_Pro_Text'] font-normal not-italic text-[0.75vw] leading-[1.1vw]">
                                                 {item.label}
                                             </span>
 
@@ -187,7 +187,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                                 className="object-contain"
                             />
                         </div>
-                        <span className="flex-grow text-left font-['SF_Pro_Text'] font-normal text-[0.75vw] leading-[1.1vw]">
+                        <span className="flex-grow text-left font-['SF_Pro_Text'] font-normal not-italic text-[0.75vw] leading-[1.1vw]">
                             Logout
                         </span>
                         <ChevronRight className="opacity-50 w-[0.75vw] h-[0.75vw]" />

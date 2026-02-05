@@ -63,12 +63,12 @@ export const BaseCard: React.FC<BaseCardProps> = ({
 
                 {/* Text Content */}
                 <div className="flex flex-col gap-[0.42vw] items-center w-full text-center self-stretch">
-                    <h2 className="w-full font-medium text-[1.67vw] leading-[1.98vw] tracking-[-0.02em] text-white">
+                    <h2 className="w-full font-medium not-italic text-[1.67vw] leading-[1.98vw] tracking-[-0.02em] text-white">
                         {title}
                     </h2>
                     <div className="w-full text-white/90">
                         {typeof description === 'string' ? (
-                            <p className="font-normal text-[0.73vw] leading-[150%]">{description}</p>
+                            <p className="font-normal not-italic text-[0.73vw] leading-[150%]">{description}</p>
                         ) : (
                             description
                         )}
@@ -99,7 +99,7 @@ const Button = ({ label, onClick, variant = 'secondary' }: { label: string; onCl
     // Radius 52px -> ~2.71vw
     // Font 16px -> ~0.83vw
 
-    const baseStyle = "flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-[2.92vw] rounded-[2.71vw] font-medium text-[0.83vw] leading-[1.25vw] transition-all cursor-pointer flex-1 w-full";
+    const baseStyle = "flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-[2.92vw] rounded-[2.71vw] font-medium not-italic text-[0.83vw] leading-[1.25vw] transition-all cursor-pointer flex-1 w-full";
 
     const variants = {
         'primary-purple': "bg-[#5F00DB] text-white shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:bg-[#7000ff]",
@@ -125,7 +125,7 @@ const RadioList = ({ options, selected, onSelect }: { options: string[], selecte
                 <div className={`w-[1.25vw] h-[1.25vw] rounded-full border border-white flex items-center justify-center shrink-0 ${selected === opt ? 'bg-white' : 'bg-[#222222]'}`}>
                     {selected === opt && <div className="w-[0.63vw] h-[0.63vw] rounded-full bg-[#5F00DB]" />}
                 </div>
-                <span className="font-normal text-[0.83vw] leading-[150%] text-white flex-grow whitespace-nowrap overflow-hidden text-ellipsis">
+                <span className="font-normal not-italic text-[0.83vw] leading-[150%] text-white flex-grow whitespace-nowrap overflow-hidden text-ellipsis">
                     {opt}
                 </span>
             </div>
@@ -244,8 +244,8 @@ export const DeactivationCard = ({
     // In BaseCard title/description separation:
     const desc = (
         <div className="flex flex-col gap-[0.42vw]">
-            <p className="font-normal text-[0.94vw] leading-[1.67vw]">Are you sure you want to deactivate this user’s account?</p>
-            <p className="font-normal text-[0.73vw] leading-[150%] opacity-80">Once deactivated, the user will not be able to log in or access the app until reactivated by an admin. This action will not permanently delete their data.</p>
+            <p className="font-normal not-italic text-[0.94vw] leading-[1.67vw]">Are you sure you want to deactivate this user’s account?</p>
+            <p className="font-normal not-italic text-[0.73vw] leading-[150%] opacity-80">Once deactivated, the user will not be able to log in or access the app until reactivated by an admin. This action will not permanently delete their data.</p>
         </div>
     );
 

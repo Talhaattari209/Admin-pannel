@@ -22,8 +22,8 @@ const RemovePromptResponseCard: React.FC<RemovePromptResponseCardProps> = ({ onC
 
     const actions = (
         <>
-            <button onClick={onCancel} className="flex-1 h-[56px] border border-white rounded-[52px] text-white font-medium">Cancel</button>
-            <button onClick={() => onRemove(selectedReason, customReason)} className="flex-1 h-[56px] bg-[#FF4E4E] rounded-[52px] text-white font-medium shadow-lg">Remove</button>
+            <button onClick={onCancel} className="flex-1 h-[56px] border border-white rounded-[52px] text-white font-medium not-italic">Cancel</button>
+            <button onClick={() => onRemove(selectedReason, customReason)} className="flex-1 h-[56px] bg-[#FF4E4E] rounded-[52px] text-white font-medium not-italic shadow-lg">Remove</button>
         </>
     );
 
@@ -46,7 +46,7 @@ const RemovePromptResponseCard: React.FC<RemovePromptResponseCardProps> = ({ onC
                 ))}
             </div>
             <div className="flex flex-col gap-1 w-full">
-                <label className="text-white text-[12px] font-bold uppercase tracking-wider">Enter a reason</label>
+                <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Enter a reason</label>
                 <input type="text" placeholder="Type here.." value={customReason} onChange={(e) => setCustomReason(e.target.value)} className="w-full bg-transparent border-b border-white py-2 text-white focus:outline-none placeholder:text-white/40" />
             </div>
         </BaseCard>

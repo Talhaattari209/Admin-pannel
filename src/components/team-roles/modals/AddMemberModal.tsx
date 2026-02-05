@@ -17,7 +17,7 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ onCancel, onInvite }) =
                     </div>
                 </div>
 
-                <h2 className="text-white text-[32px] font-medium tracking-tight text-center font-['SF_Pro_Text']">Add Team Member</h2>
+                <h2 className="text-white text-[32px] font-medium not-italic tracking-tight text-center font-['SF_Pro_Text']">Add Team Member</h2>
 
                 {/* Form */}
                 <div className="flex flex-col gap-6 w-full">
@@ -26,14 +26,14 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ onCancel, onInvite }) =
                         { label: 'Email', placeholder: 'john@fennec.com', type: 'email' }
                     ].map(field => (
                         <div key={field.label} className="flex flex-col gap-1 border-b border-white py-2">
-                            <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-100 font-['SF_Pro_Text']">{field.label}</label>
-                            <input type={field.type} placeholder={field.placeholder} className="bg-transparent border-none text-white text-[16px] focus:outline-none placeholder:text-white/40 font-['SF_Pro_Text']" />
+                            <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-100 font-['SF_Pro_Text']">{field.label}</label>
+                            <input type={field.type} placeholder={field.placeholder} className="bg-transparent border-none text-white text-[16px] focus:outline-none placeholder:text-white/40 font-['SF_Pro_Text'] not-italic" />
                         </div>
                     ))}
 
                     <div className="flex flex-col gap-1 border-b border-white py-2 relative group">
-                        <label className="text-white text-[12px] font-bold uppercase tracking-wider font-['SF_Pro_Text']">Role</label>
-                        <select className="w-full bg-transparent text-white text-[16px] appearance-none focus:outline-none cursor-pointer font-['SF_Pro_Text']">
+                        <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider font-['SF_Pro_Text']">Role</label>
+                        <select className="w-full bg-transparent text-white text-[16px] appearance-none focus:outline-none cursor-pointer font-['SF_Pro_Text'] not-italic">
                             <option className="bg-[#222222]">Moderator</option>
                             <option className="bg-[#222222]">Admin</option>
                             <option className="bg-[#222222]">Viewer</option>
@@ -48,9 +48,9 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ onCancel, onInvite }) =
                         { label: 'Confirm Password', placeholder: '················' }
                     ].map(field => (
                         <div key={field.label} className="flex flex-col gap-1 border-b border-white py-2 relative">
-                            <label className="text-white text-[12px] font-bold uppercase tracking-wider font-['SF_Pro_Text']">{field.label}</label>
+                            <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider font-['SF_Pro_Text']">{field.label}</label>
                             <div className="flex items-center justify-between">
-                                <input type="password" placeholder={field.placeholder} className="bg-transparent border-none text-white text-[16px] focus:outline-none placeholder:text-white/40 font-['SF_Pro_Text'] flex-grow" />
+                                <input type="password" placeholder={field.placeholder} className="bg-transparent border-none text-white text-[16px] focus:outline-none placeholder:text-white/40 font-['SF_Pro_Text'] not-italic flex-grow" />
                                 <button className="text-white/40 hover:text-white transition-colors"><svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg></button>
                             </div>
                         </div>
@@ -60,13 +60,13 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ onCancel, onInvite }) =
                 <div className="flex flex-col w-full gap-4">
                     <button
                         onClick={onInvite}
-                        className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
+                        className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
                     >
                         Invite Team Member
                     </button>
                     <button
                         onClick={onCancel}
-                        className="w-full h-[56px] border border-white rounded-[52px] text-white font-medium hover:bg-white/10 active:scale-95 transition-all font-['SF_Pro_Text']"
+                        className="w-full h-[56px] border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 active:scale-95 transition-all font-['SF_Pro_Text']"
                     >
                         Cancel
                     </button>

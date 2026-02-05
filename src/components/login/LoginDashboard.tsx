@@ -30,14 +30,14 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
     return (
         <div className="flex flex-col justify-end items-start p-[0.83vw] gap-[0.68vw] w-full h-[5.11vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
             {/* Label */}
-            <h6 className="w-full text-[#CCCCCC] font-bold text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
+            <h6 className="w-full text-[#CCCCCC] font-bold not-italic text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
                 {label}
             </h6>
 
             {/* Value and Change Row */}
             <div className="flex flex-row justify-end items-center w-full h-[1.77vw]">
                 {/* Main Number */}
-                <span className="flex-grow text-white font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em]">
+                <span className="flex-grow text-white font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em]">
                     {value}
                 </span>
 
@@ -71,7 +71,7 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
                         />
                     </div>
                     <span className={cn(
-                        "font-bold text-[1.04vw] leading-[120%] tracking-[-0.04em]",
+                        "font-bold not-italic text-[1.04vw] leading-[120%] tracking-[-0.04em]",
                         isUp ? "text-[#3ADC60]" : "text-red-500"
                     )}>
                         {change}
@@ -172,7 +172,7 @@ export default function LoginDashboard() {
                             <button
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
-                                className={`flex-shrink-0 px-[1.25vw] py-[0.26vw] rounded-full text-[0.72vw] font-medium transition-all duration-300 border ${activeFilter === filter
+                                className={`flex-shrink-0 px-[1.25vw] py-[0.26vw] rounded-full text-[0.72vw] font-medium not-italic transition-all duration-300 border ${activeFilter === filter
                                     ? 'bg-[#5F00DB] border-[#5F00DB] text-white shadow-[0_0_15px_rgba(95,0,219,0.4)]'
                                     : 'bg-[#16003F] border-[#5F00DB]/30 text-white/70 hover:border-[#5F00DB] hover:text-white'
                                     }`}

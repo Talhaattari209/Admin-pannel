@@ -21,11 +21,11 @@ const SettingsSuccessCard: React.FC<SettingsSuccessCardProps> = ({ onDone }) => 
           </div>
         </div>
 
-        <h2 className="text-white text-[1.67vw] font-medium tracking-tight text-center">App Settings Updated</h2>
+        <h2 className="text-white text-[1.67vw] font-medium not-italic tracking-tight text-center">App Settings Updated</h2>
 
         <button
           onClick={onDone}
-          className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all"
+          className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all"
         >
           Done
         </button>

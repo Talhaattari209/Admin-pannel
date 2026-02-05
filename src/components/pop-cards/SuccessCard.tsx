@@ -20,7 +20,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
     );
 
     const actions = (
-        <button onClick={onDone} className="flex-1 h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium shadow-lg hover:brightness-110">Done</button>
+        <button onClick={onDone} className="flex-1 h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium not-italic shadow-lg hover:brightness-110">Done</button>
     );
 
     return (

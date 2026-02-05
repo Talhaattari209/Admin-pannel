@@ -21,13 +21,13 @@ const AddPromptModal: React.FC<AddPromptModalProps> = ({ onCancel, onAdd }) => {
         <>
             <button
                 onClick={onCancel}
-                className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-[2.92vw] rounded-[2.71vw] font-medium text-[0.83vw] leading-[1.25vw] transition-all cursor-pointer flex-1 bg-transparent border border-white/20 text-white hover:bg-white/10 filter drop-shadow(0px 0.63vw 2.08vw rgba(0, 0, 0, 0.05)) backdrop-blur-[6px]"
+                className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-[2.92vw] rounded-[2.71vw] font-medium not-italic text-[0.83vw] leading-[1.25vw] transition-all cursor-pointer flex-1 bg-transparent border border-white/20 text-white hover:bg-white/10 filter drop-shadow(0px 0.63vw 2.08vw rgba(0, 0, 0, 0.05)) backdrop-blur-[6px]"
             >
                 Cancel
             </button>
             <button
                 onClick={onAdd}
-                className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-[2.92vw] rounded-[2.71vw] font-medium text-[0.83vw] leading-[1.25vw] transition-all cursor-pointer flex-1 bg-[#5F00DB] text-white shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:bg-[#7000ff]"
+                className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-[2.92vw] rounded-[2.71vw] font-medium not-italic text-[0.83vw] leading-[1.25vw] transition-all cursor-pointer flex-1 bg-[#5F00DB] text-white shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:bg-[#7000ff]"
             >
                 Add Prompt
             </button>
@@ -43,7 +43,7 @@ const AddPromptModal: React.FC<AddPromptModalProps> = ({ onCancel, onAdd }) => {
             glowColor="#5F00DB"
         >
             <div className="flex flex-col gap-[0.42vw] w-full">
-                <label className="text-white text-[0.73vw] font-medium ml-[0.42vw]">Prompt Text</label>
+                <label className="text-white text-[0.73vw] font-medium not-italic ml-[0.42vw]">Prompt Text</label>
                 <input
                     type="text"
                     value={promptText}

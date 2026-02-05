@@ -24,7 +24,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
             'Closed': 'bg-[#FF4E4E] text-white',
         };
         return (
-            <div className={`h-[32px] px-4 rounded-full text-[13px] font-bold flex items-center justify-center min-w-[84px] leading-none text-center ${colors[s] || 'bg-white/10 text-white'}`}>
+            <div className={`h-[32px] px-4 rounded-full text-[13px] font-bold not-italic flex items-center justify-center min-w-[84px] leading-none text-center ${colors[s] || 'bg-white/10 text-white'}`}>
                 <span className="mt-[1px] font-['SF_Pro_Text']">{s}</span>
             </div>
         );
@@ -49,19 +49,19 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                 </button>
 
                 <div className="flex flex-col flex-grow">
-                    <h1 className="text-white text-[36px] font-bold tracking-tight font-['Michroma'] leading-tight">User Report Details</h1>
+                    <h1 className="text-white text-[36px] font-bold not-italic tracking-tight font-['Michroma'] leading-tight">User Report Details</h1>
                     <p className="text-[#CCCCCC] text-[16px] leading-[150%] opacity-60">
                         Review the report, inspect the evidence, and take appropriate action to maintain safety and compliance.
                     </p>
                 </div>
 
                 <div className="flex gap-4">
-                    <button className="px-8 py-4 border border-white rounded-[52px] text-white font-medium hover:bg-white/10 backdrop-blur-[6px] transition-all">
+                    <button className="px-8 py-4 border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all">
                         View User's Profile
                     </button>
                     <button
                         onClick={onDeactivate}
-                        className="px-8 py-4 bg-[#FF4E4E] rounded-[52px] text-white font-medium shadow-[0px_4px_12px_rgba(255,78,78,0.25)] hover:brightness-110 transition-all">
+                        className="px-8 py-4 bg-[#FF4E4E] rounded-[52px] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(255,78,78,0.25)] hover:brightness-110 transition-all">
                         Deactivate User
                     </button>
                 </div>
@@ -74,7 +74,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
 
                     <div className="flex flex-col p-8 bg-[#222222] border border-[#666666]/30 rounded-[24px] shadow-lg w-full">
                         <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-white text-[28px] font-bold leading-tight">Reported User</h3>
+                            <h3 className="text-white text-[28px] font-bold not-italic leading-tight">Reported User</h3>
                             {getStatusBadge(report.status)}
                         </div>
 
@@ -85,7 +85,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                             />
                             <div className="flex flex-col flex-grow min-w-0 w-full">
                                 <div className="flex items-center gap-4 flex-wrap">
-                                    <span className="text-white text-[4vw] md:text-[72px] font-bold tracking-tight leading-none truncate">
+                                    <span className="text-white text-[4vw] md:text-[72px] font-bold not-italic tracking-tight leading-none truncate">
                                         {report.reportedUser.name}, {report.reportedUser.age}
                                     </span>
                                     <div className="w-8 h-8 flex items-center justify-center bg-white rounded-full mt-4 shrink-0 shadow-lg">
@@ -96,25 +96,25 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                                 </div>
                                 <div className="flex flex-wrap gap-2 mt-4">
                                     {['Straight', 'He/Him', 'Austin, TX', '2 miles', 'Stanford University', 'Software Engineer'].map((chip) => (
-                                        <div key={chip} className="px-3 py-1 bg-[#5F00DB] rounded-full text-white text-[12px] font-medium">
+                                        <div key={chip} className="px-3 py-1 bg-[#5F00DB] rounded-full text-white text-[12px] font-medium not-italic">
                                             {chip}
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <button className="px-6 py-4 border border-white rounded-[52px] text-white font-medium hover:bg-white/10 transition-all shrink-0 mt-4 md:mt-0">
+                            <button className="px-6 py-4 border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 transition-all shrink-0 mt-4 md:mt-0">
                                 View User's Profile
                             </button>
                         </div>
 
                         <div className="flex flex-col gap-2">
-                            <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Reason</label>
-                            <p className="text-white text-[18px] font-normal leading-relaxed">{report.category}</p>
+                            <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Reason</label>
+                            <p className="text-white text-[18px] font-normal not-italic leading-relaxed">{report.category}</p>
                         </div>
                     </div>
 
                     <div className="flex flex-col p-8 bg-[#222222] border border-[#666666]/30 rounded-[24px] shadow-xl w-full">
-                        <h3 className="text-white text-[28px] font-bold">Activity</h3>
+                        <h3 className="text-white text-[28px] font-bold not-italic">Activity</h3>
                         <GradientLine />
                         <div className="flex flex-col relative pl-8 gap-12 pb-10">
                             <div className="absolute left-[11px] top-2 bottom-10 w-[2px] bg-white/10 rounded-full" />
@@ -122,17 +122,17 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                             <div className="relative flex flex-col items-start gap-4">
                                 <div className="absolute -left-[30px] top-1 w-6 h-6 bg-[#5F00DB] rounded-full border-2 border-white z-10 shadow-[0_0_10px_rgba(95,0,219,0.5)]" />
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-white text-[12px] font-bold uppercase tracking-wider">Reported Submitted</span>
+                                    <span className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Reported Submitted</span>
                                     <span className="text-white/60 text-[16px]">{report.submittedOn}</span>
                                 </div>
 
                                 <div className="flex flex-col p-5 bg-[#16003F] border border-white/5 rounded-[16px] w-[280px] gap-4 mt-2 group shadow-2xl transition-all hover:border-[#5F00DB]/40 cursor-default">
-                                    <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Submitted By</label>
+                                    <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Submitted By</label>
                                     <div className="flex items-center gap-4">
                                         <div className="w-10 h-10 rounded-full bg-cover bg-center border border-white/10 shrink-0" style={{ backgroundImage: `url(${report.reportedBy.avatar})` }} />
                                         <div className="flex flex-col flex-grow min-w-0">
-                                            <span className="text-white text-[14px] font-semibold truncate leading-none mb-1">{report.reportedBy.name}</span>
-                                            <span className="text-white/40 text-[11px] truncate leading-none font-light">{report.reportedBy.email}</span>
+                                            <span className="text-white text-[14px] font-semibold not-italic truncate leading-none mb-1">{report.reportedBy.name}</span>
+                                            <span className="text-white/40 text-[11px] truncate leading-none font-light not-italic">{report.reportedBy.email}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                             <div className="relative flex flex-col items-start gap-3">
                                 <div className="absolute -left-[30px] top-1 w-6 h-6 bg-[#5F00DB] rounded-full border-2 border-white z-10" />
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-white text-[12px] font-bold uppercase tracking-wider">Status Updated</span>
+                                    <span className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Status Updated</span>
                                     <span className="text-white/60 text-[16px]">Jan 12, 2026 • 10:20 AM</span>
                                 </div>
                                 <div className="flex items-center gap-4 mt-2 bg-white/5 p-2 rounded-full pr-4">
@@ -160,10 +160,10 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
 
                 {/* Right Column: Actions Sidebar */}
                 <div className="flex-[1] flex flex-col gap-6 bg-[#222222] border border-[#666666]/30 rounded-[24px] p-8 lg:sticky lg:top-8 min-w-[340px] w-full shadow-2xl">
-                    <h3 className="text-white text-[28px] font-bold">Actions</h3>
+                    <h3 className="text-white text-[28px] font-bold not-italic">Actions</h3>
                     <GradientLine />
                     <div className="flex flex-col gap-2">
-                        <label className="text-white text-[12px] font-bold uppercase tracking-wider">Status</label>
+                        <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Status</label>
                         <div className="relative border-b border-white py-2 group">
                             <select
                                 value={status}
@@ -181,7 +181,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 flex-grow mt-4">
-                        <label className="text-white text-[12px] font-bold uppercase tracking-wider">Notes</label>
+                        <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Notes</label>
                         <textarea
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
@@ -191,7 +191,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                     </div>
                     <button
                         onClick={() => onUpdateStatus(status, notes)}
-                        className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all mt-4">
+                        className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold not-italic text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all mt-4">
                         Update Status
                     </button>
                 </div>

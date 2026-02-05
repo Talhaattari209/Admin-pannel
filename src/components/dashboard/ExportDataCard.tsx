@@ -38,7 +38,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
       </div>
 
       {/* Export Data Title */}
-      <h2 className="w-[21.67vw] h-[1.98vw] font-['SF_Pro_Text'] font-medium text-[1.67vw] leading-[1.98vw] flex items-center text-center text-white flex-none order-1 self-stretch flex-grow-0 tracking-[-0.02em] justify-center">
+      <h2 className="w-[21.67vw] h-[1.98vw] font-['SF_Pro_Text'] font-medium not-italic text-[1.67vw] leading-[1.98vw] flex items-center text-center text-white flex-none order-1 self-stretch flex-grow-0 tracking-[-0.02em] justify-center">
         Export Data
       </h2>
 
@@ -51,10 +51,10 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
           {/* Start Date */}
           <div className="flex flex-col items-start w-[10.42vw] h-[3.33vw] flex-none order-0 flex-grow-1">
             <div className="flex flex-row items-start gap-[0.21vw] w-[10.42vw] h-[0.83vw] flex-none order-0 self-stretch flex-grow-0">
-              <span className="h-[0.83vw] font-['SF_Pro_Text'] font-bold text-[0.625vw] leading-[0.83vw] text-white">Start Date</span>
+              <span className="h-[0.83vw] font-['SF_Pro_Text'] font-bold not-italic text-[0.625vw] leading-[0.83vw] text-white">Start Date</span>
             </div>
             <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-[10.42vw] h-[2.5vw] min-h-[2.5vw] border-b border-white flex-none order-1 self-stretch flex-grow-0">
-              <span className="w-[8.33vw] h-[1.25vw] font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[1.25vw] text-white flex items-center">{startDate}</span>
+              <span className="w-[8.33vw] h-[1.25vw] font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">{startDate}</span>
               <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                 <line x1="16" y1="2" x2="16" y2="6" />
@@ -67,10 +67,10 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
           {/* End Date */}
           <div className="flex flex-col items-start w-[10.42vw] h-[3.33vw] flex-none order-1 flex-grow-1">
             <div className="flex flex-row items-start gap-[0.21vw] w-[10.42vw] h-[0.83vw] flex-none order-0 self-stretch flex-grow-0">
-              <span className="h-[0.83vw] font-['SF_Pro_Text'] font-bold text-[0.625vw] leading-[0.83vw] text-white">End Date</span>
+              <span className="h-[0.83vw] font-['SF_Pro_Text'] font-bold not-italic text-[0.625vw] leading-[0.83vw] text-white">End Date</span>
             </div>
             <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-[10.42vw] h-[2.5vw] min-h-[2.5vw] border-b border-white flex-none order-1 self-stretch flex-grow-0">
-              <span className="w-[8.33vw] h-[1.25vw] font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[1.25vw] text-white flex items-center">{endDate}</span>
+              <span className="w-[8.33vw] h-[1.25vw] font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">{endDate}</span>
               <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                 <line x1="16" y1="2" x2="16" y2="6" />
@@ -88,7 +88,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className="flex flex-row justify-center items-center px-[0.625vw] py-[0.21vw] gap-[0.42vw] h-[1.67vw] rounded-[1.25vw] transition-all font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-white bg-[#5F00DB] hover:bg-[#8022FF]"
+              className="flex flex-row justify-center items-center px-[0.625vw] py-[0.21vw] gap-[0.42vw] h-[1.67vw] rounded-[1.25vw] transition-all font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-white bg-[#5F00DB] hover:bg-[#8022FF]"
             >
               {filter}
             </button>
@@ -98,10 +98,10 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
         {/* Format Field */}
         <div className="flex flex-col items-start w-[21.67vw] h-[3.33vw] flex-none order-4 self-stretch flex-grow-0">
           <div className="flex flex-row items-start gap-[0.21vw] w-[21.67vw] h-[0.83vw] flex-none order-0 self-stretch flex-grow-0">
-            <span className="h-[0.83vw] font-['SF_Pro_Text'] font-bold text-[0.625vw] leading-[0.83vw] text-white">Format</span>
+            <span className="h-[0.83vw] font-['SF_Pro_Text'] font-bold not-italic text-[0.625vw] leading-[0.83vw] text-white">Format</span>
           </div>
           <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-[21.67vw] h-[2.5vw] min-h-[2.5vw] border-b border-white flex-none order-1 self-stretch flex-grow-0">
-            <span className="w-[19.58vw] h-[1.25vw] font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[1.25vw] text-white flex items-center">{format}</span>
+            <span className="w-[19.58vw] h-[1.25vw] font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">{format}</span>
             <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
               <polyline points="6 9 12 15 18 9" />
             </svg>
@@ -114,7 +114,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
             onClick={() => onDownload && onDownload({ startDate, endDate, format, activeFilter })}
             className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] w-[21.67vw] h-[2.92vw] bg-[#5F00DB] shadow-[0px_-0.42vw_0.625vw_rgba(95,0,219,0.25),0px_0.42vw_0.625vw_rgba(95,0,219,0.25)] rounded-[2.71vw] text-white cursor-pointer hover:brightness-110 active:scale-95 transition-all"
           >
-            <span className="h-[1.25vw] font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.25vw] flex items-end text-center">
+            <span className="h-[1.25vw] font-['SF_Pro_Text'] font-medium not-italic text-[0.83vw] leading-[1.25vw] flex items-end text-center">
               Download
             </span>
           </button>

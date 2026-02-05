@@ -49,13 +49,15 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
 
   const ColumnHeader = ({ label, width = "auto", grow = false }: { label: string, width?: string, grow?: boolean }) => (
     <div className={`flex flex-row items-center gap-2 px-4 h-[38px] group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
-      <span className="text-white text-[12px] font-bold uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
+      <span className="text-white text-[12px] font-bold not-italic uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity font-sans not-italic">
         {label}
       </span>
-      <div className="flex flex-col opacity-20 group-hover:opacity-100 transition-opacity">
-        <svg viewBox="0 0 10 6" className="w-[10px] h-[6px] rotate-180" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-        <svg viewBox="0 0 10 6" className="w-[10px] h-[6px]" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-      </div>
+      <img
+        src="/assets/chevron_up_down.png"
+        alt="Sort"
+        style={{ width: '14px', height: '14px', opacity: 0.3, margin: '-4px 0px' }}
+        className="shrink-0"
+      />
     </div>
   );
 

@@ -40,12 +40,12 @@ const BaseCard: React.FC<BaseCardProps> = ({
 
       {/* Text Content */}
       <div className="flex flex-col gap-4 text-center self-stretch">
-        <h2 className="text-[32px] font-medium leading-[38px] tracking-[-0.02em] text-white font-inter">
+        <h2 className="text-[32px] font-medium not-italic leading-[38px] tracking-[-0.02em] text-white font-inter not-italic">
           {title}
         </h2>
         <div className="text-white">
           {typeof description === 'string' ? (
-            <p className="text-[18px] font-normal leading-[32px] opacity-90 font-inter">{description}</p>
+            <p className="text-[18px] font-normal not-italic leading-[32px] opacity-90 font-inter not-italic">{description}</p>
           ) : (
             description
           )}

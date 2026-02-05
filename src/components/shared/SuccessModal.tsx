@@ -24,13 +24,13 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ title, description, onDone 
         </div>
 
         <div className="flex flex-col gap-[0.42vw] text-center">
-          <h2 className="text-white text-[1.67vw] font-medium tracking-tight font-inter">{title}</h2>
+          <h2 className="text-white text-[1.67vw] font-medium not-italic tracking-tight font-inter not-italic">{title}</h2>
           {description && <p className="text-[#CCCCCC] text-[0.83vw] opacity-60 leading-[150%]">{description}</p>}
         </div>
 
         <button
           onClick={onDone}
-          className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-inter"
+          className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-inter not-italic"
         >
           Done
         </button>

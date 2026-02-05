@@ -74,7 +74,7 @@ const UsageDistributionCard: React.FC = () => {
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading Section */}
       <div className="flex flex-col items-start p-[0.83vw] md:p-[1.25vw] gap-[0.41vw] w-full">
-        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em]">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em]">
           Platform Usage Distribution
         </h4>
         <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%]">
@@ -86,7 +86,7 @@ const UsageDistributionCard: React.FC = () => {
       <div className="relative flex-grow w-full px-[0.41vw] pt-[1.25vw] pb-[0.41vw] flex items-center justify-center">
         {/* Total Display Overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-          <span className="text-white text-[1.66vw] font-bold leading-none">
+          <span className="text-white text-[1.66vw] font-bold not-italic leading-none">
             {total.toLocaleString()}
           </span>
         </div>
@@ -129,7 +129,7 @@ const UsageDistributionCard: React.FC = () => {
                         className="w-[0.62vw] h-[0.62vw] rounded-full border border-black/20"
                         style={{ backgroundColor: entry.color }}
                       />
-                      <span className="text-white/80 text-[0.62vw] font-normal">{entry.value}</span>
+                      <span className="text-white/80 text-[0.62vw] font-normal not-italic">{entry.value}</span>
                     </div>
                   ))}
                 </div>

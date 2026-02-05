@@ -50,15 +50,15 @@ const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAct
             style={{ backgroundImage: `url(${data.reportedBy.avatar})` }}
           />
           <div className="flex flex-col min-w-0">
-            <span className="text-white text-[14px] font-semibold truncate leading-none mb-1">{data.reportedBy.name}</span>
-            <span className="text-white/40 text-[11px] font-light truncate leading-none">{data.reportedBy.email}</span>
+            <span className="text-white text-[14px] font-semibold not-italic truncate leading-none mb-1">{data.reportedBy.name}</span>
+            <span className="text-white/40 text-[11px] font-light not-italic truncate leading-none">{data.reportedBy.email}</span>
           </div>
         </div>
       </div>
-      <div className="w-[200px] px-4 shrink-0 text-white text-[14px] font-medium truncate">{data.subject}</div>
+      <div className="w-[200px] px-4 shrink-0 text-white text-[14px] font-medium not-italic truncate">{data.subject}</div>
       <div className="flex-[1] px-4 min-w-0 text-white/60 text-[14px] truncate">{data.message}</div>
       <div className="w-[120px] px-4 flex items-center shrink-0">
-        <div className={`h-[32px] px-4 rounded-full text-[13px] font-bold flex items-center justify-center min-w-[84px] leading-none text-center ${getStatusColor(data.status)}`}>
+        <div className={`h-[32px] px-4 rounded-full text-[13px] font-bold not-italic flex items-center justify-center min-w-[84px] leading-none text-center ${getStatusColor(data.status)}`}>
           <span className="mt-[1px]">{data.status}</span>
         </div>
       </div>

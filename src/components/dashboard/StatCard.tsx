@@ -19,14 +19,14 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, change, isPositive })
     return (
         <div className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.6vw] w-full h-[4.09vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
             {/* Label - H6 (16px -> 0.83vw), #CCCCCC, Bold */}
-            <h6 className="w-full text-[#CCCCCC] font-bold text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
+            <h6 className="w-full text-[#CCCCCC] font-bold not-italic text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
                 {label}
             </h6>
 
             {/* Value and Change Row */}
             <div className="flex flex-row justify-end items-center w-full h-[1.77vw]">
                 {/* Main Number - H3 (28px -> 1.46vw), White, Bold, Flex-grow */}
-                <span className="flex-grow text-white font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em]">
+                <span className="flex-grow text-white font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em]">
                     {value}
                 </span>
 
@@ -48,7 +48,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, change, isPositive })
                     </div>
                     {/* Change % - H5 (20px -> 1.04vw), #3ADC60, Bold */}
                     <span className={cn(
-                        "font-bold text-[1.04vw] leading-[120%] tracking-[-0.04em]",
+                        "font-bold not-italic text-[1.04vw] leading-[120%] tracking-[-0.04em]",
                         isUp ? "text-[#3ADC60]" : "text-[#FF3D00]"
                     )}>
                         {change}

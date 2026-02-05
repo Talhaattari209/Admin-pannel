@@ -25,17 +25,17 @@ const AddRoleModal: React.FC<AddRoleModalProps> = ({ onCancel, onAdd, initialDat
                     </div>
                 </div>
 
-                <h2 className="text-white text-[32px] font-medium tracking-tight text-center font-['SF_Pro_Text']">{isEdit ? 'Edit Role' : 'Add New Role'}</h2>
+                <h2 className="text-white text-[32px] font-medium not-italic tracking-tight text-center font-['SF_Pro_Text']">{isEdit ? 'Edit Role' : 'Add New Role'}</h2>
 
                 <div className="flex flex-col gap-8 w-full">
                     <div className="flex flex-col gap-1 border-b border-white py-2">
-                        <label className="text-white text-[12px] font-bold uppercase tracking-wider font-['SF_Pro_Text']">Title</label>
-                        <input type="text" defaultValue={initialData?.role || 'Content Manager'} className="bg-transparent border-none text-white text-[16px] focus:outline-none font-['SF_Pro_Text']" />
+                        <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider font-['SF_Pro_Text']">Title</label>
+                        <input type="text" defaultValue={initialData?.role || 'Content Manager'} className="bg-transparent border-none text-white text-[16px] focus:outline-none font-['SF_Pro_Text'] not-italic" />
                     </div>
 
                     <div className="flex flex-col gap-1 border-b border-white py-2">
-                        <label className="text-white text-[12px] font-bold uppercase tracking-wider font-['SF_Pro_Text']">Description</label>
-                        <textarea placeholder="Type here..." defaultValue={initialData?.description} className="bg-transparent border-none text-white text-[16px] focus:outline-none resize-none h-24 font-['SF_Pro_Text'] placeholder:text-white/40" />
+                        <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider font-['SF_Pro_Text']">Description</label>
+                        <textarea placeholder="Type here..." defaultValue={initialData?.description} className="bg-transparent border-none text-white text-[16px] focus:outline-none resize-none h-24 font-['SF_Pro_Text'] not-italic placeholder:text-white/40" />
                     </div>
 
                     <SwitchToggleTable />
@@ -44,13 +44,13 @@ const AddRoleModal: React.FC<AddRoleModalProps> = ({ onCancel, onAdd, initialDat
                 <div className="flex flex-row gap-4 w-full">
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-[56px] border border-white rounded-[52px] text-white font-medium hover:bg-white/10 active:scale-95 transition-all font-['SF_Pro_Text']"
+                        className="flex-1 h-[56px] border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 active:scale-95 transition-all font-['SF_Pro_Text']"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={onAdd}
-                        className="flex-1 h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
+                        className="flex-1 h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
                     >
                         {isEdit ? 'Update' : 'Add Role'}
                     </button>

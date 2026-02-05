@@ -24,10 +24,10 @@ const LinkSentCard: React.FC<LinkSentCardProps> = ({ onBack }) => {
 
       {/* Header Text */}
       <div className="flex flex-col items-center gap-[1.67vw] w-full">
-        <h2 className="font-['SF_Pro_Text'] font-medium text-[1.67vw] leading-[1.2] text-white text-center tracking-[-0.02em]">
+        <h2 className="font-['SF_Pro_Text'] font-medium not-italic text-[1.67vw] leading-[1.2] text-white text-center tracking-[-0.02em]">
           Link Sent!
         </h2>
-        <p className="font-['SF_Pro_Text'] font-normal text-[0.94vw] leading-[1.78] text-[#DDDDDD] text-center">
+        <p className="font-['SF_Pro_Text'] font-normal not-italic text-[0.94vw] leading-[1.78] text-[#DDDDDD] text-center">
           Check your email inbox and follow the instructions to reset your password.
         </p>
       </div>
@@ -38,7 +38,7 @@ const LinkSentCard: React.FC<LinkSentCardProps> = ({ onBack }) => {
           onClick={onBack}
           className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] gap-[0.625vw] hover:brightness-110 transition-all active:scale-[0.98]"
         >
-          <span className="font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.5] text-white text-center">
+          <span className="font-['SF_Pro_Text'] font-medium not-italic text-[0.83vw] leading-[1.5] text-white text-center">
             Back to Login
           </span>
         </button>

@@ -47,7 +47,7 @@ const renderCustomizedLabel = (props: any) => {
         textAnchor={isRight ? 'start' : 'end'}
         dominantBaseline="central"
         fontSize={12}
-        className="font-inter"
+        className="font-inter not-italic"
       >
         {name}
       </text>
@@ -59,7 +59,7 @@ const renderCustomizedLabel = (props: any) => {
         dominantBaseline="central"
         fontSize={14}
         fontWeight="bold"
-        className="font-inter"
+        className="font-inter not-italic"
       >
         {value}
       </text>
@@ -74,7 +74,7 @@ const UsersReportedCard: React.FC = () => {
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading */}
       <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw]">
-        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Users Reported
         </h4>
         <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
@@ -87,7 +87,7 @@ const UsersReportedCard: React.FC = () => {
         <div className="relative flex-grow h-full flex items-center justify-center">
           {/* Central Total */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-            <span className="text-white text-[1.66vw] font-bold">{total}</span>
+            <span className="text-white text-[1.66vw] font-bold not-italic">{total}</span>
           </div>
 
           <ResponsiveContainer width="100%" height="100%">
@@ -125,7 +125,7 @@ const UsersReportedCard: React.FC = () => {
           {data.map((item, index) => (
             <div key={index} className="flex items-center gap-[0.62vw]">
               <div className="w-[0.62vw] h-[0.62vw] rounded-full border border-black/20" style={{ backgroundColor: item.color }} />
-              <span className="text-white/80 text-[0.62vw] font-inter">{item.name}</span>
+              <span className="text-white/80 text-[0.62vw] font-inter not-italic">{item.name}</span>
             </div>
           ))}
         </div>

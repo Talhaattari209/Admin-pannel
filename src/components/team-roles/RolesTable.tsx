@@ -28,14 +28,16 @@ const RolesTable: React.FC = () => {
     }, [openMenuId]);
 
     const ColumnHeader = ({ label, width }: { label: string; width: string }) => (
-        <div className={`flex flex-row items-center gap-[0.31vw] px-[0.42vw] h-[2vw] shrink-0 group cursor-pointer ${width}`}>
-            <span className="text-white text-[0.57vw] font-normal font-['SF_Pro_Text'] uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
+        <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full shrink-0 group cursor-pointer ${width}`}>
+            <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity">
                 {label}
             </span>
-            <div className="flex flex-col opacity-20 group-hover:opacity-100 transition-opacity shrink-0">
-                <svg viewBox="0 0 10 6" className="w-[0.42vw] h-[0.26vw] rotate-180" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-                <svg viewBox="0 0 10 6" className="w-[0.42vw] h-[0.26vw]" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-            </div>
+            <img
+                src="/assets/chevron_up_down.png"
+                alt="Sort"
+                style={{ width: '0.73vw', height: '0.73vw', margin: '-0.21vw 0px' }}
+                className="shrink-0 opacity-100"
+            />
         </div>
     );
 
@@ -45,7 +47,7 @@ const RolesTable: React.FC = () => {
             className="w-full h-full"
         >
             {/* Column Headers: Fluid Width */}
-            <div className="flex flex-row items-center w-full h-[2vw] bg-[#1a1a1a]/50">
+            <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1C1C1E]">
                 <ColumnHeader label="Role" width="w-[12%]" />
                 <ColumnHeader label="Description" width="flex-1" />
                 <ColumnHeader label="Members" width="w-[12%]" />
@@ -62,11 +64,11 @@ const RolesTable: React.FC = () => {
                 {MOCK_ROLES.map((role) => (
                     <div
                         key={role.id}
-                        className={`flex flex-row items-center w-full h-[2.92vw] border-b border-[#666666]/50 bg-[#222222] hover:bg-white/5 transition-colors relative ${openMenuId === role.id ? 'z-50' : 'z-10'}`}
+                        className={`flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors relative ${openMenuId === role.id ? 'z-50' : 'z-10'}`}
                     >
-                        <div className="w-[12%] px-[0.42vw] text-white text-[0.65vw] font-['SF_Pro_Text'] truncate shrink-0">{role.role}</div>
-                        <div className="flex-1 px-[0.42vw] text-white text-[0.65vw] font-['SF_Pro_Text'] truncate shrink-0">{role.description}</div>
-                        <div className="w-[12%] px-[0.42vw] text-white text-[0.65vw] font-['SF_Pro_Text'] shrink-0">{role.memberCount}</div>
+                        <div className="w-[12%] px-[0.42vw] text-white text-[0.73vw] leading-[0.83vw] font-normal not-italic font-sans not-italic truncate shrink-0">{role.role}</div>
+                        <div className="flex-1 px-[0.42vw] text-white text-[0.73vw] leading-[0.83vw] font-normal not-italic font-sans not-italic truncate shrink-0">{role.description}</div>
+                        <div className="w-[12%] px-[0.42vw] text-white text-[0.73vw] leading-[0.83vw] font-normal not-italic font-sans not-italic shrink-0">{role.memberCount}</div>
 
                         <div className="w-[3.13vw] h-[2.92vw] flex items-center justify-center shrink-0">
                             <button
@@ -88,14 +90,14 @@ const RolesTable: React.FC = () => {
                                 <button onClick={() => { setModal('EDIT_ROLE'); setOpenMenuId(null); }} className="flex items-center justify-between w-full px-[0.83vw] py-[0.63vw] hover:bg-white/5 group transition-colors">
                                     <div className="flex items-center gap-[0.83vw]">
                                         <svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw] text-white/60 group-hover:text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
-                                        <span className="text-white text-[0.83vw] font-['SF_Pro_Text']">Edit Role</span>
+                                        <span className="text-white text-[0.83vw] font-['SF_Pro_Text'] not-italic">Edit Role</span>
                                     </div>
                                     <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw] text-white/20" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
                                 </button>
                                 <button onClick={() => { setModal('DELETE_ROLE'); setOpenMenuId(null); }} className="flex items-center justify-between w-full px-[0.83vw] py-[0.63vw] hover:bg-white/5 group transition-colors text-[#FF4E4E]">
                                     <div className="flex items-center gap-[0.83vw]">
                                         <svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw] text-[#FF4E4E]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
-                                        <span className="text-[0.83vw] font-['SF_Pro_Text']">Delete Role</span>
+                                        <span className="text-[0.83vw] font-['SF_Pro_Text'] not-italic">Delete Role</span>
                                     </div>
                                     <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw] text-[#FF4E4E]/20" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
                                 </button>

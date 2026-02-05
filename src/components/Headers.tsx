@@ -9,7 +9,7 @@ const PrimaryButton = ({ label, onClick, icon }: { label: string; onClick?: () =
         onClick={onClick}
         className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] bg-[#5F00DB] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] hover:bg-[#4a00aa] transition-all flex-none"
     >
-        <span className="font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
+        <span className="font-['SF_Pro_Text'] font-medium not-italic text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
             {label}
         </span>
         {icon && <span className="text-white w-[1.25vw] h-[1.25vw] flex items-center justify-center">{icon}</span>}
@@ -22,7 +22,7 @@ const SecondaryButton = ({ label, onClick, icon }: { label: string; onClick?: ()
         className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
     >
         {icon && <span className="text-white w-[1.25vw] h-[1.25vw] flex items-center justify-center">{icon}</span>}
-        <span className="font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
+        <span className="font-['SF_Pro_Text'] font-medium not-italic text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
             {label}
         </span>
     </button>
@@ -67,12 +67,12 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             {/* Text Column - Grows to fill space */}
             <div className="flex flex-col justify-center items-start gap-[0.83vw] flex-grow h-full">
                 {/* Title */}
-                <h1 className={`flex items-center text-white font-bold ${titleSizeClass} leading-[110%] tracking-[-0.04em]`}>
+                <h1 className={`flex items-center text-white font-bold not-italic ${titleSizeClass} leading-[110%] tracking-[-0.04em]`}>
                     {title}
                 </h1>
 
                 {/* Description */}
-                <p className="flex items-center text-[#CCCCCC] font-normal text-[0.83vw] leading-[150%]">
+                <p className="flex items-center text-[#CCCCCC] font-normal not-italic text-[0.83vw] leading-[150%]">
                     {description}
                 </p>
             </div>
@@ -162,12 +162,12 @@ export const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
                 {/* Height: 40px -> 2.083vw */}
                 <div className="flex flex-row items-center p-0 w-full h-[2.08vw]">
                     {/* Name */}
-                    <h1 className="flex items-center text-white font-bold text-[1.875vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap">
+                    <h1 className="flex items-center text-white font-bold not-italic text-[1.875vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap">
                         {name}
                     </h1>
 
                     {/* Comma + Age */}
-                    <h1 className="flex items-center text-white font-bold text-[1.875vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap ml-1">
+                    <h1 className="flex items-center text-white font-bold not-italic text-[1.875vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap ml-1">
                         , {age}
                     </h1>
 
@@ -220,7 +220,7 @@ export const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
 const Chip = ({ label, icon }: { label: string; icon?: React.ReactNode }) => (
     <div className="flex flex-row justify-center items-center px-[0.42vw] py-[0.26vw] gap-[0.26vw] h-[1.25vw] bg-[#5F00DB] backdrop-blur-[6px] rounded-[2.5vw] flex-none">
         {icon && <span className="text-white flex items-center justify-center">{icon}</span>}
-        <span className="font-['SF_Pro_Text'] font-normal text-[0.625vw] leading-[0.73vw] text-white text-center whitespace-nowrap">
+        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.625vw] leading-[0.73vw] text-white text-center whitespace-nowrap">
             {label}
         </span>
     </div>

@@ -20,11 +20,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
         <div className="w-[10.4vw] h-[10.4vw]">
           <Logo />
         </div>
-        <h1 className="font-michroma text-[2.5vw] leading-[3.5vw] text-white text-center">Fennec</h1>
+        <h1 className="font-michroma not-italic text-[2.5vw] leading-[3.5vw] text-white text-center">Fennec</h1>
       </div>
 
       {/* Header Text */}
-      <h2 className="font-['SF_Pro_Text'] font-medium text-[1.67vw] leading-[1.2] text-white text-center tracking-[-0.02em] w-full">
+      <h2 className="font-['SF_Pro_Text'] font-medium not-italic text-[1.67vw] leading-[1.2] text-white text-center tracking-[-0.02em] w-full">
         Login to your account
       </h2>
 
@@ -39,24 +39,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
       >
         {/* Email Field */}
         <div className="flex flex-col items-start gap-[0.2vw] w-full border-b border-white py-[0.42vw]">
-          <label className="text-white text-[0.625vw] font-bold uppercase tracking-wider opacity-100 font-['SF_Pro_Text']">Email</label>
+          <label className="text-white text-[0.625vw] font-bold not-italic uppercase tracking-wider opacity-100 font-['SF_Pro_Text']">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-transparent border-none text-white text-[0.83vw] font-['SF_Pro_Text'] focus:outline-none placeholder:text-white/40 font-normal leading-[1.25vw]"
+            className="w-full bg-transparent border-none text-white text-[0.83vw] font-['SF_Pro_Text'] focus:outline-none placeholder:text-white/40 font-normal not-italic leading-[1.25vw]"
           />
         </div>
 
         {/* Password Field */}
         <div className="flex flex-col items-start gap-[0.2vw] w-full border-b border-white py-[0.42vw] relative">
-          <label className="text-white text-[0.625vw] font-bold uppercase tracking-wider opacity-100 font-['SF_Pro_Text']">Password</label>
+          <label className="text-white text-[0.625vw] font-bold not-italic uppercase tracking-wider opacity-100 font-['SF_Pro_Text']">Password</label>
           <div className="flex items-center w-full">
             <input
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-transparent border-none text-white text-[0.83vw] font-['SF_Pro_Text'] focus:outline-none placeholder:text-white/40 font-normal leading-[1.25vw]"
+              className="w-full bg-transparent border-none text-white text-[0.83vw] font-['SF_Pro_Text'] focus:outline-none placeholder:text-white/40 font-normal not-italic leading-[1.25vw]"
             />
             <button
               type="button"
@@ -76,7 +76,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
           <button
             type="button"
             onClick={onForgotPassword}
-            className="text-white text-[0.625vw] font-bold font-['SF_Pro_Text'] hover:underline transition-all"
+            className="text-white text-[0.625vw] font-bold not-italic font-['SF_Pro_Text'] hover:underline transition-all"
           >
             Forgot Password?
           </button>
@@ -88,7 +88,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
             type="submit"
             className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25),0px_-8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] transition-all hover:brightness-110 active:scale-[0.98]"
           >
-            <span className="font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.5] text-white text-center">
+            <span className="font-['SF_Pro_Text'] font-medium not-italic text-[0.83vw] leading-[1.5] text-white text-center">
               Login
             </span>
           </button>

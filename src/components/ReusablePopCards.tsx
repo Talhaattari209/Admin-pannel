@@ -72,7 +72,7 @@ export default function ReusablePopCards() {
 
     return (
         <div className="p-8 bg-slate-900 min-h-screen text-white">
-            <h1 className="text-3xl font-bold mb-8">Reusable Pop Cards Demo</h1>
+            <h1 className="text-3xl font-bold not-italic mb-8">Reusable Pop Cards Demo</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* Buttons to open modals */}

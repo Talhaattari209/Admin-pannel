@@ -35,7 +35,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ label, isActive, onClick, ico
             </div>
 
             {/* Label */}
-            <span className={`font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[1.25vw] text-left flex-grow ${isActive ? 'text-white' : 'text-[#CCCCCC]'}`}>
+            <span className={`font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-left flex-grow ${isActive ? 'text-white' : 'text-[#CCCCCC]'}`}>
                 {label}
             </span>
 

@@ -26,13 +26,13 @@ const ExportModal: React.FC<ExportModalProps> = ({ onClose, onExport }) => {
         <>
             <button
                 onClick={onClose}
-                className="flex-1 h-[56px] border border-white/30 rounded-[52px] text-white font-medium hover:bg-white/5 transition-colors font-['SF_Pro_Text']"
+                className="flex-1 h-[56px] border border-white/30 rounded-[52px] text-white font-medium not-italic hover:bg-white/5 transition-colors font-['SF_Pro_Text']"
             >
                 Cancel
             </button>
             <button
                 onClick={() => onExport(format, dateRange)}
-                className="flex-1 h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium shadow-lg hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
+                className="flex-1 h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium not-italic shadow-lg hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
             >
                 Export Data
             </button>
@@ -51,13 +51,13 @@ const ExportModal: React.FC<ExportModalProps> = ({ onClose, onExport }) => {
 
                 {/* Format Selection */}
                 <div className="flex flex-col gap-3">
-                    <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-80">Format</label>
+                    <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-80">Format</label>
                     <div className="flex gap-4">
                         {['CSV', 'PDF', 'Excel'].map((f) => (
                             <button
                                 key={f}
                                 onClick={() => setFormat(f)}
-                                className={`flex-1 h-[48px] rounded-[12px] border flex items-center justify-center text-[14px] font-medium transition-all ${format === f
+                                className={`flex-1 h-[48px] rounded-[12px] border flex items-center justify-center text-[14px] font-medium not-italic transition-all ${format === f
                                     ? 'bg-[#5F00DB] border-[#5F00DB] text-white shadow-lg'
                                     : 'bg-transparent border-white/20 text-white/60 hover:border-white/40 hover:text-white'
                                     }`}
@@ -70,7 +70,7 @@ const ExportModal: React.FC<ExportModalProps> = ({ onClose, onExport }) => {
 
                 {/* Date Range Selection */}
                 <div className="flex flex-col gap-3">
-                    <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-80">Date Range</label>
+                    <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-80">Date Range</label>
                     <div className="relative">
                         <select
                             value={dateRange}

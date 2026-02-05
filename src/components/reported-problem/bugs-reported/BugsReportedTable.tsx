@@ -36,28 +36,30 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
     const [currentPage, setCurrentPage] = useState(1);
 
     const ColumnHeader = ({ label, grow = false, width = "auto" }: { label: string, grow?: boolean, width?: string }) => (
-        <div className={`flex flex-row items-center gap-2 px-4 h-[38px] group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
-            <span className="text-white text-[12px] font-bold uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity whitespace-nowrap font-['SF_Pro_Text']">
+        <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
+            <span className="text-[#AAAAAA] font-['SF_Pro_Text'] not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity truncate">
                 {label}
             </span>
-            <div className="flex flex-col opacity-20 group-hover:opacity-100 transition-opacity shrink-0">
-                <svg viewBox="0 0 10 6" className="w-[10px] h-[6px] rotate-180" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-                <svg viewBox="0 0 10 6" className="w-[10px] h-[6px]" fill="currentColor"><path d="M5 0L0 5H10L5 0Z" /></svg>
-            </div>
+            <img
+                src="/assets/chevron_up_down.png"
+                alt="Sort"
+                style={{ width: '0.73vw', height: '0.73vw', margin: '-0.21vw 0px' }}
+                className="shrink-0 opacity-100"
+            />
         </div>
     );
 
     return (
-        <div className="flex flex-col w-full bg-[#222222] rounded-[16px] rounded-tl-none overflow-hidden border border-white/5 shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
-            <div className="flex flex-row items-center justify-between p-4 gap-4 bg-[#1a1a1a]/30 flex-wrap">
+        <div className="flex flex-col w-full bg-[#222222] rounded-[1.25vw] overflow-hidden border border-white/5 shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
+            <div className="flex flex-row items-center justify-between w-full h-[4.58vw] px-[0.83vw] bg-[#1C1C1E]">
                 <SearchInput value={search} onChange={setSearch} />
-                <div className="flex gap-4 flex-wrap">
+                <div className="flex gap-[0.66vw]">
                     <FilterSelect label="Issue Type" value={issueTypeFilter} options={['UI', 'Security', 'Performance', 'Functional']} onChange={setIssueTypeFilter} />
                     <FilterSelect label="Status" value={statusFilter} options={['New', 'Pending', 'Resolved', 'Closed']} onChange={setStatusFilter} />
                 </div>
             </div>
 
-            <div className="flex flex-row items-center w-full border-b border-white/10 bg-[#1a1a1a]/50">
+            <div className="flex flex-row items-center w-full h-[48px] bg-[#1C1C1E]">
                 <ColumnHeader label="Reported By" width="16.66vw" />
                 <ColumnHeader label="Subject" width="13.88vw" />
                 <ColumnHeader label="Message" grow />
@@ -66,13 +68,13 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
                 <div className="w-[4.16vw] shrink-0" />
             </div>
 
-            <div className="flex flex-col min-h-[400px]">
+            <div className="flex flex-col flex-grow h-full min-h-[400px]">
                 {MOCK_BUGS.map((bug) => (
                     <BugsReportedTableRow key={bug.id} data={bug} onAction={() => onViewDetail(bug)} />
                 ))}
 
                 {/* Gap */}
-                <div className="w-full h-[2.60vw]" />
+                <div className="mt-auto w-full h-[2.60vw]" />
 
                 {/* Pagination */}
                 <Pagination

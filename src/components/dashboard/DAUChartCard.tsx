@@ -41,7 +41,7 @@ const DAUChartCard: React.FC = () => {
   return (
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-[52.5vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5 transition-all hover:border-white/10">
       <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
-        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Daily Active Users (DAU)
         </h4>
         <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] max-w-[50.83vw] font-['SF_Pro_Text']">
@@ -101,7 +101,7 @@ const DAUChartCard: React.FC = () => {
                 <div className="flex items-center justify-center gap-[0.62vw] mt-[0.02vw]">
                   <div className="w-[0.83vw] h-[0.1vw] bg-[#5F00DB]" />
                   <div className="w-[0.41vw] h-[0.41vw] bg-[#5F00DB] rounded-full -ml-[0.62vw]" />
-                  <span className="text-white/60 text-[0.62vw] font-inter">DAU</span>
+                  <span className="text-white/60 text-[0.62vw] font-inter not-italic">DAU</span>
                 </div>
               )}
             />

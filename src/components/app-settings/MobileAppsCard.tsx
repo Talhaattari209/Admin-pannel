@@ -24,8 +24,8 @@ const MobileAppsCard: React.FC = () => {
       </div>
 
       <div className="flex flex-col flex-grow min-w-0">
-        <span className="text-white text-[1.04vw] font-bold font-inter leading-none mb-[0.21vw]">{platform}</span>
-        <span className="text-white/40 text-[0.73vw] font-inter font-light">Version {version}</span>
+        <span className="text-white text-[1.04vw] font-bold not-italic font-inter not-italic leading-none mb-[0.21vw]">{platform}</span>
+        <span className="text-white/40 text-[0.73vw] font-inter not-italic font-light not-italic">Version {version}</span>
       </div>
 
       <div className="flex flex-row items-center gap-[0.83vw]">
@@ -40,7 +40,7 @@ const MobileAppsCard: React.FC = () => {
             </svg>
           )}
         </div>
-        <button className="flex items-center gap-[0.42vw] px-[0.83vw] py-[0.42vw] bg-[#5F00DB] rounded-[2.71vw] text-white text-[0.73vw] font-medium hover:brightness-110 shadow-lg whitespace-nowrap">
+        <button className="flex items-center gap-[0.42vw] px-[0.83vw] py-[0.42vw] bg-[#5F00DB] rounded-[2.71vw] text-white text-[0.73vw] font-medium not-italic hover:brightness-110 shadow-lg whitespace-nowrap">
           {isAndroid ? 'Play Store' : 'App Store'}
           <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw]" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" /></svg>
         </button>
@@ -51,7 +51,7 @@ const MobileAppsCard: React.FC = () => {
   return (
     <div className="flex flex-col p-[1.25vw] bg-[#222222] border border-[#666666]/30 rounded-[0.83vw] gap-[1.67vw] shrink-0 shadow-lg">
       <div className="flex flex-col gap-[0.42vw]">
-        <h3 className="text-white text-[1.46vw] font-bold font-inter leading-none tracking-tight">Mobile Apps</h3>
+        <h3 className="text-white text-[1.46vw] font-bold not-italic font-inter not-italic leading-none tracking-tight">Mobile Apps</h3>
         <p className="text-[#CCCCCC] text-[0.83vw] opacity-60">Latest versions of your iOS and Android Mobile Apps</p>
       </div>
       <div className="flex flex-row gap-[0.83vw]">

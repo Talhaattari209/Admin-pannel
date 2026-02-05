@@ -33,10 +33,10 @@ const renderCustomizedLabel = (props: any) => {
   return (
     <g>
       <path d={`M${sx},${sy} Q${mx},${my} ${x},${y}`} stroke={color} fill="none" strokeWidth={1} opacity={0.6} />
-      <text x={x} y={y - 8} fill="rgba(255, 255, 255, 0.6)" textAnchor={isRight ? 'start' : 'end'} dominantBaseline="central" fontSize="0.62vw" className="font-inter">
+      <text x={x} y={y - 8} fill="rgba(255, 255, 255, 0.6)" textAnchor={isRight ? 'start' : 'end'} dominantBaseline="central" fontSize="0.62vw" className="font-inter not-italic">
         {name}
       </text>
-      <text x={x} y={y + 8} fill={color} textAnchor={isRight ? 'start' : 'end'} dominantBaseline="central" fontSize="0.62vw" fontWeight="bold" className="font-inter">
+      <text x={x} y={y + 8} fill={color} textAnchor={isRight ? 'start' : 'end'} dominantBaseline="central" fontSize="0.62vw" fontWeight="bold" className="font-inter not-italic">
         {value}
       </text>
     </g>
@@ -48,7 +48,7 @@ const SubscriptionsBreakdownCard: React.FC = () => {
   return (
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full">
-        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Subscriptions Breakdown
         </h4>
         <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
@@ -58,7 +58,7 @@ const SubscriptionsBreakdownCard: React.FC = () => {
 
       <div className="relative flex-grow w-full flex items-center justify-center p-[0.83vw]">
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-          <span className="text-white text-[1.66vw] font-bold font-inter">100</span>
+          <span className="text-white text-[1.66vw] font-bold not-italic font-inter not-italic">100</span>
         </div>
 
         <ResponsiveContainer width="100%" height="100%">
@@ -94,7 +94,7 @@ const SubscriptionsBreakdownCard: React.FC = () => {
                   {payload?.map((entry: any, index: number) => (
                     <div key={index} className="flex items-center gap-[0.41vw]">
                       <div className="w-[0.62vw] h-[0.62vw] rounded-full" style={{ backgroundColor: entry.color }} />
-                      <span className="text-white/60 text-[0.62vw] font-inter">{entry.value}</span>
+                      <span className="text-white/60 text-[0.62vw] font-inter not-italic">{entry.value}</span>
                     </div>
                   ))}
                 </div>

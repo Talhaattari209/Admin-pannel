@@ -54,7 +54,7 @@ export const ProfileTabs = ({ activeTab, onTabChange }: { activeTab: string, onT
                 // No, I need to insert ProfileMedia. I'll just skip replacing ProfileTabs if I don't need to change it.
                 // But I need to add ProfileMedia. I'll add it BEFORE ProfileOverview.
                 >
-                    <span className="font-['Lato'] font-normal text-[0.83vw] leading-[1.0vw] whitespace-nowrap">
+                    <span className="font-['Lato'] font-normal not-italic text-[0.83vw] leading-[1.0vw] whitespace-nowrap">
                         {tab}
                     </span>
                 </button>
@@ -94,8 +94,8 @@ const ProfileMedia = () => {
             {/* Header */}
             <div className="flex flex-col gap-[0.83vw] w-[57.51vw]">
                 <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] border-b border-[#333333]">
-                    <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Media</h3>
-                    <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] text-[#CCCCCC]">View and manage all photos and videos uploaded by the user.</span>
+                    <h3 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Media</h3>
+                    <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] text-[#CCCCCC]">View and manage all photos and videos uploaded by the user.</span>
                 </div>
             </div>
 
@@ -136,7 +136,7 @@ const ProfileMedia = () => {
                                                 className="flex flex-row items-center gap-[0.42vw] px-[0.63vw] py-[0.42vw] bg-[#FF4E4E] rounded-[2.7vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#ff3333] transition-colors"
                                             >
                                                 <Trash2 className="w-[0.83vw] h-[0.83vw] text-white" />
-                                                <span className="text-[0.83vw] text-white font-medium">Remove</span>
+                                                <span className="text-[0.83vw] text-white font-medium not-italic">Remove</span>
                                             </button>
                                         </div>
                                     </div>
@@ -207,8 +207,8 @@ export const ProfilePrompts = () => {
             {/* Heading */}
             <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] h-[4.69vw] relative">
                 <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] w-full">
-                    <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Prompts</h3>
-                    <p className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">Review and moderate the user’s responses to personality and icebreaker prompts.</p>
+                    <h3 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Prompts</h3>
+                    <p className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Review and moderate the user’s responses to personality and icebreaker prompts.</p>
                 </div>
                 {/* Gradient Line */}
                 <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, #FFFFFF 100%)' }} />
@@ -220,8 +220,8 @@ export const ProfilePrompts = () => {
                 <div className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] h-[7.08vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
                     {/* Top Row: Question + Date + Trash */}
                     <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.94vw] leading-[1.67vw] text-white flex-grow">A perfect weekend for me looks like...</span>
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">A perfect weekend for me looks like...</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
                         <div
                             className="flex justify-center items-center w-[1.67vw] h-[1.67vw] bg-[#FF4E4E] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] rounded-full cursor-pointer hover:bg-[#ff3333] transition-colors"
                             onClick={() => setIsRemoveOpen(true)}
@@ -242,7 +242,7 @@ export const ProfilePrompts = () => {
                         </div>
                         {/* Time */}
                         <div className="w-[2.29vw] h-[0.73vw] flex items-center justify-center mr-[0.63vw] flex-shrink-0">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.63vw] leading-[0.73vw] text-white text-center">00:16</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.63vw] leading-[0.73vw] text-white text-center">00:16</span>
                         </div>
                     </div>
                 </div>
@@ -250,8 +250,8 @@ export const ProfilePrompts = () => {
                 {/* Text Prompt 1 */}
                 <div className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] h-[5.83vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
                     <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.94vw] leading-[1.67vw] text-white flex-grow">My friends describe me as...</span>
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">My friends describe me as...</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
                         <div
                             className="flex justify-center items-center w-[1.67vw] h-[1.67vw] bg-[#FF4E4E] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] rounded-full cursor-pointer hover:bg-[#ff3333] transition-colors"
                             onClick={() => setIsRemoveOpen(true)}
@@ -260,15 +260,15 @@ export const ProfilePrompts = () => {
                         </div>
                     </div>
                     <div className="w-[55.83vw] h-[1.67vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.94vw] leading-[1.67vw] text-[#CCCCCC]">Quiet at first, but the funniest one once you know me.</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.94vw] leading-[1.67vw] text-[#CCCCCC]">Quiet at first, but the funniest one once you know me.</span>
                     </div>
                 </div>
 
                 {/* Text Prompt 2 */}
                 <div className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] h-[5.83vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
                     <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.94vw] leading-[1.67vw] text-white flex-grow">Two truths and a lie...</span>
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">Two truths and a lie...</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
                         <div
                             className="flex justify-center items-center w-[1.67vw] h-[1.67vw] bg-[#FF4E4E] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] rounded-full cursor-pointer hover:bg-[#ff3333] transition-colors"
                             onClick={() => setIsRemoveOpen(true)}
@@ -277,7 +277,7 @@ export const ProfilePrompts = () => {
                         </div>
                     </div>
                     <div className="w-[55.83vw] h-[1.67vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.94vw] leading-[1.67vw] text-[#CCCCCC]">I’ve skydived, I hate pizza, I can juggle three oranges.</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.94vw] leading-[1.67vw] text-[#CCCCCC]">I’ve skydived, I hate pizza, I can juggle three oranges.</span>
                     </div>
                 </div>
             </div>
@@ -301,10 +301,10 @@ export const ProfilePrompts = () => {
 
 const InfoField = ({ label, value }: { label: string, value: string }) => (
     <div className="flex flex-col gap-[0.63vw] w-[28.33vw]">
-        <label className="font-['SF_Pro_Text'] font-bold text-[0.63vw] leading-[0.83vw] text-white">
+        <label className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
             {label}
         </label>
-        <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[1.25vw] text-white">
+        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white">
             {value}
         </span>
     </div>
@@ -338,10 +338,10 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
         >
             {/* Header */}
             <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] relative">
-                <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">
+                <h3 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">
                     Overview
                 </h3>
-                <p className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">
+                <p className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">
                     Quick snapshot of the user's profile, activity, and engagement stats.
                 </p>
                 {/* Gradient Line */}
@@ -378,17 +378,17 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
 
                 {/* Bio */}
                 <div className="flex flex-col gap-[0.63vw] w-full">
-                    <label className="font-['SF_Pro_Text'] font-bold text-[0.63vw] leading-[0.83vw] text-white">
+                    <label className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
                         Short Bio
                     </label>
-                    <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[1.25vw] text-white">
+                    <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white">
                         Code, climb, repeat. Always up for a challenge — unless it's karaoke.
                     </span>
                 </div>
 
                 {/* Lifestyle Tags */}
                 <div className="flex flex-col gap-[0.63vw] w-full">
-                    <label className="font-['SF_Pro_Text'] font-bold text-[0.63vw] leading-[0.83vw] text-white">
+                    <label className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
                         Lifestyle Tags
                     </label>
                     <div className="flex flex-row flex-wrap gap-[0.63vw]">
@@ -417,7 +417,7 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
 
                 {/* Interests */}
                 <div className="flex flex-col gap-[0.63vw] w-full">
-                    <label className="font-['SF_Pro_Text'] font-bold text-[0.63vw] leading-[0.83vw] text-white">
+                    <label className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
                         Interests
                     </label>
                     <div className="flex flex-row flex-wrap gap-[0.63vw]">
@@ -452,17 +452,17 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
 
 const InfoRow = ({ label, value, isBadge = false }: { label: string, value: string | React.ReactNode, isBadge?: boolean }) => (
     <div className="flex flex-row items-center justify-between w-full h-[1.67vw]">
-        <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">
+        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">
             {label}
         </span>
         {isBadge ? (
             <div className="flex flex-row justify-center items-center px-[0.63vw] py-[0.42vw] bg-[#5F00DB] rounded-[0.83vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-white">
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                     {value}
                 </span>
             </div>
         ) : (
-            <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-white text-right">
+            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-white text-right">
                 {value}
             </span>
         )}
@@ -473,7 +473,7 @@ export const ProfileInfoCard = () => (
     <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[19.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] h-fit">
         {/* Heading */}
         <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] relative">
-            <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">
+            <h3 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">
                 Profile Info
             </h3>
             {/* Gradient Line */}
@@ -515,7 +515,7 @@ interface InternalCardProps {
 
 const GroupInfoRow = ({ label, value }: { label: string, value: React.ReactNode }) => (
     <div className="flex flex-row items-center justify-between w-full h-[1.43vw]">
-        <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">
+        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">
             {label}
         </span>
         <div className="flex items-center gap-[0.42vw]">
@@ -545,7 +545,7 @@ const InternalDetailCard = ({
                                 className="w-[1.25vw] h-[1.25vw] rounded-full bg-cover bg-center border border-white/10"
                                 style={{ backgroundImage: `url(${createdBy.avatar})` }}
                             />
-                            <span className="font-['SF_Pro_Text'] font-normal text-white text-[0.83vw] leading-[150%] text-right">{createdBy.name}</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-white text-[0.83vw] leading-[150%] text-right">{createdBy.name}</span>
                         </>
                     }
                 />
@@ -553,19 +553,19 @@ const InternalDetailCard = ({
                 {/* Created On */}
                 <GroupInfoRow
                     label="Created On"
-                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.83vw] leading-[150%] text-right">{createdOn}</span>}
+                    value={<span className="font-['SF_Pro_Text'] font-normal not-italic text-white text-[0.83vw] leading-[150%] text-right">{createdOn}</span>}
                 />
 
                 {/* Joined On */}
                 <GroupInfoRow
                     label="Joined On"
-                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.83vw] leading-[150%] text-right">{joined}</span>}
+                    value={<span className="font-['SF_Pro_Text'] font-normal not-italic text-white text-[0.83vw] leading-[150%] text-right">{joined}</span>}
                 />
 
                 {/* Group Members Count */}
                 <GroupInfoRow
                     label="Group Members"
-                    value={<span className="font-['SF_Pro_Text'] font-normal text-white text-[0.83vw] leading-[150%] text-right">{memberCount}</span>}
+                    value={<span className="font-['SF_Pro_Text'] font-normal not-italic text-white text-[0.83vw] leading-[150%] text-right">{memberCount}</span>}
                 />
             </div>
 
@@ -577,7 +577,7 @@ const InternalDetailCard = ({
                             className="w-[2.84vw] h-[2.84vw] rounded-full border-[2px] border-[#111111] bg-cover bg-center"
                             style={{ backgroundImage: `url(${member.image})` }}
                         />
-                        <span className="font-['SF_Pro_Text'] font-normal text-[#EEEEEE] text-[0.73vw] leading-[150%] text-center truncate w-full">
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[#EEEEEE] text-[0.73vw] leading-[150%] text-center truncate w-full">
                             {member.name}
                         </span>
                     </div>
@@ -611,9 +611,9 @@ const MatchDetailCard = ({
         <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[28.33vw] h-[14.01vw] bg-[#111111] backdrop-blur-[6px] rounded-[1.25vw] border border-white/5 shrink-0 font-['SF_Pro_Text']">
             {/* Status Row */}
             <div className="flex flex-row items-center justify-between w-full h-[1.67vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">Status</span>
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Status</span>
                 <div className={`flex flex-row justify-center items-center px-[0.63vw] py-[0.42vw] rounded-[0.83vw] ${badgeColor}`}>
-                    <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-white">
+                    <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                         {status}
                     </span>
                 </div>
@@ -621,14 +621,14 @@ const MatchDetailCard = ({
 
             {/* Date Row */}
             <div className="flex flex-row items-center justify-between w-full h-[1.25vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">{statusDateLabel}</span>
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-white text-right">{statusDate}</span>
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">{statusDateLabel}</span>
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-white text-right">{statusDate}</span>
             </div>
 
             {/* Member Count Row */}
             <div className="flex flex-row items-center justify-between w-full h-[1.25vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">Group Members</span>
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-white text-right">{memberCount}</span>
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Group Members</span>
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-white text-right">{memberCount}</span>
             </div>
 
             {/* Members Avatars Row */}
@@ -639,7 +639,7 @@ const MatchDetailCard = ({
                             className="w-[3.33vw] h-[3.33vw] rounded-full border-[2px] border-[#111111] bg-cover bg-center"
                             style={{ backgroundImage: `url(${member.image})` }}
                         />
-                        <span className="font-['SF_Pro_Text'] font-normal text-[#EEEEEE] text-[0.73vw] leading-[150%] text-center truncate w-full">
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[#EEEEEE] text-[0.73vw] leading-[150%] text-center truncate w-full">
                             {member.name}
                         </span>
                     </div>
@@ -703,8 +703,8 @@ export const ProfileMatches = () => {
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw]">
                 <div className="flex flex-col gap-[0.83vw]">
-                    <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Matches</h3>
-                    <p className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">Monitor user’s group matches, including status and last activity.</p>
+                    <h3 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Matches</h3>
+                    <p className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Monitor user’s group matches, including status and last activity.</p>
                 </div>
                 {/* Gradient Divider Line */}
                 <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, rgba(255, 255, 255, 0.1) 100%)' }} />
@@ -744,8 +744,8 @@ export const FullGroupCard = () => {
             {/* Header Section */}
             <div className="w-full relative pb-[0.71vw]">
                 <div className="flex flex-col gap-[0.71vw]">
-                    <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Groups</h3>
-                    <p className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">List of all groups the user belongs to or has created.</p>
+                    <h3 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Groups</h3>
+                    <p className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">List of all groups the user belongs to or has created.</p>
                 </div>
                 {/* Gradient Divider Line */}
                 <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, rgba(255, 255, 255, 0.1) 100%)' }} />
@@ -800,10 +800,10 @@ const PokeActivityRow = ({ item }: { item: PokeActivityItem }) => {
                     style={{ backgroundImage: `url(${item.user.avatar})` }}
                 />
                 <div className="flex flex-col justify-center gap-[0.21vw]">
-                    <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-white">
+                    <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                         {item.user.name}
                     </span>
-                    <span className="font-['SF_Pro_Text'] font-light text-[0.57vw] leading-[0.83vw] tracking-[0.02em] text-white/50">
+                    <span className="font-['SF_Pro_Text'] font-light not-italic text-[0.57vw] leading-[0.83vw] tracking-[0.02em] text-white/50">
                         {item.user.email}
                     </span>
                 </div>
@@ -811,14 +811,14 @@ const PokeActivityRow = ({ item }: { item: PokeActivityItem }) => {
 
             {/* Type Column */}
             <div className="flex flex-row items-center w-[7.29vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-white">
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                     {item.type}
                 </span>
             </div>
 
             {/* Details Column */}
             <div className="flex flex-row items-center w-[22.08vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-[#CCCCCC] truncate pr-[1vw]">
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-[#CCCCCC] truncate pr-[1vw]">
                     {item.details}
                 </span>
             </div>
@@ -826,7 +826,7 @@ const PokeActivityRow = ({ item }: { item: PokeActivityItem }) => {
             {/* Status Column */}
             <div className="flex flex-row items-center w-[7.29vw]">
                 <div className={`flex flex-row justify-center items-center px-[0.63vw] py-[0.21vw] rounded-[0.83vw] h-[1.67vw] ${getStatusStyle(item.status)}`}>
-                    <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw]">
+                    <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw]">
                         {item.status}
                     </span>
                 </div>
@@ -834,7 +834,7 @@ const PokeActivityRow = ({ item }: { item: PokeActivityItem }) => {
 
             {/* Timestamp Column */}
             <div className="flex flex-row items-center justify-end gap-[0.42vw] w-[10.42vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-white">
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                     {item.timestamp}
                 </span>
             </div>
@@ -969,8 +969,8 @@ export const ProfilePokesActivity = () => {
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw] flex-shrink-0">
                 <div className="flex flex-col gap-[0.83vw]">
-                    <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Pokes Activity</h3>
-                    <p className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">Track sent and received pokes, along with their context and outcomes.</p>
+                    <h3 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Pokes Activity</h3>
+                    <p className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Track sent and received pokes, along with their context and outcomes.</p>
                 </div>
                 {/* Gradient Divider Line */}
                 <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, rgba(255, 255, 255, 0.1) 100%)' }} />
@@ -984,18 +984,18 @@ export const ProfilePokesActivity = () => {
                         onClick={() => { setSubTab('Sent'); setCurrentPage(1); }}
                         className={`flex flex-row justify-center items-center px-[1.25vw] h-[2.5vw] min-w-[5.52vw] gap-[0.42vw] rounded-t-[0.63vw] transition-colors ${subTab === 'Sent' ? 'bg-[#5F00DB]' : 'bg-[#111111] hover:bg-[#333333]'}`}
                     >
-                        <span className="font-['Lato'] font-normal text-[0.83vw] leading-[1.0vw] text-white">Sent</span>
+                        <span className="font-['Lato'] font-normal not-italic text-[0.83vw] leading-[1.0vw] text-white">Sent</span>
                         <div className="flex flex-row justify-center items-center w-[0.94vw] h-[0.94vw] bg-[#FF4E4E] rounded-[1.25vw]">
-                            <span className="font-['SF_Pro_Text'] font-bold text-[0.63vw] leading-[0.73vw] text-white flex items-center justify-center h-full">{sentPokes.length}</span>
+                            <span className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-[0.73vw] text-white flex items-center justify-center h-full">{sentPokes.length}</span>
                         </div>
                     </button>
                     <button
                         onClick={() => { setSubTab('Received'); setCurrentPage(1); }}
                         className={`flex flex-row justify-center items-center px-[1.25vw] h-[2.5vw] min-w-[5.52vw] gap-[0.42vw] rounded-t-[0.63vw] transition-colors ${subTab === 'Received' ? 'bg-[#5F00DB]' : 'bg-[#111111] hover:bg-[#333333]'}`}
                     >
-                        <span className="font-['Lato'] font-normal text-[0.83vw] leading-[1.0vw] text-white">Received</span>
+                        <span className="font-['Lato'] font-normal not-italic text-[0.83vw] leading-[1.0vw] text-white">Received</span>
                         <div className="flex flex-row justify-center items-center w-[0.94vw] h-[0.94vw] bg-[#FF4E4E] rounded-[1.25vw]">
-                            <span className="font-['SF_Pro_Text'] font-bold text-[0.63vw] leading-[0.73vw] text-white flex items-center justify-center h-full">{receivedPokes.length}</span>
+                            <span className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-[0.73vw] text-white flex items-center justify-center h-full">{receivedPokes.length}</span>
                         </div>
                     </button>
                 </div>
@@ -1005,23 +1005,23 @@ export const ProfilePokesActivity = () => {
                     {/* Table Header */}
                     <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1a1a1a] border-b border-[#333333] px-[0.83vw] flex-shrink-0">
                         <div className="flex flex-row items-center gap-[0.42vw] w-[10.42vw]">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">User</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC]">User</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                         <div className="flex flex-row items-center gap-[0.42vw] w-[7.29vw] ml-[0.63vw]">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC] ml-[1vw]">Type</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC] ml-[1vw]">Type</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                         <div className="flex flex-row items-center gap-[0.42vw] w-[22.08vw] ml-[0.63vw]">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Details</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Details</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                         <div className="flex flex-row items-center gap-[0.42vw] w-[7.29vw] ml-[0.63vw]">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Status</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Status</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                         <div className="flex flex-row items-center gap-[0.42vw] w-[10.42vw] ml-auto justify-end">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC] mr-[0.5vw]">Timestamp</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC] mr-[0.5vw]">Timestamp</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                     </div>
@@ -1070,27 +1070,27 @@ const TransactionRow = ({ item }: { item: Transaction }) => {
         <div className="flex flex-row items-center w-full h-[2.92vw] border-b border-[#666666]/50 bg-[#111111] px-[0.63vw] hover:bg-[#FFFFFF]/5 transition-colors">
             {/* Type */}
             <div className="flex flex-row items-center w-[14.37vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-white">
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                     {item.type}
                 </span>
             </div>
             {/* Amount */}
             <div className="flex flex-row items-center w-[14.37vw]">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-white">
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                     {item.amount}
                 </span>
             </div>
             {/* Status */}
             <div className="flex flex-row items-center w-[14.37vw]">
                 <div className={`flex items-center justify-center px-[0.63vw] py-[0.42vw] rounded-[0.83vw] h-[1.67vw] ${item.status === 'Successful' ? 'bg-[#3ADC60]' : 'bg-[#FF4E4E]'}`}>
-                    <span className={`font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] ${item.status === 'Successful' ? 'text-black' : 'text-white'}`}>
+                    <span className={`font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] ${item.status === 'Successful' ? 'text-black' : 'text-white'}`}>
                         {item.status}
                     </span>
                 </div>
             </div>
             {/* Timestamp */}
             <div className="flex flex-row items-center w-[14.37vw] justify-end">
-                <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.83vw] text-white">
+                <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                     {item.timestamp}
                 </span>
             </div>
@@ -1122,8 +1122,8 @@ export const ProfileSubscription = () => {
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw]">
                 <div className="flex flex-col gap-[0.83vw]">
-                    <h3 className="font-['SF_Pro_Text'] font-bold text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Subscription & Payments</h3>
-                    <p className="font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] text-[#CCCCCC]">Shows the user’s premium subscription status, poke pack purchases, renewal logs, and transaction history.</p>
+                    <h3 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Subscription & Payments</h3>
+                    <p className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Shows the user’s premium subscription status, poke pack purchases, renewal logs, and transaction history.</p>
                 </div>
                 {/* Gradient Divider Line */}
                 <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, rgba(255, 255, 255, 0.1) 100%)' }} />
@@ -1132,16 +1132,16 @@ export const ProfileSubscription = () => {
             {/* Banner Card */}
             <div className="w-[57.51vw] h-[4.58vw] rounded-[0.83vw] p-[0.83vw] flex flex-row items-center justify-between" style={{ background: 'linear-gradient(180deg, #16003F 0%, #111111 100%)' }}>
                 <div className="flex items-center h-full">
-                    <h4 className="font-['SF_Pro_Text'] font-bold text-[1.25vw] leading-[120%] tracking-[-0.04em] text-white">Fennec Premium</h4>
+                    <h4 className="font-['SF_Pro_Text'] font-bold not-italic text-[1.25vw] leading-[120%] tracking-[-0.04em] text-white">Fennec Premium</h4>
                 </div>
                 <div className="flex flex-row gap-[1.67vw] mr-[1vw]">
                     <div className="flex flex-col gap-[0.42vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] text-[#CCCCCC]">Premium User Since</span>
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] text-white">October 25, 2024</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] text-[#CCCCCC]">Premium User Since</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] text-white">October 25, 2024</span>
                     </div>
                     <div className="flex flex-col gap-[0.42vw]">
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] text-[#CCCCCC]">Next Billing Date</span>
-                        <span className="font-['SF_Pro_Text'] font-normal text-[0.83vw] text-white">November 25, 2025</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] text-[#CCCCCC]">Next Billing Date</span>
+                        <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] text-white">November 25, 2025</span>
                     </div>
                 </div>
             </div>
@@ -1153,19 +1153,19 @@ export const ProfileSubscription = () => {
                     {/* Header */}
                     <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1a1a1a] border-b border-[#333333] px-[0.63vw]">
                         <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Type</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Type</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                         <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Amount</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Amount</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                         <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC]">Status</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Status</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                         <div className="flex flex-row items-center w-[14.37vw] justify-end gap-[0.42vw]">
-                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] text-[#CCCCCC] mr-[0.5vw]">Timestamp</span>
+                            <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] text-[#CCCCCC] mr-[0.5vw]">Timestamp</span>
                             <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
                         </div>
                     </div>

@@ -49,16 +49,16 @@ const SwitchToggleTable: React.FC<SwitchToggleTableProps> = ({ initialPermission
         <div className="flex flex-col p-4 bg-[#111111] border border-white/10 rounded-[16px] gap-4 w-full">
             {/* Header */}
             <div className="flex flex-row items-center gap-4 px-2 h-8">
-                <div className="flex-grow text-[#CCCCCC] text-[16px] font-['SF_Pro_Text']">Module</div>
+                <div className="flex-grow text-[#CCCCCC] text-[16px] font-['SF_Pro_Text'] not-italic">Module</div>
                 {['View', 'Edit', 'Delete', 'Export'].map(label => (
-                    <div key={label} className="w-[72px] text-center text-[#CCCCCC] text-[16px] font-['SF_Pro_Text']">{label}</div>
+                    <div key={label} className="w-[72px] text-center text-[#CCCCCC] text-[16px] font-['SF_Pro_Text'] not-italic">{label}</div>
                 ))}
             </div>
 
             {/* Rows */}
             {MODULES.map(mod => (
                 <div key={mod} className="flex flex-row items-center gap-4 px-2 h-8 min-h-[32px]">
-                    <div className="flex-grow text-[#CCCCCC] text-[16px] font-['SF_Pro_Text'] whitespace-nowrap">{mod}</div>
+                    <div className="flex-grow text-[#CCCCCC] text-[16px] font-['SF_Pro_Text'] not-italic whitespace-nowrap">{mod}</div>
                     <div className="w-[72px] flex justify-center"><Switch active={permissions[mod].view} onToggle={() => toggle(mod, 'view')} /></div>
                     <div className="w-[72px] flex justify-center"><Switch active={permissions[mod].edit} onToggle={() => toggle(mod, 'edit')} /></div>
                     <div className="w-[72px] flex justify-center"><Switch active={permissions[mod].delete} onToggle={() => toggle(mod, 'delete')} /></div>

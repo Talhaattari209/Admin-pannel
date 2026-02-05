@@ -27,7 +27,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
             'Closed': 'bg-[#FF4E4E] text-white',
         };
         return (
-            <div className={`h-[32px] px-4 rounded-full text-[13px] font-bold flex items-center justify-center min-w-[84px] leading-none text-center ${colors[s] || 'bg-white/10 text-white'}`}>
+            <div className={`h-[32px] px-4 rounded-full text-[13px] font-bold not-italic flex items-center justify-center min-w-[84px] leading-none text-center ${colors[s] || 'bg-white/10 text-white'}`}>
                 <span className="mt-[1px] font-['SF_Pro_Text']">{s}</span>
             </div>
         );
@@ -52,7 +52,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                 </button>
 
                 <div className="flex flex-col flex-grow">
-                    <h1 className="text-white text-[36px] font-bold tracking-tight font-['Michroma']">Bug Report Details</h1>
+                    <h1 className="text-white text-[36px] font-bold not-italic tracking-tight font-['Michroma']">Bug Report Details</h1>
                     <p className="text-[#CCCCCC] text-[16px] leading-[150%]">
                         Review the report, inspect the bugs, and take appropriate action to maintain a smoother experience for your users.
                     </p>
@@ -67,23 +67,23 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                     {/* Reported Bug Card */}
                     <div className="flex flex-col p-8 bg-[#222222] border border-[#666666]/30 rounded-[24px] shrink-0 shadow-lg w-full">
                         <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-white text-[28px] font-bold leading-tight">Reported Bug</h3>
+                            <h3 className="text-white text-[28px] font-bold not-italic leading-tight">Reported Bug</h3>
                             {getStatusBadge(bug.status)}
                         </div>
 
                         <div className="flex flex-col gap-8">
                             <div className="flex flex-col gap-2">
-                                <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Subject</label>
-                                <p className="text-white text-[18px] font-normal">{bug.subject}</p>
+                                <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Subject</label>
+                                <p className="text-white text-[18px] font-normal not-italic">{bug.subject}</p>
                             </div>
 
                             <div className="flex flex-col gap-2">
-                                <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Message</label>
-                                <p className="text-white text-[18px] font-normal leading-relaxed opacity-90">{bug.message}</p>
+                                <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Message</label>
+                                <p className="text-white text-[18px] font-normal not-italic leading-relaxed opacity-90">{bug.message}</p>
                             </div>
 
                             <div className="flex flex-col gap-3">
-                                <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Attachments</label>
+                                <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Attachments</label>
                                 <div className="flex flex-wrap gap-4">
                                     {(bug.attachments || ['https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800']).map((img, i) => (
                                         <div
@@ -108,7 +108,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                                                         )}
                                                     </svg>
                                                 </button>
-                                                {!revealedImages[i] && <span className="text-white text-[12px] font-bold mt-4 tracking-widest uppercase opacity-80 select-none">Click to reveal</span>}
+                                                {!revealedImages[i] && <span className="text-white text-[12px] font-bold not-italic mt-4 tracking-widest uppercase opacity-80 select-none">Click to reveal</span>}
                                             </div>
                                         </div>
                                     ))}
@@ -119,7 +119,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
                     {/* Activity Card */}
                     <div className="flex flex-col p-8 bg-[#222222] border border-[#666666]/30 rounded-[24px] shrink-0 shadow-xl w-full">
-                        <h3 className="text-white text-[28px] font-bold">Activity</h3>
+                        <h3 className="text-white text-[28px] font-bold not-italic">Activity</h3>
                         <GradientLine />
                         <div className="flex flex-col relative pl-8 gap-12 pb-10">
                             <div className="absolute left-[11px] top-2 bottom-10 w-[2px] bg-white/10 rounded-full" />
@@ -127,17 +127,17 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                             <div className="relative flex flex-col items-start gap-4">
                                 <div className="absolute -left-[30px] top-1 w-6 h-6 bg-[#5F00DB] rounded-full border-2 border-white z-10 shadow-[0_0_10px_rgba(95,0,219,0.5)]" />
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-white text-[12px] font-bold uppercase tracking-wider">Reported Submitted</span>
+                                    <span className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Reported Submitted</span>
                                     <span className="text-white/60 text-[16px]">{bug.submittedOn}</span>
                                 </div>
 
                                 <div className="flex flex-col p-5 bg-[#16003F] border border-white/5 rounded-[16px] w-[280px] gap-4 mt-2 group shadow-2xl transition-all hover:border-[#5F00DB]/40 cursor-default">
-                                    <label className="text-white text-[12px] font-bold uppercase tracking-wider opacity-60">Submitted By</label>
+                                    <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Submitted By</label>
                                     <div className="flex items-center gap-4">
                                         <div className="w-10 h-10 rounded-full bg-cover bg-center border border-white/10" style={{ backgroundImage: `url(${bug.reportedBy.avatar})` }} />
                                         <div className="flex flex-col flex-grow min-w-0">
-                                            <span className="text-white text-[14px] font-semibold truncate leading-none mb-1">{bug.reportedBy.name}</span>
-                                            <span className="text-white/40 text-[11px] truncate leading-none font-light">{bug.reportedBy.email}</span>
+                                            <span className="text-white text-[14px] font-semibold not-italic truncate leading-none mb-1">{bug.reportedBy.name}</span>
+                                            <span className="text-white/40 text-[11px] truncate leading-none font-light not-italic">{bug.reportedBy.email}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +146,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                             <div className="relative flex flex-col items-start gap-3">
                                 <div className="absolute -left-[30px] top-1 w-6 h-6 bg-[#5F00DB] rounded-full border-2 border-white z-10" />
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-white text-[12px] font-bold uppercase tracking-wider">Status Updated</span>
+                                    <span className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Status Updated</span>
                                     <span className="text-white/60 text-[16px]">Jan 12, 2026 • 10:20 AM</span>
                                 </div>
                                 <div className="flex items-center gap-4 mt-2 bg-white/5 p-2 rounded-full pr-4">
@@ -161,10 +161,10 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
                 {/* Right Column: Actions Sidebar - Sticky */}
                 <div className="flex-[1] flex flex-col gap-6 bg-[#222222] border border-[#666666]/30 rounded-[24px] p-8 lg:sticky lg:top-0 min-w-[340px] w-full shadow-2xl">
-                    <h3 className="text-white text-[28px] font-bold">Actions</h3>
+                    <h3 className="text-white text-[28px] font-bold not-italic">Actions</h3>
                     <GradientLine />
                     <div className="flex flex-col gap-2">
-                        <label className="text-white text-[12px] font-bold uppercase tracking-wider">Status</label>
+                        <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Status</label>
                         <div className="relative border-b border-white py-2 group">
                             <select
                                 value={status}
@@ -182,7 +182,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 flex-grow mt-4">
-                        <label className="text-white text-[12px] font-bold uppercase tracking-wider">Notes</label>
+                        <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Notes</label>
                         <textarea
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
@@ -190,7 +190,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                             className="w-full h-[220px] bg-transparent text-white text-[16px] leading-[150%] focus:outline-none border-b border-white py-2 resize-none placeholder:text-white/40 font-['SF_Pro_Text']"
                         />
                     </div>
-                    <button className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all mt-4">
+                    <button className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold not-italic text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all mt-4">
                         Update Status
                     </button>
                 </div>

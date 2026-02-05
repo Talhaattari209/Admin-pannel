@@ -71,7 +71,7 @@ const BugsReportedCard: React.FC = () => {
   return (
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw]">
-        <h4 className="text-white text-[1.25vw] font-bold leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
           Bugs Reported
         </h4>
         <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
@@ -82,7 +82,7 @@ const BugsReportedCard: React.FC = () => {
       <div className="relative flex flex-row w-full h-[24.11vw] px-[0.41vw] py-[1.25vw]">
         <div className="relative flex-grow h-full flex items-center justify-center">
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-            <span className="text-white text-[1.66vw] font-bold">{total}</span>
+            <span className="text-white text-[1.66vw] font-bold not-italic">{total}</span>
           </div>
 
           <ResponsiveContainer width="100%" height="100%">

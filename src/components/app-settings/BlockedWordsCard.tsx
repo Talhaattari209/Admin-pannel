@@ -22,7 +22,7 @@ const BlockedWordsCard: React.FC = () => {
   return (
     <div className="flex flex-col p-[1.25vw] bg-[#222222] border border-[#666666]/30 rounded-[0.83vw] gap-[1.67vw] shrink-0 shadow-lg min-h-[15.31vw]">
       <div className="flex flex-col gap-[0.42vw]">
-        <h3 className="text-white text-[1.46vw] font-bold font-inter leading-none">Blocked Words</h3>
+        <h3 className="text-white text-[1.46vw] font-bold not-italic font-inter not-italic leading-none">Blocked Words</h3>
         <p className="text-[#CCCCCC] text-[0.83vw] opacity-60">List of keywords that should be banned across the app in messages, bios, prompts, etc.</p>
       </div>
 
@@ -33,7 +33,7 @@ const BlockedWordsCard: React.FC = () => {
               key={idx}
               className="flex items-center gap-[0.42vw] px-[0.83vw] py-[0.31vw] bg-[#5F00DB] rounded-full text-white text-[0.83vw] animate-in zoom-in-75 duration-200"
             >
-              <span className="font-inter">{word}</span>
+              <span className="font-inter not-italic">{word}</span>
               <button
                 onClick={() => removeWord(idx)}
                 className="w-[0.83vw] h-[0.83vw] flex items-center justify-center hover:bg-white/20 rounded-full transition-colors shrink-0"
@@ -53,7 +53,7 @@ const BlockedWordsCard: React.FC = () => {
             if (e.key === 'Enter') addWord();
           }}
           placeholder="Type word and press Enter.."
-          className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/30 p-[0.42vw] font-inter"
+          className="bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/30 p-[0.42vw] font-inter not-italic"
         />
       </div>
     </div>

@@ -22,15 +22,15 @@ const TeamRolesView: React.FC = () => {
             {/* Page Header */}
             <div className="flex flex-row items-end justify-between w-full h-[3.47vw] mb-[1.49vw] shrink-0">
                 <div className="flex flex-col justify-center items-start gap-[0.23vw]">
-                    <h1 className="text-white text-[2.25vw] font-bold tracking-tight font-['SF_Pro_Text']">Team & Roles</h1>
-                    <p className="text-[#CCCCCC] text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
+                    <h1 className="text-white text-[2.25vw] font-bold not-italic tracking-tight font-['SF_Pro_Text']">Team & Roles</h1>
+                    <p className="text-[#CCCCCC] text-[0.83vw] leading-[150%] font-['SF_Pro_Text'] not-italic">
                         Manage admin accounts, assign permissions, and define moderator or reviewer roles.
                     </p>
                 </div>
                 <Button
                     onClick={() => setModal(activeTab === 'members' ? 'ADD_MEMBER' : 'ADD_ROLE')}
                     variant="filled"
-                    className="!px-[1.67vw] font-['SF_Pro_Text'] text-[0.83vw]"
+                    className="!px-[1.67vw] font-['SF_Pro_Text'] not-italic text-[0.83vw]"
                 >
                     {activeTab === 'members' ? 'Add Team Member' : 'Add Role'}
                 </Button>
@@ -38,7 +38,12 @@ const TeamRolesView: React.FC = () => {
 
             {/* Tabs */}
             <div className="w-full mb-[-1px] z-10 flex flex-row">
-                <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
+                <Tabs
+                    tabs={tabs}
+                    activeTab={activeTab}
+                    onTabChange={setActiveTab}
+                    className="gap-[0.42vw] pl-[0.83vw]" // 8px gap, 16px start padding
+                />
             </div>
 
             {/* Table Content */}

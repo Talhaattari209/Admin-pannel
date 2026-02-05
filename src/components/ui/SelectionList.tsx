@@ -19,7 +19,7 @@ export const SelectionList = ({ options, selected, onSelect }: SelectionListProp
                     }`}>
                     {selected === option && <div className="w-2 h-2 rounded-full bg-[#16003F]" />}
                 </div>
-                <span className="text-white text-base leading-[150%] font-normal">{option}</span>
+                <span className="text-white text-base leading-[150%] font-normal not-italic">{option}</span>
                 <input
                     type="radio"
                     className="hidden"
