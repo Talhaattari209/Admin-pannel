@@ -15,11 +15,32 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ title, description, onDone 
         {/* Animated Check Icon */}
         <div className="relative flex items-center justify-center w-[6.25vw] h-[6.25vw]">
           <div className="absolute inset-0 bg-[#3ADC60] opacity-10 blur-2xl rounded-full"></div>
-          <div className="relative w-[4.17vw] h-[4.17vw] rounded-full border-2 border-white/20 flex items-center justify-center isolation-auto overflow-hidden">
-            <svg viewBox="0 0 72 72" className="w-[3.33vw] h-[3.33vw]" fill="none">
-              <circle cx="36" cy="36" r="33" stroke="#3ADC60" strokeWidth="2" className="animate-[spin_4s_linear_infinite]" strokeDasharray="4 4" />
-              <path d="M23 37L31 45L49 27" stroke="#3ADC60" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="animate-in fade-in slide-in-from-top-2 duration-500 delay-200" />
-            </svg>
+
+          {/* Rotating Border Animation & Glow */}
+          <div className="absolute inset-0 z-[1] rounded-full">
+            {/* Glow Layer */}
+            <div
+              className="absolute -inset-[0.5vw] rounded-full animate-[spin_3s_linear_infinite]"
+              style={{
+                background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%)',
+                filter: 'blur(0.25vw)',
+                WebkitMask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)',
+                mask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)'
+              }}
+            />
+            {/* Sharp Border Layer */}
+            <div
+              className="absolute inset-0 rounded-full animate-[spin_3s_linear_infinite]"
+              style={{
+                background: 'conic-gradient(from 0deg, transparent 0%, rgba(58, 220, 96, 1) 50%, transparent 100%)', // Using Green #3ADC60
+                WebkitMask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))',
+                mask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))'
+              }}
+            />
+          </div>
+
+          <div className="relative w-[4.17vw] h-[4.17vw] rounded-full border-2 border-white/10 flex items-center justify-center isolation-auto overflow-visible z-10 bg-white/5 backdrop-blur-[6px]">
+            <img src="/assets/check-circle-success.svg" alt="Success" className="w-[3.33vw] h-[3.33vw] object-contain animate-in fade-in zoom-in duration-500 delay-200" />
           </div>
         </div>
 

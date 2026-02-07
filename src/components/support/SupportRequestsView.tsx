@@ -33,8 +33,8 @@ const SupportRequestsView: React.FC<SupportRequestsViewProps> = ({
                 }}
             />
 
-            {/* Gap match: 1.49vw */}
-            <div className="w-full mt-[1.49vw] mb-[1.25vw]">
+            {/* Gap match: 0.97vw */}
+            <div className="w-full mt-[1.49vw] mb-[0.97vw]">
                 <SupportStatsCards />
             </div>
 

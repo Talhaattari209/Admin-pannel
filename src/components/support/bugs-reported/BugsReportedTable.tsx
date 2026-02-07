@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import SearchInput from '../../app-content/shared/SearchInput';
-import FilterSelect from '../../app-content/shared/FilterSelect';
+import { FilterSelect } from '@/components/shared/TableComponents';
 import BugsReportedTableRow, { BugReportData } from './BugsReportedTableRow';
 
 const MOCK_BUGS: BugReportData[] = [
@@ -30,8 +30,8 @@ interface BugsReportedTableProps {
 
 const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) => {
   const [search, setSearch] = useState('');
-  const [catFilter, setCatFilter] = useState('Select');
-  const [statusFilter, setStatusFilter] = useState('Select');
+  const [catFilter, setCatFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
 
   const ColumnHeader = ({ label, grow = false, width = "auto" }: { label: string, grow?: boolean, width?: string }) => (
     <div className={`flex flex-row items-center gap-2 px-4 h-[38px] group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
@@ -52,8 +52,18 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
       <div className="flex flex-row items-center justify-between p-4 gap-4 bg-[#1a1a1a]/30">
         <SearchInput value={search} onChange={setSearch} />
         <div className="flex gap-4">
-          <FilterSelect label="Category" value={catFilter} options={['UI', 'Security', 'Performance']} onChange={setCatFilter} />
-          <FilterSelect label="Status" value={statusFilter} options={['New', 'Pending', 'Resolved', 'Closed']} onChange={setStatusFilter} />
+          <FilterSelect
+            label="Category"
+            value={catFilter}
+            options={['UI', 'Security', 'Performance'].map(opt => ({ label: opt, value: opt }))}
+            onChange={setCatFilter}
+          />
+          <FilterSelect
+            label="Status"
+            value={statusFilter}
+            options={['New', 'Pending', 'Resolved', 'Closed'].map(opt => ({ label: opt, value: opt }))}
+            onChange={setStatusFilter}
+          />
         </div>
       </div>
 

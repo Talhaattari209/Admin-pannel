@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { BaseCard } from '@/components/PopCards';
-import { Plus } from 'lucide-react';
+// import { Plus } from 'lucide-react';
 
 interface AddPromptModalProps {
     onCancel: () => void;
@@ -13,7 +13,7 @@ const AddPromptModal: React.FC<AddPromptModalProps> = ({ onCancel, onAdd }) => {
 
     const icon = (
         <div className="w-[3.75vw] h-[3.75vw] rounded-full bg-[#5F00DB]/20 flex items-center justify-center">
-            <Plus className="w-[1.67vw] h-[1.67vw] text-white" />
+            <img src="/assets/message-square.svg" alt="Add Prompt" className="w-[1.67vw] h-[1.67vw]" />
         </div>
     );
 
@@ -41,15 +41,17 @@ const AddPromptModal: React.FC<AddPromptModalProps> = ({ onCancel, onAdd }) => {
             description="Create a new conversation starter or question for users."
             actions={actions}
             glowColor="#5F00DB"
+            width="25vw"
+            height="22.81vw"
         >
-            <div className="flex flex-col gap-[0.42vw] w-full">
+            <div className="flex flex-col gap-[0.21vw] w-full h-full min-h-0">
                 <label className="text-white text-[0.73vw] font-medium not-italic ml-[0.42vw]">Prompt Text</label>
                 <input
                     type="text"
                     value={promptText}
                     onChange={(e) => setPromptText(e.target.value)}
                     placeholder="e.g. My favorite weekend activity is..."
-                    className="w-full h-[2.92vw] px-[1.25vw] bg-[#111111]/50 border border-[#666666]/50 rounded-[0.83vw] text-white text-[0.83vw] focus:outline-none focus:border-white/40 placeholder:text-white/30"
+                    className="w-full h-[2.5vw] px-[1.25vw] bg-[#111111]/50 border border-[#666666]/50 rounded-[0.83vw] text-white text-[0.83vw] focus:outline-none focus:border-white/40 placeholder:text-white/30"
                 />
             </div>
         </BaseCard>

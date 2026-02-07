@@ -10,7 +10,7 @@ interface DeletePromptModalProps {
 
 const DeletePromptModal: React.FC<DeletePromptModalProps> = ({ onCancel, onDelete }) => {
 
-    const icon = <img src="/assets/danger.png" alt="Danger" className="w-[2.92vw] h-[2.92vw] object-contain" />;
+    const icon = <img src="/assets/alert-triangle.svg" alt="Danger" className="w-[2.92vw] h-[2.92vw] object-contain" />;
 
     const actions = (
         <>
@@ -36,6 +36,7 @@ const DeletePromptModal: React.FC<DeletePromptModalProps> = ({ onCancel, onDelet
             description="Are you sure you want to delete this prompt? This action cannot be undone."
             actions={actions}
             glowColor="#5F00DB"
+            height="17.81vw"
         />
     );
 };

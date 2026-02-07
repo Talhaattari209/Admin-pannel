@@ -1,9 +1,8 @@
 
 import React, { useState } from 'react';
 import SearchInput from '@/components/app-content/shared/SearchInput';
-import FilterSelect from '@/components/app-content/shared/FilterSelect';
+import { Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import BugsReportedTableRow, { BugReportData } from './BugsReportedTableRow';
-import { Pagination } from '@/components/shared/TableComponents';
 
 const MOCK_BUGS: BugReportData[] = [
     {
@@ -31,8 +30,8 @@ interface BugsReportedTableProps {
 
 const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) => {
     const [search, setSearch] = useState('');
-    const [issueTypeFilter, setIssueTypeFilter] = useState('Select');
-    const [statusFilter, setStatusFilter] = useState('Select');
+    const [issueTypeFilter, setIssueTypeFilter] = useState('');
+    const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
     const ColumnHeader = ({ label, grow = false, width = "auto" }: { label: string, grow?: boolean, width?: string }) => (
@@ -54,8 +53,18 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
             <div className="flex flex-row items-center justify-between w-full h-[4.58vw] px-[0.83vw] bg-[#1C1C1E]">
                 <SearchInput value={search} onChange={setSearch} />
                 <div className="flex gap-[0.66vw]">
-                    <FilterSelect label="Issue Type" value={issueTypeFilter} options={['UI', 'Security', 'Performance', 'Functional']} onChange={setIssueTypeFilter} />
-                    <FilterSelect label="Status" value={statusFilter} options={['New', 'Pending', 'Resolved', 'Closed']} onChange={setStatusFilter} />
+                    <FilterSelect
+                        label="Issue Type"
+                        value={issueTypeFilter}
+                        options={['UI', 'Security', 'Performance', 'Functional'].map(opt => ({ label: opt, value: opt }))}
+                        onChange={setIssueTypeFilter}
+                    />
+                    <FilterSelect
+                        label="Status"
+                        value={statusFilter}
+                        options={['New', 'Pending', 'Resolved', 'Closed'].map(opt => ({ label: opt, value: opt }))}
+                        onChange={setStatusFilter}
+                    />
                 </div>
             </div>
 

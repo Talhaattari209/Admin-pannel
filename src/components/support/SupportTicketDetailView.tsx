@@ -34,7 +34,7 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
     );
 
     return (
-        <div className="flex flex-col w-full h-full animate-in fade-in duration-500 font-['SF_Pro_Text']">
+        <div className="flex flex-col w-full h-full animate-in fade-in duration-500 font-['SF_Pro_Text'] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 
             {/* Profile Details Header */}
             <div className="flex flex-row items-center gap-[0.83vw] w-full h-[4.17vw] mb-[2.08vw] shrink-0">
@@ -96,6 +96,65 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
                             <div className="flex flex-col gap-[0.42vw]">
                                 <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider opacity-60">Message</label>
                                 <p className="text-white text-[0.94vw] font-normal not-italic leading-relaxed opacity-90">{ticket.message}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Activity Card */}
+                    <div className="flex flex-col p-[1.67vw] bg-[#222222] border border-[#666666]/30 rounded-[1.25vw]">
+                        <h3 className="text-white text-[1.46vw] font-bold not-italic leading-tight mb-[1.67vw]">Activity</h3>
+
+                        <div className="flex flex-col">
+                            {/* Item 1: Ticket Created */}
+                            <div className="flex gap-[0.83vw] relative pb-[1.67vw]">
+                                {/* Line */}
+                                <div className="absolute left-[0.625vw] top-[0.625vw] bottom-0 w-[2px] bg-white rounded-full -translate-x-[50%]"></div>
+                                {/* Dot */}
+                                <div className="flex-shrink-0 w-[1.25vw] h-[1.25vw] rounded-full bg-[#5F00DB] border-[1.5px] border-white z-10 box-border"></div>
+
+                                <div className="flex flex-col gap-[0.42vw]">
+                                    <span className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Ticket Created</span>
+                                    <span className="text-white text-[0.83vw] font-normal not-italic opacity-90">Jan 11, 2026 • 11:59 PM</span>
+                                </div>
+                            </div>
+
+                            {/* Item 2: Status Updated (New -> Pending) */}
+                            <div className="flex gap-[0.83vw] relative pb-[1.67vw]">
+                                {/* Line */}
+                                <div className="absolute left-[0.625vw] top-[0.625vw] bottom-0 w-[2px] bg-white rounded-full -translate-x-[50%]"></div>
+                                {/* Dot */}
+                                <div className="flex-shrink-0 w-[1.25vw] h-[1.25vw] rounded-full bg-[#5F00DB] border-[1.5px] border-white z-10 box-border"></div>
+
+                                <div className="flex flex-col gap-[0.42vw]">
+                                    <span className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Status Updated</span>
+                                    <span className="text-white text-[0.83vw] font-normal not-italic opacity-90">Jan 11, 2026 • 11:59 PM</span>
+                                    <div className="flex items-center gap-[0.63vw] mt-[0.21vw]">
+                                        {getStatusBadge('New')}
+                                        <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                                        {getStatusBadge('Pending')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Item 3: Status Updated (Pending -> Resolved) + Note */}
+                            <div className="flex gap-[0.83vw] relative">
+                                {/* Dot */}
+                                <div className="flex-shrink-0 w-[1.25vw] h-[1.25vw] rounded-full bg-[#5F00DB] border-[1.5px] border-white z-10 box-border"></div>
+
+                                <div className="flex flex-col gap-[0.42vw]">
+                                    <span className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Status Updated</span>
+                                    <span className="text-white text-[0.83vw] font-normal not-italic opacity-90">Jan 11, 2026 • 11:59 PM</span>
+                                    <div className="flex items-center gap-[0.63vw] mt-[0.21vw]">
+                                        {getStatusBadge('Pending')}
+                                        <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                                        {getStatusBadge('Resolved')}
+                                    </div>
+
+                                    {/* Note */}
+                                    <div className="mt-[0.63vw] p-[0.83vw] bg-[#16003F] rounded-[0.63vw] self-start">
+                                        <p className="text-white text-[0.73vw] italic font-normal">No proof found in this report.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

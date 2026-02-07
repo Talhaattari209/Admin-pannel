@@ -26,6 +26,29 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
         {/* Glow */}
         {/* <div className="absolute -left-[3.125vw] -right-[3.125vw] -top-[3.125vw] -bottom-[3.125vw] opacity-50 bg-[linear-gradient(180deg,#5F00DB_30%,rgba(17,17,17,0)_70%)] pointer-events-none"></div> */}
 
+        {/* Rotating Border Animation & Glow */}
+        <div className="absolute inset-0 z-[1] rounded-full">
+          {/* Glow Layer */}
+          <div
+            className="absolute -inset-[0.5vw] rounded-full animate-[spin_3s_linear_infinite]"
+            style={{
+              background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%)',
+              filter: 'blur(0.25vw)',
+              WebkitMask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)',
+              mask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)'
+            }}
+          />
+          {/* Sharp Border Layer */}
+          <div
+            className="absolute inset-0 rounded-full animate-[spin_3s_linear_infinite]"
+            style={{
+              background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 1) 50%, transparent 100%)',
+              WebkitMask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))',
+              mask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))'
+            }}
+          />
+        </div>
+
         {/* Icon BG */}
         <div className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0"></div>
 

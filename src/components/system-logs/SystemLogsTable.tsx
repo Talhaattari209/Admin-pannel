@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import SearchInput from '../app-content/shared/SearchInput';
-import FilterSelect from '../app-content/shared/FilterSelect';
+// import FilterSelect from '../app-content/shared/FilterSelect'; // Removed
 import SystemLogsTableRow, { LogEntryData } from './SystemLogsTableRow';
-import { TableFrame, Pagination } from '@/components/shared/TableComponents';
+import { TableFrame, Pagination, FilterSelect } from '@/components/shared/TableComponents'; // Updated import
 
 const MOCK_LOGS: LogEntryData[] = [
     { id: '1', timestamp: 'Dec 31, 2025 • 11:59 PM', user: 'System', role: '—', action: 'Scheduled Backup', details: 'Daily database backup completed successfully.' },
@@ -18,9 +18,9 @@ const MOCK_LOGS: LogEntryData[] = [
 
 const SystemLogsTable: React.FC = () => {
     const [search, setSearch] = useState('');
-    const [userFilter, setUserFilter] = useState('Select');
-    const [roleFilter, setRoleFilter] = useState('Select');
-    const [actionFilter, setActionFilter] = useState('Select');
+    const [userFilter, setUserFilter] = useState('');
+    const [roleFilter, setRoleFilter] = useState('');
+    const [actionFilter, setActionFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
     const ColumnHeader = ({ label, width, sortable = true }: { label: string; width: string; sortable?: boolean }) => (
@@ -44,9 +44,24 @@ const SystemLogsTable: React.FC = () => {
             searchBar={<SearchInput value={search} onChange={setSearch} placeholder="Search" />}
             filterBar={
                 <>
-                    <FilterSelect label="User / System" value={userFilter} options={['System', 'John Doe', 'Sarah Li']} onChange={setUserFilter} />
-                    <FilterSelect label="Role" value={roleFilter} options={['Admin', 'Moderator', 'Editor', '—']} onChange={setRoleFilter} />
-                    <FilterSelect label="Action" value={actionFilter} options={['Backup', 'Suspension', 'Login', 'Removal', 'Creation']} onChange={setActionFilter} />
+                    <FilterSelect
+                        label="User / System"
+                        value={userFilter}
+                        options={['System', 'John Doe', 'Sarah Li'].map(opt => ({ label: opt, value: opt }))}
+                        onChange={setUserFilter}
+                    />
+                    <FilterSelect
+                        label="Role"
+                        value={roleFilter}
+                        options={['Admin', 'Moderator', 'Editor', '—'].map(opt => ({ label: opt, value: opt }))}
+                        onChange={setRoleFilter}
+                    />
+                    <FilterSelect
+                        label="Action"
+                        value={actionFilter}
+                        options={['Backup', 'Suspension', 'Login', 'Removal', 'Creation'].map(opt => ({ label: opt, value: opt }))}
+                        onChange={setActionFilter}
+                    />
                 </>
             }
             className="w-full h-full font-sans not-italic"

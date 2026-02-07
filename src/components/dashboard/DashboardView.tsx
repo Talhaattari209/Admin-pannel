@@ -22,7 +22,7 @@ const DashboardView: React.FC = () => {
     <div className="flex flex-col w-full max-w-[79.16vw] mx-auto gap-[1.25vw] p-[1.66vw] animate-in fade-in duration-700">
 
       {/* Stats Row */}
-      <div className="grid grid-cols-6 gap-[0.83vw] w-full mb-[0.33vw]">
+      <div className="grid grid-cols-5 gap-[0.83vw] w-full mb-[0.33vw]">
         <div>
           <StatCard title="Active Users (30d)" value="142,980" change="8.2%" isPositive={true} />
         </div>
@@ -31,9 +31,6 @@ const DashboardView: React.FC = () => {
         </div>
         <div>
           <StatCard title="Revenue (30d)" value="$124,500" change="3.3%" isPositive={true} />
-        </div>
-        <div>
-          <StatCard title="Avg. Session" value="14m 32s" change="12.5%" isPositive={false} />
         </div>
         <div>
           <StatCard title="Avg. Session" value="14m 32s" change="12.5%" isPositive={false} />

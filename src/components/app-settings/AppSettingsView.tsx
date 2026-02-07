@@ -13,7 +13,7 @@ const AppSettingsView: React.FC = () => {
   const [resetKey, setResetKey] = useState(0);
 
   return (
-    <div key={resetKey} className="flex flex-col w-full h-screen overflow-hidden animate-in fade-in duration-500">
+    <div key={resetKey} className="flex flex-col w-full animate-in fade-in duration-500">
       <div className="w-full">
         <PageHeader
           title="App Settings"
@@ -29,24 +29,19 @@ const AppSettingsView: React.FC = () => {
         />
       </div>
 
-      <div className="flex flex-row gap-[1.25vw] h-full overflow-hidden pb-[2.08vw] mt-[1.49vw]">
-        <div className="flex-[2] flex flex-col gap-[1.25vw] overflow-y-auto no-scrollbar pr-[0.42vw]">
+      <div className="flex flex-row gap-[1.25vw] pb-[2.08vw] mt-[1.49vw] items-start">
+        <div className="flex-[2] flex flex-col gap-[1.25vw]">
           <MobileAppsCard />
           <ContentModerationCard />
           <BlockedWordsCard />
         </div>
-        <div className="flex-[1] flex flex-col gap-[1.25vw] overflow-y-auto no-scrollbar pl-[0.42vw]">
+        <div className="flex-[1] flex flex-col gap-[1.25vw]">
           <GeneralSettingsCard />
           <MaintenanceModeCard />
         </div>
       </div>
 
       {showSuccess && <SettingsSuccessCard onDone={() => setShowSuccess(false)} />}
-
-      <style>{`
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
     </div >
   );
 };

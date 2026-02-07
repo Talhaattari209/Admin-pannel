@@ -1,9 +1,8 @@
 
 import React, { useState } from 'react';
 import SearchInput from '../app-content/shared/SearchInput';
-import FilterSelect from '../app-content/shared/FilterSelect';
+import { Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import SupportTableRow, { SupportTicketData } from './SupportTableRow';
-import { Pagination } from '@/components/shared/TableComponents';
 
 const MOCK_TICKETS: SupportTicketData[] = [
     {
@@ -75,7 +74,7 @@ const SupportTable: React.FC<SupportTableProps> = ({ onViewDetail }) => {
                     <FilterSelect
                         label="Status"
                         value={statusFilter}
-                        options={['New', 'Pending', 'Reviewing', 'Resolved', 'Closed']}
+                        options={['New', 'Pending', 'Reviewing', 'Resolved', 'Closed'].map(opt => ({ label: opt, value: opt }))}
                         onChange={setStatusFilter}
                     />
                 </div>

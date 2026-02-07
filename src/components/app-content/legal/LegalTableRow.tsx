@@ -88,7 +88,7 @@ const LegalTableRow: React.FC<LegalTableRowProps> = ({ data, onEdit, onDelete })
             <div className="flex justify-center items-center w-[2.5vw] h-full shrink-0 relative">
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="flex justify-center items-center w-[1.67vw] h-[1.67vw] rounded-full text-white/40 hover:text-white transition-colors"
+                    className="flex justify-center items-center w-[1.67vw] h-[1.67vw] rounded-full text-white/40 hover:text-white transition-colors cursor-pointer"
                 >
                     <MoreVertical className="w-[0.83vw] h-[0.83vw]" />
                 </button>

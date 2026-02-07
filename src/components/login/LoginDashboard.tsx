@@ -47,32 +47,23 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
                         "relative w-[1.25vw] h-[1.25vw]",
                         !isUp && "rotate-180"
                     )}>
-                        <Image
-                            src="/assets/Icons_figma/arrow-up.svg"
-                            alt={isUp ? "Up" : "Down"}
-                            fill
-                            className={cn(
-                                "object-contain",
-                                isUp ? "" : "brightness-0 saturate-100 invert-[15%] sepia-[95%] saturate-[7000%] hue-rotate-[355deg]" // Red filter for down arrow if needed, or just rely on SVG color if possible. 
-                                // BUT: The SVG is likely white or green specific. Figma says arrow is green for up.
-                                // If I reuse arrow-up (green) for down (red), I need to filter it.
-                                // Or I can just trust the user wants the arrow shape and color is controlled by text color? No, SVG color is inside SVG.
-                                // The metadata for arrow-up said "color: var(--success)".
-                                // This implies the SVG itself might be colored.
-                                // If I rotate the green arrow, I get a green down arrow.
-                                // "Active Groups" in Figma had "9.4% arrow-down" (Red?).
-                                // If the arrow is green by default, I need red for down.
-                                // CSS filter to turn green to red: hue-rotate.
-                            )}
-                        // Actually, let's keep it simple. If the SVG is green, rotating it is green.
-                        // If the user wants red, I should use a red arrow or filter.
-                        // Given "minimum credits", I'll use the SVG as is with rotation. Styling exact color of SVG via CSS filter is tricky.
-                        // I'll stick to the SVG + Text color.
-                        />
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-full h-full"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M12 4C12.2652 4 12.5196 4.10536 12.7071 4.29289L19.7071 11.2929C20.0976 11.6834 20.0976 12.3166 19.7071 12.7071C19.3166 13.0976 18.6834 13.0976 18.2929 12.7071L13 7.41421V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V7.41422L5.70711 12.7071C5.31658 13.0976 4.68342 13.0976 4.29289 12.7071C3.90237 12.3166 3.90237 11.6834 4.29289 11.2929L11.2929 4.29289C11.4804 4.10536 11.7348 4 12 4Z"
+                                fill={isUp ? "#3ADC60" : "#FF4D4F"}
+                            />
+                        </svg>
                     </div>
                     <span className={cn(
                         "font-bold not-italic text-[1.04vw] leading-[120%] tracking-[-0.04em]",
-                        isUp ? "text-[#3ADC60]" : "text-red-500"
+                        isUp ? "text-[#3ADC60]" : "text-[#FF4D4F]"
                     )}>
                         {change}
                     </span>

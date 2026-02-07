@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import SearchInput from '../../app-content/shared/SearchInput';
-import FilterSelect from '../../app-content/shared/FilterSelect';
+import { FilterSelect } from '@/components/shared/TableComponents';
 import UserReportedTableRow, { UserReportData } from './UserReportedTableRow';
 
 const MOCK_REPORTS: UserReportData[] = [
@@ -43,9 +42,9 @@ interface UserReportedTableProps {
 
 const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) => {
   const [search, setSearch] = useState('');
-  const [catFilter, setCatFilter] = useState('Select');
-  const [repFilter, setRepFilter] = useState('Select');
-  const [statusFilter, setStatusFilter] = useState('Select');
+  const [catFilter, setCatFilter] = useState('');
+  const [repFilter, setRepFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
 
   const ColumnHeader = ({ label, width = "auto", grow = false }: { label: string, width?: string, grow?: boolean }) => (
     <div className={`flex flex-row items-center gap-2 px-4 h-[38px] group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
@@ -67,9 +66,24 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
       <div className="flex flex-row items-center justify-between p-4 gap-4 bg-[#1a1a1a]/30">
         <SearchInput value={search} onChange={setSearch} />
         <div className="flex gap-4">
-          <FilterSelect label="Category" value={catFilter} options={['Harassment', 'Spam', 'Nudity']} onChange={setCatFilter} />
-          <FilterSelect label="Reports" value={repFilter} options={['1-2', '3-5', '5+']} onChange={setRepFilter} />
-          <FilterSelect label="Status" value={statusFilter} options={['New', 'Pending', 'Reviewing', 'Resolved', 'Closed']} onChange={setStatusFilter} />
+          <FilterSelect
+            label="Category"
+            value={catFilter}
+            options={['Harassment', 'Spam', 'Nudity'].map(opt => ({ label: opt, value: opt }))}
+            onChange={setCatFilter}
+          />
+          <FilterSelect
+            label="Reports"
+            value={repFilter}
+            options={['1-2', '3-5', '5+'].map(opt => ({ label: opt, value: opt }))}
+            onChange={setRepFilter}
+          />
+          <FilterSelect
+            label="Status"
+            value={statusFilter}
+            options={['New', 'Pending', 'Reviewing', 'Resolved', 'Closed'].map(opt => ({ label: opt, value: opt }))}
+            onChange={setStatusFilter}
+          />
         </div>
       </div>
 

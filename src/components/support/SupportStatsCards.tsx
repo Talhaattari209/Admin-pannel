@@ -11,7 +11,7 @@ const SupportStatsCards: React.FC = () => {
     ];
 
     return (
-        <div className="flex flex-row flex-nowrap items-center gap-[0.83vw] w-full mb-[1.25vw]">
+        <div className="flex flex-row flex-nowrap items-center gap-[0.83vw] w-full">
             {stats.map((stat, i) => (
                 <div key={i} className="flex flex-col justify-end items-start p-[0.83vw] gap-[1.25vw] flex-1 h-[5.68vw] bg-[rgba(22,0,63,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
                     {/* Title */}

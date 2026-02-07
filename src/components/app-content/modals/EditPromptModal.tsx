@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BaseCard } from '@/components/PopCards';
-import { Edit2 } from 'lucide-react';
+// import { Edit2 } from 'lucide-react';
 
 interface EditPromptModalProps {
     initialValue: string;
@@ -13,7 +13,7 @@ const EditPromptModal: React.FC<EditPromptModalProps> = ({ initialValue, onCance
 
     const icon = (
         <div className="w-[3.75vw] h-[3.75vw] rounded-full bg-[#5F00DB]/20 flex items-center justify-center">
-            <Edit2 className="w-[1.67vw] h-[1.67vw] text-white" />
+            <img src="/assets/message-square.svg" alt="Edit Prompt" className="w-[1.67vw] h-[1.67vw]" />
         </div>
     );
 
@@ -41,14 +41,16 @@ const EditPromptModal: React.FC<EditPromptModalProps> = ({ initialValue, onCance
             description="Update the prompt text."
             actions={actions}
             glowColor="#5F00DB"
+            width="25vw"
+            height="22.81vw"
         >
-            <div className="flex flex-col gap-[0.42vw] w-full">
+            <div className="flex flex-col gap-[0.21vw] w-full h-full min-h-0">
                 <label className="text-white text-[0.73vw] font-medium not-italic ml-[0.42vw]">Prompt Text</label>
                 <input
                     type="text"
                     value={promptText}
                     onChange={(e) => setPromptText(e.target.value)}
-                    className="w-full h-[2.92vw] px-[1.25vw] bg-[#111111]/50 border border-[#666666]/50 rounded-[0.83vw] text-white text-[0.83vw] focus:outline-none focus:border-white/40 placeholder:text-white/30"
+                    className="w-full h-[2.5vw] px-[1.25vw] bg-[#111111]/50 border border-[#666666]/50 rounded-[0.83vw] text-white text-[0.83vw] focus:outline-none focus:border-white/40 placeholder:text-white/30"
                 />
             </div>
         </BaseCard>

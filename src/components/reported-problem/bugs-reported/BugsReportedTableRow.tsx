@@ -71,7 +71,7 @@ const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAct
             <div className="w-[4.16vw] px-[0.42vw] flex justify-center relative shrink-0">
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className={`flex flex-row justify-center items-center p-[0.42vw] gap-[0.83vw] w-[1.67vw] h-[1.67vw] rounded-[2.71vw] transition-colors ${isMenuOpen ? 'bg-white/10 text-white' : 'hover:bg-white/10 text-white/40 group-hover:text-white'}`}
+                    className={`flex flex-row justify-center items-center p-[0.42vw] gap-[0.83vw] w-[1.67vw] h-[1.67vw] rounded-[2.71vw] transition-colors cursor-pointer ${isMenuOpen ? 'bg-white/10 text-white' : 'hover:bg-white/10 text-white/40 group-hover:text-white'}`}
                 >
                     <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw]" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <circle cx="12" cy="5" r="1.5" fill="currentColor" /><circle cx="12" cy="12" r="1.5" fill="currentColor" /><circle cx="12" cy="19" r="1.5" fill="currentColor" />

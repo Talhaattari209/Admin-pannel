@@ -35,24 +35,9 @@ export const ProfileTabs = ({ activeTab, onTabChange }: { activeTab: string, onT
                     key={tab}
                     onClick={() => onTabChange(tab)}
                     className={`px-[1.25vw] py-[0.76vw] h-full flex items-center justify-center rounded-t-[0.63vw] transition-colors ${activeTab === tab
-                        ? "bg-[#222222] text-white border-t border-x border-[#666666]/50"
-                        : "bg-transparent text-white/60 hover:text-white"
-                        // Note: The previous active style was purple, but often tabs blend into the card. 
-                        // I'm adjusting to match the 'Overview' card style which has a border.
-                        // Reverting to the logic: Active = card BG color. Inactive = Transparent.
-                        // Checking previous styles... 
-                        // Previous: bg-[#5F00DB] text-white. 
-                        // I will stick to the user's previous design if they liked it, but typically tabs connecting to a card share the card's background.
-                        // Let's use the purple for active as requested in previous turns for other things, but here the design implies connection.
-                        // Given the "Media" tab is part of this system, I will keep the previous style but ensure it looks good.
+                        ? "bg-[#5F00DB] text-white"
+                        : "bg-[#222222] text-white/60 hover:bg-transparent hover:text-white"
                         }`}
-                // Re-applying the exact previous class for consistency until requested otherwise, but fixing the active/inactive logic to match "Tab" feel if needed. 
-                // Actually, I'll keep the component code as is for the tabs to minimize diffs, wait, I already replaced the chunk.
-                // Let me rewrite the tabs part exactly as it was but maybe slight tweak if needed. 
-                // The user's prompt didn't ask to change tabs styling, so I will NOT change the tabs styling in this chunk.
-                // Wait, I selected the chunk including ProfileTabs. I will create a separate ProfileMedia component and leave ProfileTabs alone in this logic? 
-                // No, I need to insert ProfileMedia. I'll just skip replacing ProfileTabs if I don't need to change it.
-                // But I need to add ProfileMedia. I'll add it BEFORE ProfileOverview.
                 >
                     <span className="font-['Lato'] font-normal not-italic text-[0.83vw] leading-[1.0vw] whitespace-nowrap">
                         {tab}

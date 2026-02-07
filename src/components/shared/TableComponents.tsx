@@ -100,11 +100,27 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
         { label: 'Dummy Opt 2', value: 'dummy2' }
     ];
 
+    const [isOpen, setIsOpen] = useState(false);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const selectedLabel = displayOptions.find(opt => opt.value === value)?.label || "Select";
+
     return (
         <div
-            className={`flex flex-col items-start ${className || ''}`}
+            ref={containerRef}
+            className={`flex flex-col items-start relative ${className || ''}`}
             style={{
-                width: '8.33vw', // Standardized (was 200px -> 10.42vw scaled 0.8)
+                width: '10.1vw', // Standardized width
                 height: '2.92vw', // Matching Row Height (56px)
                 padding: 0,
                 ...style // Allow overrides
@@ -113,10 +129,10 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
             {/* Label Row */}
             <div className="flex flex-row items-start self-stretch" style={{ gap: '0.21vw', height: '0.66vw' }}>
                 <span
-                    className="font-sans font-bold not-italic text-white"
+                    className="font-sans font-bold not-italic "
                     style={{
                         height: '0.66vw',
-                        fontSize: '0.52vw', // Scaled down text (approx 10px)
+                        fontSize: '0.70vw', // Increased from 0.63vw
                         lineHeight: '0.66vw',
                     }}
                 >
@@ -138,47 +154,66 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
                 )}
             </div>
 
-            {/* Input Area */}
+            {/* Input Area (Trigger) */}
             <div
-                className="flex flex-row items-center border-b border-white box-border relative"
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex flex-row items-center border-b border-white box-border relative cursor-pointer"
                 style={{
-                    width: '8.33vw',
+                    width: '100%',
                     height: '2.26vw', // Remaining height (2.92 - 0.66)
                     minHeight: '2.26vw',
-                    padding: `0.63vw 0px`, // Increased padding
+                    padding: 0, // Reduced to zero as requested
                     gap: '0.66vw',
                 }}
             >
-                <select
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    className="bg-transparent text-white appearance-none outline-none cursor-pointer w-full h-full absolute inset-0 z-10 opacity-0"
-                >
-                    <option value="" disabled>Select</option>
-                    {displayOptions.map(opt => (
-                        <option key={opt.value} value={opt.value} className="bg-[#222222] text-white">
-                            {opt.label}
-                        </option>
-                    ))}
-                </select>
-
                 {/* Display Text */}
                 <span
                     className="flex-grow min-w-0 truncate pointer-events-none font-sans not-italic font-normal not-italic text-white"
                     style={{
-                        fontSize: '0.66vw', // Approx 12-13px
+                        fontSize: '0.86vw', // Increased from 0.78vw
                         lineHeight: '1vw',
                         opacity: value ? 1 : 0.4,
                         zIndex: 1,
                     }}
                 >
-                    {value || "Select"}
+                    {selectedLabel}
                 </span>
 
                 {/* Chevron */}
                 <div style={{ width: '1vw', height: '1vw', flexShrink: 0, pointerEvents: 'none', zIndex: 1 }}>
                     <ChevronDownIcon />
                 </div>
+
+                {/* Custom Dropdown Menu */}
+                {isOpen && (
+                    <div
+                        className="absolute left-0 w-full bg-[#1C1C1E] border border-[#333333] z-50 overflow-hidden shadow-xl"
+                        style={{
+                            top: '100%',
+                            marginTop: '0.2vw',
+                            borderRadius: '0.66vw', // Rounded corners
+                        }}
+                    >
+                        {displayOptions.map(opt => (
+                            <div
+                                key={opt.value}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onChange(opt.value);
+                                    setIsOpen(false);
+                                }}
+                                className="w-full text-white cursor-pointer hover:bg-white/10 transition-colors"
+                                style={{
+                                    padding: '0.42vw 0.83vw', // Padding for text
+                                    fontSize: '0.80vw', // Options text size (increased from 0.73vw)
+                                    fontFamily: '"SF Pro Text", sans-serif'
+                                }}
+                            >
+                                {opt.label}
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -222,7 +257,7 @@ export const Tabs: React.FC<TabsProps & { className?: string; style?: React.CSSP
                             height: toVw(48),
                             padding: `${toVw(12)} ${toVw(24)}`,
                             gap: toVw(8),
-                            backgroundColor: isActive ? '#5F00DB' : '#000000', // Active colored, inactive black
+                            backgroundColor: isActive ? '#5F00DB' : '#222222', // Active colored, inactive match table bg
                             borderRadius: `${toVw(12)} ${toVw(12)} 0px 0px`,
                         }}
                     >
@@ -347,7 +382,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
             className={`flex items-center justify-center rounded-full transition-all duration-200 ${isNav
                 ? 'bg-[#5F00DB] hover:bg-[#4a00aa] disabled:opacity-50 disabled:hover:bg-[#5F00DB]'
                 : isActive
-                    ? 'bg-[#16003F] border border-[#5F00DB] text-[#5F00DB]'
+                    ? 'bg-[#16003F] border border-[#5F00DB] text-white'
                     : 'bg-[#120D1D] text-white hover:bg-white/10'
                 } not-italic`}
             style={{

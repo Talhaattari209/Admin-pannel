@@ -77,7 +77,7 @@ const UserReportedTableRow: React.FC<UserReportedTableRowProps> = ({ data, onAct
       <div className="w-[60px] px-2 flex justify-center relative shrink-0">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`p-2 rounded-full transition-colors ${isMenuOpen ? 'bg-white/10 text-white' : 'hover:bg-white/10 text-white/40 group-hover:text-white'}`}
+          className={`p-2 rounded-full transition-colors cursor-pointer ${isMenuOpen ? 'bg-white/10 text-white' : 'hover:bg-white/10 text-white/40 group-hover:text-white'}`}
         >
           <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5">
             <circle cx="12" cy="5" r="1.5" fill="currentColor" />

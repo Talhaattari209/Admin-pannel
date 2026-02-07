@@ -48,8 +48,9 @@ const ContentDetailsModal: React.FC<ContentDetailsModalProps> = ({ title, conten
             actions={actions}
             glowColor="#5F00DB"
             width="49.79vw"
+            height="41.98vw"
         >
-            <div className="w-full h-[28.65vw] overflow-y-auto bg-[#1a1a1a]/50 border border-[#666666]/30 rounded-[0.83vw] p-[1.25vw]">
+            <div className="w-full bg-[#1a1a1a]/50 border border-[#666666]/30 rounded-[0.83vw] p-[1.25vw]">
                 <p className="text-white text-[0.83vw] leading-[1.5] whitespace-pre-line font-['SF_Pro_Text']">
                     {displayContent}
                 </p>

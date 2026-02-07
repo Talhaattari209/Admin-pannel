@@ -49,7 +49,7 @@ export default function UserProfilePage() {
                         Note: UserProfileHeader includes a back button which we can wire up. 
                         It lays out strictly according to the design (Name, Age, Chips).
                     */}
-                    <div className="mb-[1.67vw]">
+                    <div className="mb-[1.67vw] w-[79.17vw]">
                         <UserProfileHeader
                             name="M. Abubakar"
                             age={24}

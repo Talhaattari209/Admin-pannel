@@ -101,8 +101,8 @@ const UsersReportedCard: React.FC = () => {
                 data={data}
                 cx="55%"
                 cy="50%"
-                innerRadius={65}
-                outerRadius={85}
+                innerRadius={100}
+                outerRadius={125}
                 paddingAngle={0}
                 startAngle={90}
                 endAngle={-270}

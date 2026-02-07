@@ -77,7 +77,7 @@ const RolesTable: React.FC = () => {
                                     e.stopPropagation();
                                     setOpenMenuId(openMenuId === role.id ? null : role.id);
                                 }}
-                                className="w-[1.46vw] h-[1.46vw] flex items-center justify-center rounded-[2.7vw] hover:bg-white/10 text-white/40 hover:text-white transition-all"
+                                className="w-[1.46vw] h-[1.46vw] flex items-center justify-center rounded-[2.7vw] hover:bg-white/10 text-white/40 hover:text-white transition-all cursor-pointer"
                             >
                                 <svg viewBox="0 0 16 16" className="w-[0.73vw] h-[0.73vw]" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="8" cy="3" r="1" fill="currentColor" /><circle cx="8" cy="8" r="1" fill="currentColor" /><circle cx="8" cy="13" r="1" fill="currentColor" /></svg>
                             </button>

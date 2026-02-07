@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import TabGroup, { TabItem } from './shared/TabGroup';
 import PromptsHeader from './PromptsHeader';
 import SearchInput from './shared/SearchInput';
-import FilterSelect from './shared/FilterSelect';
+import { Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import PromptsTableRow, { PromptRowData } from './PromptsTableRow';
-import { Pagination } from '@/components/shared/TableComponents';
 
 // Modals
 import AddPromptModal from './modals/AddPromptModal';
@@ -48,7 +47,7 @@ const GROUP_MOCK_DATA: PromptRowData[] = [
 const PromptsTable: React.FC = () => {
     const [activeTab, setActiveTab] = useState('individual');
     const [search, setSearch] = useState('');
-    const [status, setStatus] = useState('Published');
+    const [status, setStatus] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [activeModal, setActiveModal] = useState<any>(null);
     const [selectedPrompt, setSelectedPrompt] = useState<any | null>(null);
@@ -168,12 +167,17 @@ const PromptsTable: React.FC = () => {
             <PromptsHeader onAddPrompt={() => setActiveModal('ADD')} onExport={() => setActiveModal('EXPORT')} addLabel={isFAQTab ? 'Add FAQ' : isLegalTab ? 'Add Content' : 'Add Prompt'} />
 
             <div className="flex flex-col w-full gap-0">
-                <TabGroup tabs={TABS} activeId={activeTab} onChange={setActiveTab} />
-                <div className="flex flex-col bg-[#222222] rounded-b-[0.83vw] rounded-tr-[0.83vw] overflow-hidden border border-white/5 shadow-2xl">
+                <TabGroup tabs={TABS} activeId={activeTab} onChange={setActiveTab} className="pl-[0.83vw]" />
+                <div className="flex flex-col bg-[#222222] rounded-[0.83vw] overflow-hidden border border-white/5 shadow-2xl">
                     {/* Controls */}
                     <div className="flex flex-row items-center justify-between p-[0.83vw] gap-[0.83vw] bg-[#1a1a1a]/30">
                         <SearchInput value={search} onChange={setSearch} />
-                        <FilterSelect label="Status" value={status} options={['Published', 'Draft', 'Archived']} onChange={setStatus} />
+                        <FilterSelect
+                            label="Status"
+                            value={status}
+                            options={['Published', 'Draft', 'Archived'].map(opt => ({ label: opt, value: opt }))}
+                            onChange={setStatus}
+                        />
                     </div>
 
                     {/* Header Row */}

@@ -47,8 +47,8 @@ const EngagementChannelsCard: React.FC = () => {
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={72}
-              outerRadius={91}
+              innerRadius={94}
+              outerRadius={118}
               paddingAngle={0}
               startAngle={90}
               endAngle={-270}

@@ -84,7 +84,7 @@ const PromptsTableRow: React.FC<PromptsTableRowProps> = ({ data, onEdit, onDelet
             <div className="w-[2.5vw] px-[0.42vw] flex justify-center relative shrink-0">
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className={`p-[0.42vw] rounded-full transition-colors ${isMenuOpen ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white'}`}
+                    className={`p-[0.42vw] rounded-full transition-colors cursor-pointer ${isMenuOpen ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white'}`}
                 >
                     <MoreVertical className="w-[0.83vw] h-[0.83vw]" />
                 </button>
