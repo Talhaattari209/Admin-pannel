@@ -283,10 +283,10 @@ export const Tabs: React.FC<TabsProps & { className?: string; style?: React.CSSP
                                 }}
                             >
                                 <span
-                                    className="font-['SF_Pro_Text'] font-bold not-italic text-white text-center"
+                                    className="font-['SF_Pro_Text'] font-bold not-italic text-white text-center pb-[0.05vw]"
                                     style={{
                                         fontSize: toVw(12),
-                                        lineHeight: toVw(14),
+                                        lineHeight: '100%',
                                     }}
                                 >
                                     {tab.count}
