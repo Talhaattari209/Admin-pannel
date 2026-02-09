@@ -23,7 +23,7 @@ const ChangePasswordContent: React.FC<ChangePasswordContentProps> = ({ onSuccess
     };
 
     return (
-        <div className="flex flex-col items-start p-[1.67vw] gap-[1.67vw] w-[39.17vw] min-h-[19.69vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] box-border font-['SF_Pro_Text']">
+        <div className="flex flex-col items-start p-[1.67vw] gap-[1.67vw] w-[39.17vw] min-h-[19.69vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] box-border ">
 
             {/* Heading */}
             <h3 className="w-[35.83vw] h-[1.77vw] font-bold not-italic text-[1.46vw] leading-[1.77vw] flex items-center tracking-[-0.04em] text-white">

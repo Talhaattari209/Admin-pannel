@@ -42,7 +42,7 @@ const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAct
     };
 
     return (
-        <div className="group flex flex-row items-center w-full h-[2.92vw] bg-[#222222] border-b border-[rgba(102,102,102,0.5)] hover:bg-white/[0.05] transition-colors relative shrink-0 font-['SF_Pro_Text']">
+        <div className="group flex flex-row items-center w-full h-[2.92vw] bg-[#222222] border-b border-[rgba(102,102,102,0.5)] hover:bg-white/[0.05] transition-colors relative shrink-0 ">
             <div className="w-[16.66vw] px-[0.63vw] shrink-0">
                 <div className="flex items-center gap-[0.42vw]">
                     <div
@@ -50,19 +50,19 @@ const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAct
                         style={{ backgroundImage: `url(${data.reportedBy.avatar})` }}
                     />
                     <div className="flex flex-col min-w-0 gap-[0.21vw]">
-                        <span className="text-white text-[0.73vw] font-semibold not-italic truncate leading-[114%] font-['SF_Pro_Text']">{data.reportedBy.name}</span>
-                        <span className="text-white/40 text-[0.57vw] font-light not-italic truncate leading-[145%] font-['SF_Pro_Text']">{data.reportedBy.email}</span>
+                        <span className="text-white text-[0.73vw] font-semibold not-italic truncate leading-[114%] ">{data.reportedBy.name}</span>
+                        <span className="text-white/40 text-[0.57vw] font-light not-italic truncate leading-[145%] ">{data.reportedBy.email}</span>
                     </div>
                 </div>
             </div>
-            <div className="w-[13.88vw] px-[0.63vw] shrink-0 text-white text-[0.73vw] font-medium not-italic truncate font-['SF_Pro_Text'] leading-[114%]">{data.subject}</div>
-            <div className="flex-[1] px-[0.63vw] min-w-0 text-white/60 text-[0.73vw] truncate font-['SF_Pro_Text'] not-italic leading-[114%]">{data.message}</div>
+            <div className="w-[13.88vw] px-[0.63vw] shrink-0 text-white text-[0.73vw] font-medium not-italic truncate  leading-[114%]">{data.subject}</div>
+            <div className="flex-[1] px-[0.63vw] min-w-0 text-white/60 text-[0.73vw] truncate  not-italic leading-[114%]">{data.message}</div>
             <div className="w-[8.33vw] px-[0.63vw] flex items-center shrink-0">
-                <div className={`h-[1.67vw] px-[0.63vw] rounded-[0.83vw] text-[0.73vw] font-bold not-italic flex items-center justify-center min-w-[2.81vw] leading-[114%] text-center font-['SF_Pro_Text'] ${getStatusColor(data.status)}`}>
+                <div className={`h-[1.67vw] px-[0.63vw] rounded-[0.83vw] text-[0.73vw] font-bold not-italic flex items-center justify-center min-w-[2.81vw] leading-[114%] text-center  ${getStatusColor(data.status)}`}>
                     <span className="mt-[0.1vw]">{data.status}</span>
                 </div>
             </div>
-            <div className="w-[13.88vw] px-[0.63vw] flex items-center gap-[0.42vw] shrink-0 font-['SF_Pro_Text'] not-italic">
+            <div className="w-[13.88vw] px-[0.63vw] flex items-center gap-[0.42vw] shrink-0  not-italic">
                 <span className="text-white text-[0.73vw] leading-[114%]">{data.submittedOn.split(' • ')[0]}</span>
                 <div className="w-[0.16vw] h-[0.16vw] bg-white rounded-full opacity-40 shrink-0" />
                 <span className="text-white text-[0.73vw] opacity-40 leading-[114%]">{data.submittedOn.split(' • ')[1]}</span>
@@ -90,7 +90,7 @@ const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAct
                                 className="flex flex-row items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.83vw] hover:bg-white/5 transition-colors group/item text-left"
                             >
                                 <span className="text-white opacity-60 group-hover/item:opacity-100 transition-opacity">{item.icon}</span>
-                                <span className="flex-grow text-white text-[0.73vw] font-['SF_Pro_Text'] not-italic">{item.label}</span>
+                                <span className="flex-grow text-white text-[0.73vw]  not-italic">{item.label}</span>
                                 <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw] text-white opacity-40" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
                             </button>
                         ))}

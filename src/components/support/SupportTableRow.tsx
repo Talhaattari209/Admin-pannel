@@ -46,7 +46,7 @@ const SupportTableRow: React.FC<SupportTableRowProps> = ({ data, onAction }) => 
     };
 
     return (
-        <div className="group flex flex-row items-center w-full h-[2.92vw] bg-[#222222] border-b border-[rgba(102,102,102,0.5)] hover:bg-white/[0.05] transition-colors relative shrink-0 font-['SF_Pro_Text']">
+        <div className="group flex flex-row items-center w-full h-[2.92vw] bg-[#222222] border-b border-[rgba(102,102,102,0.5)] hover:bg-white/[0.05] transition-colors relative shrink-0 ">
             {/* User Cell */}
             <div className="w-[10.42vw] pl-[0.63vw] pr-[0.42vw] flex items-center gap-[0.42vw] shrink-0">
                 <div
@@ -127,7 +127,7 @@ const SupportTableRow: React.FC<SupportTableRowProps> = ({ data, onAction }) => 
                                 className="flex flex-row items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.83vw] hover:bg-white/5 transition-colors group/item text-left"
                             >
                                 <span className="text-white opacity-60 group-hover/item:opacity-100 transition-opacity">{item.icon}</span>
-                                <span className="flex-grow text-white text-[0.73vw] font-['SF_Pro_Text'] not-italic">{item.label}</span>
+                                <span className="flex-grow text-white text-[0.73vw]  not-italic">{item.label}</span>
                                 <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw] text-white opacity-40" fill="none" stroke="currentColor" strokeWidth="2">
                                     <polyline points="9 18 15 12 9 6" />
                                 </svg>

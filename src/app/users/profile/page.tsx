@@ -19,15 +19,9 @@ export default function UserProfilePage() {
     };
 
     return (
-        <div className="relative min-h-screen w-full bg-[#111111] overflow-hidden font-['SF_Pro_Text'] text-white">
+        <div className="relative min-h-screen w-full overflow-hidden text-white">
 
-            {/* 1. Background Layer */}
-            <div
-                className="fixed inset-0 z-0 opacity-50 bg-cover bg-center pointer-events-none"
-                style={{ backgroundImage: `url('/8.png')` }}
-            />
-
-            {/* 2. Reusable Sidebar (fixed position) */}
+            {/* Reusable Sidebar (fixed position) */}
             <SideNavigation activeId="users" />
 
             {/* 3. Main Content Container (positioned at left 320px/16.67vw) */}
@@ -66,7 +60,7 @@ export default function UserProfilePage() {
                                     onClick={() => setIsDeactivateOpen(true)}
                                     className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
                                 >
-                                    <span className="font-['SF_Pro_Text'] font-medium not-italic text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
+                                    <span className=" font-medium not-italic text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
                                         Deactivate User
                                     </span>
                                 </button>

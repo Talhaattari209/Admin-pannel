@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   PieChart,
   Pie,
@@ -17,18 +16,17 @@ const data = [
 ];
 
 const renderCustomizedLabel = (props: any) => {
-  const { cx, cy, midAngle, innerRadius, outerRadius, value, name, color } = props;
+  const { cx, cy, midAngle, outerRadius, value, name, color } = props;
   const RADIAN = Math.PI / 180;
   const radius = outerRadius * 1.25;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
   const sx = cx + outerRadius * Math.cos(-midAngle * RADIAN);
   const sy = cy + outerRadius * Math.sin(-midAngle * RADIAN);
-
-  const mx = cx + (outerRadius + 15) * Math.cos(-midAngle * RADIAN);
-  const my = cy + (outerRadius + 15) * Math.sin(-midAngle * RADIAN);
-
+  const curveOffset = outerRadius * 0.12;
+  const mx = cx + (outerRadius + curveOffset) * Math.cos(-midAngle * RADIAN);
+  const my = cy + (outerRadius + curveOffset) * Math.sin(-midAngle * RADIAN);
+  const labelGap = outerRadius * 0.08;
   const isRight = x > cx;
 
   return (
@@ -42,24 +40,22 @@ const renderCustomizedLabel = (props: any) => {
       />
       <text
         x={x}
-        y={y - 8}
+        y={y - labelGap}
         fill="rgba(255, 255, 255, 0.8)"
         textAnchor={isRight ? 'start' : 'end'}
         dominantBaseline="central"
-        fontSize={12}
-        className="font-inter not-italic"
+        fontSize="clamp(10px, 0.62vw, 14px)"
       >
         {name}
       </text>
       <text
         x={x}
-        y={y + 10}
+        y={y + labelGap}
         fill={color}
         textAnchor={isRight ? 'start' : 'end'}
         dominantBaseline="central"
-        fontSize={14}
+        fontSize="clamp(10px, 0.62vw, 14px)"
         fontWeight="bold"
-        className="font-inter not-italic"
       >
         {value}
       </text>
@@ -69,25 +65,39 @@ const renderCustomizedLabel = (props: any) => {
 
 const UsersReportedCard: React.FC = () => {
   const total = data.reduce((acc, item) => acc + item.value, 0);
+  const chartRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
+
+  useEffect(() => {
+    if (!chartRef.current) return;
+    const ro = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      setDimensions({ width, height });
+    });
+    ro.observe(chartRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const size = Math.max(80, Math.min(dimensions.width, dimensions.height) * 0.68);
+  const innerRadius = size * 0.35;
+  const outerRadius = size * 0.45;
+  const cornerRadius = Math.max(4, outerRadius * 0.16);
 
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
-      {/* Heading */}
-      <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw]">
-        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] min-h-[280px] shadow-2xl overflow-hidden border border-white/5">
+      <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw] min-h-[4rem]">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] ">
           Users Reported
         </h4>
-        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
+        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] ">
           Highlights the distribution of user-related reports (harassment, fake profiles, inappropriate media, etc.) to help prioritize moderation focus.
         </p>
       </div>
 
-      {/* Main Chart Area */}
-      <div className="relative flex flex-row w-full h-[24.11vw] px-[0.41vw] py-[1.25vw]">
-        <div className="relative flex-grow h-full flex items-center justify-center">
-          {/* Central Total */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-            <span className="text-white text-[1.66vw] font-bold not-italic">{total}</span>
+      <div className="relative flex flex-row w-full flex-grow min-h-0 px-[0.41vw] py-[1.05vw]">
+        <div ref={chartRef} className="relative flex-grow h-full min-w-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 left-1/2 -translate-x-1/2">
+            <span className="text-white text-[1.66vw] font-bold not-italic translate-x-1/2">{total}</span>
           </div>
 
           <ResponsiveContainer width="100%" height="100%">
@@ -101,15 +111,15 @@ const UsersReportedCard: React.FC = () => {
                 data={data}
                 cx="55%"
                 cy="50%"
-                innerRadius={100}
-                outerRadius={125}
+                innerRadius={innerRadius}
+                outerRadius={outerRadius}
                 paddingAngle={0}
                 startAngle={90}
                 endAngle={-270}
                 dataKey="value"
                 labelLine={false}
                 label={renderCustomizedLabel}
-                cornerRadius={20}
+                cornerRadius={cornerRadius}
                 stroke="none"
               >
                 {data.map((entry, index) => (

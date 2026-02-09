@@ -6,7 +6,7 @@ interface SupportHeaderProps {
 
 const SupportHeader: React.FC<SupportHeaderProps> = ({ onExport }) => {
   return (
-    <div className="flex flex-row items-end justify-between w-full h-[4.17vw] mb-[2.08vw] animate-in fade-in slide-in-from-top-4 duration-700 font-['SF_Pro_Text']">
+    <div className="flex flex-row items-end justify-between w-full h-[4.17vw] mb-[2.08vw] animate-in fade-in slide-in-from-top-4 duration-700 ">
       {/* Text Section */}
       <div className="flex flex-col justify-center items-start gap-[0.83vw] max-w-[71.3vw]">
         <h1 className="text-white text-[1.88vw] font-bold not-italic leading-[110%] tracking-[-0.04em]">

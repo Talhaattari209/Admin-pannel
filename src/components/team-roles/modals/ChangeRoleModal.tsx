@@ -44,9 +44,9 @@ const ChangeRoleModal: React.FC<ChangeRoleModalProps> = ({ onCancel, onUpdate })
             height="22.81vw"
         >
             <div className="flex flex-col gap-[0.21vw] w-full relative group">
-                <label className="text-white text-[0.63vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider ml-[0.21vw]">Role</label>
+                <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">Role</label>
                 <div className="relative">
-                    <select className="w-full h-[2.29vw] bg-transparent border-b border-white text-white text-[0.73vw] appearance-none focus:outline-none cursor-pointer font-['SF_Pro_Text'] not-italic pl-[0.83vw]">
+                    <select className="w-full h-[2.29vw] bg-transparent border-b border-white text-white text-[0.73vw] appearance-none focus:outline-none cursor-pointer not-italic pl-[0.83vw]">
                         <option className="bg-[#222222]">Moderator</option>
                         <option className="bg-[#222222]">Admin</option>
                         <option className="bg-[#222222]">Viewer</option>

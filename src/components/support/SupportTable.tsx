@@ -50,7 +50,7 @@ const SupportTable: React.FC<SupportTableProps> = ({ onViewDetail }) => {
 
     const ColumnHeader = ({ label, width = "auto", grow = false }: { label: string, width?: string, grow?: boolean }) => (
         <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
-            <span className="text-[#AAAAAA] font-['SF_Pro_Text'] not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity">
+            <span className="text-[#AAAAAA]  not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity">
                 {label}
             </span>
             <img
@@ -63,7 +63,7 @@ const SupportTable: React.FC<SupportTableProps> = ({ onViewDetail }) => {
     );
 
     return (
-        <div className="flex flex-col w-full bg-[#222222] rounded-[0.83vw] overflow-hidden border border-white/5 shadow-2xl animate-in slide-in-from-bottom-4 duration-700 font-['SF_Pro_Text'] not-italic">
+        <div className="flex flex-col w-full bg-[#222222] rounded-[0.83vw] overflow-hidden border border-white/5 shadow-2xl animate-in slide-in-from-bottom-4 duration-700  not-italic">
             {/* Toolbar: 4.58vw */}
             <div className="flex flex-row items-center px-[0.83vw] h-[4.58vw] gap-[0.83vw] bg-[#222222] border-b border-white/10 shrink-0">
                 <div className="w-[21.45vw]">

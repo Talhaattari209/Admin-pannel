@@ -27,10 +27,10 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
     ];
 
     return (
-        <div className="flex flex-col items-center w-full animate-in fade-in duration-700 font-['SF_Pro_Text']">
+        <div className="flex flex-col items-center w-full animate-in fade-in duration-700 ">
             {/* Header: align with PageHeader specs (h: 3.47vw, title: 2.25vw, mb: 1.49vw) */}
             {/* Header: align with PageHeader specs */}
-            <div className="flex flex-row items-end justify-between w-full h-[4.17vw] mb-[1.49vw] shrink-0 font-['SF_Pro_Text']">
+            <div className="flex flex-row items-end justify-between w-full h-[4.17vw] mb-[1.49vw] shrink-0 ">
                 <div className="flex flex-col justify-center items-start gap-[0.83vw] max-w-[70vw]">
                     <h1 className="text-white text-[1.88vw] font-bold not-italic leading-[110%] tracking-[-0.04em]">Reported Problem</h1>
                     <p className="text-[#CCCCCC] text-[0.83vw] leading-[150%] font-normal not-italic">Review and resolve user reports on inappropriate content, messages, or behavior.</p>
@@ -52,7 +52,7 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
             </div>
 
             {/* Stats: align with StatCard specs (h: 4.54vw, padding: 0.6vw, gap: 0.6vw) */}
-            <div className="flex flex-row flex-nowrap items-center gap-[0.83vw] w-full mb-[1.25vw] font-['SF_Pro_Text']">
+            <div className="flex flex-row flex-nowrap items-center gap-[0.83vw] w-full mb-[1.25vw] ">
                 {stats.map((stat, i) => (
                     <div key={i} className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.6vw] flex-1 h-[4.54vw] bg-[rgba(22,0,63,0.5)] backdrop-blur-[12px] rounded-[0.83vw]">
                         <div className="flex items-center w-full h-[1vw]">
@@ -73,7 +73,7 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as any)}
-                        className={`flex flex-row items-center justify-center px-[1.25vw] py-[0.63vw] gap-[0.42vw] h-[2.5vw] rounded-t-[0.63vw] transition-all font-medium not-italic text-[0.83vw] font-['SF_Pro_Text'] ${activeTab === tab.id ? 'bg-[#5F00DB] text-white' : 'bg-[#222222] text-white/60 hover:text-white hover:bg-white/5'
+                        className={`flex flex-row items-center justify-center px-[1.25vw] py-[0.63vw] gap-[0.42vw] h-[2.5vw] rounded-t-[0.63vw] transition-all font-medium not-italic text-[0.83vw]  ${activeTab === tab.id ? 'bg-[#5F00DB] text-white' : 'bg-[#222222] text-white/60 hover:text-white hover:bg-white/5'
                             }`}
                     >
                         {tab.label}

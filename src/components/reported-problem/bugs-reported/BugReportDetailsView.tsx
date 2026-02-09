@@ -38,7 +38,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
     );
 
     return (
-        <div className="flex flex-col w-full h-full animate-in fade-in duration-500 font-['SF_Pro_Text'] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex flex-col w-full h-full animate-in fade-in duration-500  overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 
             {/* Header */}
             <div className="flex flex-row items-center gap-[0.83vw] w-full h-[4.17vw] mb-[2.08vw] shrink-0">

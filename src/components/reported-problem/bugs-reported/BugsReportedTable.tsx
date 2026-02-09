@@ -36,7 +36,7 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
 
     const ColumnHeader = ({ label, grow = false, width = "auto" }: { label: string, grow?: boolean, width?: string }) => (
         <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
-            <span className="text-[#AAAAAA] font-['SF_Pro_Text'] not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity truncate">
+            <span className="text-[#AAAAAA]  not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity truncate">
                 {label}
             </span>
             <img

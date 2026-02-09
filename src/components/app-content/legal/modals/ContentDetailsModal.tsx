@@ -51,7 +51,7 @@ const ContentDetailsModal: React.FC<ContentDetailsModalProps> = ({ title, conten
             height="41.98vw"
         >
             <div className="w-full bg-[#1a1a1a]/50 border border-[#666666]/30 rounded-[0.83vw] p-[1.25vw]">
-                <p className="text-white text-[0.83vw] leading-[1.5] whitespace-pre-line font-['SF_Pro_Text']">
+                <p className="text-white text-[0.83vw] leading-[1.5] whitespace-pre-line ">
                     {displayContent}
                 </p>
             </div>

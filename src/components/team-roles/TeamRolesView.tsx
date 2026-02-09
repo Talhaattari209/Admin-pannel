@@ -22,15 +22,15 @@ const TeamRolesView: React.FC = () => {
             {/* Page Header */}
             <div className="flex flex-row items-end justify-between w-full h-[3.47vw] mb-[1.49vw] shrink-0">
                 <div className="flex flex-col justify-center items-start gap-[0.23vw]">
-                    <h1 className="text-white text-[2.25vw] font-bold not-italic tracking-tight font-['SF_Pro_Text']">Team & Roles</h1>
-                    <p className="text-[#CCCCCC] text-[0.83vw] leading-[150%] font-['SF_Pro_Text'] not-italic">
+                    <h1 className="text-white text-[2.25vw] font-bold not-italic tracking-tight ">Team & Roles</h1>
+                    <p className="text-[#CCCCCC] text-[0.83vw] leading-[150%]  not-italic">
                         Manage admin accounts, assign permissions, and define moderator or reviewer roles.
                     </p>
                 </div>
                 <Button
                     onClick={() => setModal(activeTab === 'members' ? 'ADD_MEMBER' : 'ADD_ROLE')}
                     variant="filled"
-                    className="!px-[1.67vw] font-['SF_Pro_Text'] not-italic text-[0.83vw]"
+                    className="!px-[1.67vw]  not-italic text-[0.83vw]"
                 >
                     {activeTab === 'members' ? 'Add Team Member' : 'Add Role'}
                 </Button>

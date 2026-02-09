@@ -47,7 +47,7 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ onCancel, onInvite }) =
                     { label: 'Email', placeholder: 'john@fennec.com', type: 'email' }
                 ].map(field => (
                     <div key={field.label} className="flex flex-col gap-[0.21vw] w-full">
-                        <label className="text-white text-[0.63vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider ml-[0.21vw]">{field.label}</label>
+                        <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">{field.label}</label>
                         <input
                             type={field.type}
                             placeholder={field.placeholder}
@@ -57,9 +57,9 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ onCancel, onInvite }) =
                 ))}
 
                 <div className="flex flex-col gap-[0.21vw] w-full relative group">
-                    <label className="text-white text-[0.63vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider ml-[0.21vw]">Role</label>
+                    <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">Role</label>
                     <div className="relative">
-                        <select className="w-full h-[2.5vw] bg-transparent border-b border-white text-white text-[0.83vw] appearance-none focus:outline-none cursor-pointer font-['SF_Pro_Text'] not-italic pl-[0.83vw]">
+                        <select className="w-full h-[2.5vw] bg-transparent border-b border-white text-white text-[0.83vw] appearance-none focus:outline-none cursor-pointer not-italic pl-[0.83vw]">
                             <option className="bg-[#222222]">Moderator</option>
                             <option className="bg-[#222222]">Admin</option>
                             <option className="bg-[#222222]">Viewer</option>
@@ -75,9 +75,9 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ onCancel, onInvite }) =
                     { label: 'Confirm Password', placeholder: '················' }
                 ].map(field => (
                     <div key={field.label} className="flex flex-col gap-[0.21vw] w-full relative">
-                        <label className="text-white text-[0.63vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider ml-[0.21vw]">{field.label}</label>
+                        <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">{field.label}</label>
                         <div className="relative flex items-center justify-between border-b border-white h-[2.5vw]">
-                            <input type="password" placeholder={field.placeholder} className="w-full h-full px-[0.83vw] bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/30 font-['SF_Pro_Text'] not-italic flex-grow" />
+                            <input type="password" placeholder={field.placeholder} className="w-full h-full px-[0.83vw] bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/30 not-italic flex-grow" />
                             <button className="text-white/40 hover:text-white transition-colors pr-[0.83vw]"><svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg></button>
                         </div>
                     </div>

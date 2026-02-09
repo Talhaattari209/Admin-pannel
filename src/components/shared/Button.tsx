@@ -37,7 +37,7 @@ export const Button: React.FC<ButtonProps> = ({
     // Base styles common to all buttons
     // Padding: 16px 24px -> 0.83vw 1.25vw (approx)
     // Gap: 12px -> 0.63vw
-    const baseStyles = "flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] transition-all duration-200 font-['SF_Pro_Text'] font-medium not-italic text-[0.83vw] leading-[1.25vw] disabled:opacity-50 disabled:cursor-not-allowed";
+    const baseStyles = "flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] transition-all duration-200  font-medium not-italic text-[0.83vw] leading-[1.25vw] disabled:opacity-50 disabled:cursor-not-allowed";
 
     // Variant specific styles
     const variants = {

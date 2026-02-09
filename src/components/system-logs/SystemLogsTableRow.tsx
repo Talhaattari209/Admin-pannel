@@ -16,7 +16,7 @@ interface SystemLogsTableRowProps {
 
 const SystemLogsTableRow: React.FC<SystemLogsTableRowProps> = ({ data }) => {
     return (
-        <div className="group flex flex-row items-center w-full h-[2.92vw] bg-[#222222] border-b border-[rgba(102,102,102,0.5)] hover:bg-white/[0.05] transition-colors shrink-0 relative font-['SF_Pro_Text']">
+        <div className="group flex flex-row items-center w-full h-[2.92vw] bg-[#222222] border-b border-[rgba(102,102,102,0.5)] hover:bg-white/[0.05] transition-colors shrink-0 relative ">
             {/* Timestamp: 15% */}
             <div className="w-[15%] h-full px-[0.63vw] flex items-center gap-[0.42vw] shrink-0">
                 <span className="text-white text-[0.73vw] leading-[0.83vw]">

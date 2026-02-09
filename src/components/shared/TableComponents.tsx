@@ -51,7 +51,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, placehold
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                className="bg-transparent border-none outline-none text-white placeholder-white placeholder-opacity-40 font-normal not-italic font-['SF_Pro_Text']"
+                className="bg-transparent border-none outline-none text-white placeholder-white placeholder-opacity-40 font-normal not-italic"
                 style={{
                     width: '100%',
                     height: '100%',
@@ -129,7 +129,7 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
             {/* Label Row */}
             <div className="flex flex-row items-start self-stretch" style={{ gap: '0.21vw', height: '0.66vw' }}>
                 <span
-                    className="font-sans font-bold not-italic "
+                    className="font-sans font-bold not-italic"
                     style={{
                         height: '0.66vw',
                         fontSize: '0.70vw', // Increased from 0.63vw
@@ -206,7 +206,7 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
                                 style={{
                                     padding: '0.42vw 0.83vw', // Padding for text
                                     fontSize: '0.80vw', // Options text size (increased from 0.73vw)
-                                    fontFamily: '"SF Pro Text", sans-serif'
+                                    fontFamily: 'var(--font-sans)'
                                 }}
                             >
                                 {opt.label}
@@ -283,7 +283,7 @@ export const Tabs: React.FC<TabsProps & { className?: string; style?: React.CSSP
                                 }}
                             >
                                 <span
-                                    className="font-['SF_Pro_Text'] font-bold not-italic text-white text-center pb-[0.05vw]"
+                                    className="font-bold not-italic text-white text-center pb-[0.05vw]"
                                     style={{
                                         fontSize: toVw(12),
                                         lineHeight: '100%',
@@ -389,7 +389,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 width: toVw(40),
                 height: toVw(40),
                 fontSize: toVw(14),
-                fontFamily: '"SF Pro Text", sans-serif',
+                fontFamily: 'var(--font-sans)',
                 gap: toVw(10)
             }}
         >

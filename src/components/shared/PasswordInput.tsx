@@ -19,7 +19,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ label, value, onChange, p
         <div className="flex flex-col items-start p-0 w-full">
             {/* Label Container */}
             <div className="flex flex-row items-start p-0 gap-[0.21vw] w-full h-[0.83vw]">
-                <label className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
+                <label className=" font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
                     {label}
                 </label>
             </div>
@@ -31,7 +31,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ label, value, onChange, p
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder={placeholder}
-                    className="w-full h-[1.25vw] font-['SF_Pro_Text'] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white bg-transparent border-none outline-none placeholder-white/50"
+                    className="w-full h-[1.25vw]  font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white bg-transparent border-none outline-none placeholder-white/50"
                 />
                 <button
                     onClick={toggleVisibility}

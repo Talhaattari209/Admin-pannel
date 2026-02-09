@@ -39,10 +39,10 @@ const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete }) => 
 
             {/* 1. Content Cell (Question/Answer) - Flexible */}
             <div className="flex-1 flex flex-col justify-center items-start px-[0.63vw] gap-[0.42vw] min-w-0 h-full">
-                <span className="text-white font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] truncate w-full">
+                <span className="text-white  font-normal not-italic text-[0.73vw] leading-[0.83vw] truncate w-full">
                     {data.question}
                 </span>
-                <span className="text-white/50 font-['SF_Pro_Text'] font-light not-italic text-[0.57vw] leading-[0.83vw] tracking-[0.02em] truncate w-full">
+                <span className="text-white/50  font-light not-italic text-[0.57vw] leading-[0.83vw] tracking-[0.02em] truncate w-full">
                     {data.answerSnippet}
                 </span>
             </div>
@@ -51,7 +51,7 @@ const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete }) => 
             <div className="flex flex-row items-center px-[0.63vw] gap-[0.21vw] w-[10.42vw] h-full shrink-0">
                 <div className={`flex flex-row justify-center items-center px-[0.63vw] py-[0.42vw] gap-[0.52vw] w-[4.64vw] h-[1.67vw] rounded-[0.83vw] ${data.status === 'Published' ? 'bg-[#5F00DB]' : 'bg-[#444444]'
                     }`}>
-                    <span className="text-white font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw]">
+                    <span className="text-white  font-normal not-italic text-[0.73vw] leading-[0.83vw]">
                         {data.status}
                     </span>
                 </div>
@@ -64,10 +64,10 @@ const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete }) => 
                     style={{ backgroundImage: `url(${data.updatedBy.avatar})` }}
                 />
                 <div className="flex flex-col justify-center items-start gap-[0.21vw]">
-                    <span className="text-white font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw]">
+                    <span className="text-white  font-normal not-italic text-[0.73vw] leading-[0.83vw]">
                         {data.updatedBy.name}
                     </span>
-                    <span className="text-white/50 font-['SF_Pro_Text'] font-light not-italic text-[0.57vw] leading-[0.83vw] tracking-[0.02em]">
+                    <span className="text-white/50  font-light not-italic text-[0.57vw] leading-[0.83vw] tracking-[0.02em]">
                         {data.updatedBy.email}
                     </span>
                 </div>
@@ -75,11 +75,11 @@ const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete }) => 
 
             {/* 4. Last Updated Cell - 200px -> 10.42vw */}
             <div className="flex flex-row items-center px-[0.63vw] gap-[0.42vw] w-[10.42vw] h-full shrink-0">
-                <span className="text-white font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw]">
+                <span className="text-white  font-normal not-italic text-[0.73vw] leading-[0.83vw]">
                     {data.lastUpdated.split(' • ')[0]}
                 </span>
                 <div className="w-[0.16vw] h-[0.16vw] bg-white rounded-full" />
-                <span className="text-white font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw]">
+                <span className="text-white  font-normal not-italic text-[0.73vw] leading-[0.83vw]">
                     {data.lastUpdated.split(' • ')[1]}
                 </span>
             </div>

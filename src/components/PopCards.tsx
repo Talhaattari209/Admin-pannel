@@ -33,7 +33,7 @@ export const BaseCard: React.FC<BaseCardProps> = ({
     glowColor = '#5F00DB'
 }) => {
     return (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center font-['SF_Pro_Text']">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center ">
             {/* Backdrop */}
             <div className="absolute inset-0 bg-[#070707]/80 backdrop-blur-sm transition-opacity" />
 

@@ -50,7 +50,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange, placeh
 
             {/* Editor Area */}
             <textarea
-                className="flex-grow w-full bg-transparent text-white font-['SF_Pro_Text'] text-[0.83vw] p-[0.83vw] resize-none focus:outline-none placeholder:text-white/30 leading-[1.25vw]"
+                className="flex-grow w-full bg-transparent text-white  text-[0.83vw] p-[0.83vw] resize-none focus:outline-none placeholder:text-white/30 leading-[1.25vw]"
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}

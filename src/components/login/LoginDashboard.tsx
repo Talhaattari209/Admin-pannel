@@ -28,7 +28,7 @@ interface StatCardProps {
 
 const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
     return (
-        <div className="flex flex-col justify-end items-start p-[0.83vw] gap-[0.68vw] w-full h-[5.11vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
+        <div className="flex flex-col justify-end items-start p-[0.83vw] gap-[0.68vw] w-full h-[5.11vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] ">
             {/* Label */}
             <h6 className="w-full text-[#CCCCCC] font-bold not-italic text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
                 {label}
@@ -102,15 +102,9 @@ export default function LoginDashboard() {
     const [showExportModal, setShowExportModal] = useState(false);
 
     return (
-        <div className="relative min-h-screen w-full bg-[#111111] overflow-hidden font-['SF_Pro_Text'] text-white">
+        <div className="relative min-h-screen w-full overflow-hidden text-white">
 
-            {/* 1. Background Layer */}
-            <div
-                className="fixed inset-0 z-0 opacity-50 bg-cover bg-center pointer-events-none"
-                style={{ backgroundImage: `url('/8.png')` }}
-            />
-
-            {/* 2. Reusable Sidebar (fixed position) */}
+            {/* Reusable Sidebar (fixed position) */}
             <SideNavigation activeId="dashboard" />
 
             {/* 3. Main Content Container - Single Scroll Flow */}

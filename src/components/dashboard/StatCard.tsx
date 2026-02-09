@@ -17,7 +17,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, change, isPositive })
     const isUp = isPositive;
 
     return (
-        <div className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.6vw] w-full h-[4.09vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] font-['SF_Pro_Text']">
+        <div className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.6vw] w-full h-[4.09vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] ">
             {/* Label - H6 (16px -> 0.83vw), #CCCCCC, Bold */}
             <h6 className="w-full text-[#CCCCCC] font-bold not-italic text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
                 {label}

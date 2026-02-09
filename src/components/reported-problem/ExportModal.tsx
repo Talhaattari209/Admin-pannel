@@ -26,13 +26,13 @@ const ExportModal: React.FC<ExportModalProps> = ({ onClose, onExport }) => {
         <>
             <button
                 onClick={onClose}
-                className="flex-1 h-[56px] border border-white/30 rounded-[52px] text-white font-medium not-italic hover:bg-white/5 transition-colors font-['SF_Pro_Text']"
+                className="flex-1 h-[56px] border border-white/30 rounded-[52px] text-white font-medium not-italic hover:bg-white/5 transition-colors "
             >
                 Cancel
             </button>
             <button
                 onClick={() => onExport(format, dateRange)}
-                className="flex-1 h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium not-italic shadow-lg hover:brightness-110 active:scale-95 transition-all font-['SF_Pro_Text']"
+                className="flex-1 h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-medium not-italic shadow-lg hover:brightness-110 active:scale-95 transition-all "
             >
                 Export Data
             </button>
@@ -47,7 +47,7 @@ const ExportModal: React.FC<ExportModalProps> = ({ onClose, onExport }) => {
             actions={actions}
             minHeight="auto"
         >
-            <div className="flex flex-col gap-6 w-full font-['SF_Pro_Text']">
+            <div className="flex flex-col gap-6 w-full ">
 
                 {/* Format Selection */}
                 <div className="flex flex-col gap-3">

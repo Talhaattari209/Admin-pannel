@@ -51,13 +51,13 @@ const AddRoleModal: React.FC<AddRoleModalProps> = ({ onCancel, onAdd, initialDat
         >
             <div className="flex flex-col gap-[0.63vw] w-full flex-1 min-h-0">
                 <div className="flex flex-col gap-[0.21vw] w-full">
-                    <label className="text-white text-[0.63vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider ml-[0.21vw]">Title</label>
-                    <input type="text" defaultValue={initialData?.role || 'Content Manager'} className="w-full h-[2.5vw] bg-transparent border-b border-white text-white text-[0.83vw] focus:outline-none font-['SF_Pro_Text'] not-italic px-[0.42vw]" />
+                    <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">Title</label>
+                    <input type="text" defaultValue={initialData?.role || 'Content Manager'} className="w-full h-[2.5vw] bg-transparent border-b border-white text-white text-[0.83vw] focus:outline-none not-italic px-[0.42vw]" />
                 </div>
 
                 <div className="flex flex-col gap-[0.21vw] w-full">
-                    <label className="text-white text-[0.63vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider ml-[0.21vw]">Description</label>
-                    <textarea placeholder="Type here..." defaultValue={initialData?.description} className="w-full bg-transparent border-b border-white text-white text-[0.83vw] focus:outline-none resize-none h-[3.15vw] font-['SF_Pro_Text'] not-italic placeholder:text-white/40 px-[0.42vw]" />
+                    <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">Description</label>
+                    <textarea placeholder="Type here..." defaultValue={initialData?.description} className="w-full bg-transparent border-b border-white text-white text-[0.83vw] focus:outline-none resize-none h-[3.15vw] not-italic placeholder:text-white/40 px-[0.42vw]" />
                 </div>
 
                 <div className="flex-grow min-h-0 overflow-y-auto custom-scrollbar">

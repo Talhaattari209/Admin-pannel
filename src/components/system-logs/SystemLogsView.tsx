@@ -8,17 +8,17 @@ const SystemLogsView: React.FC = () => {
     const [showExportModal, setShowExportModal] = useState(false);
 
     return (
-        <div className="flex flex-col w-full h-full animate-in fade-in duration-500 overflow-x-hidden font-['SF_Pro_Text'] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex flex-col w-full h-full animate-in fade-in duration-500 overflow-x-hidden  [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {/* Header matching page header_css.txt */}
             <div className="flex flex-row items-end p-0 gap-[0.83vw] w-[79.17vw] h-[4.17vw] flex-none order-0 flex-grow-0">
                 {/* Text */}
                 <div className="flex flex-col justify-center items-start p-0 gap-[0.83vw] flex-1 h-[4.17vw] order-0">
                     {/* System Logs Title */}
-                    <div className="w-[71.30vw] h-[2.08vw] font-['SF_Pro_Text'] font-bold text-[1.875vw] leading-[110%] flex items-center tracking-[-0.04em] text-white flex-none order-1 self-stretch flex-grow-0">
+                    <div className="w-[71.30vw] h-[2.08vw]  font-bold text-[1.875vw] leading-[110%] flex items-center tracking-[-0.04em] text-white flex-none order-1 self-stretch flex-grow-0">
                         System Logs
                     </div>
                     {/* Description */}
-                    <div className="w-[71.30vw] h-[1.25vw] font-['SF_Pro_Text'] font-normal text-[0.83vw] leading-[150%] flex items-center text-[#CCCCCC] flex-none order-2 self-stretch flex-grow-0">
+                    <div className="w-[71.30vw] h-[1.25vw]  font-normal text-[0.83vw] leading-[150%] flex items-center text-[#CCCCCC] flex-none order-2 self-stretch flex-grow-0">
                         Monitor key admin activities, security events, and automated system actions.
                     </div>
                 </div>
@@ -30,7 +30,7 @@ const SystemLogsView: React.FC = () => {
                         onClick={() => setShowExportModal(true)}
                         className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] w-[7.03vw] h-[2.92vw] border border-white backdrop-blur-[6px] rounded-[2.71vw] flex-none order-0 flex-grow-0 drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
                     >
-                        <span className="w-[2.66vw] h-[1.25vw] font-['SF_Pro_Text'] font-medium text-[0.83vw] leading-[1.25vw] flex items-end text-center text-white flex-none order-1 flex-grow-0">
+                        <span className="w-[2.66vw] h-[1.25vw]  font-medium text-[0.83vw] leading-[1.25vw] flex items-end text-center text-white flex-none order-1 flex-grow-0">
                             Export
                         </span>
                         {/* Download Icon */}

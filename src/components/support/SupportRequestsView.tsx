@@ -16,7 +16,7 @@ const SupportRequestsView: React.FC<SupportRequestsViewProps> = ({
     onExport
 }) => {
     return (
-        <div className="flex flex-col items-center w-full animate-in fade-in duration-700 font-['SF_Pro_Text']">
+        <div className="flex flex-col items-center w-full animate-in fade-in duration-700 ">
             <PageHeader
                 title="Support Requests"
                 description="Track and respond to user support messages, inquiries, and feedback submissions."

@@ -30,10 +30,10 @@ const MatchesOverTimeCard: React.FC = () => {
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-[52.5vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading Section */}
       <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
-        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
+        <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] ">
           Matches Over Time
         </h4>
-        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] font-['SF_Pro_Text']">
+        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] ">
           Displays weekly match volume to visualize growth in user interaction and compatibility success.
         </p>
       </div>

@@ -74,7 +74,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
     };
 
     return (
-        <aside className="fixed left-[0.83vw] top-[0.83vw] bottom-[0.83vw] w-[15vw] flex flex-col bg-transparent z-50 font-['SF_Pro_Text']">
+        <aside className="fixed left-[0.83vw] top-[0.83vw] bottom-[0.83vw] w-[15vw] flex flex-col bg-transparent z-50 ">
             {/* Side Menu Container */}
             <div className="flex flex-col w-full h-full bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[1.25vw] overflow-hidden">
 
@@ -105,7 +105,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                             {/* Section Heading - Decreased height and text size */}
                             {section.title && (
                                 <div className="flex items-center px-[0.83vw] w-full h-[2.15vw] shrink-0">
-                                    <span className="font-['SF_Pro_Text'] font-medium not-italic text-[0.65vw] leading-[0.82vw] uppercase text-white opacity-50">
+                                    <span className=" font-medium not-italic text-[0.65vw] leading-[0.82vw] uppercase text-white opacity-50">
                                         {section.title}
                                     </span>
                                 </div>
@@ -153,7 +153,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                                             </div>
 
                                             {/* Label - Decreased size */}
-                                            <span className="flex-grow text-left font-['SF_Pro_Text'] font-normal not-italic text-[0.75vw] leading-[1.1vw]">
+                                            <span className="flex-grow text-left  font-normal not-italic text-[0.75vw] leading-[1.1vw]">
                                                 {item.label}
                                             </span>
 
@@ -187,7 +187,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                                 className="object-contain"
                             />
                         </div>
-                        <span className="flex-grow text-left font-['SF_Pro_Text'] font-normal not-italic text-[0.75vw] leading-[1.1vw]">
+                        <span className="flex-grow text-left  font-normal not-italic text-[0.75vw] leading-[1.1vw]">
                             Logout
                         </span>
                         <ChevronRight className="opacity-50 w-[0.75vw] h-[0.75vw]" />

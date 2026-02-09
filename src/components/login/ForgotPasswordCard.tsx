@@ -28,10 +28,10 @@ const ForgotPasswordCard: React.FC<ForgotPasswordCardProps> = ({ onSendLink, onB
 
       {/* Header Text */}
       <div className="flex flex-col items-center gap-[0.83vw] w-full">
-        <h2 className="font-['SF_Pro_Text'] font-medium not-italic text-[1.67vw] leading-[1.2] text-white text-center tracking-[-0.02em]">
+        <h2 className=" font-medium not-italic text-[1.67vw] leading-[1.2] text-white text-center tracking-[-0.02em]">
           Forgot Password?
         </h2>
-        <p className="font-['SF_Pro_Text'] font-normal not-italic text-[0.94vw] leading-[1.78] text-[#DDDDDD] text-center">
+        <p className=" font-normal not-italic text-[0.94vw] leading-[1.78] text-[#DDDDDD] text-center">
           Enter your email address and we’ll send you a link to reset your password.
         </p>
       </div>
@@ -40,13 +40,13 @@ const ForgotPasswordCard: React.FC<ForgotPasswordCardProps> = ({ onSendLink, onB
       <div className="flex flex-col gap-[0.83vw] w-full px-[0.2vw]">
         {/* Email Field */}
         <div className="flex flex-col items-start gap-[0.2vw] w-full">
-          <label className="text-white text-[0.625vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider">Email</label>
+          <label className="text-white text-[0.625vw] font-bold not-italic  uppercase tracking-wider">Email</label>
           <div className="flex flex-col w-full border-b border-white py-[0.4vw]">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-transparent border-none text-white text-[0.83vw] font-['SF_Pro_Text'] focus:outline-none placeholder:text-white/40"
+              className="w-full bg-transparent border-none text-white text-[0.83vw]  focus:outline-none placeholder:text-white/40"
               placeholder="Enter your email"
             />
           </div>
@@ -66,7 +66,7 @@ const ForgotPasswordCard: React.FC<ForgotPasswordCardProps> = ({ onSendLink, onB
           onClick={() => onSendLink(email)}
           className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] gap-[0.625vw] hover:brightness-110 transition-all active:scale-[0.98]"
         >
-          <span className="font-['SF_Pro_Text'] font-medium not-italic text-[0.83vw] leading-[1.5] text-white text-center">
+          <span className=" font-medium not-italic text-[0.83vw] leading-[1.5] text-white text-center">
             Send Link
           </span>
         </button>
@@ -74,7 +74,7 @@ const ForgotPasswordCard: React.FC<ForgotPasswordCardProps> = ({ onSendLink, onB
 
       <button
         onClick={onBack}
-        className="text-white/60 hover:text-white text-[0.7vw] font-medium not-italic font-['SF_Pro_Text'] transition-colors"
+        className="text-white/60 hover:text-white text-[0.7vw] font-medium not-italic  transition-colors"
       >
         Back to Login
       </button>

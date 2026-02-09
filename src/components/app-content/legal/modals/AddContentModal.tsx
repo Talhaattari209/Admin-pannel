@@ -48,7 +48,7 @@ const AddContentModal: React.FC<AddContentModalProps> = ({ onCancel, onAdd }) =>
             <div className="flex flex-col gap-[0.63vw] w-full h-full min-h-0">
                 {/* Title Input */}
                 <div className="flex flex-col gap-[0.21vw] w-full shrink-0">
-                    <label className="text-white text-[0.63vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider ml-[0.21vw]">Title</label>
+                    <label className="text-white text-[0.63vw] font-bold not-italic  uppercase tracking-wider ml-[0.21vw]">Title</label>
                     <input
                         type="text"
                         value={title}
@@ -60,7 +60,7 @@ const AddContentModal: React.FC<AddContentModalProps> = ({ onCancel, onAdd }) =>
 
                 {/* Content Input (Rich Text) */}
                 <div className="flex flex-col gap-[0.21vw] w-full flex-grow min-h-0">
-                    <label className="text-white text-[0.63vw] font-bold not-italic font-['SF_Pro_Text'] uppercase tracking-wider ml-[0.21vw]">Content</label>
+                    <label className="text-white text-[0.63vw] font-bold not-italic  uppercase tracking-wider ml-[0.21vw]">Content</label>
                     <div className="flex-grow w-full min-h-0">
                         <RichTextEditor
                             value={content}

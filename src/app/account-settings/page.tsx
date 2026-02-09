@@ -6,13 +6,7 @@ import AccountSettingsView from '@/components/account-settings/AccountSettingsVi
 
 export default function AccountSettingsPage() {
     return (
-        <div className="relative min-h-screen w-full bg-[#111111] overflow-hidden font-['SF_Pro_Text'] text-white">
-            {/* Background Layer */}
-            <div
-                className="fixed inset-0 z-0 opacity-50 bg-cover bg-center pointer-events-none"
-                style={{ backgroundImage: `url('/8.png')` }}
-            />
-
+        <div className="relative min-h-screen w-full overflow-hidden">
             {/* Sidebar */}
             <SideNavigation activeId="account-settings" />
 
