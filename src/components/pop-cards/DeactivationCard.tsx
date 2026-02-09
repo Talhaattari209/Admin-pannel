@@ -16,16 +16,16 @@ const DeactivationCard: React.FC<DeactivationCardProps> = ({ onCancel, onDeactiv
     );
 
     const description = (
-        <div className="flex flex-col gap-4">
-            <p className="text-[18px] font-normal not-italic leading-[32px]">Are you sure you want to deactivate this user’s account?</p>
-            <p className="text-[14px] font-normal not-italic leading-[150%] opacity-80">Once deactivated, the user will not be able to log in or access the app until reactivated by an admin.</p>
+        <div className="flex flex-col gap-[1.66vw]">
+            <p className="text-[0.93vw] font-normal not-italic leading-[1.66vw]">Are you sure you want to deactivate this user’s account?</p>
+            <p className="text-[0.73vw] font-normal not-italic leading-[150%] opacity-80">Once deactivated, the user will not be able to log in or access the app until reactivated by an admin.</p>
         </div>
     );
 
     const actions = (
         <>
-            <button onClick={onCancel} className="flex-1 px-6 h-[56px] border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 transition-all">Cancel</button>
-            <button onClick={onDeactivate} className="flex-1 px-6 h-[56px] bg-[#FF4E4E] rounded-[52px] text-white font-medium not-italic hover:brightness-110 transition-all shadow-lg">Deactivate</button>
+            <button onClick={onCancel} className="flex-1 px-[1.25vw] h-[2.91vw] border border-white rounded-[2.70vw] text-white text-[0.83vw] font-medium not-italic hover:bg-white/10 transition-all">Cancel</button>
+            <button onClick={onDeactivate} className="flex-1 px-[1.25vw] h-[2.91vw] bg-[#FF4E4E] rounded-[2.70vw] text-white text-[0.83vw] font-medium not-italic hover:brightness-110 transition-all shadow-lg">Deactivate</button>
         </>
     );
 
@@ -35,7 +35,7 @@ const DeactivationCard: React.FC<DeactivationCardProps> = ({ onCancel, onDeactiv
             title="Deactivate User?"
             description={description}
             actions={actions}
-            minHeight="533px"
+            alignActionsToBottom={false}
         />
     );
 };

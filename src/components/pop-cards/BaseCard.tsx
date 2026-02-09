@@ -8,6 +8,7 @@ interface BaseCardProps {
     actions: React.ReactNode;
     minHeight?: string;
     iconGlowColor?: string;
+    alignActionsToBottom?: boolean;
 }
 
 const BaseCard: React.FC<BaseCardProps> = ({
@@ -17,14 +18,14 @@ const BaseCard: React.FC<BaseCardProps> = ({
     children,
     actions,
     minHeight = 'auto',
-    iconGlowColor = '#5F00DB'
+    iconGlowColor = '#5F00DB',
+    alignActionsToBottom = true
 }) => {
     return (
         <div
-            className="relative flex flex-col items-center p-8 gap-8 w-[95vw] max-w-[480px] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[32px] box-border shadow-2xl overflow-hidden"
+            className="relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] w-[25vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden"
             style={{ minHeight }}
         >
-            {/* Icon Section */}
             {/* Icon Section */}
             <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] flex-none order-0 flex-grow-0 relative">
 
@@ -61,13 +62,13 @@ const BaseCard: React.FC<BaseCardProps> = ({
             </div>
 
             {/* Text Content */}
-            <div className="flex flex-col gap-4 text-center self-stretch">
-                <h2 className="text-[32px] font-medium not-italic leading-[38px] tracking-[-0.02em] text-white">
+            <div className="flex flex-col gap-[0.83vw] text-center self-stretch">
+                <h2 className="text-[1.66vw] font-medium not-italic leading-[1.98vw] tracking-[-0.02em] text-white">
                     {title}
                 </h2>
                 <div className="text-white">
                     {typeof description === 'string' ? (
-                        <p className="text-[18px] font-normal not-italic leading-[32px] opacity-90">{description}</p>
+                        <p className="text-[0.93vw] font-normal not-italic leading-[1.66vw] opacity-90">{description}</p>
                     ) : (
                         description
                     )}
@@ -76,13 +77,13 @@ const BaseCard: React.FC<BaseCardProps> = ({
 
             {/* Custom Middle Content (Lists, Inputs, etc.) */}
             {children && (
-                <div className="flex flex-col self-stretch gap-8">
+                <div className="flex flex-col self-stretch gap-[1.66vw]">
                     {children}
                 </div>
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-row items-center justify-center gap-[24px] self-stretch mt-auto">
+            <div className={`flex flex-row items-center justify-center gap-[1.25vw] self-stretch ${alignActionsToBottom ? 'mt-auto' : ''}`}>
                 {actions}
             </div>
         </div>
