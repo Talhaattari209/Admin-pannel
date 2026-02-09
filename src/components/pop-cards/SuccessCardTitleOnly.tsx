@@ -1,19 +1,15 @@
 import React from 'react';
 import PopCardWrapper from './PopCardWrapper';
 
-interface SuccessCardProps {
+interface SuccessCardTitleOnlyProps {
     title: string;
-    description: string;
     onDone: () => void;
-    buttonText?: string;
     className?: string;
 }
 
-const SuccessCard: React.FC<SuccessCardProps> = ({
+const SuccessCardTitleOnly: React.FC<SuccessCardTitleOnlyProps> = ({
     title,
-    description,
     onDone,
-    buttonText = "Done",
     className
 }) => {
     return (
@@ -58,11 +54,6 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
                     <h2 className="text-[1.66vw] font-medium not-italic leading-[1.98vw] tracking-[-0.02em] text-white">
                         {title}
                     </h2>
-                    {description && (
-                        <p className="text-[0.94vw] font-normal not-italic leading-[1.67vw] text-[#DDDDDD]">
-                            {description}
-                        </p>
-                    )}
                 </div>
 
                 {/* Action Buttons */}
@@ -71,7 +62,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
                         onClick={onDone}
                         className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:bg-[#7000ff] transition-all"
                     >
-                        {buttonText}
+                        Done
                     </button>
                 </div>
             </div>
@@ -79,4 +70,4 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
     );
 };
 
-export default SuccessCard;
+export default SuccessCardTitleOnly;

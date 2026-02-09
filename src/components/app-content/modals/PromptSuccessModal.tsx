@@ -1,5 +1,5 @@
 import React from 'react';
-import { SuccessCard } from '@/components/PopCards';
+import SuccessCard from '@/components/pop-cards/SuccessCard';
 
 interface PromptSuccessModalProps {
     title: string;
@@ -9,11 +9,9 @@ interface PromptSuccessModalProps {
 const PromptSuccessModal: React.FC<PromptSuccessModalProps> = ({ title, onDone }) => {
     return (
         <SuccessCard
-            isOpen={true}
-            onClose={onDone}
+            onDone={onDone}
             title={title}
             description="The action has been completed successfully."
-            buttonLabel="Done"
         />
     );
 };

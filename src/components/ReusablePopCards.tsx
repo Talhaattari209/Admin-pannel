@@ -97,13 +97,7 @@ export default function ReusablePopCards() {
             </div>
 
             {/* Modal Overlay */}
-            {activeModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 shadow-xl backdrop-blur-sm overflow-y-auto">
-                    <div className="relative">
-                        {renderModalContent()}
-                    </div>
-                </div>
-            )}
+            {activeModal && renderModalContent()}
         </div>
     );
 }

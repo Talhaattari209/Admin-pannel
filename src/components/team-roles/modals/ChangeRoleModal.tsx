@@ -1,5 +1,5 @@
+
 import React from 'react';
-import { BaseCard } from '@/components/PopCards';
 
 interface ChangeRoleModalProps {
     onCancel: () => void;
@@ -7,42 +7,35 @@ interface ChangeRoleModalProps {
 }
 
 const ChangeRoleModal: React.FC<ChangeRoleModalProps> = ({ onCancel, onUpdate }) => {
-    const icon = (
-        <div className="w-[2.08vw] h-[2.08vw] flex items-center justify-center">
-            <svg viewBox="0 0 56 56" className="w-[100%] h-[100%] text-white" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <circle cx="28" cy="18" r="5" />
-                <path d="M18 32c0-4.418 3.582-8 8-8h4c4.418 0 8 3.582 8 8v2H18v-2z" />
-                <polyline points="38 18 42 22 48 16" />
-            </svg>
-        </div>
-    );
-
-    const actions = (
-        <>
-            <button
-                onClick={onCancel}
-                className="flex flex-row justify-center items-center px-[1.04vw] py-[0.63vw] gap-[0.42vw] h-[2.5vw] rounded-[2.5vw] font-medium not-italic text-[0.73vw] leading-[1.04vw] transition-all cursor-pointer flex-1 bg-transparent border border-white/20 text-white hover:bg-white/10 filter drop-shadow(0px 0.21vw 0.63vw rgba(0, 0, 0, 0.05)) backdrop-blur-[6px]"
-            >
-                Cancel
-            </button>
-            <button
-                onClick={onUpdate}
-                className="flex flex-row justify-center items-center px-[1.04vw] py-[0.63vw] gap-[0.42vw] h-[2.5vw] rounded-[2.5vw] font-medium not-italic text-[0.73vw] leading-[1.04vw] transition-all cursor-pointer flex-1 bg-[#5F00DB] text-white shadow-[0px_-0.21vw_0.42vw_rgba(95,0,219,0.25),0px_0.21vw_0.42vw_rgba(95,0,219,0.25)] hover:bg-[#7000ff]"
-            >
-                Update Role
-            </button>
-        </>
-    );
-
     return (
-        <BaseCard
-            icon={icon}
-            title="Change Role"
-            description="Select a new role for the user."
-            actions={actions}
-            glowColor="#5F00DB"
-            height="22.81vw"
-        >
+        <div className="relative flex flex-col items-center p-[2.5vw] gap-[2.5vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[2.5vw] box-border shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 w-[25vw] min-w-[320px]">
+            {/* Icon Section */}
+            <div className="relative flex flex-col justify-center items-center w-[6.25vw] h-[6.25vw] shrink-0 isolation-auto">
+                <div
+                    className="absolute -inset-[3.125vw] opacity-50 blur-2xl pointer-events-none rounded-full"
+                    style={{ background: `linear-gradient(180deg, #5F00DB 30%, transparent 70%)` }}
+                ></div>
+                <div className="absolute inset-0 bg-white/5 backdrop-blur-[6px] rounded-full border border-white/10 z-0"></div>
+                <div className="relative z-10 flex items-center justify-center">
+                    <svg viewBox="0 0 56 56" className="w-[2.08vw] h-[2.08vw] text-white" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <circle cx="28" cy="18" r="5" />
+                        <path d="M18 32c0-4.418 3.582-8 8-8h4c4.418 0 8 3.582 8 8v2H18v-2z" />
+                        <polyline points="38 18 42 22 48 16" />
+                    </svg>
+                </div>
+            </div>
+
+            {/* Text Content */}
+            <div className="flex flex-col gap-[0.83vw] text-center self-stretch">
+                <h2 className="text-[1.67vw] font-medium not-italic leading-[2.08vw] tracking-[-0.02em] text-white font-inter">
+                    Change Role
+                </h2>
+                <p className="text-[0.94vw] font-normal not-italic leading-[1.67vw] opacity-90 font-inter text-white">
+                    Select a new role for the user.
+                </p>
+            </div>
+
+            {/* Form Content */}
             <div className="flex flex-col gap-[0.21vw] w-full relative group">
                 <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">Role</label>
                 <div className="relative">
@@ -56,7 +49,23 @@ const ChangeRoleModal: React.FC<ChangeRoleModalProps> = ({ onCancel, onUpdate })
                     </div>
                 </div>
             </div>
-        </BaseCard>
+
+            {/* Action Buttons */}
+            <div className="flex flex-row items-center justify-center gap-[1.25vw] self-stretch mt-auto">
+                <button
+                    onClick={onCancel}
+                    className="flex-1 h-[3.5vw] border border-white/20 bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.94vw] hover:bg-white/10 transition-all"
+                >
+                    Cancel
+                </button>
+                <button
+                    onClick={onUpdate}
+                    className="flex-1 h-[3.5vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.94vw] shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all"
+                >
+                    Update Role
+                </button>
+            </div>
+        </div>
     );
 };
 

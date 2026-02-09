@@ -1,5 +1,5 @@
 import React from 'react';
-import { SuccessCard } from '../PopCards';
+import SuccessCard from '@/components/pop-cards/SuccessCard';
 
 interface SuccessModalProps {
     isOpen: boolean;
@@ -11,12 +11,9 @@ interface SuccessModalProps {
 const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, title, description }) => {
     return (
         <SuccessCard
-            isOpen={isOpen}
-            onClose={onClose}
+            onDone={onClose}
             title={title}
             description={description}
-            buttonLabel="Continue"
-        // Default dimensions in SuccessCard (480w, 342h) match the spec for "Account setting success"
         />
     );
 };

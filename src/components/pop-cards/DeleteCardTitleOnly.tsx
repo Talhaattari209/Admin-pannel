@@ -1,19 +1,19 @@
 import React from 'react';
 import PopCardWrapper from './PopCardWrapper';
 
-interface SuccessCardProps {
+interface DeleteCardTitleOnlyProps {
     title: string;
-    description: string;
-    onDone: () => void;
-    buttonText?: string;
+    onCancel: () => void;
+    onConfirm: () => void;
+    confirmText?: string;
     className?: string;
 }
 
-const SuccessCard: React.FC<SuccessCardProps> = ({
+const DeleteCardTitleOnly: React.FC<DeleteCardTitleOnlyProps> = ({
     title,
-    description,
-    onDone,
-    buttonText = "Done",
+    onCancel,
+    onConfirm,
+    confirmText = "Delete",
     className
 }) => {
     return (
@@ -49,7 +49,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
                     <div className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0"></div>
                     {/* Icon Content */}
                     <div className="relative z-10 flex items-center justify-center">
-                        <img src="/assets/check-circle-success.svg" alt="Success" className="w-[3.75vw] h-[3.75vw] object-contain" />
+                        <img src="/assets/alert-triangle.svg" alt="Delete" className="w-[2.92vw] h-[2.92vw] object-contain" />
                     </div>
                 </div>
 
@@ -58,20 +58,21 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
                     <h2 className="text-[1.66vw] font-medium not-italic leading-[1.98vw] tracking-[-0.02em] text-white">
                         {title}
                     </h2>
-                    {description && (
-                        <p className="text-[0.94vw] font-normal not-italic leading-[1.67vw] text-[#DDDDDD]">
-                            {description}
-                        </p>
-                    )}
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex flex-row items-center justify-center gap-[1.25vw] self-stretch mt-auto">
                     <button
-                        onClick={onDone}
-                        className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:bg-[#7000ff] transition-all"
+                        onClick={onCancel}
+                        className="flex-1 h-[3.5vw] border border-white/20 bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.94vw] hover:bg-white/10 filter drop-shadow(0px 0.63vw 2.08vw rgba(0, 0, 0, 0.05)) backdrop-blur-[6px] transition-all"
                     >
-                        {buttonText}
+                        Cancel
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        className="flex-1 h-[3.5vw] bg-[#FF4E4E] rounded-[2.71vw] text-white font-medium not-italic text-[0.94vw] shadow-[0px_-0.42vw_0.63vw_rgba(255,78,78,0.25),0px_0.42vw_0.63vw_rgba(255,78,78,0.25)] hover:bg-[#ff6666] transition-all"
+                    >
+                        {confirmText}
                     </button>
                 </div>
             </div>
@@ -79,4 +80,4 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
     );
 };
 
-export default SuccessCard;
+export default DeleteCardTitleOnly;
