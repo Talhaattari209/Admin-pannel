@@ -13,13 +13,11 @@ const ExportModal: React.FC<ExportModalProps> = ({ onClose, onExport }) => {
 
     // Custom SVG icon matching the theme (Download/Export icon)
     const ExportIcon = (
-        <div className="relative w-[72px] h-[72px] flex items-center justify-center">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#5F00DB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-        </div>
+        <svg className="w-[2.92vw] h-[2.92vw] text-white" viewBox="0 0 24 24" fill="none" stroke="#5F00DB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
     );
 
     const actions = (

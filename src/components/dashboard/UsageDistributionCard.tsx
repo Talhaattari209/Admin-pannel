@@ -149,5 +149,3 @@ const UsageDistributionCard: React.FC = () => {
     </div>
   );
 };
-
-export default UsageDistributionCard;

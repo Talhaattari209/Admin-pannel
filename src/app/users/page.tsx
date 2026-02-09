@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import SideNavigation from '@/components/SideNavigation';
 import { PageHeader } from '@/components/Headers';
 import { SearchBar, Pagination, FilterSelect } from '@/components/shared/TableComponents';
-import { ArrowUp, ArrowDown, ChevronDown, MoreVertical, UserCircle, UserX } from 'lucide-react';
+import { ArrowUp, ArrowDown, ChevronDown, MoreVertical, Eye, ChevronRight } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
 
@@ -130,22 +130,26 @@ const RowActions = ({ userId }: { userId: string }) => {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-[0.42vw] w-[11.46vw] bg-[rgba(22,0,63,0.95)] backdrop-blur-[12px] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] z-50 py-[0.42vw] shadow-2xl animate-in fade-in zoom-in duration-150">
+                <div className="absolute right-0 mt-[0.42vw] w-[12.5vw] bg-[#222222] backdrop-blur-[12px] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] z-50 py-[0.42vw] shadow-2xl animate-in fade-in zoom-in duration-150 flex flex-col">
                     <button
                         onClick={() => router.push(`/users/profile`)}
-                        className="flex items-center gap-[0.83vw] w-full px-[1.25vw] py-[0.83vw] text-white hover:bg-white/10 text-[0.83vw] transition-colors"
+                        className="flex items-center justify-between w-full h-[2.19vw] px-[0.63vw] hover:bg-white/10 transition-colors"
                     >
-                        <UserCircle size={18} className="text-purple-400" />
-                        View Details
+                        <div className="flex items-center gap-[0.83vw]">
+                            <Eye className="w-[0.83vw] h-[0.83vw] text-white" />
+                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.94vw] text-white whitespace-nowrap">View Details</span>
+                        </div>
+                        <ChevronRight className="w-[0.83vw] h-[0.83vw] text-white" />
                     </button>
 
-                    <div className="h-[1px] bg-white/10 mx-[0.83vw]" />
-
                     <button
-                        className="flex items-center gap-[0.83vw] w-full px-[1.25vw] py-[0.83vw] text-red-400 hover:bg-red-500/10 text-[0.83vw] transition-colors"
+                        className="flex items-center justify-between w-full h-[2.19vw] px-[0.63vw] hover:bg-[#FF4E4E]/10 transition-colors"
                     >
-                        <UserX size={18} />
-                        Deactivate User
+                        <div className="flex items-center gap-[0.83vw]">
+                            <img src="/assets/slash-Deactivate.svg" alt="Deactivate" className="w-[0.83vw] h-[0.83vw]" />
+                            <span className="font-['SF_Pro_Text'] font-normal text-[0.73vw] leading-[0.94vw] text-[#FF4E4E] whitespace-nowrap">Deactivate User</span>
+                        </div>
+                        <ChevronRight className="w-[0.83vw] h-[0.83vw] text-[#FF4E4E]" />
                     </button>
                 </div>
             )}

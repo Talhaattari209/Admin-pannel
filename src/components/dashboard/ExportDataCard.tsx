@@ -76,8 +76,16 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
             <div className="flex flex-row items-start gap-[0.21vw] w-[10.42vw] h-[0.83vw] flex-none order-0 self-stretch flex-grow-0">
               <span className="h-[0.83vw]  font-bold not-italic text-[0.625vw] leading-[0.83vw] text-white">Start Date</span>
             </div>
-            <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-[10.42vw] h-[2.5vw] min-h-[2.5vw] border-b border-white flex-none order-1 self-stretch flex-grow-0">
-              <span className="w-[8.33vw] h-[1.25vw]  font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">{startDate}</span>
+            <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-[10.42vw] h-[2.5vw] min-h-[2.5vw] border-b border-white flex-none order-1 self-stretch flex-grow-0 relative">
+              <input
+                type="date"
+                value={startDate === 'Jan 01, 2025' ? '2025-01-01' : startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+              <span className="w-[8.33vw] h-[1.25vw]  font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">
+                {startDate === 'Jan 01, 2025' ? 'Jan 01, 2025' : new Date(startDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}
+              </span>
               <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                 <line x1="16" y1="2" x2="16" y2="6" />
@@ -92,8 +100,16 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
             <div className="flex flex-row items-start gap-[0.21vw] w-[10.42vw] h-[0.83vw] flex-none order-0 self-stretch flex-grow-0">
               <span className="h-[0.83vw]  font-bold not-italic text-[0.625vw] leading-[0.83vw] text-white">End Date</span>
             </div>
-            <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-[10.42vw] h-[2.5vw] min-h-[2.5vw] border-b border-white flex-none order-1 self-stretch flex-grow-0">
-              <span className="w-[8.33vw] h-[1.25vw]  font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">{endDate}</span>
+            <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-[10.42vw] h-[2.5vw] min-h-[2.5vw] border-b border-white flex-none order-1 self-stretch flex-grow-0 relative">
+              <input
+                type="date"
+                value={endDate === 'Dec 31, 2025' ? '2025-12-31' : endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+              <span className="w-[8.33vw] h-[1.25vw]  font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">
+                {endDate === 'Dec 31, 2025' ? 'Dec 31, 2025' : new Date(endDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}
+              </span>
               <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                 <line x1="16" y1="2" x2="16" y2="6" />

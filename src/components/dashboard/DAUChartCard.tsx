@@ -39,7 +39,7 @@ const CustomDot = (props: any) => {
 
 const DAUChartCard: React.FC = () => {
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-[52.5vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5 transition-all hover:border-white/10">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[30.2vw] shadow-2xl overflow-hidden border border-white/5 transition-all hover:border-white/10">
       <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
         <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] ">
           Daily Active Users (DAU)
@@ -49,64 +49,68 @@ const DAUChartCard: React.FC = () => {
         </p>
       </div>
 
-      <div className="flex flex-grow w-full pl-[0.66vw] pr-[1.62vw] pt-[0.62vw] pb-[0.28vw]">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-            <defs>
-              <linearGradient id="colorDauFull" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#5F00DB" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#5F00DB" stopOpacity={0.05} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid
-              strokeDasharray="4 4"
-              vertical={true}
-              horizontal={true}
-              stroke="rgba(217, 217, 255, 0.1)"
-            />
-            <XAxis
-              dataKey="day"
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: '0.62vw' }}
-              dy={15}
-              height={50}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: '0.62vw' }}
-              domain={[0, 20000]}
-              ticks={[0, 5000, 10000, 15000, 20000]}
-              width={45}
-            />
-            <Tooltip
-              contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
-              itemStyle={{ color: 'white' }}
-            />
-            <Area
-              type="monotone"
-              dataKey="dau"
-              stroke="#FFFFFF"
-              strokeWidth="0.1vw"
-              fillOpacity={1}
-              fill="url(#colorDauFull)"
-              dot={<CustomDot />}
-              activeDot={{ r: 6, fill: '#5F00DB' }}
-            />
-            <Legend
-              verticalAlign="bottom"
-              align="center"
-              content={() => (
-                <div className="flex items-center justify-center gap-[0.62vw] mt-[0.02vw]">
-                  <div className="w-[0.83vw] h-[0.1vw] bg-[#5F00DB]" />
-                  <div className="w-[0.41vw] h-[0.41vw] bg-[#5F00DB] rounded-full -ml-[0.62vw]" />
-                  <span className="text-white/60 text-[0.62vw] font-inter not-italic">DAU</span>
-                </div>
-              )}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+      <div className="relative flex-grow w-full min-w-0 min-h-0">
+        <div className="absolute inset-0 pl-[0.66vw] pr-[1.62vw] pt-[0.62vw] pb-[0.28vw]">
+          <div className="w-full h-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorDauFull" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#5F00DB" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#5F00DB" stopOpacity={0.05} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid
+                  strokeDasharray="4 4"
+                  vertical={true}
+                  horizontal={true}
+                  stroke="rgba(217, 217, 255, 0.1)"
+                />
+                <XAxis
+                  dataKey="day"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: '0.62vw' }}
+                  dy={15}
+                  height={50}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: '0.62vw' }}
+                  domain={[0, 20000]}
+                  ticks={[0, 5000, 10000, 15000, 20000]}
+                  width={45}
+                />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
+                  itemStyle={{ color: 'white' }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="dau"
+                  stroke="#FFFFFF"
+                  strokeWidth="0.1vw"
+                  fillOpacity={1}
+                  fill="url(#colorDauFull)"
+                  dot={<CustomDot />}
+                  activeDot={{ r: 6, fill: '#5F00DB' }}
+                />
+                <Legend
+                  verticalAlign="bottom"
+                  align="center"
+                  content={() => (
+                    <div className="flex items-center justify-center gap-[0.62vw] mt-[0.02vw]">
+                      <div className="w-[0.83vw] h-[0.1vw] bg-[#5F00DB]" />
+                      <div className="w-[0.41vw] h-[0.41vw] bg-[#5F00DB] rounded-full -ml-[0.62vw]" />
+                      <span className="text-white/60 text-[0.62vw] font-inter not-italic">DAU</span>
+                    </div>
+                  )}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );

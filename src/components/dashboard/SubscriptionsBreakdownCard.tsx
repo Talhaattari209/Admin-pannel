@@ -120,5 +120,3 @@ const SubscriptionsBreakdownCard: React.FC = () => {
     </div>
   );
 };
-
-export default SubscriptionsBreakdownCard;
