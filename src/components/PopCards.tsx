@@ -51,22 +51,15 @@ export const BaseCard: React.FC<BaseCardProps> = ({
                 {/* Header Section (Icon + Title) */}
                 <div className="flex flex-col items-center gap-[0.63vw] w-full shrink-0"> {/* Gap reduced */}
                     {/* Icon Section */}
-                    <div className="relative flex flex-col justify-center items-center w-[4vw] h-[4vw] shrink-0 isolation-isolate mb-[0.21vw]"> {/* Icon size reduced from 5vw */}
-                        {/* Glow */}
-                        <div
-                            className="absolute -left-[2.5vw] -right-[2.5vw] -top-[2.5vw] -bottom-[2.5vw] opacity-50 z-0 rounded-full blur-xl pointer-events-none"
-                            style={{ background: `linear-gradient(180deg, ${glowColor} 30%, transparent 70%)` }}
-                        />
-
+                    <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] mb-[0.21vw] flex-none order-0 flex-grow-0 relative">
                         {/* Rotating Border Animation & Glow */}
                         <div className="absolute inset-0 z-[1] rounded-full">
-                            {/* Glow Layer - Extended bounds to allow external blur */}
+                            {/* Glow Layer */}
                             <div
                                 className="absolute -inset-[0.5vw] rounded-full animate-[spin_3s_linear_infinite]"
                                 style={{
                                     background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%)',
                                     filter: 'blur(0.25vw)',
-                                    // Mask creates a ring centered roughly at the 2vw radius mark (which is 80% of the 2.5vw radius)
                                     WebkitMask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)',
                                     mask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)'
                                 }}
@@ -83,10 +76,10 @@ export const BaseCard: React.FC<BaseCardProps> = ({
                         </div>
 
                         {/* Icon BG */}
-                        <div className="absolute inset-0 bg-white/5 backdrop-blur-[6px] rounded-full z-0" />
+                        <div className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0"></div>
 
                         {/* Icon Content */}
-                        <div className="relative z-10 flex items-center justify-center scale-90"> {/* Scale down icon slightly */}
+                        <div className="relative z-10 flex items-center justify-center">
                             {icon}
                         </div>
                     </div>
@@ -177,7 +170,7 @@ export const SuccessCard = ({
     if (!isOpen) return null;
 
     // Adjusted icon size for the smaller container
-    const icon = <img src={SUCCESS_ICON} alt="Success" className="w-[2.5vw] h-[2.5vw] object-contain" />;
+    const icon = <img src={SUCCESS_ICON} alt="Success" className="w-[2.92vw] h-[2.92vw] object-contain" />;
 
     // Default Height: 342px -> 17.81vw
     const defaultHeight = "17.81vw";
@@ -208,7 +201,7 @@ export const RemoveMediaCard = ({
 
     const reasons = ["Inappropriate Content", "Violence or Harmful Imagery", "Nudity or Sexual Content", "Copyright or Ownership Concerns", "Misleading or Fake Media", "Privacy Violation", "Other"];
 
-    const icon = <img src={DANGER_ICON} alt="Danger" className="w-[2.08vw] h-[2.08vw] object-contain" />;
+    const icon = <img src={DANGER_ICON} alt="Danger" className="w-[2.92vw] h-[2.92vw] object-contain" />;
 
     return (
         <BaseCard
@@ -243,7 +236,7 @@ export const RemovePromptResponseCard = ({
 
     const reasons = ["Inappropriate Content", "Violence or Harmful Imagery", "Nudity or Sexual Content", "Copyright or Ownership Concerns", "Misleading or Fake Media", "Privacy Violation", "Other"];
 
-    const icon = <img src={DANGER_ICON} alt="Danger" className="w-[2.08vw] h-[2.08vw] object-contain" />;
+    const icon = <img src={DANGER_ICON} alt="Danger" className="w-[2.92vw] h-[2.92vw] object-contain" />;
 
     return (
         <BaseCard
@@ -274,7 +267,7 @@ export const DeactivationCard = ({
 }: { isOpen: boolean; onClose: () => void; onConfirm: () => void }) => {
     if (!isOpen) return null;
 
-    const icon = <img src={DANGER_ICON} alt="Danger" className="w-[2.08vw] h-[2.08vw] object-contain" />;
+    const icon = <img src={DANGER_ICON} alt="Danger" className="w-[2.92vw] h-[2.92vw] object-contain" />;
 
     // Compact description
     const desc = (

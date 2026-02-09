@@ -76,15 +76,16 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
 const StatRow = () => {
     const stats = [
         { label: "Active Users (30d)", value: "142,980", change: "8.2%" },
-        { label: "New Signups (7d)", value: "32,540", change: "16.3%" },
-        { label: "Active Groups (30d)", value: "8,420", change: "9.4%", isUp: false },
-        { label: "Net Revenue", value: "$482,090", change: "2.5%" },
+        { label: "New Signups (7d)", value: "9,540", change: "6.8%" },
+        { label: "Revenue (30d)", value: "$124,500", change: "3.3%" },
+        { label: "Avg. Session", value: "14m 32s", change: "12.5%", isUp: false },
+        { label: "Total Downloads", value: "1,240", change: "5.2%" },
     ];
 
     return (
-        <div className="flex flex-row flex-wrap items-center gap-[0.83vw] w-full min-h-[5.68vw]">
+        <div className="grid grid-cols-5 gap-[0.83vw] w-full min-h-[5.68vw]">
             {stats.map((stat, index) => (
-                <div key={index} className="flex-1">
+                <div key={index} className="w-full">
                     <StatCard {...stat} />
                 </div>
             ))}

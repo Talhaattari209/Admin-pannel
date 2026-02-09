@@ -13,8 +13,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ title, description, onDone 
       <div className="relative flex flex-col items-center p-[1.67vw] gap-[1.67vw] w-[22.92vw] bg-[#16003F] border border-white/20 rounded-[1.67vw] shadow-2xl animate-in zoom-in-95 duration-300">
 
         {/* Animated Check Icon */}
-        <div className="relative flex items-center justify-center w-[6.25vw] h-[6.25vw]">
-          <div className="absolute inset-0 bg-[#3ADC60] opacity-10 blur-2xl rounded-full"></div>
+        <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] flex-none order-0 flex-grow-0 relative">
 
           {/* Rotating Border Animation & Glow */}
           <div className="absolute inset-0 z-[1] rounded-full">
@@ -32,15 +31,19 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ title, description, onDone 
             <div
               className="absolute inset-0 rounded-full animate-[spin_3s_linear_infinite]"
               style={{
-                background: 'conic-gradient(from 0deg, transparent 0%, rgba(58, 220, 96, 1) 50%, transparent 100%)', // Using Green #3ADC60
+                background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 1) 50%, transparent 100%)',
                 WebkitMask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))',
                 mask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))'
               }}
             />
           </div>
 
-          <div className="relative w-[4.17vw] h-[4.17vw] rounded-full border-2 border-white/10 flex items-center justify-center isolation-auto overflow-visible z-10 bg-white/5 backdrop-blur-[6px]">
-            <img src="/assets/check-circle-success.svg" alt="Success" className="w-[3.33vw] h-[3.33vw] object-contain animate-in fade-in zoom-in duration-500 delay-200" />
+          {/* Icon BG */}
+          <div className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0"></div>
+
+          {/* Icon Content */}
+          <div className="relative z-10 flex items-center justify-center">
+            <img src="/assets/check-circle-success.svg" alt="Success" className="w-[2.92vw] h-[2.92vw] object-contain animate-in fade-in zoom-in duration-500 delay-200" />
           </div>
         </div>
 

@@ -1,10 +1,32 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Michroma } from "next/font/google";
+import { Geist_Mono, Michroma } from "next/font/google";
+import localFont from 'next/font/local';
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const sfPro = localFont({
+  src: [
+    {
+      path: '../../public/fonts/SFProText-Regular.woff',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/SFProText-Medium.woff',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/SFProText-Semibold.woff',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/SFProText-Bold.woff',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-sfpro',
 });
 
 const geistMono = Geist_Mono({
@@ -31,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${michroma.variable} antialiased`}
+        className={`${sfPro.variable} ${geistMono.variable} ${michroma.variable} antialiased`}
       >
         {children}
       </body>

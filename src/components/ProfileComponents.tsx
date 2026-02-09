@@ -802,7 +802,7 @@ const PokeActivityRow = ({ item }: { item: PokeActivityItem }) => {
             </div>
 
             {/* Details Column */}
-            <div className="flex flex-row items-center w-[22.08vw]">
+            <div className="flex flex-row items-center w-[20.80vw]">
                 <span className="font-['SF_Pro_Text'] font-normal not-italic text-[0.73vw] leading-[0.83vw] text-[#CCCCCC] truncate pr-[1vw]">
                     {item.details}
                 </span>
@@ -971,7 +971,7 @@ export const ProfilePokesActivity = () => {
                     >
                         <span className="font-['Lato'] font-normal not-italic text-[0.83vw] leading-[1.0vw] text-white">Sent</span>
                         <div className="flex flex-row justify-center items-center w-[0.94vw] h-[0.94vw] bg-[#FF4E4E] rounded-[1.25vw]">
-                            <span className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-none text-white flex items-center justify-center h-full pb-[0.05vw]">{sentPokes.length}</span>
+                            <span className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-none text-white flex items-center justify-center h-full">{sentPokes.length}</span>
                         </div>
                     </button>
                     <button
@@ -980,7 +980,7 @@ export const ProfilePokesActivity = () => {
                     >
                         <span className="font-['Lato'] font-normal not-italic text-[0.83vw] leading-[1.0vw] text-white">Received</span>
                         <div className="flex flex-row justify-center items-center w-[0.94vw] h-[0.94vw] bg-[#FF4E4E] rounded-[1.25vw]">
-                            <span className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-none text-white flex items-center justify-center h-full pb-[0.05vw]">{receivedPokes.length}</span>
+                            <span className="font-['SF_Pro_Text'] font-bold not-italic text-[0.63vw] leading-none text-white flex items-center justify-center h-full">{receivedPokes.length}</span>
                         </div>
                     </button>
                 </div>

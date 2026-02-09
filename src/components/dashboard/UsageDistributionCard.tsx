@@ -83,60 +83,64 @@ const UsageDistributionCard: React.FC = () => {
       </div>
 
       {/* Chart Section */}
-      <div className="relative flex-grow w-full px-[0.41vw] pt-[1.25vw] pb-[0.41vw] flex items-center justify-center">
-        {/* Total Display Overlay */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-          <span className="text-white text-[1.66vw] font-bold not-italic leading-none">
-            {total.toLocaleString()}
-          </span>
-        </div>
+      <div className="relative flex-grow w-full min-w-0 min-h-0">
+        <div className="absolute inset-0 px-[0.41vw] pt-[1.25vw] pb-[0.41vw] flex items-center justify-center">
+          {/* Total Display Overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
+            <span className="text-white text-[1.66vw] font-bold not-italic leading-none">
+              {total.toLocaleString()}
+            </span>
+          </div>
 
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Tooltip
-              contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
-              itemStyle={{ color: 'white' }}
-              labelStyle={{ display: 'none' }}
-            />
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              innerRadius={94}
-              outerRadius={118}
-              paddingAngle={0}
-              startAngle={90}
-              endAngle={-270}
-              dataKey="value"
-              labelLine={false}
-              label={renderCustomizedLabel}
-              cornerRadius={20} // Added rounded corners as requested
-              stroke="none"
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
-              ))}
-            </Pie>
-            <Legend
-              verticalAlign="bottom"
-              align="center"
-              height={36}
-              content={({ payload }) => (
-                <div className="flex items-center justify-center gap-[1.25vw] mt-[0.83vw]">
-                  {payload?.map((entry: any, index: number) => (
-                    <div key={index} className="flex items-center gap-[0.41vw]">
-                      <div
-                        className="w-[0.62vw] h-[0.62vw] rounded-full border border-black/20"
-                        style={{ backgroundColor: entry.color }}
-                      />
-                      <span className="text-white/80 text-[0.62vw] font-normal not-italic">{entry.value}</span>
-                    </div>
+          <div className="w-full h-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                  itemStyle={{ color: 'white' }}
+                  labelStyle={{ display: 'none' }}
+                />
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={94}
+                  outerRadius={118}
+                  paddingAngle={0}
+                  startAngle={90}
+                  endAngle={-270}
+                  dataKey="value"
+                  labelLine={false}
+                  label={renderCustomizedLabel}
+                  cornerRadius={20} // Added rounded corners as requested
+                  stroke="none"
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
-                </div>
-              )}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+                </Pie>
+                <Legend
+                  verticalAlign="bottom"
+                  align="center"
+                  height={36}
+                  content={({ payload }) => (
+                    <div className="flex items-center justify-center gap-[1.25vw] mt-[0.83vw]">
+                      {payload?.map((entry: any, index: number) => (
+                        <div key={index} className="flex items-center gap-[0.41vw]">
+                          <div
+                            className="w-[0.62vw] h-[0.62vw] rounded-full border border border-black/20"
+                            style={{ backgroundColor: entry.color }}
+                          />
+                          <span className="text-white/80 text-[0.62vw] font-normal not-italic">{entry.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );

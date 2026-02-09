@@ -25,12 +25,8 @@ const BaseCard: React.FC<BaseCardProps> = ({
             style={{ minHeight }}
         >
             {/* Icon Section */}
-            <div className="relative flex flex-col justify-center items-center w-[6.25vw] h-[6.25vw] shrink-0 isolation-auto">
-                {/* Glow behind icon */}
-                <div
-                    className="absolute -inset-[3.125vw] opacity-50 blur-2xl pointer-events-none rounded-full"
-                    style={{ background: `linear-gradient(180deg, ${iconGlowColor} 30%, transparent 70%)` }}
-                ></div>
+            {/* Icon Section */}
+            <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] flex-none order-0 flex-grow-0 relative">
 
                 {/* Rotating Border Animation & Glow */}
                 <div className="absolute inset-0 z-[1] rounded-full">
@@ -55,9 +51,10 @@ const BaseCard: React.FC<BaseCardProps> = ({
                     />
                 </div>
 
-                {/* Icon BG Layer */}
-                <div className="absolute inset-0 bg-white/5 backdrop-blur-[6px] rounded-full border border-white/10 z-0"></div>
-                {/* Actual Icon Content */}
+                {/* Icon BG */}
+                <div className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0"></div>
+
+                {/* Icon Content */}
                 <div className="relative z-10 flex items-center justify-center">
                     {icon}
                 </div>

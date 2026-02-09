@@ -71,7 +71,7 @@ const UsersReportedCard: React.FC = () => {
   const total = data.reduce((acc, item) => acc + item.value, 0);
 
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading */}
       <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw]">
         <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] font-['SF_Pro_Text']">
@@ -83,41 +83,46 @@ const UsersReportedCard: React.FC = () => {
       </div>
 
       {/* Main Chart Area */}
+      {/* Main Chart Area */}
       <div className="relative flex flex-row w-full h-[24.11vw] px-[0.41vw] py-[1.25vw]">
-        <div className="relative flex-grow h-full flex items-center justify-center">
-          {/* Central Total */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-            <span className="text-white text-[1.66vw] font-bold not-italic">{total}</span>
-          </div>
+        <div className="relative flex-grow h-full min-w-0 min-h-0">
+          <div className="absolute inset-0">
+            {/* Central Total */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
+              <span className="text-white text-[1.66vw] font-bold not-italic">{total}</span>
+            </div>
 
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Tooltip
-                contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.41vw' }}
-                itemStyle={{ color: 'white' }}
-                labelStyle={{ display: 'none' }}
-              />
-              <Pie
-                data={data}
-                cx="55%"
-                cy="50%"
-                innerRadius={100}
-                outerRadius={125}
-                paddingAngle={0}
-                startAngle={90}
-                endAngle={-270}
-                dataKey="value"
-                labelLine={false}
-                label={renderCustomizedLabel}
-                cornerRadius={20}
-                stroke="none"
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
+            <div className="w-full h-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#16003F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.41vw' }}
+                    itemStyle={{ color: 'white' }}
+                    labelStyle={{ display: 'none' }}
+                  />
+                  <Pie
+                    data={data}
+                    cx="55%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={100}
+                    paddingAngle={0}
+                    startAngle={90}
+                    endAngle={-270}
+                    dataKey="value"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
+                    cornerRadius={20}
+                    stroke="none"
+                  >
+                    {data.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
 
         {/* Legend */}

@@ -13,7 +13,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
     description = "The account has been successfully deactivated. You can reactivate it anytime from the user’s detail page."
 }) => {
     const icon = (
-        <img src="/assets/check-circle-success.svg" alt="Success" className="w-[72px] h-[72px] object-contain" />
+        <img src="/assets/check-circle-success.svg" alt="Success" className="w-[2.92vw] h-[2.92vw] object-contain" />
     );
 
     const actions = (
