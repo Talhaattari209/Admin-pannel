@@ -28,14 +28,15 @@ interface StatCardProps {
 
 const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
     return (
-        <div className="flex flex-col justify-end items-start p-[0.83vw] gap-[0.68vw] w-full h-[5.11vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] ">
+
+        <div className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.8vw] w-full h-[4.83vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] ">
             {/* Label */}
             <h6 className="w-full text-[#CCCCCC] font-bold not-italic text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
                 {label}
             </h6>
 
             {/* Value and Change Row */}
-            <div className="flex flex-row justify-end items-center w-full h-[1.77vw]">
+            <div className="flex flex-row justify-end items-center w-full h-[1.6vw]">
                 {/* Main Number */}
                 <span className="flex-grow text-white font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em]">
                     {value}
@@ -116,41 +117,45 @@ export default function LoginDashboard() {
                     className="flex flex-col items-start w-full text-white"
                     style={{
                         paddingLeft: '2.08vw',
-                        paddingTop: '2.08vw',
+                        paddingTop: '1.4vw',
                         paddingRight: '2.08vw',
                         paddingBottom: '2.08vw'
                     }}
                 >
-                    {/* Page Header */}
-                    <div className="w-full">
-                        <PageHeader
-                            title="Dashboard"
-                            description="Get a quick overview of user activity, group interactions, and overall platform performance."
-                            variant="dashboard"
-                            secondaryAction={{
-                                label: "Export",
-                                onClick: () => setShowExportModal(true),
-                                icon: (
-                                    <div className="relative w-[1.25vw] h-[1.25vw] flex items-center justify-center">
-                                        <Image
-                                            src="/assets/Icons_figma/download.svg"
-                                            alt="Export"
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                )
-                            }}
-                        />
-
+                    {/* Custom Compact Header */}
+                    <div className="relative w-full h-[4.01vw] flex flex-col justify-center gap-[0.51vw]">
+                        <div className="flex items-center justify-start w-full">
+                            <h1 className="text-white text-[1.8vw] font-bold leading-[110%] tracking-[0.01em]">
+                                Dashboard
+                            </h1>
+                        </div>
+                        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%]">
+                            Get a quick overview of user activity, group interactions, and overall platform performance.
+                        </p>
+                        <button
+                            onClick={() => setShowExportModal(true)}
+                            className="absolute bottom-[0.2vw] right-0 flex items-center justify-center gap-[0.62vw] px-[1.25vw] py-[0.41vw] rounded-full border border-white backdrop-blur-[6px]"
+                        >
+                            <div className="relative w-[1.25vw] h-[1.25vw]">
+                                <Image
+                                    src="/assets/Icons_figma/download.svg"
+                                    alt="Export"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <span className="text-white text-[0.83vw] font-medium leading-[120%]">
+                                Export
+                            </span>
+                        </button>
                     </div>
 
-                    <div className="h-[1.66vw]" />
+                    <div className="h-[1.33vw]" />
 
                     {/* Stat Cards */}
                     <StatRow />
 
-                    <div className="h-[1.66vw]" />
+                    <div className="h-[1.03vw]" />
 
                     {/* Filters Row (Timeline) */}
                     <div className="flex flex-nowrap items-center gap-[0.41vw] mb-[0.83vw] w-[70%] overflow-x-auto scrollbar-hide">
@@ -170,7 +175,7 @@ export default function LoginDashboard() {
 
                     {/* Analytics Grid */}
                     <div className="flex flex-col w-full animate-in fade-in duration-700">
-                        <div className="grid grid-cols-12 gap-6 w-full">
+                        <div className="grid grid-cols-12 gap-[0.83vw] w-full">
                             {/* Row 1 */}
                             <div className="col-span-12 lg:col-span-8">
                                 <DAUChartCard />

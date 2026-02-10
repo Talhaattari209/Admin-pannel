@@ -54,15 +54,13 @@ const SystemLogsView: React.FC = () => {
 
             {/* Modals */}
             {showExportModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-                    <ExportModal
-                        onCancel={() => setShowExportModal(false)}
-                        onDownload={(config) => {
-                            console.log('Exporting', config);
-                            setShowExportModal(false);
-                        }}
-                    />
-                </div>
+                <ExportModal
+                    onCancel={() => setShowExportModal(false)}
+                    onDownload={(config) => {
+                        console.log('Exporting', config);
+                        setShowExportModal(false);
+                    }}
+                />
             )}
         </div>
     );

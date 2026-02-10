@@ -96,37 +96,32 @@ export default function ReportedProblemsPage() {
             </main>
 
             {/* Export Modal */}
+            {/* Export Modal */}
             {isExportModalOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-                    <ExportModal
-                        onCancel={() => setIsExportModalOpen(false)}
-                        onDownload={(config) => {
-                            console.log('Exporting', config);
-                            setIsExportModalOpen(false);
-                        }}
-                    />
-                </div>
+                <ExportModal
+                    onCancel={() => setIsExportModalOpen(false)}
+                    onDownload={(config) => {
+                        console.log('Exporting', config);
+                        setIsExportModalOpen(false);
+                    }}
+                />
             )}
 
             {/* Deactivation Modal */}
             {isDeactivationModalOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-                    <DeactivationCard
-                        onCancel={() => setIsDeactivationModalOpen(false)}
-                        onDeactivate={confirmDeactivation}
-                    />
-                </div>
+                <DeactivationCard
+                    onCancel={() => setIsDeactivationModalOpen(false)}
+                    onDeactivate={confirmDeactivation}
+                />
             )}
 
             {/* Success Modal */}
             {isSuccessModalOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-                    <SuccessCard
-                        onDone={() => setIsSuccessModalOpen(false)}
-                        title={successMessage.title}
-                        description={successMessage.description}
-                    />
-                </div>
+                <SuccessCard
+                    onDone={() => setIsSuccessModalOpen(false)}
+                    title={successMessage.title}
+                    description={successMessage.description}
+                />
             )}
         </div>
     );

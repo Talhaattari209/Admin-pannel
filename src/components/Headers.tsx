@@ -103,7 +103,6 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     );
 };
 
-
 // --- User Profile Header Component ---
 
 interface UserProfileHeaderProps {
@@ -137,73 +136,64 @@ export const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
 }) => {
     return (
         <div
-            className="flex flex-row items-center p-0 gap-[0.83vw] w-full h-[4.17vw] "
+            className="flex flex-row items-center p-0 gap-[0.71vw] w-full h-[3.54vw] -mt-[0.3vw]"
         >
-            {/* Back Button */}
-            {/* 48px -> 2.5vw */}
+            {/* Back Button - reduced by 15% */}
             <button
                 onClick={onBack}
-                className="flex justify-center items-center w-[2.5vw] h-[2.5vw] p-[0.625vw] gap-[0.83vw] bg-[#5F00DB] rounded-[2.7vw] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#4a00aa] transition-colors flex-none"
+                className="flex justify-center items-center w-[2.13vw] h-[2.13vw] p-[0.53vw] gap-[0.71vw] bg-[#5F00DB] rounded-[2.7vw] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#4a00aa] transition-colors flex-none"
             >
-                <ArrowLeft className="text-white w-[1.25vw] h-[1.25vw]" />
+                <ArrowLeft className="text-white w-[1.06vw] h-[1.06vw]" />
             </button>
 
-            {/* Profile Picture */}
-            {/* 80px -> 4.17vw */}
+            {/* Profile Picture - reduced by 15% */}
             <div
-                className="w-[4.17vw] h-[4.17vw] rounded-[2.5vw] bg-cover bg-center bg-no-repeat flex-none bg-gray-700"
+                className="w-[3.54vw] h-[3.54vw] rounded-[2.13vw] bg-cover bg-center bg-no-repeat flex-none bg-gray-700"
                 style={{ backgroundImage: `url(${avatarUrl || '/assets/avatar-placeholder.png'})` }}
             />
 
             {/* Info Column */}
-            <div className="flex flex-col justify-center items-start gap-[0.83vw] h-[4.17vw] flex-grow">
+            <div className="flex flex-col justify-center items-start gap-[0.71vw] h-[3.54vw] flex-grow">
 
-                {/* Top Row: Name + Age + Verified */}
-                {/* Height: 40px -> 2.083vw */}
-                <div className="flex flex-row items-center p-0 w-full h-[2.08vw]">
+                {/* Top Row: Name + Age + Verified - reduced by 15% */}
+                <div className="flex flex-row items-center p-0 w-full h-[1.77vw]">
                     {/* Name */}
-                    <h1 className="flex items-center text-white font-bold not-italic text-[1.875vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap">
+                    <h1 className="flex items-center text-white font-bold not-italic text-[1.59vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap">
                         {name}
                     </h1>
 
                     {/* Comma + Age */}
-                    <h1 className="flex items-center text-white font-bold not-italic text-[1.875vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap ml-1">
+                    <h1 className="flex items-center text-white font-bold not-italic text-[1.59vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap ml-1">
                         , {age}
                     </h1>
 
-                    {/* Verified Badge */}
-                    {/* 56px width -> 2.91vw */}
+                    {/* Verified Badge - reduced by 15% */}
                     {verified && (
-                        <div className="flex flex-row items-center px-[0.625vw] gap-[0.52vw] w-[2.92vw] h-[2.08vw]">
-                            {/* Custom Verified Icon */}
-                            <div className="relative w-[1.67vw] h-[1.67vw]">
-                                {/* White Star Background (Vector) - approximated with rotated box for now or SVG */}
-                                <div className="absolute left-[4.17%] right-[4.17%] top-[4.17%] bottom-[4.17%] bg-white rounded-[0.06vw] rotate-45 transform origin-center"></div>
-                                {/* Purple Check */}
-                                <div className="absolute left-[20.83%] right-[20.83%] top-[20.83%] bottom-[20.83%] flex items-center justify-center z-10">
-                                    <Check className="w-[1vw] h-[1vw] text-[#5F00DB] stroke-[3]" />
-                                </div>
-                                {/* Border Ring if needed (CSS mentions vector border 2px solid #5F00DB at specific pos) */}
-                            </div>
+                        <div className="flex flex-row items-center px-[0.53vw] gap-[0.44vw] w-[2.48vw] h-[1.77vw]">
+                            {/* Custom Verified Icon from Assets */}
+                            <img
+                                src="/assets/Verified_profile_header.png"
+                                alt="Verified"
+                                className="w-[1.42vw] h-[1.42vw] object-contain mt-[0.35vw]"
+                            />
                         </div>
                     )}
                 </div>
 
-                {/* Bottom Row: Chips */}
-                {/* Height: 24px -> 1.25vw */}
-                <div className="flex flex-row items-center p-0 gap-[0.21vw] h-[1.25vw] w-full">
+                {/* Bottom Row: Chips - reduced by 15% */}
+                <div className="flex flex-row items-center p-0 gap-[0.18vw] h-[1.06vw] w-full">
                     {sex && <Chip label={sex} />}
                     {religion && <Chip label={religion} />}
-                    {location && <Chip label={location} icon={<MapPin className="w-[0.625vw] h-[0.625vw]" />} />}
-                    {distance && <Chip label={distance} icon={<Navigation className="w-[0.625vw] h-[0.625vw]" />} />}
-                    {university && <Chip label={university} icon={<GraduationCap className="w-[0.625vw] h-[0.625vw]" />} />}
-                    {occupation && <Chip label={occupation} icon={<Briefcase className="w-[0.625vw] h-[0.625vw]" />} />}
+                    {location && <Chip label={location} icon={<MapPin className="w-[0.53vw] h-[0.53vw]" />} />}
+                    {distance && <Chip label={distance} icon={<Navigation className="w-[0.53vw] h-[0.53vw]" />} />}
+                    {university && <Chip label={university} icon={<GraduationCap className="w-[0.53vw] h-[0.53vw]" />} />}
+                    {occupation && <Chip label={occupation} icon={<Briefcase className="w-[0.53vw] h-[0.53vw]" />} />}
                 </div>
             </div>
 
-            {/* Action Slot */}
+            {/* Action Slot - reduced by 15% */}
             {action && (
-                <div className="flex flex-row items-center gap-[0.83vw] h-[2.91vw] flex-none">
+                <div className="flex flex-row items-center justify-center gap-[0.71vw] flex-none">
                     {action}
                 </div>
             )}
@@ -211,16 +201,16 @@ export const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
     );
 };
 
-// Helper Chip Component
-// Height: 24px -> 1.25vw
-// Padding: 5px 8px -> 0.26vw 0.42vw
-// Gap: 5px -> 0.26vw
-// Radius: 48px -> 2.5vw
-// Font Size: 12px -> 0.625vw
+// Helper Chip Component - reduced by 15%
+// Height: 24px * 0.85 -> 1.06vw
+// Padding: 5px * 0.85 = 4.25px, 8px * 0.85 = 6.8px -> 0.22vw 0.35vw
+// Gap: 5px * 0.85 -> 0.22vw
+// Radius: 48px -> 2.5vw (keep same for rounded look)
+// Font Size: 12px * 0.85 -> 0.53vw
 const Chip = ({ label, icon }: { label: string; icon?: React.ReactNode }) => (
-    <div className="flex flex-row justify-center items-center px-[0.42vw] py-[0.26vw] gap-[0.26vw] h-[1.25vw] bg-[#5F00DB] backdrop-blur-[6px] rounded-[2.5vw] flex-none">
+    <div className="flex flex-row justify-center items-center px-[0.35vw] py-[0.22vw] gap-[0.22vw] h-[1.06vw] bg-[#5F00DB] backdrop-blur-[6px] rounded-[2.5vw] flex-none">
         {icon && <span className="text-white flex items-center justify-center">{icon}</span>}
-        <span className=" font-normal not-italic text-[0.625vw] leading-[0.73vw] text-white text-center whitespace-nowrap">
+        <span className=" font-normal not-italic text-[0.53vw] leading-[0.62vw] text-white text-center whitespace-nowrap">
             {label}
         </span>
     </div>

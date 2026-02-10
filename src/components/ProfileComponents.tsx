@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Compass, Leaf, Coffee, Music, Camera, Palette, Tent, ChevronLeft, ChevronRight, Trash2, Play, ArrowUpDown } from 'lucide-react';
+import { Compass, Leaf, Coffee, Music, Camera, Palette, Tent, ChevronLeft, ChevronRight, Trash2, Play } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, FreeMode, EffectFade } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -14,6 +14,16 @@ import 'swiper/css/thumbs';
 import 'swiper/css/free-mode';
 import 'swiper/css/effect-fade';
 
+
+// --- Sort Icon Component (same as User Management) ---
+const SortIcon = () => (
+    <img
+        src="/assets/chevron_up_down.png"
+        alt="Sort"
+        style={{ width: '14px', height: '14px', margin: '-4px 0px' }}
+        className="shrink-0 opacity-100"
+    />
+);
 
 // --- ProfileTabs Component ---
 
@@ -74,7 +84,7 @@ const ProfileMedia = () => {
     ];
 
     return (
-        <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw]" style={{ minHeight: '34.7vw' }}> {/* Height reduced by ~14% from 42.19vw */}
+        <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw]" style={{ minHeight: '35.5vw' }}> {/* Fine-tuned to 35.5vw */}
 
             {/* Header */}
             <div className="flex flex-col gap-[0.83vw] w-[57.51vw]">
@@ -96,7 +106,7 @@ const ProfileMedia = () => {
                     </button>
 
                     {/* Main Swiper */}
-                    <div className="w-[22.8vw] h-[22.8vw] rounded-[0.83vw] overflow-hidden relative group bg-black/20">
+                    <div className="w-[24.0vw] h-[24.0vw] rounded-[0.83vw] overflow-hidden relative group bg-black/20">
                         <Swiper
                             loop={true}
                             spaceBetween={10}
@@ -137,7 +147,7 @@ const ProfileMedia = () => {
                 </div>
 
                 {/* Thumbnails Reel */}
-                <div className="w-[22.8vw] h-[3.33vw]">
+                <div className="w-[24.0vw] h-[3.5vw]">
                     <Swiper
                         onSwiper={setThumbsSwiper}
                         loop={true}
@@ -150,7 +160,7 @@ const ProfileMedia = () => {
                     >
                         {images.map((img, index) => (
                             <SwiperSlide key={index}>
-                                <div className="w-[3.33vw] h-[3.33vw] rounded-[0.63vw] overflow-hidden border-2 transition-all cursor-pointer border-transparent opacity-60 hover:opacity-100 [.swiper-slide-thumb-active_&]:border-white [.swiper-slide-thumb-active_&]:opacity-100">
+                                <div className="w-[3.5vw] h-[3.5vw] rounded-[0.63vw] overflow-hidden border-2 transition-all cursor-pointer border-transparent opacity-60 hover:opacity-100 [.swiper-slide-thumb-active_&]:border-white [.swiper-slide-thumb-active_&]:opacity-100">
                                     <img src={img} className="w-full h-full object-cover" alt={`Thumb ${index}`} />
                                 </div>
                             </SwiperSlide>
@@ -188,7 +198,7 @@ export const ProfilePrompts = () => {
     };
 
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] h-[28.44vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw]">
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] h-[28.44vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw]"> {/* Reverted to original 28.44vw */}
             {/* Heading */}
             <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] h-[4.69vw] relative">
                 <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] w-full">
@@ -200,7 +210,7 @@ export const ProfilePrompts = () => {
             </div>
 
             {/* Prompts List */}
-            <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] h-[20.42vw]">
+            <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] h-[20.42vw]"> {/* Reverted to original 20.42vw */}
                 {/* Voice Prompt */}
                 <div className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] h-[7.08vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
                     {/* Top Row: Question + Date + Trash */}
@@ -311,7 +321,7 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
     if (activeTab === "Subscription & Payments") return <ProfileSubscription />;
 
     if (activeTab !== "Overview") return (
-        <div className="w-[59.17vw] h-[41.35vw] flex items-center justify-center bg-[#222222] rounded-[0.83vw] border border-[#666666]/50">
+        <div className="w-[59.17vw] h-[45.0vw] flex items-center justify-center bg-[#222222] rounded-[0.83vw] border border-[#666666]/50">
             <span className="text-white/40">Content for {activeTab}</span>
         </div>
     );
@@ -334,7 +344,7 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
             </div>
 
             {/* Form Grid */}
-            <div className="flex flex-col justify-between flex-grow h-full">
+            <div className="flex flex-col flex-grow-0 gap-[0.73vw]">
                 {/* Row 1 */}
                 <div className="flex flex-row gap-[0.83vw]">
                     <InfoField label="First Name" value="John" />
@@ -372,28 +382,28 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
                 </div>
 
                 {/* Lifestyle Tags */}
-                <div className="flex flex-col gap-[0.63vw] w-full">
+                <div className="flex flex-col gap-[0.63vw] w-full mb-[0.53vw]">
                     <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
                         Lifestyle Tags
                     </label>
-                    <div className="flex flex-row flex-wrap gap-[0.63vw]">
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                    <div className="flex flex-row flex-wrap gap-[0.73vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.73vw] text-white">Adventure seeker</span>
                             <CompressIcon className="w-[0.83vw] h-[0.83vw] text-white" />
                         </div>
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.73vw] text-white">Nature explorer</span>
                             <LeafIcon className="w-[0.83vw] h-[0.83vw] text-[#3ADC60]" />
                         </div>
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.73vw] text-white">Foodie</span>
                             <CoffeeIcon className="w-[0.83vw] h-[0.83vw] text-white" />
                         </div>
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.73vw] text-white">Dog parent</span>
                             <span className="text-[0.83vw]">🐶</span>
                         </div>
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.73vw] text-white">Early riser</span>
                             <span className="text-[0.83vw]">🌅</span>
                         </div>
@@ -405,24 +415,24 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
                     <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
                         Interests
                     </label>
-                    <div className="flex flex-row flex-wrap gap-[0.63vw]">
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                    <div className="flex flex-row flex-wrap gap-[0.73vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.83vw]">🎸</span>
                             <span className="text-[0.73vw] text-white">Music Festivals</span>
                         </div>
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.83vw]">🌭</span>
                             <span className="text-[0.73vw] text-white">Street Food Explorer</span>
                         </div>
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.83vw]">📸</span>
                             <span className="text-[0.73vw] text-white">Photography</span>
                         </div>
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.83vw]">⛺</span>
                             <span className="text-[0.73vw] text-white">Weekend Escapes</span>
                         </div>
-                        <div className="px-[0.83vw] py-[0.42vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
                             <span className="text-[0.83vw]">🎨</span>
                             <span className="text-[0.73vw] text-white">Art & Design</span>
                         </div>
@@ -684,7 +694,7 @@ export const ProfileMatches = () => {
     ];
 
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[47.58vw]">
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[49.0vw]"> {/* Fine-tuned to 49vw */}
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw]">
                 <div className="flex flex-col gap-[0.83vw]">
@@ -725,7 +735,7 @@ export const FullGroupCard = () => {
     };
 
     return (
-        <div className="flex flex-col items-start p-[0.71vw] gap-[0.71vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[27.68vw]">
+        <div className="flex flex-col items-start p-[0.71vw] gap-[0.71vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[28.5vw]"> {/* Fine-tuned to 28.5vw */}
             {/* Header Section */}
             <div className="w-full relative pb-[0.71vw]">
                 <div className="flex flex-col gap-[0.71vw]">
@@ -950,7 +960,7 @@ export const ProfilePokesActivity = () => {
     const currentData = activeList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[47.58vw]">
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[49.0vw]"> {/* Fine-tuned to 49vw */}
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw] flex-shrink-0">
                 <div className="flex flex-col gap-[0.83vw]">
@@ -991,23 +1001,23 @@ export const ProfilePokesActivity = () => {
                     <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1a1a1a] border-b border-[#333333] px-[0.83vw] flex-shrink-0">
                         <div className="flex flex-row items-center gap-[0.42vw] w-[10.42vw]">
                             <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC]">User</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                            <SortIcon />
                         </div>
                         <div className="flex flex-row items-center gap-[0.42vw] w-[7.29vw] ml-[0.63vw]">
-                            <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC] ml-[1vw]">Type</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                            <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Type</span>
+                            <SortIcon />
                         </div>
                         <div className="flex flex-row items-center gap-[0.42vw] w-[22.08vw] ml-[0.63vw]">
                             <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Details</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                            <SortIcon />
                         </div>
                         <div className="flex flex-row items-center gap-[0.42vw] w-[7.29vw] ml-[0.63vw]">
                             <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Status</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                            <SortIcon />
                         </div>
                         <div className="flex flex-row items-center gap-[0.42vw] w-[10.42vw] ml-auto justify-end">
                             <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC] mr-[0.5vw]">Timestamp</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                            <SortIcon />
                         </div>
                     </div>
 
@@ -1074,7 +1084,7 @@ const TransactionRow = ({ item }: { item: Transaction }) => {
                 </div>
             </div>
             {/* Timestamp */}
-            <div className="flex flex-row items-center w-[14.37vw] justify-end">
+            <div className="flex flex-row items-center w-[14.37vw]">
                 <span className="font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
                     {item.timestamp}
                 </span>
@@ -1103,7 +1113,7 @@ export const ProfileSubscription = () => {
     const currentData = transactions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[47.58vw]">
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[49.0vw]"> {/* Fine-tuned to 49vw */}
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw]">
                 <div className="flex flex-col gap-[0.83vw]">
@@ -1115,18 +1125,33 @@ export const ProfileSubscription = () => {
             </div>
 
             {/* Banner Card */}
-            <div className="w-[57.51vw] h-[4.58vw] rounded-[0.83vw] p-[0.83vw] flex flex-row items-center justify-between" style={{ background: 'linear-gradient(180deg, #16003F 0%, #111111 100%)' }}>
-                <div className="flex items-center h-full">
+            <div
+                className="relative w-[57.51vw] h-[4.58vw] rounded-[0.83vw] p-[0.83vw] flex flex-row items-center justify-between overflow-hidden"
+                style={{ background: 'linear-gradient(180deg, #16003F 0%, #111111 100%)' }}
+            >
+                {/* Gradient Border */}
+                <div
+                    className="absolute inset-0 rounded-[0.83vw] pointer-events-none"
+                    style={{
+                        background: 'linear-gradient(90deg, #FFFFFF 0%, #5F00DB 100%)',
+                        WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                        WebkitMaskComposite: 'xor',
+                        maskComposite: 'exclude',
+                        padding: '1px'
+                    }}
+                />
+
+                <div className="flex items-center h-full relative z-10">
                     <h4 className="font-bold not-italic text-[1.25vw] leading-[120%] tracking-[-0.04em] text-white">Fennec Premium</h4>
                 </div>
-                <div className="flex flex-row gap-[1.67vw] mr-[1vw]">
+                <div className="flex flex-row gap-[5.83vw] mr-[7vw] relative z-10">
                     <div className="flex flex-col gap-[0.42vw]">
-                        <span className="font-normal not-italic text-[0.83vw] text-[#CCCCCC]">Premium User Since</span>
-                        <span className="font-normal not-italic text-[0.83vw] text-white">October 25, 2024</span>
+                        <span className="font-normal not-italic text-[0.83vw] leading-[150%] text-white">Premium User Since</span>
+                        <span className="font-normal not-italic text-[0.83vw] leading-[150%] text-white">October 25, 2024</span>
                     </div>
                     <div className="flex flex-col gap-[0.42vw]">
-                        <span className="font-normal not-italic text-[0.83vw] text-[#CCCCCC]">Next Billing Date</span>
-                        <span className="font-normal not-italic text-[0.83vw] text-white">November 25, 2025</span>
+                        <span className="font-normal not-italic text-[0.83vw] leading-[150%] text-white">Next Billing Date</span>
+                        <span className="font-normal not-italic text-[0.83vw] leading-[150%] text-white">November 25, 2025</span>
                     </div>
                 </div>
             </div>
@@ -1139,23 +1164,23 @@ export const ProfileSubscription = () => {
                     <div className="flex flex-row items-center w-full h-[2.5vw] bg-[#1a1a1a] border-b border-[#333333] px-[0.63vw]">
                         <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
                             <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Type</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                            <SortIcon />
                         </div>
                         <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
                             <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Amount</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                            <SortIcon />
                         </div>
                         <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
                             <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Status</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                            <SortIcon />
                         </div>
-                        <div className="flex flex-row items-center w-[14.37vw] justify-end gap-[0.42vw]">
-                            <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC] mr-[0.5vw]">Timestamp</span>
-                            <ArrowUpDown className="w-[0.73vw] h-[0.73vw] text-white/30" />
+                        <div className="flex flex-row items-center w-[14.37vw] gap-[0.42vw]">
+                            <span className="font-normal not-italic text-[0.73vw] text-[#CCCCCC]">Timestamp</span>
+                            <SortIcon />
                         </div>
                     </div>
                     {/* Body */}
-                    <div className="flex flex-col w-full min-h-[25vw] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    <div className="flex flex-col w-full min-h-[26.0vw] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}> {/* Adjusted for 49vw card */}
                         <style>{`
                                 div::-webkit-scrollbar {
                                     display: none;

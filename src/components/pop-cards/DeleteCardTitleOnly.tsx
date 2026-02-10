@@ -19,7 +19,7 @@ const DeleteCardTitleOnly: React.FC<DeleteCardTitleOnlyProps> = ({
     return (
         <PopCardWrapper>
             <div
-                className={`relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] w-[25vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 ${className || ''}`}
+                className={`relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] w-[25vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden ${className || ''}`}
             >
                 {/* Icon Section */}
                 <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] flex-none order-0 flex-grow-0 relative">

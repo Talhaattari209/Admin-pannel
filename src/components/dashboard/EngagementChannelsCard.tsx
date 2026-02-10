@@ -31,13 +31,13 @@ const EngagementChannelsCard: React.FC = () => {
     return () => ro.disconnect();
   }, []);
 
-  const size = Math.max(80, Math.min(dimensions.width, dimensions.height) * 0.72);
+  const size = Math.max(80, Math.min(dimensions.width, dimensions.height) * 0.65);
   const innerRadius = size * 0.35;
   const outerRadius = size * 0.45;
   const cornerRadius = Math.max(4, outerRadius * 0.17);
 
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[25.83vw] h-[30.2vw] min-h-[280px] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[25.83vw] h-[27.2vw] min-h-[220px] shadow-2xl overflow-hidden border border-white/5">
       <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full">
         <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] ">
           Top Engagement Channels

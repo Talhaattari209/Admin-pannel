@@ -139,7 +139,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                                                 "flex flex-row items-center px-[0.83vw] gap-[0.65vw] w-full h-[2.45vw] transition-all shrink-0",
                                                 isActive
                                                     ? "bg-gradient-to-r from-[#5F00DB] to-[rgba(22,0,63,0)] text-white"
-                                                    : "bg-transparent text-[#FFFFFF] hover:bg-white/5"
+                                                    : "bg-transparent text-[#FFFFFF] hover:bg-gradient-to-r hover:from-[#5F00DB]/40 hover:to-[rgba(22,0,63,0)]"
                                             )}
                                         >
                                             {/* Icon - Decreased size */}
@@ -176,7 +176,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
                     <button
                         onClick={handleLogout}
                         className={cn(
-                            "flex flex-row items-center px-[0.83vw] gap-[0.65vw] w-full h-[2.45vw] transition-all text-[#FFFFFF] hover:bg-white/5"
+                            "flex flex-row items-center px-[0.83vw] gap-[0.65vw] w-full h-[2.45vw] transition-all text-[#FFFFFF] hover:bg-gradient-to-r hover:from-[#5F00DB]/40 hover:to-[rgba(22,0,63,0)]"
                         )}
                     >
                         <div className="relative w-[1.05vw] h-[1.05vw]">

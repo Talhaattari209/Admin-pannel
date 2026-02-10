@@ -27,9 +27,9 @@ const data = [
 
 const MatchesOverTimeCard: React.FC = () => {
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[27.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading Section */}
-      <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
+      <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[3.84vw]">
         <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] ">
           Matches Over Time
         </h4>
@@ -68,7 +68,7 @@ const MatchesOverTimeCard: React.FC = () => {
                   tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: '0.62vw' }}
                   domain={[0, 200000] as any}
                   ticks={[0, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000] as any}
-                  width={45}
+                  width={53}
                 />
                 <Tooltip
                   cursor={{ fill: 'transparent' }}

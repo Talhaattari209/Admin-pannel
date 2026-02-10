@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ExportDataCard from '../dashboard/ExportDataCard';
+import PopCardWrapper from '../pop-cards/PopCardWrapper';
 
 interface ExportModalProps {
   onCancel: () => void;
@@ -8,17 +9,12 @@ interface ExportModalProps {
 
 const ExportModal: React.FC<ExportModalProps> = ({ onCancel, onDownload }) => {
   return (
-    <div
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
-      onClick={onCancel}
-    >
-      <div onClick={(e) => e.stopPropagation()}>
-        <ExportDataCard
-          onDownload={onDownload}
-          onCancel={onCancel}
-        />
-      </div>
-    </div>
+    <PopCardWrapper>
+      <ExportDataCard
+        onDownload={onDownload}
+        onCancel={onCancel}
+      />
+    </PopCardWrapper>
   );
 };
 

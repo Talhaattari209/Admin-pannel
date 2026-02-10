@@ -58,9 +58,9 @@ export default function UserProfilePage() {
                             action={
                                 <button
                                     onClick={() => setIsDeactivateOpen(true)}
-                                    className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
+                                    className="box-border flex flex-row justify-center items-center px-[1.06vw] py-[0.71vw] gap-[0.53vw] h-[2.47vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
                                 >
-                                    <span className=" font-medium not-italic text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
+                                    <span className=" font-medium not-italic text-[0.71vw] leading-[1.06vw] text-white text-center flex items-end">
                                         Deactivate User
                                     </span>
                                 </button>
@@ -76,7 +76,7 @@ export default function UserProfilePage() {
                     {/* The Parallel Layout */}
                     <div className="flex flex-row gap-[1.67vw] w-[79.17vw] items-start">
                         {/* Dynamic Left Component: Changes Heading/Text/Content based on Tab */}
-                        <ProfileOverview activeTab={activeTab} height="calc((100vh - 11.25vw - 58px) * 1.06)" />
+                        <ProfileOverview activeTab={activeTab} height="calc((100vh - 11.25vw - 58px) * 1.13)" />
 
                         {/* Static Right Component: Remains same for all tabs */}
                         <ProfileInfoCard />

@@ -78,13 +78,13 @@ const UsersReportedCard: React.FC = () => {
     return () => ro.disconnect();
   }, []);
 
-  const size = Math.max(80, Math.min(dimensions.width, dimensions.height) * 0.68);
+  const size = Math.max(80, Math.min(dimensions.width, dimensions.height) * 0.62);
   const innerRadius = size * 0.35;
   const outerRadius = size * 0.45;
   const cornerRadius = Math.max(4, outerRadius * 0.16);
 
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] min-h-[280px] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[27.2vw] min-h-[220px] shadow-2xl overflow-hidden border border-white/5">
       <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw] min-h-[4rem]">
         <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] ">
           Users Reported
@@ -97,7 +97,7 @@ const UsersReportedCard: React.FC = () => {
       <div className="relative flex flex-row w-full flex-grow min-h-0 px-[0.41vw] py-[1.05vw]">
         <div ref={chartRef} className="relative flex-grow h-full min-w-0 flex items-center justify-center">
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 left-1/2 -translate-x-1/2">
-            <span className="text-white text-[1.66vw] font-bold not-italic translate-x-1/2">{total}</span>
+            <span className="text-white text-[1.66vw] font-bold not-italic">{total}</span>
           </div>
 
           <ResponsiveContainer width="100%" height="100%">
@@ -109,7 +109,7 @@ const UsersReportedCard: React.FC = () => {
               />
               <Pie
                 data={data}
-                cx="55%"
+                cx="50%"
                 cy="50%"
                 innerRadius={innerRadius}
                 outerRadius={outerRadius}
@@ -131,7 +131,7 @@ const UsersReportedCard: React.FC = () => {
         </div>
 
         {/* Legend */}
-        <div className="w-[9.37vw] flex flex-col justify-center gap-[0.83vw] pr-[1.25vw]">
+        <div className="w-[7.19vw] flex flex-col justify-center gap-[0.21vw] pr-[1.25vw]">
           {data.map((item, index) => (
             <div key={index} className="flex items-center gap-[0.62vw]">
               <div className="w-[0.62vw] h-[0.62vw] rounded-full border border-black/20" style={{ backgroundColor: item.color }} />

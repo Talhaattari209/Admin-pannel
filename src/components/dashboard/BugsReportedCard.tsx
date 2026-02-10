@@ -77,13 +77,13 @@ const BugsReportedCard: React.FC = () => {
     return () => ro.disconnect();
   }, []);
 
-  const size = Math.max(80, Math.min(dimensions.width, dimensions.height) * 0.68);
+  const size = Math.max(80, Math.min(dimensions.width, dimensions.height) * 0.62);
   const innerRadius = size * 0.37;
   const outerRadius = size * 0.47;
   const cornerRadius = Math.max(4, outerRadius * 0.16);
 
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[30.2vw] min-h-[280px] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full max-w-[39.16vw] h-[27.2vw] min-h-[220px] shadow-2xl overflow-hidden border border-white/5">
       <div className="flex flex-col items-start p-[1.25vw] gap-[0.41vw] w-full h-[6.09vw] min-h-[4rem]">
         <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] ">
           Bugs Reported
@@ -129,10 +129,13 @@ const BugsReportedCard: React.FC = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="w-[6.25vw] flex flex-col justify-center gap-[0.83vw] pr-[1.25vw]">
+        <div className="w-[3.65vw] flex flex-col justify-center gap-[0.21vw] pr-[1.25vw]">
           {data.map((item, index) => (
             <div key={index} className="flex items-center gap-[0.41vw]">
-              <div className="w-[0.62vw] h-[0.62vw] rounded-full" style={{ backgroundColor: item.color }} />
+              <div
+                className="w-[0.62vw] h-[0.62vw] rounded-full border border-[#1A1F26]"
+                style={{ backgroundColor: item.color }}
+              />
               <span className="text-white/80 text-[0.62vw]">{item.name}</span>
             </div>
           ))}

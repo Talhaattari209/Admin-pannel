@@ -26,7 +26,7 @@ const ContentDetailsPopCard: React.FC<ContentDetailsPopCardProps> = ({ title, co
 
     return (
         <PopCardWrapper>
-            <div className="relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 w-[49.79vw] h-[48.64vw] min-w-[600px] max-h-[90vh]">
+            <div className="relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden w-[49.79vw] h-[48.64vw] min-w-[600px] max-h-[90vh]">
                 {/* Header Row */}
                 <div className="flex flex-row justify-between items-center w-full h-[2.5vw] shrink-0 relative">
                     <div className="absolute left-1/2 transform -translate-x-1/2">

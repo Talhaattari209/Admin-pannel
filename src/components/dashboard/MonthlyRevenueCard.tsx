@@ -39,9 +39,9 @@ const CustomDot = (props: any) => {
 
 const MonthlyRevenueCard: React.FC = () => {
   return (
-    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[30.2vw] shadow-2xl overflow-hidden border border-white/5">
+    <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[27.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading */}
-      <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[4.84vw]">
+      <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[3.84vw]">
         <h4 className="text-white text-[1.25vw] font-bold not-italic leading-[120%] tracking-[-0.04em] ">
           Monthly Revenue
         </h4>

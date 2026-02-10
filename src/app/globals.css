@@ -96,3 +96,19 @@ body {
     /* Firefox */
   }
 }
+
+@keyframes slide-up {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 1.5s ease-out forwards;
+}
