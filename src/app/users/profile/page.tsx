@@ -58,7 +58,7 @@ export default function UserProfilePage() {
                             action={
                                 <button
                                     onClick={() => setIsDeactivateOpen(true)}
-                                    className="box-border flex flex-row justify-center items-center px-[1.06vw] py-[0.71vw] gap-[0.53vw] h-[2.47vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
+                                    className="box-border flex flex-row justify-center items-center px-[1.06vw] py-[0.71vw] gap-[0.53vw] h-[2.47vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)] cursor-pointer"
                                 >
                                     <span className=" font-medium not-italic text-[0.71vw] leading-[1.06vw] text-white text-center flex items-end">
                                         Deactivate User

@@ -24,11 +24,11 @@ const SystemLogsView: React.FC = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex flex-row items-center p-0 gap-[0.83vw] w-[7.03vw] h-[2.92vw] flex-none order-1 flex-grow-0 mr-[1.04vw]">
+                <div className="flex flex-row items-center p-0 gap-[0.83vw] w-[7.03vw] h-[2.92vw] flex-none order-1 flex-grow-0 mr-[1.04vw] mb-[0.625vw]">
                     {/* Button - Export */}
                     <button
                         onClick={() => setShowExportModal(true)}
-                        className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] w-[7.03vw] h-[2.92vw] border border-white backdrop-blur-[6px] rounded-[2.71vw] flex-none order-0 flex-grow-0 drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
+                        className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] w-[7.03vw] h-[2.92vw] border border-white backdrop-blur-[6px] rounded-[2.71vw] flex-none order-0 flex-grow-0 drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)] cursor-pointer"
                     >
                         <span className="w-[2.66vw] h-[1.25vw]  font-medium text-[0.83vw] leading-[1.25vw] flex items-end text-center text-white flex-none order-1 flex-grow-0">
                             Export

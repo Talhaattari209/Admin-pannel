@@ -77,13 +77,13 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
                 <div className="w-[4.16vw] shrink-0" />
             </div>
 
-            <div className="flex flex-col flex-grow h-full min-h-[400px]">
+            <div className="flex flex-col flex-grow h-full">
                 {MOCK_BUGS.map((bug) => (
                     <BugsReportedTableRow key={bug.id} data={bug} onAction={() => onViewDetail(bug)} />
                 ))}
 
                 {/* Gap */}
-                <div className="mt-auto w-full h-[2.60vw]" />
+                <div className="mt-auto w-full h-[2.5vw]" />
 
                 {/* Pagination */}
                 <Pagination

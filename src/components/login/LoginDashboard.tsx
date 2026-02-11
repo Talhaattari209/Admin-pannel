@@ -134,7 +134,7 @@ export default function LoginDashboard() {
                         </p>
                         <button
                             onClick={() => setShowExportModal(true)}
-                            className="absolute bottom-[0.2vw] right-0 flex items-center justify-center gap-[0.62vw] px-[1.25vw] py-[0.41vw] rounded-full border border-white backdrop-blur-[6px]"
+                            className="absolute bottom-[0.2vw] right-0 flex items-center justify-center gap-[0.62vw] px-[1.25vw] py-[0.41vw] rounded-full border border-white backdrop-blur-[6px] cursor-pointer hover:bg-white/10 transition-all"
                         >
                             <div className="relative w-[1.25vw] h-[1.25vw]">
                                 <Image

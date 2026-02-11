@@ -69,7 +69,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
                 <div className="flex flex-row items-center justify-center gap-[1.25vw] self-stretch mt-auto">
                     <button
                         onClick={onDone}
-                        className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:bg-[#7000ff] transition-all"
+                        className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:bg-[#7000ff] transition-all cursor-pointer"
                     >
                         {buttonText}
                     </button>

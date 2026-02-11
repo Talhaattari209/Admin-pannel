@@ -74,7 +74,7 @@ export default function SideNavigation({ activeId = 'user-management' }: SideNav
     };
 
     return (
-        <aside className="fixed left-[0.83vw] top-[0.83vw] bottom-[0.83vw] w-[15vw] flex flex-col bg-transparent z-50 ">
+        <aside className="fixed left-[0.83vw] top-[0.83vw] bottom-[0.83vw] w-[15vw] flex flex-col bg-transparent z-[100] ">
             {/* Side Menu Container */}
             <div className="flex flex-col w-full h-full bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[1.25vw] overflow-hidden">
 

@@ -9,6 +9,8 @@ interface SuccessModalProps {
 }
 
 const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, title, description }) => {
+    if (!isOpen) return null;
+
     return (
         <SuccessCard
             onDone={onClose}

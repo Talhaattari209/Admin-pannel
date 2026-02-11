@@ -39,7 +39,7 @@ const DeactivationCard: React.FC<DeactivationCardProps> = ({ onCancel, onDeactiv
                     <div className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0"></div>
                     {/* Icon Content */}
                     <div className="relative z-10 flex items-center justify-center">
-                        <img src="/assets/slash-Deactivate.svg" alt="Deactivate" className="w-[2.92vw] h-[2.92vw] object-contain" />
+                        <img src="/assets/alert-triangle.svg" alt="Deactivate" className="w-[2.92vw] h-[2.92vw] object-contain" />
                     </div>
                 </div>
 
@@ -62,13 +62,13 @@ const DeactivationCard: React.FC<DeactivationCardProps> = ({ onCancel, onDeactiv
                 <div className="flex flex-row items-center justify-center gap-[1.25vw] self-stretch mt-auto">
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-[2.92vw] border border-white/20 bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] hover:bg-white/10 filter drop-shadow(0px 0.63vw 2.08vw rgba(0, 0, 0, 0.05)) backdrop-blur-[6px] transition-all"
+                        className="flex-1 h-[2.92vw] border border-white/20 bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] hover:bg-white/10 filter drop-shadow(0px 0.63vw 2.08vw rgba(0, 0, 0, 0.05)) backdrop-blur-[6px] transition-all cursor-pointer"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={onDeactivate}
-                        className="flex-1 h-[2.92vw] bg-[#FF4E4E] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(255,78,78,0.25),0px_0.42vw_0.63vw_rgba(255,78,78,0.25)] hover:bg-[#ff6666] transition-all"
+                        className="flex-1 h-[2.92vw] bg-[#FF4E4E] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(255,78,78,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:bg-[#ff6666] transition-all cursor-pointer"
                     >
                         Deactivate
                     </button>

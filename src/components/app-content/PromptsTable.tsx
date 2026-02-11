@@ -91,7 +91,7 @@ const PromptsTable: React.FC = () => {
 
         const currentData = activeTab === 'individual' ? INDIVIDUAL_MOCK_DATA : GROUP_MOCK_DATA;
         return (
-            <div className="flex flex-col min-h-[20.83vw]">
+            <div className="flex flex-col">
                 {currentData.map((row) => (
                     <PromptsTableRow key={row.id} data={row} onEdit={handleEdit} onDelete={handleDelete} />
                 ))}
@@ -189,7 +189,7 @@ const PromptsTable: React.FC = () => {
                     </div>
 
                     {/* Gap */}
-                    <div className="w-full h-[2.60vw]" />
+                    <div className="w-full h-[2.5vw]" />
 
                     {/* Pagination */}
                     <Pagination

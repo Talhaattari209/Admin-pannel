@@ -74,7 +74,7 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite }) => 
                             <label className="text-white text-[0.63vw] font-bold not-italic font-inter uppercase tracking-wider ml-[0.21vw]">{field.label}</label>
                             <div className="relative flex items-center justify-between border-b border-white h-[2.5vw]">
                                 <input type="password" placeholder={field.placeholder} className="w-full h-full px-[0.83vw] bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/30 not-italic font-inter flex-grow" />
-                                <button className="text-white/40 hover:text-white transition-colors pr-[0.83vw]"><svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg></button>
+                                <button className="text-white/40 hover:text-white transition-colors pr-[0.83vw] cursor-pointer"><svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg></button>
                             </div>
                         </div>
                     ))}
@@ -84,13 +84,13 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite }) => 
                 <div className="flex flex-row items-center justify-center gap-[1.25vw] self-stretch mt-auto shrink-0">
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-[2.92vw] border border-white backdrop-blur-[6px] bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] hover:bg-white/10 transition-all"
+                        className="flex-1 h-[2.92vw] border border-white backdrop-blur-[6px] bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] hover:bg-white/10 transition-all cursor-pointer"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={onInvite}
-                        className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all"
+                        className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all cursor-pointer"
                     >
                         Invite Team Member
                     </button>

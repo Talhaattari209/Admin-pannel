@@ -175,7 +175,7 @@ const TeamMembersTable: React.FC = () => {
             </div >
 
             {/* Gap */}
-            < div className="w-full h-[2.60vw]" />
+            <div className="w-full h-[2.5vw]" />
 
             {/* Pagination */}
             < Pagination

@@ -110,5 +110,5 @@ body {
 }
 
 .animate-slide-up {
-  animation: slide-up 1.5s ease-out forwards;
+  animation: slide-up 0.8s ease-out forwards;
 }

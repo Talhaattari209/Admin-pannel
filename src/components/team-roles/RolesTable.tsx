@@ -109,7 +109,7 @@ const RolesTable: React.FC = () => {
             </div>
 
             {/* Gap */}
-            <div className="w-full h-[2.60vw]" />
+            <div className="w-full h-[2.5vw]" />
 
             {/* Pagination */}
             <Pagination
@@ -119,7 +119,7 @@ const RolesTable: React.FC = () => {
                 className="w-full px-[1.25vw] pb-[1.25vw]"
             />
 
-            {modal === 'EDIT_ROLE' && <AddRoleModal onCancel={() => setModal(null)} onAdd={() => setModal('SUCCESS_EDIT')} initialData={{ role: 'Admin', description: 'Full access to all system features.' }} />}
+            {modal === 'EDIT_ROLE' && <AddRoleModal onCancel={() => setModal(null)} onAdd={() => setModal('SUCCESS_EDIT')} initialData={{ title: 'Admin', description: 'Full access to all system features.', permissions: {} }} />}
             {modal === 'DELETE_ROLE' && <RemoveConfirmModal type="role" onCancel={() => setModal(null)} onConfirm={() => setModal('SUCCESS_DELETE')} />}
             {modal === 'SUCCESS_EDIT' && <TeamRolesSuccessModal title="Role Updated" onDone={() => setModal(null)} />}
             {modal === 'SUCCESS_DELETE' && <TeamRolesSuccessModal title="Role Deleted" onDone={() => setModal(null)} />}

@@ -90,7 +90,7 @@ const SupportTable: React.FC<SupportTableProps> = ({ onViewDetail }) => {
                 <div className="w-[2.5vw] shrink-0" />
             </div>
 
-            <div className="flex flex-col min-h-[20.83vw] w-full">
+            <div className="flex flex-col w-full">
                 {MOCK_TICKETS.map((ticket) => (
                     <SupportTableRow
                         key={ticket.id}
@@ -101,7 +101,7 @@ const SupportTable: React.FC<SupportTableProps> = ({ onViewDetail }) => {
             </div>
 
             {/* Gap */}
-            <div className="w-full h-[2.60vw]" />
+            <div className="w-full h-[2.5vw]" />
 
             {/* Pagination */}
             <Pagination
