@@ -67,7 +67,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             {/* Text Column - Grows to fill space */}
             <div className="flex flex-col justify-center items-start gap-[0.83vw] flex-grow h-full">
                 {/* Title */}
-                <h1 className={`flex items-center text-white font-bold not-italic ${variant === 'dashboard' ? 'text-[2.25vw]' : 'text-[1.875vw]'} leading-[110%] tracking-[-0.04em]`}>
+                <h1 className={`flex items-center text-white font-bold not-italic ${variant === 'dashboard' ? 'text-[2.25vw]' : 'text-[1.875vw]'} leading-[110%] tracking-[-0.01em]`}>
                     {title}
                 </h1>
 
@@ -158,7 +158,7 @@ export const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
                 {/* Top Row: Name + Age + Verified - reduced by 15% */}
                 <div className="flex flex-row items-center p-0 w-full h-[1.77vw]">
                     {/* Name */}
-                    <h1 className="flex items-center text-white font-bold not-italic text-[1.59vw] leading-[110%] tracking-[-0.04em] whitespace-nowrap">
+                    <h1 className="flex items-center text-white font-bold not-italic text-[1.59vw] leading-[110%] tracking-[-0.01em] whitespace-nowrap">
                         {name}
                     </h1>
 

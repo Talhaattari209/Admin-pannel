@@ -32,7 +32,7 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
             {/* Header: align with PageHeader specs */}
             <div className="flex flex-row items-end justify-between w-full h-[4.17vw] mb-[1.49vw] shrink-0 ">
                 <div className="flex flex-col justify-center items-start gap-[0.83vw] max-w-[70vw]">
-                    <h1 className="text-white text-[1.88vw] font-bold not-italic leading-[110%] tracking-[-0.04em]">Reported Problem</h1>
+                    <h1 className="text-white text-[1.88vw] font-bold not-italic leading-[110%] tracking-[-0.01em]">Reported Problem</h1>
                     <p className="text-[#CCCCCC] text-[0.83vw] leading-[150%] font-normal not-italic">Review and resolve user reports on inappropriate content, messages, or behavior.</p>
                 </div>
                 <div className="flex flex-row items-center gap-[0.83vw] h-[2.92vw]">

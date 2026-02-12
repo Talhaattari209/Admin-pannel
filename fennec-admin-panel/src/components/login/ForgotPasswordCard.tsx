@@ -50,7 +50,7 @@ const ForgotPasswordCard: React.FC<ForgotPasswordCardProps> = ({ onSendLink, onB
 
         {/* Header Text */}
         <div className="flex flex-col items-center gap-[0.83vw] w-full">
-          <h2 className=" font-medium not-italic text-[1.67vw] leading-[1.2] text-white text-center tracking-[-0.02em]">
+          <h2 className=" font-medium not-italic text-[1.67vw] leading-[1.2] text-white text-center tracking-[0.01em]">
             Forgot Password?
           </h2>
           <p className=" font-normal not-italic text-[0.94vw] leading-[1.78] text-[#DDDDDD] text-center">

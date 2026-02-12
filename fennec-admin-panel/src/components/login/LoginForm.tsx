@@ -24,7 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
       </div>
 
       {/* Header Text */}
-      <h2 className=" font-medium not-italic text-[1.67vw] leading-[1.2] text-white text-center tracking-[-0.02em] w-full">
+      <h2 className=" font-medium not-italic text-[1.67vw] leading-[1.2] text-white text-center tracking-[0.01em] w-full">
         Login to your account
       </h2>
 
