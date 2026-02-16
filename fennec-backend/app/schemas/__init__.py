@@ -13,6 +13,7 @@ from app.schemas.common import (
     UserStatistics,
     PaginationParams,
     PaginatedResponse,
+    UserStatusUpdate,
 )
 from app.schemas.auth import (
     LoginRequest,
@@ -39,6 +40,7 @@ __all__ = [
     "UserStatistics",
     "PaginationParams",
     "PaginatedResponse",
+    "UserStatusUpdate",
     "LoginRequest",
     "SuperAdminLoginRequest",
     "TeamMemberLoginRequest",

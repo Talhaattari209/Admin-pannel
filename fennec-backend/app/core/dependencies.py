@@ -1,16 +1,17 @@
 from typing import Optional, Union
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.database import get_db
 from app.core.security import decode_token
 from app.models import SuperAdmin, TeamMember
 
 security = HTTPBearer()
 
-def get_current_admin(
+async def get_current_admin(
     credentials: HTTPAuthorizationCredentials = Depends(security),
-    db: Session = Depends(get_db)
+    db: AsyncSession = Depends(get_db)
 ) -> Union[SuperAdmin, TeamMember]:
     """
     Dependency to get current authenticated admin (Super Admin or Team Member)
@@ -36,9 +37,11 @@ def get_current_admin(
     
     # Get user based on type
     if user_type == "super_admin":
-        admin = db.query(SuperAdmin).filter(SuperAdmin.id == user_id).first()
+        result = await db.execute(select(SuperAdmin).filter(SuperAdmin.id == user_id))
+        admin = result.scalar_one_or_none()
     elif user_type == "team_member":
-        admin = db.query(TeamMember).filter(TeamMember.id == user_id).first()
+        result = await db.execute(select(TeamMember).filter(TeamMember.id == user_id))
+        admin = result.scalar_one_or_none()
     else:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -59,7 +62,7 @@ def get_current_admin(
     
     return admin
 
-def get_super_admin(
+async def get_super_admin(
     current_admin: Union[SuperAdmin, TeamMember] = Depends(get_current_admin)
 ) -> SuperAdmin:
     """

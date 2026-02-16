@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const MODULES = [
     'Users Management', 'App Content', 'Support Requests', 'Reported Problems', 'App Settings', 'Team & Roles', 'System Logs'
@@ -10,17 +10,31 @@ interface SwitchToggleTableProps {
 }
 
 const SwitchToggleTable: React.FC<SwitchToggleTableProps> = ({ initialPermissions, onChange }) => {
-    const [permissions, setPermissions] = useState<Record<string, Record<string, boolean>>>(
-        initialPermissions || MODULES.reduce((acc, mod) => ({
+    // Initialize with provided permissions or defaults
+    const getDefaultPermissions = () => {
+        if (initialPermissions && Object.keys(initialPermissions).length > 0) {
+            return initialPermissions;
+        }
+
+        return MODULES.reduce((acc, mod) => ({
             ...acc,
             [mod]: {
-                view: mod === 'App Content' || mod === 'Support Requests' || mod === 'Reported Problems',
-                edit: mod === 'App Content' || mod === 'Support Requests' || mod === 'Reported Problems',
-                delete: mod === 'App Content' || mod === 'Support Requests' || mod === 'Reported Problems',
-                export: mod === 'App Content' || mod === 'Support Requests' || mod === 'Reported Problems'
+                view: false,
+                edit: false,
+                delete: false,
+                export: false
             }
-        }), {})
-    );
+        }), {});
+    };
+
+    const [permissions, setPermissions] = useState<Record<string, Record<string, boolean>>>(getDefaultPermissions());
+
+    // Update local state when initialPermissions change (for edit mode)
+    useEffect(() => {
+        if (initialPermissions && Object.keys(initialPermissions).length > 0) {
+            setPermissions(initialPermissions);
+        }
+    }, [initialPermissions]);
 
     const toggle = (mod: string, key: string) => {
         const newPermissions = {
@@ -28,7 +42,10 @@ const SwitchToggleTable: React.FC<SwitchToggleTableProps> = ({ initialPermission
             [mod]: { ...permissions[mod], [key]: !permissions[mod][key] }
         };
         setPermissions(newPermissions);
-        if (onChange) onChange(newPermissions);
+
+        if (onChange) {
+            onChange(newPermissions);
+        }
     };
 
     const Switch = ({ active, onToggle }: { active: boolean, onToggle: () => void }) => (
@@ -59,10 +76,10 @@ const SwitchToggleTable: React.FC<SwitchToggleTableProps> = ({ initialPermission
             {MODULES.map(mod => (
                 <div key={mod} className="flex flex-row items-center gap-[0.83vw] px-[0.42vw] h-[1.67vw] min-h-[1.67vw]">
                     <div className="flex-grow text-[#CCCCCC] text-[0.83vw]  not-italic whitespace-nowrap">{mod}</div>
-                    <div className="w-[3.75vw] flex justify-center"><Switch active={permissions[mod].view} onToggle={() => toggle(mod, 'view')} /></div>
-                    <div className="w-[3.75vw] flex justify-center"><Switch active={permissions[mod].edit} onToggle={() => toggle(mod, 'edit')} /></div>
-                    <div className="w-[3.75vw] flex justify-center"><Switch active={permissions[mod].delete} onToggle={() => toggle(mod, 'delete')} /></div>
-                    <div className="w-[3.75vw] flex justify-center"><Switch active={permissions[mod].export} onToggle={() => toggle(mod, 'export')} /></div>
+                    <div className="w-[3.75vw] flex justify-center"><Switch active={permissions[mod]?.view || false} onToggle={() => toggle(mod, 'view')} /></div>
+                    <div className="w-[3.75vw] flex justify-center"><Switch active={permissions[mod]?.edit || false} onToggle={() => toggle(mod, 'edit')} /></div>
+                    <div className="w-[3.75vw] flex justify-center"><Switch active={permissions[mod]?.delete || false} onToggle={() => toggle(mod, 'delete')} /></div>
+                    <div className="w-[3.75vw] flex justify-center"><Switch active={permissions[mod]?.export || false} onToggle={() => toggle(mod, 'export')} /></div>
                 </div>
             ))}
         </div>

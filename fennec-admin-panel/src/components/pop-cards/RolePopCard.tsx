@@ -1,18 +1,53 @@
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import PopCardWrapper from './PopCardWrapper';
 import SwitchToggleTable from '../team-roles/SwitchToggleTable';
+import { ResourcePermission } from '@/types/api';
+import { resourcesToToggles } from '@/utils/permissions';
 
 interface RolePopCardProps {
     onCancel: () => void;
-    onSave: () => void;
-    initialRole?: string;
-    initialDescription?: string;
+    onSave: (data: { title: string; description: string; permissions: Record<string, Record<string, boolean>> }) => void;
+    initialData?: {
+        title?: string;
+        description?: string;
+        resources?: ResourcePermission[];
+    };
     mode?: 'add' | 'edit';
+    isLoading?: boolean;
 }
 
-const RolePopCard: React.FC<RolePopCardProps> = ({ onCancel, onSave, initialRole = '', initialDescription = '', mode = 'add' }) => {
+const RolePopCard: React.FC<RolePopCardProps> = ({
+    onCancel,
+    onSave,
+    initialData,
+    mode = 'add',
+    isLoading = false
+}) => {
     const isEdit = mode === 'edit';
+    const titleRef = useRef<HTMLInputElement>(null);
+    const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+    // Convert API resources to toggle format, or use empty defaults
+    const [permissions, setPermissions] = useState<Record<string, Record<string, boolean>>>(
+        initialData?.resources ? resourcesToToggles(initialData.resources) : {}
+    );
+
+    const handleSave = () => {
+        const title = titleRef.current?.value || '';
+        const description = descriptionRef.current?.value || '';
+
+        if (!title.trim()) {
+            alert('Please enter a role title');
+            return;
+        }
+
+        onSave({
+            title,
+            description,
+            permissions
+        });
+    };
 
     return (
         <PopCardWrapper>
@@ -40,23 +75,36 @@ const RolePopCard: React.FC<RolePopCardProps> = ({ onCancel, onSave, initialRole
                     <h2 className="text-[1.66vw] font-medium not-italic leading-[1.98vw] tracking-[-0.02em] text-white font-inter">
                         {isEdit ? 'Edit Role' : 'Add New Role'}
                     </h2>
-                    {/* No Description matching existing AddRoleModal */}
                 </div>
 
                 {/* Form Content */}
                 <div className="flex flex-col gap-[1.25vw] w-full flex-grow min-h-0">
                     <div className="flex flex-col gap-[0.41vw] w-full">
                         <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">Title</label>
-                        <input type="text" defaultValue={initialRole || 'Content Manager'} className="w-full h-[2.5vw] bg-transparent border-b border-white text-white text-[0.83vw] focus:outline-none not-italic px-[0.42vw]" />
+                        <input
+                            ref={titleRef}
+                            type="text"
+                            defaultValue={initialData?.title || ''}
+                            placeholder="Content Manager"
+                            className="w-full h-[2.5vw] bg-transparent border-b border-white text-white text-[0.83vw] focus:outline-none not-italic px-[0.42vw] placeholder:text-white/30"
+                        />
                     </div>
 
                     <div className="flex flex-col gap-[0.41vw] w-full">
                         <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider ml-[0.21vw]">Description</label>
-                        <textarea placeholder="Type here..." defaultValue={initialDescription} className="w-full bg-transparent border-b border-white text-white text-[0.83vw] focus:outline-none resize-none h-[3.15vw] not-italic placeholder:text-white/40 px-[0.42vw]" />
+                        <textarea
+                            ref={descriptionRef}
+                            placeholder="Type here..."
+                            defaultValue={initialData?.description || ''}
+                            className="w-full bg-transparent border-b border-white text-white text-[0.83vw] focus:outline-none resize-none h-[3.15vw] not-italic placeholder:text-white/40 px-[0.42vw]"
+                        />
                     </div>
 
                     <div className="flex-grow min-h-0 overflow-y-auto custom-scrollbar">
-                        <SwitchToggleTable />
+                        <SwitchToggleTable
+                            initialPermissions={permissions}
+                            onChange={setPermissions}
+                        />
                     </div>
                 </div>
 
@@ -64,15 +112,17 @@ const RolePopCard: React.FC<RolePopCardProps> = ({ onCancel, onSave, initialRole
                 <div className="flex flex-row items-center justify-center gap-[1.25vw] self-stretch mt-auto shrink-0">
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-[2.92vw] border border-white backdrop-blur-[6px] bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] hover:bg-white/10 transition-all"
+                        disabled={isLoading}
+                        className="flex-1 h-[2.92vw] border border-white backdrop-blur-[6px] bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] hover:bg-white/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         Cancel
                     </button>
                     <button
-                        onClick={onSave}
-                        className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all"
+                        onClick={handleSave}
+                        disabled={isLoading}
+                        className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {isEdit ? 'Update' : 'Add Role'}
+                        {isLoading ? 'Saving...' : (isEdit ? 'Update' : 'Add Role')}
                     </button>
                 </div>
             </div>

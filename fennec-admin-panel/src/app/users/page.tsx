@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import SideNavigation from '@/components/SideNavigation';
 import { PageHeader } from '@/components/Headers';
 import { SearchBar, Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import { ArrowUp, ArrowDown, ChevronDown, MoreVertical, Eye, ChevronRight } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
+import { useUsers, useUserStatistics } from '@/services/users';
+import { User } from '@/types/api';
 
 // --- Stat Cards Components ---
 
@@ -66,14 +68,26 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
 };
 
 const StatRow = () => {
+    const { data: statistics, isLoading } = useUserStatistics();
+
     const stats = [
-        { label: "Total Users", value: "123,456", change: "12" },
-        { label: "Active This Week", value: "12,345", change: "12", isUp: false },
-        { label: "Pending KYC", value: "123", change: "12" },
-        { label: "Suspended Accounts", value: "123", change: "12", isUp: false },
-        { label: "Verified Accounts", value: "123,210", change: "12" },
-        { label: "Premium Subscribers", value: "120,234", change: "12", isUp: false },
+        { label: "Total Users", value: statistics?.totalUsers.toLocaleString() || "0", change: "12" },
+        { label: "Active This Week", value: statistics?.activeThisWeek.toLocaleString() || "0", change: "12", isUp: false },
+        { label: "Pending KYC", value: statistics?.pendingKYC.toLocaleString() || "0", change: "12" },
+        { label: "Suspended Accounts", value: statistics?.suspendedAccounts.toLocaleString() || "0", change: "12", isUp: false },
+        { label: "Verified Accounts", value: statistics?.verifiedAccounts.toLocaleString() || "0", change: "12" },
+        { label: "Premium Subscribers", value: statistics?.premiumSubscriptions.toLocaleString() || "0", change: "12", isUp: false },
     ];
+
+    if (isLoading) {
+        return (
+            <div className="flex flex-wrap items-center gap-[0.83vw] w-full min-h-[4.54vw]">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <div key={i} className="flex-1 h-[4.54vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] animate-pulse" />
+                ))}
+            </div>
+        );
+    }
 
     return (
         <div className="flex flex-wrap items-center gap-[0.83vw] w-full min-h-[4.54vw]">
@@ -108,6 +122,7 @@ const RowActions = ({ userId }: { userId: string }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+    const { onDeactivate } = useUserActions();
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -143,6 +158,10 @@ const RowActions = ({ userId }: { userId: string }) => {
                     </button>
 
                     <button
+                        onClick={() => {
+                            setIsOpen(false);
+                            onDeactivate(userId);
+                        }}
                         className="flex items-center justify-between w-full h-[2.19vw] px-[0.63vw] hover:bg-[#FF4E4E]/10 transition-colors"
                     >
                         <div className="flex items-center gap-[0.83vw]">
@@ -157,52 +176,60 @@ const RowActions = ({ userId }: { userId: string }) => {
     );
 };
 
-const UserTableRow = () => (
-    <div className="flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors">
-        {/* User ID */}
-        <div className="flex items-center px-[0.63vw] w-[6.77vw] h-full shrink-0">
-            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">U-00***24543</span>
-        </div>
+const UserTableRow = ({ user }: { user: User }) => {
+    const formatDate = (dateString: string | null | undefined) => {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    };
 
-        {/* Name */}
-        <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <div className="w-[1.875vw] h-[1.875vw] rounded-full bg-cover bg-center shrink-0" style={{ backgroundImage: "url('/8.png')" }} />
-            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">John Doe</span>
-        </div>
+    return (
+        <div className="flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors">
+            {/* User ID */}
+            <div className="flex items-center px-[0.63vw] w-[6.77vw] h-full shrink-0">
+                <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{user.id.substring(0, 8)}</span>
+            </div>
 
-        {/* Email */}
-        <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">johndoe@email.com</span>
-        </div>
+            {/* Name */}
+            <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] h-full shrink-0">
+                <div className="w-[1.875vw] h-[1.875vw] rounded-full bg-cover bg-center shrink-0" style={{ backgroundImage: "url('/8.png')" }} />
+                <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{user.first_name} {user.last_name}</span>
+            </div>
 
-        {/* Phone */}
-        <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">+1 416-883-2410</span>
-        </div>
+            {/* Email */}
+            <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
+                <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap overflow-hidden text-ellipsis">{user.email}</span>
+            </div>
 
-        {/* Subscription */}
-        <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <div className="flex items-center justify-center gap-[0.52vw] w-[4.32vw] h-[1.67vw] bg-[#5F00DB] rounded-[0.83vw]">
-                <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">Premium</span>
+            {/* Phone */}
+            <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
+                <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{user.phone || 'N/A'}</span>
+            </div>
+
+            {/* Subscription */}
+            <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
+                <div className="flex items-center justify-center gap-[0.52vw] w-[4.32vw] h-[1.67vw] bg-[#5F00DB] rounded-[0.83vw]">
+                    <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">Free</span>
+                </div>
+            </div>
+
+            {/* Joined On */}
+            <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
+                <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{formatDate(user.created_at)}</span>
+            </div>
+
+            {/* Last Active */}
+            <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
+                <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{formatDate(user.last_active)}</span>
+            </div>
+
+            {/* Action */}
+            <div className="flex justify-center items-center w-[2.5vw] h-full shrink-0">
+                <RowActions userId={user.id} />
             </div>
         </div>
-
-        {/* Joined On */}
-        <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">Dec 31, 2025 • 11:59 PM</span>
-        </div>
-
-        {/* Last Active */}
-        <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-            <span className="text-white font-sans not-italic font-normal not-italic text-[0.73vw] leading-[0.83vw] whitespace-nowrap">Dec 31, 2025 • 11:59 PM</span>
-        </div>
-
-        {/* Action */}
-        <div className="flex justify-center items-center w-[2.5vw] h-full shrink-0">
-            <RowActions userId="mock-id" />
-        </div>
-    </div>
-);
+    );
+};
 
 const UserTableSection = () => {
     const [searchValue, setSearchValue] = useState('');
@@ -212,6 +239,58 @@ const UserTableSection = () => {
     const [subFilter, setSubFilter] = useState('');
     const [joinedFilter, setJoinedFilter] = useState('');
     const [activeFilter, setActiveFilter] = useState('');
+
+    // Fetch users with pagination and search
+    const { data, isLoading, error } = useUsers({
+        page: currentPage,
+        limit: 10,
+        search: searchValue || undefined
+    });
+
+    // Apply client-side filters to the fetched data
+    const filteredUsers = useMemo(() => {
+        if (!data?.data) return [];
+
+        return data.data.filter(user => {
+            // Subscription filter (would need premium field in User type - for now skip)
+            // Note: The User type doesn't have a subscription field, so this filter won't work
+            // You may need to adjust based on your actual data structure
+
+            // Joined date filter
+            if (joinedFilter) {
+                if (!user.created_at) return false;
+                const joinedDate = new Date(user.created_at);
+                const now = new Date();
+
+                if (joinedFilter === 'this-week') {
+                    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    if (joinedDate < weekAgo) return false;
+                } else if (joinedFilter === 'this-month') {
+                    if (joinedDate.getMonth() !== now.getMonth() || joinedDate.getFullYear() !== now.getFullYear()) {
+                        return false;
+                    }
+                }
+            }
+
+            // Last active filter
+            if (activeFilter) {
+                if (!user.last_active) return false;
+                const lastActive = new Date(user.last_active);
+                const now = new Date();
+
+                if (activeFilter === 'today') {
+                    if (lastActive.toDateString() !== now.toDateString()) return false;
+                } else if (activeFilter === '7-days') {
+                    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    if (lastActive < weekAgo) return false;
+                }
+            }
+
+            return true;
+        });
+    }, [data?.data, subFilter, joinedFilter, activeFilter]);
+
+    const totalPages = data?.pages || 1;
 
     return (
         <div className="flex flex-col w-full">
@@ -293,9 +372,35 @@ const UserTableSection = () => {
             <div className="flex flex-col w-full bg-[#222222] rounded-b-[0.83vw] overflow-hidden pb-[1.25vw]">
                 {/* Rows */}
                 <div className="flex flex-col w-full">
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <UserTableRow key={i} />
-                    ))}
+                    {isLoading ? (
+                        // Loading skeleton
+                        [1, 2, 3, 4, 5, 6].map((i) => (
+                            <div key={i} className="flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] animate-pulse">
+                                <div className="mx-[0.63vw] w-[6vw] h-[0.83vw] bg-white/10 rounded" />
+                                <div className="mx-[0.63vw] w-[10vw] h-[0.83vw] bg-white/10 rounded" />
+                                <div className="mx-[0.63vw] w-[10vw] h-[0.83vw] bg-white/10 rounded" />
+                                <div className="mx-[0.63vw] w-[10vw] h-[0.83vw] bg-white/10 rounded" />
+                                <div className="mx-[0.63vw] w-[4vw] h-[0.83vw] bg-white/10 rounded" />
+                                <div className="mx-[0.63vw] w-[10vw] h-[0.83vw] bg-white/10 rounded" />
+                                <div className="mx-[0.63vw] w-[10vw] h-[0.83vw] bg-white/10 rounded" />
+                            </div>
+                        ))
+                    ) : error ? (
+                        // Error state
+                        <div className="flex items-center justify-center w-full h-[20vw] text-red-400">
+                            <p>Error loading users. Please try again later.</p>
+                        </div>
+                    ) : filteredUsers && filteredUsers.length > 0 ? (
+                        // Actual data
+                        filteredUsers.map((user) => (
+                            <UserTableRow key={user.id} user={user} />
+                        ))
+                    ) : (
+                        // Empty state
+                        <div className="flex items-center justify-center w-full h-[20vw] text-white/50">
+                            <p>No users found</p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Gap: 50px -> 2.60vw */}
@@ -304,7 +409,7 @@ const UserTableSection = () => {
                 {/* 4. Pagination (Inside) */}
                 <Pagination
                     currentPage={currentPage}
-                    totalPages={10}
+                    totalPages={totalPages}
                     onPageChange={setCurrentPage}
                     className="w-full px-[1.25vw]"
                 />
@@ -313,48 +418,86 @@ const UserTableSection = () => {
     );
 };
 
+// Import needed for Deactivation
+import DeactivationCard from '@/components/pop-cards/DeactivationCard';
+import { useDeactivateUser } from '@/services/users';
+
 export default function UserManagementPage() {
+    // State for Deactivation Modal
+    const [selectedUserForDeactivation, setSelectedUserForDeactivation] = useState<string | null>(null);
+    const deactivateUserMutation = useDeactivateUser();
+
+    // Handler passed down to RowActions via Context or Prop Drilling
+    // For simplicity here, we'll export a Context or clone children, 
+    // BUT since UserTableRow is defined in the same file, we can lift state up or use a Context.
+    // Given the structure, let's use a simple React Context for Row Actions to communicate up.
+
     return (
-        <div className="relative min-h-screen w-full overflow-hidden">
+        <UserActionContext.Provider value={{
+            onDeactivate: (id) => setSelectedUserForDeactivation(id)
+        }}>
+            <div className="relative min-h-screen w-full overflow-hidden">
 
-            {/* Reusable Sidebar (fixed position) */}
-            <SideNavigation activeId="users" />
+                {/* Reusable Sidebar (fixed position) */}
+                <SideNavigation activeId="users" />
 
-            {/* 3. Main Content Container (positioned at left 320px/16.67vw) */}
-            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto scrollbar-hide">
+                {/* 3. Main Content Container (positioned at left 320px/16.67vw) */}
+                <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto scrollbar-hide">
 
-                {/* Content Wrapper */}
-                <div
-                    className="flex flex-col items-start w-full max-w-[83.33vw]"
-                    style={{
-                        paddingLeft: '2.08vw',   // 40px Left
-                        paddingTop: '1.77vw',    // Adjusted Top
-                        paddingBottom: '2.08vw', // 40px Bottom
-                        paddingRight: '2.08vw'   // 40px Right
-                    }}
-                >
+                    {/* Content Wrapper */}
+                    <div
+                        className="flex flex-col items-start w-full max-w-[83.33vw]"
+                        style={{
+                            paddingLeft: '2.08vw',   // 40px Left
+                            paddingTop: '1.77vw',    // Adjusted Top
+                            paddingBottom: '2.08vw', // 40px Bottom
+                            paddingRight: '2.08vw'   // 40px Right
+                        }}
+                    >
 
-                    {/* Page Header (Title/Subtitle) */}
-                    <div className="w-[79.17vw]">
-                        <PageHeader
-                            title="Users Management"
-                            description="View, verify, and manage all registered users — including KYC status, bans, and account details."
-                        />
+                        {/* Page Header (Title/Subtitle) */}
+                        <div className="w-[79.17vw]">
+                            <PageHeader
+                                title="Users Management"
+                                description="View, verify, and manage all registered users — including KYC status, bans, and account details."
+                            />
+                        </div>
+
+                        {/* Gap of 40px (2.08vw) */}
+                        <div className="h-[1.49vw]" />
+
+                        {/* Stat Cards Row */}
+                        <StatRow />
+
+                        <div className="h-[1.25vw]" />
+
+                        {/* Table Section */}
+                        <UserTableSection />
+
                     </div>
 
-                    {/* Gap of 40px (2.08vw) */}
-                    <div className="h-[1.49vw]" />
-
-                    {/* Stat Cards Row */}
-                    <StatRow />
-
-                    <div className="h-[1.25vw]" />
-
-                    {/* Table Section */}
-                    <UserTableSection />
-
-                </div>
-            </main>
-        </div>
+                    {/* Deactivation Modal */}
+                    {selectedUserForDeactivation && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                            <DeactivationCard
+                                onCancel={() => setSelectedUserForDeactivation(null)}
+                                onDeactivate={() => {
+                                    if (selectedUserForDeactivation) {
+                                        deactivateUserMutation.mutate(selectedUserForDeactivation, {
+                                            onSuccess: () => setSelectedUserForDeactivation(null)
+                                        });
+                                    }
+                                }}
+                            />
+                        </div>
+                    )}
+                </main>
+            </div>
+        </UserActionContext.Provider>
     );
 }
+
+// Simple Context for interactions
+const UserActionContext = React.createContext<{ onDeactivate: (id: string) => void }>({ onDeactivate: () => { } });
+// Hook to use context
+const useUserActions = () => React.useContext(UserActionContext);

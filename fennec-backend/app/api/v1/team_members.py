@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
-from sqlalchemy.orm import Session
-from sqlalchemy import or_
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import or_, select, func
+from sqlalchemy.orm import selectinload
 from typing import Optional, Union
 from uuid import UUID
 from app.database import get_db
@@ -20,9 +21,9 @@ router = APIRouter()
 # ==================== Create Team Member ====================
 
 @router.post("", response_model=TeamMemberResponse, status_code=status.HTTP_201_CREATED)
-def create_team_member(
+async def create_team_member(
     member_data: TeamMemberCreate,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_admin: Union[SuperAdmin, TeamMember] = Depends(get_current_admin)
 ):
     """
@@ -30,7 +31,8 @@ def create_team_member(
     An invitation email with password will be sent automatically (TODO: implement email)
     """
     # Check if email already exists
-    existing_member = db.query(TeamMember).filter(TeamMember.email == member_data.email).first()
+    result = await db.execute(select(TeamMember).filter(TeamMember.email == member_data.email))
+    existing_member = result.scalar_one_or_none()
     if existing_member:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -38,7 +40,8 @@ def create_team_member(
         )
     
     # Check if role exists
-    role = db.query(Role).filter(Role.id == member_data.role).first()
+    result = await db.execute(select(Role).filter(Role.id == member_data.role))
+    role = result.scalar_one_or_none()
     if not role:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -55,8 +58,8 @@ def create_team_member(
     )
     
     db.add(member)
-    db.commit()
-    db.refresh(member)
+    await db.commit()
+    await db.refresh(member)
     
     # TODO: Send invitation email
     
@@ -65,17 +68,17 @@ def create_team_member(
 # ==================== Get All Team Members ====================
 
 @router.get("", response_model=PaginatedResponse)
-def get_team_members(
+async def get_team_members(
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
     search: Optional[str] = Query(None, description="Search by name or email"),
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_admin: Union[SuperAdmin, TeamMember] = Depends(get_current_admin)
 ):
     """
     Get all team members with pagination and search
     """
-    query = db.query(TeamMember)
+    query = select(TeamMember).options(selectinload(TeamMember.role))
     
     # Apply search filter
     if search:
@@ -87,14 +90,17 @@ def get_team_members(
         )
     
     # Get total count
-    total = query.count()
+    count_result = await db.execute(select(func.count()).select_from(query.subquery()))
+    total = count_result.scalar()
     
     # Calculate pagination
     pages = math.ceil(total / limit)
     offset = (page - 1) * limit
     
-    # Get paginated results
-    members = query.offset(offset).limit(limit).all()
+    # Get paginated results with eager loading
+    query = query.offset(offset).limit(limit)
+    result = await db.execute(query)
+    members = result.scalars().all()
     
     # Convert to response format
     members_data = [TeamMemberResponse.model_validate(member) for member in members]
@@ -110,15 +116,20 @@ def get_team_members(
 # ==================== Get Team Member by ID ====================
 
 @router.get("/{member_id}", response_model=TeamMemberResponse)
-def get_team_member(
+async def get_team_member(
     member_id: UUID,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_admin: Union[SuperAdmin, TeamMember] = Depends(get_current_admin)
 ):
     """
     Get a single team member by ID
     """
-    member = db.query(TeamMember).filter(TeamMember.id == member_id).first()
+    result = await db.execute(
+        select(TeamMember)
+        .options(selectinload(TeamMember.role))
+        .filter(TeamMember.id == member_id)
+    )
+    member = result.scalar_one_or_none()
     
     if not member:
         raise HTTPException(
@@ -131,16 +142,21 @@ def get_team_member(
 # ==================== Update Team Member ====================
 
 @router.put("/{member_id}", response_model=TeamMemberResponse)
-def update_team_member(
+async def update_team_member(
     member_id: UUID,
     member_data: TeamMemberUpdate,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_admin: Union[SuperAdmin, TeamMember] = Depends(get_current_admin)
 ):
     """
     Update a team member (all fields are optional)
     """
-    member = db.query(TeamMember).filter(TeamMember.id == member_id).first()
+    result = await db.execute(
+        select(TeamMember)
+        .options(selectinload(TeamMember.role))
+        .filter(TeamMember.id == member_id)
+    )
+    member = result.scalar_one_or_none()
     
     if not member:
         raise HTTPException(
@@ -153,7 +169,8 @@ def update_team_member(
     
     # Check email uniqueness if changing email
     if "email" in update_data and update_data["email"] != member.email:
-        existing_member = db.query(TeamMember).filter(TeamMember.email == update_data["email"]).first()
+        result = await db.execute(select(TeamMember).filter(TeamMember.email == update_data["email"]))
+        existing_member = result.scalar_one_or_none()
         if existing_member:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -162,7 +179,8 @@ def update_team_member(
     
     # Check role exists if changing role
     if "role" in update_data:
-        role = db.query(Role).filter(Role.id == update_data["role"]).first()
+        result = await db.execute(select(Role).filter(Role.id == update_data["role"]))
+        role = result.scalar_one_or_none()
         if not role:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -174,23 +192,24 @@ def update_team_member(
     for key, value in update_data.items():
         setattr(member, key, value)
     
-    db.commit()
-    db.refresh(member)
+    await db.commit()
+    await db.refresh(member)
     
     return member
 
 # ==================== Delete Team Member ====================
 
 @router.delete("/{member_id}")
-def delete_team_member(
+async def delete_team_member(
     member_id: UUID,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_admin: Union[SuperAdmin, TeamMember] = Depends(get_current_admin)
 ):
     """
     Delete a team member
     """
-    member = db.query(TeamMember).filter(TeamMember.id == member_id).first()
+    result = await db.execute(select(TeamMember).filter(TeamMember.id == member_id))
+    member = result.scalar_one_or_none()
     
     if not member:
         raise HTTPException(
@@ -198,7 +217,7 @@ def delete_team_member(
             detail="Team member not found"
         )
     
-    db.delete(member)
-    db.commit()
+    await db.delete(member)
+    await db.commit()
     
     return {"success": True, "message": "Team member deleted successfully"}

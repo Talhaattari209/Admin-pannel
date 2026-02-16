@@ -98,6 +98,11 @@ class UserResponse(BaseModel):
     class Config:
         from_attributes = True
 
+class UserStatusUpdate(BaseModel):
+    """Schema for updating user status"""
+    status: str = Field(..., description="New status for the user")
+
+
 class UserStatistics(BaseModel):
     """Schema for user statistics"""
     total_users: int = Field(..., alias="totalUsers")

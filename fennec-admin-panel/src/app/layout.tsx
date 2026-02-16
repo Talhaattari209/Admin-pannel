@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Geist_Mono, Michroma } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/components/providers";
 
 const sfProDisplay = localFont({
   src: [
@@ -45,7 +46,7 @@ export default function RootLayout({
           style={{ backgroundImage: "url('/8.png')" }}
         />
         <div className="relative z-10 min-h-screen">
-          {children}
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>

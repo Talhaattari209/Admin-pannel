@@ -6,24 +6,33 @@ import ForgotPasswordCard from '@/components/login/ForgotPasswordCard';
 import LinkSentCard from '@/components/login/LinkSentCard';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useSuperAdminLogin } from '@/services/auth';
 
 const LoginPage = () => {
     const [currentView, setCurrentView] = useState<'login' | 'forgot' | 'sent'>('login');
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const router = useRouter();
+    const loginMutation = useSuperAdminLogin();
 
     const handleLogin = async (data: any) => {
         try {
-            console.log("Login data:", data);
-            // Add authentication logic here
+            setErrorMessage('');
+            await loginMutation.mutateAsync({
+                email: data.email,
+                password: data.password
+            });
+            // Auth store is updated automatically by the mutation
             router.push('/dashboard');
-        } catch (error) {
+        } catch (error: any) {
             console.error("Login failed:", error);
+            const message = error?.response?.data?.detail || 'Invalid credentials. Please try again.';
+            setErrorMessage(message);
         }
     };
 
     const handleSendLink = (email: string) => {
         console.log("Sending link to:", email);
-        // Add API call here
+        // TODO: Add API call here for password reset
         setCurrentView('sent');
     };
 
@@ -39,6 +48,13 @@ const LoginPage = () => {
                     className="object-cover opacity-100"
                 />
             </div>
+
+            {/* Error Message */}
+            {errorMessage && (
+                <div className="absolute top-[5vw] z-20 max-w-[30vw] bg-red-500/90 text-white px-[1.5vw] py-[1vw] rounded-[0.83vw] backdrop-blur-[12px] shadow-lg">
+                    <p className="text-[0.83vw] font-medium">{errorMessage}</p>
+                </div>
+            )}
 
             {/* Cards */}
             <div className="relative z-10 w-full flex justify-center px-[2vw]">
@@ -62,6 +78,16 @@ const LoginPage = () => {
                     />
                 )}
             </div>
+
+            {/* Loading Overlay */}
+            {loginMutation.isPending && (
+                <div className="absolute inset-0 z-30 bg-black/50 flex items-center justify-center backdrop-blur-sm">
+                    <div className="bg-[#16003F]/90 border border-[#666666]/50 rounded-[1.67vw] p-[2vw] flex flex-col items-center gap-[1vw]">
+                        <div className="w-[3vw] h-[3vw] border-4 border-[#5F00DB] border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-white text-[1vw] font-medium">Logging in...</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
