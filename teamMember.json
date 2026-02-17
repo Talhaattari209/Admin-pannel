@@ -1,0 +1,39 @@
+{
+    "data": [
+        {
+            "id": "69944e3ba389cf3295a3c79c",
+            "name": "jolly",
+            "email": "jolly@email.com",
+            "role": {
+                "_id": "69942693a389cf3295a3c5cd",
+                "title": "Developer",
+                "description": "Tailwind"
+            },
+            "status": "active",
+            "addedOn": "2026-02-17T11:17:15.617Z",
+            "createdAt": "2026-02-17T11:17:15.617Z",
+            "updatedAt": "2026-02-17T11:17:15.617Z"
+        },
+        {
+            "id": "69940cdca389cf3295a3c530",
+            "name": "Jhon",
+            "email": "jhondoe@email.com",
+            "role": {
+                "_id": "69940a1fa389cf3295a3c4c4",
+                "title": "CTO",
+                "description": "TTTTbb"
+            },
+            "status": "active",
+            "addedOn": "2026-02-17T06:38:20.932Z",
+            "lastActive": "2026-02-17T07:01:15.964Z",
+            "createdAt": "2026-02-17T06:38:20.933Z",
+            "updatedAt": "2026-02-17T07:01:15.965Z"
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 10,
+        "total": 2,
+        "totalPages": 1
+    }
+}

@@ -1,0 +1,65 @@
+/* chevron */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+padding: 0px;
+
+width: 14px;
+height: 14px;
+
+opacity: 0.3;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* chevron-up */
+
+width: 14px;
+height: 14px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+margin: -4px 0px;
+
+
+/* Vector  */
+
+position: absolute;
+left: 21.88%;
+right: 21.88%;
+top: 34.38%;
+bottom: 34.38%;
+
+background: #FFFFFF;
+
+
+/* chevron-down */
+
+width: 14px;
+height: 14px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Vector  */
+
+position: absolute;
+left: 21.88%;
+right: 21.87%;
+top: 34.38%;
+bottom: 34.38%;
+
+background: #FFFFFF;

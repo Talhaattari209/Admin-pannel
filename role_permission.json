@@ -1,0 +1,27 @@
+{
+    "title": "Content Manager",
+    "description": "Manages app content and user-generated content",
+    "resources": [
+        {
+            "module": "dashboard",
+            "permissions": [
+                "view"
+            ]
+        },
+        {
+            "module": "app content",
+            "permissions": [
+                "view",
+                "edit",
+                "delete"
+            ]
+        },
+        {
+            "module": "users management",
+            "permissions": [
+                "view",
+                "export"
+            ]
+        }
+    ]
+}

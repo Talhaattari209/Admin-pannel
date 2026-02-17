@@ -1,0 +1,88 @@
+{
+    "data": [
+        {
+            "id": "699408c7a389cf3295a3c49d",
+            "title": "Test Content Manager",
+            "description": "Can manage app content only",
+            "resources": [
+                {
+                    "module": "users management",
+                    "permissions": [
+                        "view"
+                    ],
+                    "_id": "699408c7a389cf3295a3c49e"
+                },
+                {
+                    "module": "app content",
+                    "permissions": [
+                        "view",
+                        "edit",
+                        "delete"
+                    ],
+                    "_id": "699408c7a389cf3295a3c49f"
+                }
+            ],
+            "teamMembers": [],
+            "createdAt": "2026-02-17T06:20:55.916Z",
+            "updatedAt": "2026-02-17T06:20:55.916Z"
+        },
+        {
+            "id": "69940a1fa389cf3295a3c4c4",
+            "title": "CTO",
+            "description": "TTTTbb",
+            "resources": [
+                {
+                    "module": "app content",
+                    "permissions": [
+                        "view",
+                        "edit"
+                    ],
+                    "_id": "69940af6a389cf3295a3c4e1"
+                }
+            ],
+            "teamMembers": [],
+            "createdAt": "2026-02-17T06:26:39.131Z",
+            "updatedAt": "2026-02-17T06:30:14.111Z"
+        },
+        {
+            "id": "69942693a389cf3295a3c5cd",
+            "title": "Developer",
+            "description": "Tailwind",
+            "resources": [
+                {
+                    "module": "support requests",
+                    "permissions": [
+                        "view",
+                        "edit"
+                    ],
+                    "_id": "69942693a389cf3295a3c5ce"
+                },
+                {
+                    "module": "reported problems",
+                    "permissions": [
+                        "view",
+                        "edit"
+                    ],
+                    "_id": "69942693a389cf3295a3c5cf"
+                },
+                {
+                    "module": "account settings",
+                    "permissions": [
+                        "view",
+                        "edit"
+                    ],
+                    "_id": "69942693a389cf3295a3c5d0"
+                }
+            ],
+            "teamMembers": [],
+            "createdAt": "2026-02-17T08:28:03.965Z",
+            "updatedAt": "2026-02-17T08:28:03.965Z"
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 10,
+        "total": 3,
+        "totalPages": 1
+    }
+}

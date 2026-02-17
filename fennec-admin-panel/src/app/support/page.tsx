@@ -1,0 +1,50 @@
+
+'use client';
+
+import React, { useState } from 'react';
+import SideNavigation from '@/components/SideNavigation';
+
+import SupportRequestsView from '@/components/support/SupportRequestsView';
+import SupportTicketDetailView from '@/components/support/SupportTicketDetailView';
+import { SupportTicketData } from '@/components/support/SupportTableRow';
+import ExportModal from '@/components/shared/ExportModal';
+
+export default function SupportPage() {
+    const [selectedTicket, setSelectedTicket] = useState<SupportTicketData | null>(null);
+    const [showExportModal, setShowExportModal] = useState(false);
+
+    return (
+        <div className="relative min-h-screen w-full overflow-hidden">
+            {/* Sidebar */}
+            <SideNavigation activeId="support-requests" />
+
+            {/* Main Content */}
+            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto">
+                <div className="flex flex-col items-start w-full max-w-[83.33vw] px-[2.08vw] py-[2.08vw]">
+                    {selectedTicket ? (
+                        <SupportTicketDetailView
+                            ticket={selectedTicket}
+                            onBack={() => setSelectedTicket(null)}
+                        />
+                    ) : (
+                        <SupportRequestsView
+                            onViewDetail={(ticket) => setSelectedTicket(ticket)}
+                            onExport={() => setShowExportModal(true)}
+                        />
+                    )}
+                </div>
+            </main>
+
+            {/* Modals */}
+            {showExportModal && (
+                <ExportModal
+                    onCancel={() => setShowExportModal(false)}
+                    onDownload={(config) => {
+                        console.log('Exporting', config);
+                        setShowExportModal(false);
+                    }}
+                />
+            )}
+        </div>
+    );
+}

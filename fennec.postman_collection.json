@@ -1,0 +1,754 @@
+{
+  "info": {
+    "_postman_id": "bfcd9cce-952c-4ea4-b45e-820fb2fddc10",
+    "name": "fennec",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45411665",
+    "_collection_link": "https://go.postman.co/collection/45411665-bfcd9cce-952c-4ea4-b45e-820fb2fddc10?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Admin panel",
+      "item": [
+        {
+          "name": "Auth",
+          "item": [
+            {
+              "name": "Admin / Member Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 200) {",
+                      "    const response = pm.response.json();",
+                      "    pm.environment.set(\"admin_access_token\", response.accessToken);",
+                      "    pm.environment.set(\"admin_refresh_token\", response.refreshToken);",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "// {\n//   \"email\": \"admin@example.com\",\n//   \"password\": \"password123\"\n// }\n{\n  \"email\": \"superadmin@mailinator.com\",\n  \"password\": \"go6Qnri&cQ1Rj1$N\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "auth",
+                    "login"
+                  ]
+                },
+                "description": "Login for team members"
+              },
+              "response": []
+            },
+            {
+              "name": "Super Admin Create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"superadmin@example.com\",\n  \"ipAddress\": \"127.0.0.1\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/auth/super-admin/create",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "auth",
+                    "super-admin",
+                    "create"
+                  ]
+                },
+                "description": "Create super admin (IP-based). Password will be auto-generated and sent via email."
+              },
+              "response": []
+            },
+            {
+              "name": "Get Current Admin",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/auth/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "auth",
+                    "me"
+                  ]
+                },
+                "description": "Get current authenticated admin user details"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Super Admin Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{super_admin_access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newPassword\": \"newSecurePassword123!\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/auth/super-admin/update-password",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "auth",
+                    "super-admin",
+                    "update-password"
+                  ]
+                },
+                "description": "Update super admin password (IP-verified)"
+              },
+              "response": []
+            },
+            {
+              "name": "Logout",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/auth/logout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "auth",
+                    "logout"
+                  ]
+                },
+                "description": "Logout and invalidate session"
+              },
+              "response": []
+            }
+          ],
+          "description": "Authentication endpoints for admin panel"
+        },
+        {
+          "name": "Teams & Roles",
+          "item": [
+            {
+              "name": "Create Team Member",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"role\": \"role_id_here\",\n  \"password\": \"SecurePassword123!\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/team-members",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "team-members"
+                  ]
+                },
+                "description": "Create a new team member. An invitation email with password will be sent automatically."
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Team Members",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/team-members?page=1&limit=10&search=",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "team-members"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search by name or email"
+                    }
+                  ]
+                },
+                "description": "Get all team members with pagination and search"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Team Member by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/team-members/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "team-members",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "team_member_id_here"
+                    }
+                  ]
+                },
+                "description": "Get a single team member by ID"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Team Member",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Updated\",\n  \"email\": \"john.updated@example.com\",\n  \"role\": \"new_role_id_here\",\n  \"status\": \"active\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/team-members/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "team-members",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "team_member_id_here"
+                    }
+                  ]
+                },
+                "description": "Update a team member (all fields are optional)"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Team Member",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/team-members/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "team-members",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "team_member_id_here"
+                    }
+                  ]
+                },
+                "description": "Delete a team member"
+              },
+              "response": []
+            },
+            {
+              "name": "Create Role",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Content Manager\",\n  \"description\": \"Manages app content and user-generated content\",\n  \"resources\": [\n    {\n      \"module\": \"dashboard\",\n      \"permissions\": [\"view\"]\n    },\n    {\n      \"module\": \"app content\",\n      \"permissions\": [\"view\", \"edit\", \"delete\"]\n    },\n    {\n      \"module\": \"users management\",\n      \"permissions\": [\"view\", \"export\"]\n    }\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/roles",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "roles"
+                  ]
+                },
+                "description": "Create a new role with permissions"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Roles",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/roles?page=1&limit=10&search=",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "roles"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page number"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Items per page"
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search query (optional)"
+                    }
+                  ]
+                },
+                "description": "Get all roles with pagination and search. Returns roles with associated team members."
+              },
+              "response": []
+            },
+            {
+              "name": "Get Role by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/roles/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "roles",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "role_id_here",
+                      "description": "Role ID"
+                    }
+                  ]
+                },
+                "description": "Get a single role by ID with team members"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Role",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated Role Title\",\n  \"description\": \"Updated description\",\n  \"resources\": [\n    {\n      \"module\": \"dashboard\",\n      \"permissions\": [\"view\", \"export\"]\n    }\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/roles/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "roles",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "role_id_here"
+                    }
+                  ]
+                },
+                "description": "Update a role (all fields are optional)"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Role",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/roles/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "roles",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "role_id_here"
+                    }
+                  ]
+                },
+                "description": "Delete a role (only if no team members are assigned)"
+              },
+              "response": []
+            }
+          ],
+          "description": "Team member management endpoints"
+        },
+        {
+          "name": "User Management",
+          "item": [
+            {
+              "name": "Get All Users",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{local_url}}/admin/users",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "disabled": true
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search by firstName, lastName, email, or phone",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Get all mobile app users with pagination and search"
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Statistics",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/users/stats",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "users",
+                    "stats"
+                  ]
+                },
+                "description": "Get user statistics including total users, active this week, pending KYC, suspended accounts, verified accounts, and premium subscriptions"
+              },
+              "response": []
+            },
+            {
+              "name": "Get User by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/admin/users/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "users",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "user_id_here"
+                    }
+                  ]
+                },
+                "description": "Get a single user by ID"
+              },
+              "response": []
+            }
+          ],
+          "description": "User management endpoints for mobile app users"
+        },
+        {
+          "name": "file upload",
+          "item": [
+            {
+              "name": "single",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "0b34e206-496a-4aec-9c9e-c83e633aa8cc",
+                      "src": "/Users/macbookpro/Downloads/censor-beep-10-seconds-8113.mp3"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local_url}}/upload/single",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "upload",
+                    "single"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "multiple",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "files",
+                      "type": "file",
+                      "uuid": "c95888af-342a-43e5-b1b0-a639a2310052",
+                      "value": null
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local_url}}/upload/multiple",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "upload",
+                    "multiple"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "local_url",
+      "value": ""
+    },
+    {
+      "key": "dev_url",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "base_url",
+      "value": ""
+    }
+  ]
+}
