@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
 import LegalContentPopCard from '@/components/pop-cards/LegalContentPopCard';
-import { Plus } from 'lucide-react';
-import RichTextEditor from '../../shared/RichTextEditor';
 
 interface AddContentModalProps {
     onCancel: () => void;
-    onAdd: () => void;
+    onSave: (title: string, content: string) => void;
 }
 
-const AddContentModal: React.FC<AddContentModalProps> = ({ onCancel, onAdd }) => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-
+const AddContentModal: React.FC<AddContentModalProps> = ({ onCancel, onSave }) => {
     const handleSave = (title: string, content: string) => {
-        setTitle(title);
-        setContent(content);
-        onAdd();
+        onSave(title, content);
     };
 
     return (

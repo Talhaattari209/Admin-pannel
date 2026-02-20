@@ -1,42 +1,35 @@
 import React from 'react';
 import LegalTableRow, { LegalRowData } from './LegalTableRow';
+import { LegalContent } from '@/types/api';
 
 interface LegalTableProps {
+    data: LegalContent[];
     onEdit: (data: any) => void;
     onDelete: (id: string) => void;
     onViewDetails: (data: any) => void;
 }
 
-const MOCK_DATA: LegalRowData[] = [
-    {
-        id: '1',
-        title: 'Terms of Service',
-        description: 'Welcome to Fennec, a group-based social and dating platform that helps people connect...',
-        status: 'Published',
-        updatedBy: { name: 'John Doe', email: 'Moderator', avatar: '/8.png' },
-        lastUpdated: 'Dec 31, 2025 • 11:59 PM'
-    },
-    {
-        id: '2',
-        title: 'Privacy Policy',
-        description: 'Your privacy is important to us. This policy explains how we collect and use your data...',
-        status: 'Published',
-        updatedBy: { name: 'John Doe', email: 'Moderator', avatar: '/8.png' },
-        lastUpdated: 'Dec 31, 2025 • 11:59 PM'
-    },
-];
-
-const LegalTable: React.FC<LegalTableProps> = ({ onEdit, onDelete }) => {
+const LegalTable: React.FC<LegalTableProps> = ({ data, onEdit, onDelete, onViewDetails }) => {
     return (
         <div className="flex flex-col w-full">
-            {MOCK_DATA.map((row) => (
-                <LegalTableRow
-                    key={row.id}
-                    data={row}
-                    onEdit={onEdit}
-                    onDelete={onDelete}
-                />
-            ))}
+            {data.map((item) => {
+                const row: LegalRowData = {
+                    id: item.id,
+                    title: item.title,
+                    description: item.content?.substring(0, 100) + (item.content?.length > 100 ? '...' : '') || '',
+                    status: item.status === 'published' ? 'Published' : 'Draft',
+                    updatedBy: { name: item.updatedBy || item.addedBy || '—', email: '', avatar: '/8.png' },
+                    lastUpdated: new Date(item.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) + ' • ' + new Date(item.updatedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+                };
+                return (
+                    <LegalTableRow
+                        key={item.id}
+                        data={row}
+                        onEdit={() => onEdit({ ...item, ...row })}
+                        onDelete={onDelete}
+                    />
+                );
+            })}
         </div>
     );
 };

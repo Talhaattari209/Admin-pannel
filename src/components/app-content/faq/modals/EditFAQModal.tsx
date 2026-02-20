@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FAQPopCard from '@/components/pop-cards/FAQPopCard';
-import { Edit2 } from 'lucide-react';
-import RichTextEditor from '../../shared/RichTextEditor';
 
 interface EditFAQModalProps {
+    faqId: string;
     initialQuestion: string;
     initialAnswer: string;
     onCancel: () => void;
-    onUpdate: () => void;
+    onSave: (question: string, answer: string) => void;
 }
 
-const EditFAQModal: React.FC<EditFAQModalProps> = ({ initialQuestion, initialAnswer, onCancel, onUpdate }) => {
-    const [question, setQuestion] = useState(initialQuestion);
-    const [answer, setAnswer] = useState(initialAnswer);
-
+const EditFAQModal: React.FC<EditFAQModalProps> = ({ faqId, initialQuestion, initialAnswer, onCancel, onSave }) => {
     const handleSave = (newQuestion: string, newAnswer: string) => {
-        setQuestion(newQuestion);
-        setAnswer(newAnswer);
-        onUpdate();
+        onSave(newQuestion, newAnswer);
     };
 
     return (

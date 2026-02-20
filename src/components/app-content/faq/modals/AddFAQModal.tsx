@@ -1,20 +1,15 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import FAQPopCard from '@/components/pop-cards/FAQPopCard';
 
 interface AddFAQModalProps {
     onCancel: () => void;
-    onAdd: () => void;
+    onSave: (question: string, answer: string) => void;
 }
 
-const AddFAQModal: React.FC<AddFAQModalProps> = ({ onCancel, onAdd }) => {
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
-
+const AddFAQModal: React.FC<AddFAQModalProps> = ({ onCancel, onSave }) => {
     const handleSave = (question: string, answer: string) => {
-        setQuestion(question);
-        setAnswer(answer);
-        onAdd();
+        onSave(question, answer);
     };
 
     return (

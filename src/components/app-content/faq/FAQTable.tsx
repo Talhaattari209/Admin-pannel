@@ -1,42 +1,35 @@
 import React from 'react';
 import FAQTableRow, { FAQRowData } from './FAQTableRow';
+import { FAQ } from '@/types/api';
 
 interface FAQTableProps {
+    data: FAQ[];
     onEdit: (data: any) => void;
     onDelete: (id: string) => void;
     onViewDetails: (data: any) => void;
 }
 
-const MOCK_DATA: FAQRowData[] = [
-    {
-        id: '1',
-        question: 'Can I use Fennec without joining a group?',
-        answerSnippet: 'Youll need to be in a group to start matching. You can either create your own or join one...',
-        status: 'Published',
-        updatedBy: { name: 'John Doe', email: 'Moderator', avatar: '/8.png' },
-        lastUpdated: 'Dec 31, 2025 • 11:59 PM'
-    },
-    {
-        id: '2',
-        question: 'How do I report a user?',
-        answerSnippet: 'Go to the user profile and tap the three dots in the corner, then select Report User...',
-        status: 'Published',
-        updatedBy: { name: 'John Doe', email: 'Moderator', avatar: '/8.png' },
-        lastUpdated: 'Dec 31, 2025 • 11:59 PM'
-    },
-];
-
-const FAQTable: React.FC<FAQTableProps> = ({ onEdit, onDelete }) => {
+const FAQTable: React.FC<FAQTableProps> = ({ data, onEdit, onDelete, onViewDetails }) => {
     return (
         <div className="flex flex-col w-full">
-            {MOCK_DATA.map((row) => (
-                <FAQTableRow
-                    key={row.id}
-                    data={row}
-                    onEdit={onEdit}
-                    onDelete={onDelete}
-                />
-            ))}
+            {data.map((item) => {
+                const row: FAQRowData = {
+                    id: item.id,
+                    question: item.question,
+                    answerSnippet: item.answer?.substring(0, 100) + (item.answer?.length > 100 ? '...' : '') || '',
+                    status: item.status === 'published' ? 'Published' : 'Draft',
+                    updatedBy: { name: item.updatedBy || item.addedBy || '—', email: '', avatar: '/8.png' },
+                    lastUpdated: new Date(item.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) + ' • ' + new Date(item.updatedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+                };
+                return (
+                    <FAQTableRow
+                        key={item.id}
+                        data={row}
+                        onEdit={() => onEdit({ ...item, ...row })}
+                        onDelete={onDelete}
+                    />
+                );
+            })}
         </div>
     );
 };

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import {
     Home,
     Users,
@@ -33,8 +33,18 @@ type SideNavSection = {
     items: SideNavItem[];
 };
 
-interface SideNavigationProps {
-    activeId?: string;
+// Derive the activeId from the pathname automatically
+function getActiveId(pathname: string): string {
+    if (pathname.startsWith('/users')) return 'users';
+    if (pathname.startsWith('/app-content')) return 'app-content';
+    if (pathname.startsWith('/team-roles')) return 'team-roles';
+    if (pathname.startsWith('/system-logs')) return 'system-logs';
+    if (pathname.startsWith('/settings')) return 'app-settings';
+    if (pathname.startsWith('/support')) return 'support-requests';
+    if (pathname.startsWith('/reported-problems')) return 'reported-problems';
+    if (pathname.startsWith('/account-settings')) return 'account-settings';
+    if (pathname.startsWith('/dashboard')) return 'dashboard';
+    return '';
 }
 
 // Mapping of sidebar item IDs to permission module names
@@ -82,8 +92,10 @@ const sections: SideNavSection[] = [
     }
 ];
 
-export default function SideNavigation({ activeId = 'user-management' }: SideNavigationProps) {
+export default function SideNavigation() {
     const router = useRouter();
+    const pathname = usePathname();
+    const activeId = getActiveId(pathname);
     const permissions = useAuthStore((state) => state.permissions);
     const isSuperAdmin = useAuthStore((state) => state.user?.isSuperAdmin);
 

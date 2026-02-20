@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import TabGroup, { TabItem } from './shared/TabGroup';
 import PromptsHeader from './PromptsHeader';
 import SearchInput from './shared/SearchInput';
@@ -24,25 +24,13 @@ import EditFAQModal from './faq/modals/EditFAQModal';
 import FAQDetailsModal from './faq/modals/FAQDetailsModal';
 import ExportModal from '@/components/shared/ExportModal';
 
-const TABS: TabItem[] = [
-    { id: 'individual', label: 'Individual Prompts', count: 4 },
-    { id: 'group', label: 'Group Prompts', count: 4 },
-    { id: 'legal', label: 'Legal Content', count: 2 },
-    { id: 'faq', label: 'Frequently Asked Questions', count: 2 },
-];
-
-const INDIVIDUAL_MOCK_DATA: PromptRowData[] = [
-    { id: '1', title: 'A perfect weekend for me looks like...', status: 'Published', updatedBy: { name: 'John Doe', role: 'Moderator', avatar: '/8.png', email: 'john@fennec.com' }, lastUpdated: 'Dec 31, 2025 • 11:59 PM' },
-    { id: '2', title: 'The most spontaneous thing I\'ve done...', status: 'Published', updatedBy: { name: 'John Doe', role: 'Moderator', avatar: '/8.png', email: 'john@fennec.com' }, lastUpdated: 'Dec 31, 2025 • 11:59 PM' },
-    { id: '3', title: 'My friends describe me as...', status: 'Published', updatedBy: { name: 'John Doe', role: 'Moderator', avatar: '/8.png', email: 'john@fennec.com' }, lastUpdated: 'Dec 31, 2025 • 11:59 PM' },
-    { id: '4', title: 'Two truths and a lie...', status: 'Published', updatedBy: { name: 'John Doe', role: 'Moderator', avatar: '/8.png', email: 'john@fennec.com' }, lastUpdated: 'Dec 31, 2025 • 11:59 PM' },
-];
-
-const GROUP_MOCK_DATA: PromptRowData[] = [
-    { id: '5', title: 'What I\'d bring to a group trip...', status: 'Published', updatedBy: { name: 'John Doe', role: 'Moderator', avatar: '/8.png', email: 'john@fennec.com' }, lastUpdated: 'Dec 31, 2025 • 11:59 PM' },
-    { id: '6', title: 'The fastest way to make me smile...', status: 'Published', updatedBy: { name: 'John Doe', role: 'Moderator', avatar: '/8.png', email: 'john@fennec.com' }, lastUpdated: 'Dec 31, 2025 • 11:59 PM' },
-    { id: '7', title: 'How my group describes me in one word...', status: 'Published', updatedBy: { name: 'John Doe', role: 'Moderator', avatar: '/8.png', email: 'john@fennec.com' }, lastUpdated: 'Dec 31, 2025 • 11:59 PM' },
-];
+// API Hooks
+import {
+    useIndividualPrompts, useCreateIndividualPrompt, useUpdateIndividualPrompt, useDeleteIndividualPrompt,
+    useGroupPrompts, useCreateGroupPrompt, useUpdateGroupPrompt, useDeleteGroupPrompt,
+    useLegalContents, useCreateLegalContent, useUpdateLegalContent, useDeleteLegalContent,
+    useFAQs, useCreateFAQ, useUpdateFAQ, useDeleteFAQ,
+} from '@/services/app-content';
 
 const PromptsTable: React.FC = () => {
     const [activeTab, setActiveTab] = useState('individual');
@@ -51,10 +39,76 @@ const PromptsTable: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [activeModal, setActiveModal] = useState<any>(null);
     const [selectedPrompt, setSelectedPrompt] = useState<any | null>(null);
+    const [selectedItemId, setSelectedItemId] = useState<string>('');
 
     const isLegalTab = activeTab === 'legal';
     const isFAQTab = activeTab === 'faq';
 
+    // Build query params
+    const queryParams = useMemo(() => {
+        const p: { page?: number; limit?: number; search?: string; status?: string } = { page: currentPage, limit: 10 };
+        if (search) p.search = search;
+        if (status) p.status = status.toLowerCase();
+        return p;
+    }, [currentPage, search, status]);
+
+    // ---------- Data queries ----------
+    const individualQuery = useIndividualPrompts(activeTab === 'individual' ? queryParams : undefined);
+    const groupQuery = useGroupPrompts(activeTab === 'group' ? queryParams : undefined);
+    const legalQuery = useLegalContents(activeTab === 'legal' ? queryParams : undefined);
+    const faqQuery = useFAQs(activeTab === 'faq' ? queryParams : undefined);
+
+    // ---------- Mutations ----------
+    const createIndividual = useCreateIndividualPrompt();
+    const updateIndividual = useUpdateIndividualPrompt();
+    const deleteIndividual = useDeleteIndividualPrompt();
+
+    const createGroup = useCreateGroupPrompt();
+    const updateGroup = useUpdateGroupPrompt();
+    const deleteGroup = useDeleteGroupPrompt();
+
+    const createLegal = useCreateLegalContent();
+    const updateLegal = useUpdateLegalContent();
+    const deleteLegal = useDeleteLegalContent();
+
+    const createFAQ = useCreateFAQ();
+    const updateFAQ = useUpdateFAQ();
+    const deleteFAQ = useDeleteFAQ();
+
+    // ---------- Resolve active query ----------
+    const activeQuery = activeTab === 'individual' ? individualQuery
+        : activeTab === 'group' ? groupQuery
+            : activeTab === 'legal' ? legalQuery
+                : faqQuery;
+
+    const totalPages = activeQuery.data?.pages || 1;
+
+    // Tab items with live counts
+    const TABS: TabItem[] = [
+        { id: 'individual', label: 'Individual Prompts', count: individualQuery.data?.total ?? 0 },
+        { id: 'group', label: 'Group Prompts', count: groupQuery.data?.total ?? 0 },
+        { id: 'legal', label: 'Legal Content', count: legalQuery.data?.total ?? 0 },
+        { id: 'faq', label: 'Frequently Asked Questions', count: faqQuery.data?.total ?? 0 },
+    ];
+
+    // Reset page when tab changes
+    const handleTabChange = (tabId: string) => {
+        setActiveTab(tabId);
+        setCurrentPage(1);
+        setSearch('');
+        setStatus('');
+    };
+
+    // ---------- Map API data → row format ----------
+    const mapPromptToRow = (p: any): PromptRowData => ({
+        id: p.id,
+        title: p.title,
+        status: p.status === 'published' ? 'Published' : 'Draft',
+        updatedBy: { name: p.updatedBy || p.addedBy || '—', role: '', avatar: '/8.png', email: '' },
+        lastUpdated: new Date(p.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) + ' • ' + new Date(p.updatedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+    });
+
+    // ---------- Column header ----------
     const ColumnHeader = ({ label, sortable = true, width = "auto", grow = false }: { label: string, sortable?: boolean, width?: string, grow?: boolean }) => (
         <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow min-w-0' : 'shrink-0'}`} style={{ width: !grow ? width : undefined }}>
             <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-colors truncate">
@@ -71,8 +125,10 @@ const PromptsTable: React.FC = () => {
         </div>
     );
 
+    // ---------- Action handlers ----------
     const handleEdit = (data: any) => {
         setSelectedPrompt(data);
+        setSelectedItemId(data.id);
         setActiveModal('EDIT');
     };
 
@@ -82,33 +138,110 @@ const PromptsTable: React.FC = () => {
     };
 
     const handleDelete = (id: string) => {
+        setSelectedItemId(id);
         setActiveModal('DELETE');
     };
 
-    const renderTableContent = () => {
-        if (activeTab === 'legal') return <LegalTable onEdit={handleEdit} onDelete={handleDelete} onViewDetails={handleViewDetails} />;
-        if (activeTab === 'faq') return <FAQTable onEdit={handleEdit} onDelete={handleDelete} onViewDetails={handleViewDetails} />;
+    // ---------- Mutation callbacks ----------
+    const handleAddPrompt = (value: string) => {
+        const payload = { title: value, status: 'published' };
+        const mutation = activeTab === 'individual' ? createIndividual : createGroup;
+        mutation.mutate(payload, { onSuccess: () => setActiveModal('SUCCESS_ADD') });
+    };
 
-        const currentData = activeTab === 'individual' ? INDIVIDUAL_MOCK_DATA : GROUP_MOCK_DATA;
+    const handleEditPrompt = (value: string) => {
+        const payload = { title: value };
+        const mutation = activeTab === 'individual' ? updateIndividual : updateGroup;
+        mutation.mutate({ id: selectedItemId, data: payload }, { onSuccess: () => setActiveModal('SUCCESS_EDIT') });
+    };
+
+    const handleDeleteItem = () => {
+        if (isFAQTab) {
+            deleteFAQ.mutate(selectedItemId, { onSuccess: () => setActiveModal('SUCCESS_DELETE') });
+        } else if (isLegalTab) {
+            deleteLegal.mutate(selectedItemId, { onSuccess: () => setActiveModal('SUCCESS_DELETE') });
+        } else if (activeTab === 'group') {
+            deleteGroup.mutate(selectedItemId, { onSuccess: () => setActiveModal('SUCCESS_DELETE') });
+        } else {
+            deleteIndividual.mutate(selectedItemId, { onSuccess: () => setActiveModal('SUCCESS_DELETE') });
+        }
+    };
+
+    const handleAddLegalContent = (title: string, content: string) => {
+        createLegal.mutate({ title, content, status: 'draft' }, { onSuccess: () => setActiveModal('SUCCESS_CONTENT_ADD') });
+    };
+
+    const handleEditLegalContent = (title: string, content: string) => {
+        updateLegal.mutate({ id: selectedItemId, data: { title, content } }, { onSuccess: () => setActiveModal('SUCCESS_CONTENT_EDIT') });
+    };
+
+    const handleAddFAQ = (question: string, answer: string) => {
+        createFAQ.mutate({ question, answer, status: 'published' }, { onSuccess: () => setActiveModal('SUCCESS_FAQ_ADD') });
+    };
+
+    const handleEditFAQ = (question: string, answer: string) => {
+        updateFAQ.mutate({ id: selectedItemId, data: { question, answer } }, { onSuccess: () => setActiveModal('SUCCESS_FAQ_EDIT') });
+    };
+
+    // ---------- Loading / Error / Empty states ----------
+    const renderLoadingState = () => (
+        <div className="flex items-center justify-center w-full h-[10vw]">
+            <div className="flex flex-col items-center gap-[0.83vw]">
+                <div className="w-[2vw] h-[2vw] border-2 border-white/20 border-t-[#5F00DB] rounded-full animate-spin" />
+                <span className="text-white/40 text-[0.73vw]">Loading...</span>
+            </div>
+        </div>
+    );
+
+    const renderErrorState = () => (
+        <div className="flex items-center justify-center w-full h-[10vw]">
+            <div className="flex flex-col items-center gap-[0.83vw]">
+                <span className="text-[#FF4E4E] text-[0.83vw]">Failed to load data</span>
+                <button onClick={() => activeQuery.refetch()} className="text-[#5F00DB] text-[0.73vw] underline cursor-pointer">Retry</button>
+            </div>
+        </div>
+    );
+
+    const renderEmptyState = () => (
+        <div className="flex items-center justify-center w-full h-[10vw]">
+            <span className="text-white/40 text-[0.73vw]">No items found</span>
+        </div>
+    );
+
+    // ---------- Table content ----------
+    const renderTableContent = () => {
+        if (activeQuery.isLoading) return renderLoadingState();
+        if (activeQuery.isError) return renderErrorState();
+
+        if (activeTab === 'legal') {
+            const data = legalQuery.data?.data || [];
+            if (data.length === 0) return renderEmptyState();
+            return <LegalTable data={data} onEdit={handleEdit} onDelete={handleDelete} onViewDetails={handleViewDetails} />;
+        }
+        if (activeTab === 'faq') {
+            const data = faqQuery.data?.data || [];
+            if (data.length === 0) return renderEmptyState();
+            return <FAQTable data={data} onEdit={handleEdit} onDelete={handleDelete} onViewDetails={handleViewDetails} />;
+        }
+
+        // Individual / Group prompts
+        const promptsData = activeQuery.data?.data || [];
+        if (promptsData.length === 0) return renderEmptyState();
+
         return (
             <div className="flex flex-col">
-                {currentData.map((row) => (
-                    <PromptsTableRow key={row.id} data={row} onEdit={handleEdit} onDelete={handleDelete} />
-                ))}
+                {promptsData.map((p: any) => {
+                    const row = mapPromptToRow(p);
+                    return <PromptsTableRow key={row.id} data={row} onEdit={handleEdit} onDelete={handleDelete} />;
+                })}
             </div>
         );
     };
 
-    // Define Headers based on active tab to match the column widths perfectly
+    // Define Headers based on active tab
     const renderHeaders = () => {
-        // For Legal and FAQ, we have 45.42vw / 10.42 / 10.42 / 10.42 / 2.5
-        // For Prompts, we used 9.38 / 10.42 / 11.46 / 2.5. 
-        // I'll standardize PromptsTableRow to also use 10.42 for Status/Updated/Date to be consistent if possible, 
-        // but if not, I'll switch header logic here.
-        // Let's stick to the Legal/FAQ widths for now since they are the focus.
-
         const statusWidth = (isLegalTab || isFAQTab) ? "10.42vw" : "9.38vw";
-        const updatedByWidth = (isLegalTab || isFAQTab) ? "10.42vw" : "10.42vw";
+        const updatedByWidth = "10.42vw";
         const lastUpdatedWidth = (isLegalTab || isFAQTab) ? "10.42vw" : "11.46vw";
 
         return (
@@ -128,20 +261,20 @@ const PromptsTable: React.FC = () => {
             {/* --- Modals --- */}
             {activeModal && (
                 <>
-                    {activeModal === 'ADD' && (isFAQTab ? <AddFAQModal onCancel={() => setActiveModal(null)} onAdd={() => setActiveModal('SUCCESS_FAQ_ADD')} /> : isLegalTab ? <AddContentModal onCancel={() => setActiveModal(null)} onAdd={() => setActiveModal('SUCCESS_CONTENT_ADD')} /> : <AddPromptModal onCancel={() => setActiveModal(null)} onAdd={() => setActiveModal('SUCCESS_ADD')} />)}
+                    {activeModal === 'ADD' && (isFAQTab ? <AddFAQModal onCancel={() => setActiveModal(null)} onSave={handleAddFAQ} /> : isLegalTab ? <AddContentModal onCancel={() => setActiveModal(null)} onSave={handleAddLegalContent} /> : <AddPromptModal onCancel={() => setActiveModal(null)} onSave={handleAddPrompt} />)}
 
                     {activeModal === 'EDIT' && selectedPrompt && (
-                        isFAQTab ? <EditFAQModal initialQuestion={selectedPrompt.question || selectedPrompt.title} initialAnswer={selectedPrompt.answerSnippet || selectedPrompt.fullContent || ''} onCancel={() => setActiveModal(null)} onUpdate={() => setActiveModal('SUCCESS_FAQ_EDIT')} /> :
-                            isLegalTab ? <EditContentModal initialTitle={selectedPrompt.title} initialContent={selectedPrompt.description || selectedPrompt.fullContent || ''} onCancel={() => setActiveModal(null)} onUpdate={() => setActiveModal('SUCCESS_CONTENT_EDIT')} /> :
-                                <EditPromptModal initialValue={selectedPrompt.title} onCancel={() => setActiveModal(null)} onUpdate={() => setActiveModal('SUCCESS_EDIT')} />
+                        isFAQTab ? <EditFAQModal faqId={selectedItemId} initialQuestion={selectedPrompt.question || selectedPrompt.title} initialAnswer={selectedPrompt.answerSnippet || selectedPrompt.answer || selectedPrompt.fullContent || ''} onCancel={() => setActiveModal(null)} onSave={handleEditFAQ} /> :
+                            isLegalTab ? <EditContentModal contentId={selectedItemId} initialTitle={selectedPrompt.title} initialContent={selectedPrompt.description || selectedPrompt.content || selectedPrompt.fullContent || ''} onCancel={() => setActiveModal(null)} onSave={handleEditLegalContent} /> :
+                                <EditPromptModal promptId={selectedItemId} initialValue={selectedPrompt.title} onCancel={() => setActiveModal(null)} onSave={handleEditPrompt} />
                     )}
 
                     {activeModal === 'DETAILS' && selectedPrompt && (
-                        isFAQTab ? <FAQDetailsModal question={selectedPrompt.question || selectedPrompt.title} answer={selectedPrompt.answerSnippet || selectedPrompt.fullContent || ''} onClose={() => setActiveModal(null)} /> :
-                            <ContentDetailsModal title={selectedPrompt.title} content={selectedPrompt.description || selectedPrompt.fullContent || ''} onClose={() => setActiveModal(null)} />
+                        isFAQTab ? <FAQDetailsModal question={selectedPrompt.question || selectedPrompt.title} answer={selectedPrompt.answerSnippet || selectedPrompt.answer || selectedPrompt.fullContent || ''} onClose={() => setActiveModal(null)} /> :
+                            <ContentDetailsModal title={selectedPrompt.title} content={selectedPrompt.description || selectedPrompt.content || selectedPrompt.fullContent || ''} onClose={() => setActiveModal(null)} />
                     )}
 
-                    {activeModal === 'DELETE' && <DeletePromptModal onCancel={() => setActiveModal(null)} onDelete={() => setActiveModal('SUCCESS_DELETE')} />}
+                    {activeModal === 'DELETE' && <DeletePromptModal onCancel={() => setActiveModal(null)} onDelete={handleDeleteItem} />}
 
                     {activeModal === 'SUCCESS_ADD' && <PromptSuccessModal title="New Prompt Added" onDone={() => setActiveModal(null)} />}
                     {activeModal === 'SUCCESS_EDIT' && <PromptSuccessModal title="Prompt Updated" onDone={() => setActiveModal(null)} />}
@@ -165,7 +298,7 @@ const PromptsTable: React.FC = () => {
             <PromptsHeader onAddPrompt={() => setActiveModal('ADD')} onExport={() => setActiveModal('EXPORT')} addLabel={isFAQTab ? 'Add FAQ' : isLegalTab ? 'Add Content' : 'Add Prompt'} />
 
             <div className="flex flex-col w-full gap-0">
-                <TabGroup tabs={TABS} activeId={activeTab} onChange={setActiveTab} className="pl-[0.83vw]" />
+                <TabGroup tabs={TABS} activeId={activeTab} onChange={handleTabChange} className="pl-[0.83vw]" />
                 <div className="flex flex-col bg-[#222222] rounded-[0.83vw] overflow-hidden border border-white/5 shadow-2xl">
                     {/* Controls */}
                     <div className="flex flex-row items-center justify-between p-[0.83vw] gap-[0.83vw] bg-[#1a1a1a]/30">
@@ -194,7 +327,7 @@ const PromptsTable: React.FC = () => {
                     {/* Pagination */}
                     <Pagination
                         currentPage={currentPage}
-                        totalPages={10}
+                        totalPages={totalPages}
                         onPageChange={setCurrentPage}
                         className="w-full px-[1.25vw] pb-[1.25vw]"
                     />

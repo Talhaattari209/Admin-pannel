@@ -108,4 +108,74 @@ export interface ApiError {
     detail: string;
 }
 
+// === App Content Types ===
 
+// Prompt (Individual & Group) - matches API response shape
+export interface Prompt {
+    id: string;
+    title: string;
+    type: 'individual' | 'group';
+    status: 'published' | 'draft';
+    addedBy?: string;
+    updatedBy?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface PromptCreate {
+    title: string;
+    status: string;
+}
+
+export interface PromptUpdate {
+    title?: string;
+    status?: string;
+}
+
+// Legal Content - matches API response shape
+export interface LegalContent {
+    id: string;
+    title: string;
+    content: string;
+    status: 'published' | 'draft';
+    addedBy?: string;
+    updatedBy?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface LegalContentCreate {
+    title: string;
+    content: string;
+    status: string;
+}
+
+export interface LegalContentUpdate {
+    title?: string;
+    content?: string;
+    status?: string;
+}
+
+// FAQ - matches API response shape
+export interface FAQ {
+    id: string;
+    question: string;
+    answer: string;
+    status: 'published' | 'draft';
+    addedBy?: string;
+    updatedBy?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface FAQCreate {
+    question: string;
+    answer: string;
+    status: string;
+}
+
+export interface FAQUpdate {
+    question?: string;
+    answer?: string;
+    status?: string;
+}

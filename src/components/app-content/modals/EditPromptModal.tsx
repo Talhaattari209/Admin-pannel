@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PromptPopCard from '@/components/pop-cards/PromptPopCard';
-// import { Edit2 } from 'lucide-react';
 
 interface EditPromptModalProps {
+    promptId: string;
     initialValue: string;
     onCancel: () => void;
-    onUpdate: () => void;
+    onSave: (value: string) => void;
 }
 
-const EditPromptModal: React.FC<EditPromptModalProps> = ({ initialValue, onCancel, onUpdate }) => {
-    const [promptText, setPromptText] = useState(initialValue);
-
+const EditPromptModal: React.FC<EditPromptModalProps> = ({ promptId, initialValue, onCancel, onSave }) => {
     const handleSave = (value: string) => {
-        setPromptText(value);
-        onUpdate();
+        onSave(value);
     };
 
     return (

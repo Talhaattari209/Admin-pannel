@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  reactCompiler: true,
+  reactCompiler: false,
   devIndicators: {
     // @ts-ignore - buildActivity is not typed but works
     buildActivity: false,

@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import SideNavigation from '@/components/SideNavigation';
-import { PageHeader } from '@/components/Headers';
 import Image from 'next/image';
 import { cn } from "@/lib/utils";
 import ExportModal from '@/components/shared/ExportModal';
@@ -104,113 +102,102 @@ export default function LoginDashboard() {
     const [showExportModal, setShowExportModal] = useState(false);
 
     return (
-        <div className="relative min-h-screen w-full overflow-hidden text-white">
-
-            {/* Reusable Sidebar (fixed position) */}
-            <SideNavigation activeId="dashboard" />
-
-            {/* 3. Main Content Container - Single Scroll Flow */}
-            <main className="relative z-10 ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto scrollbar-hide">
-
-                {/* Content Wrapper */}
-                <div
-                    className="flex flex-col items-start w-full text-white"
-                    style={{
-                        paddingLeft: '2.08vw',
-                        paddingTop: '1.4vw',
-                        paddingRight: '2.08vw',
-                        paddingBottom: '2.08vw'
-                    }}
+        <div
+            className="flex flex-col items-start w-full text-white"
+            style={{
+                paddingLeft: '2.08vw',
+                paddingTop: '1.4vw',
+                paddingRight: '2.08vw',
+                paddingBottom: '2.08vw'
+            }}
+        >
+            {/* Custom Compact Header */}
+            <div className="relative w-full h-[4.01vw] flex flex-col justify-center gap-[0.51vw]">
+                <div className="flex items-center justify-start w-full">
+                    <h1 className="text-white text-[1.8vw] font-bold leading-[110%] tracking-[0.01em]">
+                        Dashboard
+                    </h1>
+                </div>
+                <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%]">
+                    Get a quick overview of user activity, group interactions, and overall platform performance.
+                </p>
+                <button
+                    onClick={() => setShowExportModal(true)}
+                    className="absolute bottom-[0.2vw] right-0 flex items-center justify-center gap-[0.62vw] px-[1.25vw] py-[0.41vw] rounded-full border border-white backdrop-blur-[6px] cursor-pointer hover:bg-white/10 transition-all"
                 >
-                    {/* Custom Compact Header */}
-                    <div className="relative w-full h-[4.01vw] flex flex-col justify-center gap-[0.51vw]">
-                        <div className="flex items-center justify-start w-full">
-                            <h1 className="text-white text-[1.8vw] font-bold leading-[110%] tracking-[0.01em]">
-                                Dashboard
-                            </h1>
-                        </div>
-                        <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%]">
-                            Get a quick overview of user activity, group interactions, and overall platform performance.
-                        </p>
-                        <button
-                            onClick={() => setShowExportModal(true)}
-                            className="absolute bottom-[0.2vw] right-0 flex items-center justify-center gap-[0.62vw] px-[1.25vw] py-[0.41vw] rounded-full border border-white backdrop-blur-[6px] cursor-pointer hover:bg-white/10 transition-all"
-                        >
-                            <div className="relative w-[1.25vw] h-[1.25vw]">
-                                <Image
-                                    src="/assets/Icons_figma/download.svg"
-                                    alt="Export"
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
-                            <span className="text-white text-[0.83vw] font-medium leading-[120%]">
-                                Export
-                            </span>
-                        </button>
+                    <div className="relative w-[1.25vw] h-[1.25vw]">
+                        <Image
+                            src="/assets/Icons_figma/download.svg"
+                            alt="Export"
+                            fill
+                            className="object-contain"
+                        />
+                    </div>
+                    <span className="text-white text-[0.83vw] font-medium leading-[120%]">
+                        Export
+                    </span>
+                </button>
+            </div>
+
+            <div className="h-[1.33vw]" />
+
+            {/* Stat Cards */}
+            <StatRow />
+
+            <div className="h-[1.03vw]" />
+
+            {/* Filters Row (Timeline) */}
+            <div className="flex flex-nowrap items-center gap-[0.41vw] mb-[0.83vw] w-[70%] overflow-x-auto scrollbar-hide">
+                {FILTERS.map((filter) => (
+                    <button
+                        key={filter}
+                        onClick={() => setActiveFilter(filter)}
+                        className={`flex-shrink-0 px-[1.25vw] py-[0.26vw] rounded-full text-[0.72vw] font-medium not-italic transition-all duration-300 border ${activeFilter === filter
+                            ? 'bg-[#5F00DB] border-[#5F00DB] text-white shadow-[0_0_15px_rgba(95,0,219,0.4)]'
+                            : 'bg-[#16003F] border-[#5F00DB]/30 text-white/70 hover:border-[#5F00DB] hover:text-white'
+                            }`}
+                    >
+                        {filter}
+                    </button>
+                ))}
+            </div>
+
+            {/* Analytics Grid */}
+            <div className="flex flex-col w-full animate-in fade-in duration-700">
+                <div className="grid grid-cols-12 gap-[0.83vw] w-full">
+                    {/* Row 1 */}
+                    <div className="col-span-12 lg:col-span-8">
+                        <DAUChartCard />
+                    </div>
+                    <div className="col-span-12 lg:col-span-4">
+                        <UsageDistributionCard />
                     </div>
 
-                    <div className="h-[1.33vw]" />
-
-                    {/* Stat Cards */}
-                    <StatRow />
-
-                    <div className="h-[1.03vw]" />
-
-                    {/* Filters Row (Timeline) */}
-                    <div className="flex flex-nowrap items-center gap-[0.41vw] mb-[0.83vw] w-[70%] overflow-x-auto scrollbar-hide">
-                        {FILTERS.map((filter) => (
-                            <button
-                                key={filter}
-                                onClick={() => setActiveFilter(filter)}
-                                className={`flex-shrink-0 px-[1.25vw] py-[0.26vw] rounded-full text-[0.72vw] font-medium not-italic transition-all duration-300 border ${activeFilter === filter
-                                    ? 'bg-[#5F00DB] border-[#5F00DB] text-white shadow-[0_0_15px_rgba(95,0,219,0.4)]'
-                                    : 'bg-[#16003F] border-[#5F00DB]/30 text-white/70 hover:border-[#5F00DB] hover:text-white'
-                                    }`}
-                            >
-                                {filter}
-                            </button>
-                        ))}
+                    {/* Row 2 */}
+                    <div className="col-span-12 lg:col-span-8">
+                        <MatchesOverTimeCard />
+                    </div>
+                    <div className="col-span-12 lg:col-span-4">
+                        <EngagementChannelsCard />
                     </div>
 
-                    {/* Analytics Grid */}
-                    <div className="flex flex-col w-full animate-in fade-in duration-700">
-                        <div className="grid grid-cols-12 gap-[0.83vw] w-full">
-                            {/* Row 1 */}
-                            <div className="col-span-12 lg:col-span-8">
-                                <DAUChartCard />
-                            </div>
-                            <div className="col-span-12 lg:col-span-4">
-                                <UsageDistributionCard />
-                            </div>
+                    {/* Row 3 */}
+                    <div className="col-span-12 lg:col-span-6">
+                        <UsersReportedCard />
+                    </div>
+                    <div className="col-span-12 lg:col-span-6">
+                        <BugsReportedCard />
+                    </div>
 
-                            {/* Row 2 */}
-                            <div className="col-span-12 lg:col-span-8">
-                                <MatchesOverTimeCard />
-                            </div>
-                            <div className="col-span-12 lg:col-span-4">
-                                <EngagementChannelsCard />
-                            </div>
-
-                            {/* Row 3 */}
-                            <div className="col-span-12 lg:col-span-6">
-                                <UsersReportedCard />
-                            </div>
-                            <div className="col-span-12 lg:col-span-6">
-                                <BugsReportedCard />
-                            </div>
-
-                            {/* Row 4 */}
-                            <div className="col-span-12 lg:col-span-4">
-                                <SubscriptionsBreakdownCard />
-                            </div>
-                            <div className="col-span-12 lg:col-span-8">
-                                <MonthlyRevenueCard />
-                            </div>
-                        </div>
+                    {/* Row 4 */}
+                    <div className="col-span-12 lg:col-span-4">
+                        <SubscriptionsBreakdownCard />
+                    </div>
+                    <div className="col-span-12 lg:col-span-8">
+                        <MonthlyRevenueCard />
                     </div>
                 </div>
-            </main>
+            </div>
 
             {/* Export Modal */}
             {showExportModal && (

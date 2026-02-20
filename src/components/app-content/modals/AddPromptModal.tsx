@@ -1,19 +1,15 @@
 
 import React, { useState } from 'react';
 import PromptPopCard from '@/components/pop-cards/PromptPopCard';
-// import { Plus } from 'lucide-react';
 
 interface AddPromptModalProps {
     onCancel: () => void;
-    onAdd: () => void;
+    onSave: (value: string) => void;
 }
 
-const AddPromptModal: React.FC<AddPromptModalProps> = ({ onCancel, onAdd }) => {
-    const [promptText, setPromptText] = useState('');
-
+const AddPromptModal: React.FC<AddPromptModalProps> = ({ onCancel, onSave }) => {
     const handleSave = (value: string) => {
-        setPromptText(value);
-        onAdd();
+        onSave(value);
     };
 
     return (
