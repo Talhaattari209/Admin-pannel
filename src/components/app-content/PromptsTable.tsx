@@ -150,7 +150,8 @@ const PromptsTable: React.FC = () => {
     };
 
     const handleEditPrompt = (value: string) => {
-        const payload = { title: value };
+        // status must be included in PUT body (Postman requirement)
+        const payload = { title: value, status: (selectedPrompt?.status || 'published').toLowerCase() };
         const mutation = activeTab === 'individual' ? updateIndividual : updateGroup;
         mutation.mutate({ id: selectedItemId, data: payload }, { onSuccess: () => setActiveModal('SUCCESS_EDIT') });
     };
@@ -172,7 +173,9 @@ const PromptsTable: React.FC = () => {
     };
 
     const handleEditLegalContent = (title: string, content: string) => {
-        updateLegal.mutate({ id: selectedItemId, data: { title, content } }, { onSuccess: () => setActiveModal('SUCCESS_CONTENT_EDIT') });
+        // status must be included in PUT body (Postman requirement)
+        const currentStatus = (selectedPrompt?.status || 'draft').toLowerCase();
+        updateLegal.mutate({ id: selectedItemId, data: { title, content, status: currentStatus } }, { onSuccess: () => setActiveModal('SUCCESS_CONTENT_EDIT') });
     };
 
     const handleAddFAQ = (question: string, answer: string) => {
@@ -180,7 +183,9 @@ const PromptsTable: React.FC = () => {
     };
 
     const handleEditFAQ = (question: string, answer: string) => {
-        updateFAQ.mutate({ id: selectedItemId, data: { question, answer } }, { onSuccess: () => setActiveModal('SUCCESS_FAQ_EDIT') });
+        // status must be included in PUT body (Postman requirement)
+        const currentStatus = (selectedPrompt?.status || 'published').toLowerCase();
+        updateFAQ.mutate({ id: selectedItemId, data: { question, answer, status: currentStatus } }, { onSuccess: () => setActiveModal('SUCCESS_FAQ_EDIT') });
     };
 
     // ---------- Loading / Error / Empty states ----------

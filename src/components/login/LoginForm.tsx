@@ -9,8 +9,8 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('johndoe@email.com');
-  const [password, setPassword] = useState('............');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <div className="relative flex flex-col items-center p-[1.67vw] gap-[1.67vw] w-[25vw] min-w-[320px] max-w-[480px] bg-[#16003F]/50 border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.67vw] box-border shadow-2xl overflow-hidden">
@@ -44,6 +44,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
             className="w-full bg-transparent border-none text-white text-[0.83vw]  focus:outline-none placeholder:text-white/40 font-normal not-italic leading-[1.25vw]"
           />
         </div>
@@ -56,6 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
               className="w-full bg-transparent border-none text-white text-[0.83vw]  focus:outline-none placeholder:text-white/40 font-normal not-italic leading-[1.25vw]"
             />
             <button
