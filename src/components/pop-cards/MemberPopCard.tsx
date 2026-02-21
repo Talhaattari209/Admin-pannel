@@ -170,10 +170,10 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite, roles
     };
 
     return (
-        <PopCardWrapper>
+        <PopCardWrapper onClose={onCancel}>
             <div className="relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden w-[25vw] min-w-[320px]">
                 {/* Icon Section - Clickable for image upload */}
-                <div className="relative flex flex-col justify-center items-center w-[6.25vw] h-[6.25vw] shrink-0 isolation-auto">
+                <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] flex-none order-0 flex-grow-0 relative">
                     <input
                         ref={fileInputRef}
                         type="file"
@@ -181,28 +181,49 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite, roles
                         onChange={handleFileChange}
                         className="hidden"
                     />
-                    <div
-                        className="absolute -inset-[3.125vw] opacity-50 blur-2xl pointer-events-none rounded-full"
-                        style={{ background: `linear-gradient(180deg, #5F00DB 30%, transparent 70%)` }}
-                    ></div>
+                    {/* Rotating Border Animation & Glow */}
+                    <div className="absolute inset-0 z-[1] rounded-full pointer-events-none">
+                        {/* Glow Layer */}
+                        <div
+                            className="absolute -inset-[0.5vw] rounded-full animate-[spin_3s_linear_infinite]"
+                            style={{
+                                background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%)',
+                                filter: 'blur(0.25vw)',
+                                WebkitMask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)',
+                                mask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)'
+                            }}
+                        />
+                        {/* Sharp Border Layer */}
+                        <div
+                            className="absolute inset-0 rounded-full animate-[spin_3s_linear_infinite]"
+                            style={{
+                                background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 1) 50%, transparent 100%)',
+                                WebkitMask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))',
+                                mask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))'
+                            }}
+                        />
+                    </div>
+                    {/* Icon BG - Clickable for upload */}
                     <button
                         type="button"
                         onClick={handleImageClick}
                         disabled={uploading || isLoading}
-                        className="absolute inset-0 bg-white/5 backdrop-blur-[6px] rounded-full border border-white/10 z-0 cursor-pointer hover:bg-white/10 transition-all disabled:cursor-not-allowed overflow-hidden"
+                        className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0 cursor-pointer hover:bg-white/10 transition-all disabled:cursor-not-allowed overflow-hidden"
                     >
                         {imageUrl ? (
                             <img src={imageUrl} alt="Profile" className="w-full h-full object-cover" />
-                        ) : (
-                            <div className="relative z-10 flex items-center justify-center w-full h-full">
-                                {uploading ? (
-                                    <div className="text-white text-[0.63vw]">Uploading...</div>
-                                ) : (
-                                    <svg viewBox="0 0 56 56" className="w-[2.92vw] h-[2.92vw] text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v2M16 23c-4.418 0-8 3.582-8 8v2h16v-2c0-4.418-3.582-8-8-8zM36 23c4.418 0 8 3.582 8 8v2H28v-2c0-4.418 3.582-8 8-8zM28 11a5 5 0 1 1-10 0 5 5 0 0 1 10 0zM41 11a5 5 0 1 1-10 0 5 5 0 0 1 10 0z" /></svg>
-                                )}
-                            </div>
-                        )}
+                        ) : null}
                     </button>
+                    {/* Icon Content */}
+                    {!imageUrl && (
+                        <div className="relative z-10 flex items-center justify-center pointer-events-none">
+                            {uploading ? (
+                                <div className="text-white text-[0.63vw]">Uploading...</div>
+                            ) : (
+                                <svg viewBox="0 0 56 56" className="w-[2.92vw] h-[2.92vw] text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v2M16 23c-4.418 0-8 3.582-8 8v2h16v-2c0-4.418-3.582-8-8-8zM36 23c4.418 0 8 3.582 8 8v2H28v-2c0-4.418 3.582-8 8-8zM28 11a5 5 0 1 1-10 0 5 5 0 0 1 10 0zM41 11a5 5 0 1 1-10 0 5 5 0 0 1 10 0z" /></svg>
+                            )}
+                        </div>
+                    )}
                     {!imageUrl && !uploading && (
                         <div className="absolute bottom-0 right-0 z-20 bg-[#5F00DB] rounded-full p-[0.21vw] cursor-pointer">
                             <svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
@@ -230,7 +251,7 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite, roles
                         <input
                             ref={nameRef}
                             type="text"
-                            placeholder="John Doe"
+                            placeholder="Enter name"
                             className="w-full h-[2.5vw] px-[0.83vw] bg-transparent border-b border-white text-white text-[0.83vw] font-normal not-italic font-inter focus:outline-none placeholder:text-white/30"
                         />
                     </div>
@@ -241,7 +262,7 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite, roles
                         <input
                             ref={emailRef}
                             type="email"
-                            placeholder="john@fennec.com"
+                            placeholder="Enter email"
                             className="w-full h-[2.5vw] px-[0.83vw] bg-transparent border-b border-white text-white text-[0.83vw] font-normal not-italic font-inter focus:outline-none placeholder:text-white/30"
                         />
                     </div>
@@ -276,7 +297,7 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite, roles
                                 type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="················"
+                                placeholder="Enter password"
                                 className="w-full h-full px-[0.83vw] bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/30 not-italic font-inter flex-grow"
                             />
                             <button
@@ -301,7 +322,7 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite, roles
                                 type={showConfirmPassword ? "text" : "password"}
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="················"
+                                placeholder="Confirm password"
                                 className="w-full h-full px-[0.83vw] bg-transparent border-none text-white text-[0.83vw] focus:outline-none placeholder:text-white/30 not-italic font-inter flex-grow"
                             />
                             <button
@@ -326,18 +347,11 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite, roles
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-row items-center justify-center gap-[1.25vw] self-stretch mt-auto shrink-0">
-                    <button
-                        onClick={onCancel}
-                        disabled={isLoading}
-                        className="flex-1 h-[2.92vw] border border-white backdrop-blur-[6px] bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] hover:bg-white/10 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        Cancel
-                    </button>
+                <div className="flex flex-row items-center justify-center w-full mt-auto shrink-0">
                     <button
                         onClick={handleInvite}
                         disabled={isLoading}
-                        className="flex-1 h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic text-[0.83vw] shadow-[0px_-0.42vw_0.63vw_rgba(95,0,219,0.25),0px_0.42vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isLoading ? 'Inviting...' : 'Invite Team Member'}
                     </button>

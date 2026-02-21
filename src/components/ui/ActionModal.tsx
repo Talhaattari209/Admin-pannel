@@ -36,25 +36,48 @@ export const ActionModal = ({
             className
         )}>
             {/* Glow & Icon Section */}
-            <div className="relative w-[120px] h-[120px] flex items-center justify-center shrink-0">
-                {/* Glow Effect */}
-                <div className="absolute inset-[-60px] bg-[linear-gradient(180deg,#5F00DB_30%,rgba(17,17,17,0)_70%)] opacity-50 rounded-full pointer-events-none" />
+            <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] flex-none order-0 flex-grow-0 relative shrink-0">
+                {/* Rotating Border Animation & Glow */}
+                <div className="absolute inset-0 z-[1] rounded-full">
+                    {/* Glow Layer */}
+                    <div
+                        className="absolute -inset-[0.5vw] rounded-full animate-[spin_3s_linear_infinite]"
+                        style={{
+                            background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%)',
+                            filter: 'blur(0.25vw)',
+                            WebkitMask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)',
+                            mask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)'
+                        }}
+                    />
+                    {/* Sharp Border Layer */}
+                    <div
+                        className="absolute inset-0 rounded-full animate-[spin_3s_linear_infinite]"
+                        style={{
+                            background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 1) 50%, transparent 100%)',
+                            WebkitMask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))',
+                            mask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))'
+                        }}
+                    />
+                </div>
 
-                {/* Icon Circle */}
-                <div className="relative z-10 w-[120px] h-[120px] border border-white/20 rounded-full flex items-center justify-center backdrop-blur-[6px]">
+                {/* Icon BG */}
+                <div className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0"></div>
+
+                {/* Icon Content */}
+                <div className="relative z-10 w-[6.25vw] h-[6.25vw] flex items-center justify-center">
                     {icon ? (
                         <div className="flex items-center justify-center w-full h-full">
                             {icon}
                         </div>
                     ) : (
                         variant === 'success' ? (
-                            <div className="relative flex items-center justify-center w-[72px] h-[72px]">
-                                <Check className="w-10 h-10 text-[#3ADC60]" strokeWidth={4} />
+                            <div className="relative flex items-center justify-center w-[3.75vw] h-[3.75vw]">
+                                <Check className="w-[2.08vw] h-[2.08vw] text-[#3ADC60]" strokeWidth={4} />
                                 <div className="absolute inset-0 border-[3px] border-[#3ADC60] rounded-full opacity-0"></div>
                             </div>
                         ) : (
-                            <div className="flex items-center justify-center w-[56px] h-[56px]">
-                                <AlertTriangle className="w-14 h-14 text-white" strokeWidth={1.5} />
+                            <div className="flex items-center justify-center w-[2.92vw] h-[2.92vw]">
+                                <AlertTriangle className="w-[2.92vw] h-[2.92vw] text-white" strokeWidth={1.5} />
                             </div>
                         )
                     )}
@@ -84,14 +107,14 @@ export const ActionModal = ({
                 {showCancel && (
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-14 border border-white rounded-[52px] text-white font-medium not-italic text-base hover:bg-white/10 transition-all backdrop-blur-[6px] flex items-center justify-center"
+                        className="flex-1 h-14 border border-white rounded-[52px] text-white font-medium not-italic text-base hover:bg-white/10 transition-all backdrop-blur-[6px] flex items-center justify-center cursor-pointer"
                     >
                         Cancel
                     </button>
                 )}
                 <button
                     onClick={onAction}
-                    className={`flex-1 h-14 rounded-[52px] text-white font-medium not-italic text-base transition-all active:scale-95 flex items-center justify-center ${variant === 'success'
+                    className={`flex-1 h-14 rounded-[52px] text-white font-medium not-italic text-base transition-all active:scale-95 flex items-center justify-center cursor-pointer ${variant === 'success'
                         ? 'bg-[#5F00DB] shadow-[0px_-8px_12px_rgba(95,0,219,0.25),0px_8px_12px_rgba(95,0,219,0.25)]'
                         : 'bg-[#FF4E4E] shadow-[0px_-8px_12px_rgba(255,78,78,0.25),0px_8px_12px_rgba(255,78,78,0.25)]'
                         }`}

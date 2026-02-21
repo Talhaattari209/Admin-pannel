@@ -164,7 +164,7 @@ const TeamMembersTable: React.FC = () => {
                                 {hasAnyAction && (
                                     <button
                                         onClick={() => setOpenMenuId(openMenuId === member.id ? null : member.id)}
-                                        className="w-[1.46vw] h-[1.46vw] flex items-center justify-center rounded-full hover:bg-white/10 text-white/40 hover:text-white transition-all"
+                                        className="w-[1.46vw] h-[1.46vw] flex items-center justify-center rounded-full hover:bg-white/10 text-white/40 hover:text-white transition-all cursor-pointer"
                                     >
                                         <svg viewBox="0 0 16 16" className="w-[0.73vw] h-[0.73vw]" fill="none" stroke="currentColor" strokeWidth="2.5">
                                             <circle cx="8" cy="3" r="1" fill="currentColor" />
@@ -178,7 +178,7 @@ const TeamMembersTable: React.FC = () => {
                             {openMenuId === member.id && hasAnyAction && (
                                 <div ref={menuRef} className="absolute top-[85%] right-[0.83vw] w-[12.5vw] bg-[#1a1a1a] border border-[#666666]/50 rounded-[0.83vw] shadow-2xl z-[1000] py-[0.42vw]">
                                     {canEdit && (
-                                        <button onClick={() => handleChangeRole(member)} className="flex items-center justify-between w-full px-[0.83vw] py-[0.63vw] hover:bg-white/5 group transition-colors">
+                                        <button onClick={() => handleChangeRole(member)} className="flex items-center justify-between w-full px-[0.83vw] py-[0.63vw] hover:bg-white/5 group transition-colors cursor-pointer">
                                             <div className="flex items-center gap-[0.83vw]">
                                                 <svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw] text-white/60 group-hover:text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" /></svg>
                                                 <span className="text-white text-[0.83vw]">Change Role</span>
@@ -186,7 +186,7 @@ const TeamMembersTable: React.FC = () => {
                                         </button>
                                     )}
                                     {canDelete && (
-                                        <button onClick={() => handleDeleteMember(member)} className="flex items-center justify-between w-full px-[0.83vw] py-[0.63vw] hover:bg-white/5 group transition-colors text-[#FF4E4E]">
+                                        <button onClick={() => handleDeleteMember(member)} className="flex items-center justify-between w-full px-[0.83vw] py-[0.63vw] hover:bg-white/5 group transition-colors text-[#FF4E4E] cursor-pointer">
                                             <div className="flex items-center gap-[0.83vw]">
                                                 <svg viewBox="0 0 24 24" className="w-[1.04vw] h-[1.04vw]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
                                                 <span className="text-[0.83vw]">Remove Member</span>

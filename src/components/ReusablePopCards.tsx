@@ -76,22 +76,22 @@ export default function ReusablePopCards() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* Buttons to open modals */}
-                <button onClick={() => setActiveModal(1)} className="p-4 bg-red-600 rounded-xl hover:bg-red-700 transition">
+                <button onClick={() => setActiveModal(1)} className="p-4 bg-red-600 rounded-xl hover:bg-red-700 transition cursor-pointer">
                     1. Deactivate User (Confirmation)
                 </button>
-                <button onClick={() => setActiveModal(2)} className="p-4 bg-green-600 rounded-xl hover:bg-green-700 transition">
+                <button onClick={() => setActiveModal(2)} className="p-4 bg-green-600 rounded-xl hover:bg-green-700 transition cursor-pointer">
                     2. User Deactivated (Success)
                 </button>
-                <button onClick={() => setActiveModal(3)} className="p-4 bg-orange-600 rounded-xl hover:bg-orange-700 transition">
+                <button onClick={() => setActiveModal(3)} className="p-4 bg-orange-600 rounded-xl hover:bg-orange-700 transition cursor-pointer">
                     3. Remove Prompt Response (Selection)
                 </button>
-                <button onClick={() => setActiveModal(4)} className="p-4 bg-green-600 rounded-xl hover:bg-green-700 transition">
+                <button onClick={() => setActiveModal(4)} className="p-4 bg-green-600 rounded-xl hover:bg-green-700 transition cursor-pointer">
                     4. Prompt Response Removed (Success)
                 </button>
-                <button onClick={() => setActiveModal(5)} className="p-4 bg-orange-600 rounded-xl hover:bg-orange-700 transition">
+                <button onClick={() => setActiveModal(5)} className="p-4 bg-orange-600 rounded-xl hover:bg-orange-700 transition cursor-pointer">
                     5. Remove Media (Selection)
                 </button>
-                <button onClick={() => setActiveModal(6)} className="p-4 bg-green-600 rounded-xl hover:bg-green-700 transition">
+                <button onClick={() => setActiveModal(6)} className="p-4 bg-green-600 rounded-xl hover:bg-green-700 transition cursor-pointer">
                     6. Media Removed (Success)
                 </button>
             </div>

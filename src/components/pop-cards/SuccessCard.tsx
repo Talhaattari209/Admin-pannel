@@ -17,7 +17,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
     className
 }) => {
     return (
-        <PopCardWrapper>
+        <PopCardWrapper onClose={onDone}>
             <div
                 className={`relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] w-[25vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden ${className || ''}`}
             >

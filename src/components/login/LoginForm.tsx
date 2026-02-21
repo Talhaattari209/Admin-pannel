@@ -63,7 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-0 text-white hover:opacity-100 transition-opacity"
+              className="absolute right-0 text-white hover:opacity-100 transition-opacity cursor-pointer"
             >
               <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw]" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <circle cx="12" cy="12" r="3" />
@@ -78,7 +78,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
           <button
             type="button"
             onClick={onForgotPassword}
-            className="text-white text-[0.625vw] font-bold not-italic  hover:underline transition-all"
+            className="text-white text-[0.625vw] font-bold not-italic  hover:underline transition-all cursor-pointer"
           >
             Forgot Password?
           </button>
@@ -88,7 +88,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
         <div className="w-full mt-[0.5vw]">
           <button
             type="submit"
-            className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25),0px_-8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] transition-all hover:brightness-110 active:scale-[0.98]"
+            className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25),0px_-8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] transition-all hover:brightness-110 active:scale-[0.98] cursor-pointer"
           >
             <span className=" font-medium not-italic text-[0.83vw] leading-[1.5] text-white text-center">
               Login

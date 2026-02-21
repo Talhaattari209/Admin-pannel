@@ -51,7 +51,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
             <div className="flex flex-row items-center gap-[0.83vw] w-full h-[4.17vw] mb-[2.08vw] shrink-0">
                 <button
                     onClick={onBack}
-                    className="w-[2.5vw] h-[2.5vw] flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all"
+                    className="w-[2.5vw] h-[2.5vw] flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all cursor-pointer"
                 >
                     <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <polyline points="15 18 9 12 15 6" />
@@ -66,13 +66,13 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                 </div>
 
                 <div className="flex gap-[0.83vw]">
-                    <button className="px-[1.67vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all">
+                    <button className="px-[1.67vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all cursor-pointer">
                         View User's Profile
                     </button>
                     {canDelete && (
                         <button
                             onClick={() => setShowDeactivateModal(true)}
-                            className="px-[1.67vw] py-[0.83vw] bg-[#FF4E4E] rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic shadow-[0px_4px_12px_rgba(255,78,78,0.25)] hover:brightness-110 transition-all">
+                            className="px-[1.67vw] py-[0.83vw] bg-[#FF4E4E] rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic shadow-[0px_4px_12px_rgba(255,78,78,0.25)] hover:brightness-110 transition-all cursor-pointer">
                             Deactivate User
                         </button>
                     )}
@@ -227,7 +227,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                             {/* Update Button */}
                             <button
                                 onClick={() => onUpdateStatus(status, notes)}
-                                className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw]"
+                                className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw] cursor-pointer"
                             >
                                 Update Status
                             </button>

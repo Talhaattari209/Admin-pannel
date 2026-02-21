@@ -23,7 +23,7 @@ const ChangeRoleModal: React.FC<ChangeRoleModalProps> = ({ member, roles, onCanc
     };
 
     return (
-        <PopCardWrapper>
+        <PopCardWrapper onClose={onCancel}>
             <div className="relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden w-[25vw] min-w-[320px]">
                 {/* Icon Section */}
                 <div className="relative flex flex-col justify-center items-center w-[6.25vw] h-[6.25vw] shrink-0 isolation-auto">

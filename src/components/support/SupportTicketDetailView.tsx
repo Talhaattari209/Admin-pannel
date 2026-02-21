@@ -88,7 +88,7 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
             <div className="flex flex-row items-center gap-[0.83vw] w-full h-[4.17vw] mb-[2.08vw] shrink-0">
                 <button
                     onClick={onBack}
-                    className="w-[2.5vw] h-[2.5vw] flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all"
+                    className="w-[2.5vw] h-[2.5vw] flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all cursor-pointer"
                 >
                     <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <polyline points="15 18 9 12 15 6" />
@@ -274,7 +274,7 @@ const SupportTicketDetailView: React.FC<SupportTicketDetailViewProps> = ({ ticke
                                 <button
                                     onClick={handleUpdateStatus}
                                     disabled={updateStatus.isPending}
-                                    className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw] disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {updateStatus.isPending ? 'Updating...' : 'Update Status'}
                                 </button>

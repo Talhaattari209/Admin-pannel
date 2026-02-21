@@ -39,7 +39,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
       <div className="flex flex-row items-center gap-4 w-full h-[80px] mb-10">
         <button
           onClick={onBack}
-          className="w-12 h-12 flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all"
+          className="w-12 h-12 flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all cursor-pointer"
         >
           <svg viewBox="0 0 24 24" className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2.5">
             <polyline points="15 18 9 12 15 6" />
@@ -54,10 +54,10 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
         </div>
 
         <div className="flex gap-4">
-          <button className="px-8 py-4 border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all">
+          <button className="px-8 py-4 border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all cursor-pointer">
             View User's Profile
           </button>
-          <button className="px-8 py-4 bg-[#FF4E4E] rounded-[52px] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(255,78,78,0.25)] hover:brightness-110 transition-all">
+          <button className="px-8 py-4 bg-[#FF4E4E] rounded-[52px] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(255,78,78,0.25)] hover:brightness-110 transition-all cursor-pointer">
             Deactivate User
           </button>
         </div>
@@ -98,7 +98,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                   ))}
                 </div>
               </div>
-              <button className="px-8 py-3 border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 transition-all">
+              <button className="px-8 py-3 border border-white rounded-[52px] text-white font-medium not-italic hover:bg-white/10 transition-all cursor-pointer">
                 View User's Profile
               </button>
             </div>
@@ -188,7 +188,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
               className="w-full h-[180px] bg-transparent text-white text-[16px] leading-[150%] focus:outline-none border-b border-white py-2 resize-none placeholder:text-white/40"
             />
           </div>
-          <button className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold not-italic text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-4">
+          <button className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold not-italic text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-4 cursor-pointer">
             Update Status
           </button>
         </div>

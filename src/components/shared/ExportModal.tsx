@@ -9,7 +9,7 @@ interface ExportModalProps {
 
 const ExportModal: React.FC<ExportModalProps> = ({ onCancel, onDownload }) => {
   return (
-    <PopCardWrapper>
+    <PopCardWrapper onClose={onCancel}>
       <ExportDataCard
         onDownload={onDownload}
         onCancel={onCancel}

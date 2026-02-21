@@ -74,7 +74,7 @@ const SwitchToggleTable: React.FC<SwitchToggleTableProps> = ({ initialPermission
         <button
             onClick={onToggle}
             type="button"
-            className={`relative w-[2.5vw] h-[1.46vw] rounded-[1.67vw] border transition-all duration-300 ${active ? 'bg-[#222222] border-white' : 'bg-[#222222] border-[#888888]'
+            className={`relative w-[2.5vw] h-[1.46vw] rounded-[1.67vw] border transition-all duration-300 cursor-pointer ${active ? 'bg-[#222222] border-white' : 'bg-[#222222] border-[#888888]'
                 }`}
         >
             <div

@@ -100,11 +100,11 @@ const MonthlyRevenueCard: React.FC = () => {
                   type="monotone"
                   dataKey="revenue"
                   stroke="#FFFFFF"
-                  strokeWidth="0.20vw"
+                  strokeWidth="0.07vw"
                   fillOpacity={1}
                   fill="url(#colorRev)"
                   dot={<CustomDot />}
-                  activeDot={{ r: 6, strokeWidth: 0, fill: '#FFFFFF' }}
+                  activeDot={{ r: 1, strokeWidth: 0, fill: '#FFFFFF' }}
                 />
                 <Legend
                   verticalAlign="bottom"

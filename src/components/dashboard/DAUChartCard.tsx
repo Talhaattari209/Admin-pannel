@@ -90,11 +90,11 @@ const DAUChartCard: React.FC = () => {
                   type="monotone"
                   dataKey="dau"
                   stroke="#FFFFFF"
-                  strokeWidth="0.1vw"
+                  strokeWidth="0.07vw"
                   fillOpacity={1}
                   fill="url(#colorDauFull)"
                   dot={<CustomDot />}
-                  activeDot={{ r: 6, fill: '#5F00DB' }}
+                  activeDot={{ r: 1, fill: '#5F00DB' }}
                 />
                 <Legend
                   verticalAlign="bottom"

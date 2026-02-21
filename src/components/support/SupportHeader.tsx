@@ -21,7 +21,7 @@ const SupportHeader: React.FC<SupportHeaderProps> = ({ onExport }) => {
       <div className="flex flex-row items-center gap-[0.83vw] h-[2.92vw]">
         <button
           onClick={onExport}
-          className="flex flex-row items-center justify-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-full border border-white rounded-[2.71vw] backdrop-blur-[6px] transition-all hover:bg-white/10 group box-border shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
+          className="flex flex-row items-center justify-center px-[1.25vw] py-[0.83vw] gap-[0.63vw] h-full border border-white rounded-[2.71vw] backdrop-blur-[6px] transition-all hover:bg-white/10 group box-border shadow-[0px_12px_40px_rgba(0,0,0,0.05)] cursor-pointer"
         >
           <span className="text-white text-[0.83vw] font-medium not-italic leading-[150%]">Export</span>
           <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

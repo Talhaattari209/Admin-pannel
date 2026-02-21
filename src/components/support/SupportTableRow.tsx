@@ -124,7 +124,7 @@ const SupportTableRow: React.FC<SupportTableRowProps> = ({ data, onAction }) => 
                                     onAction(item.id as any, data);
                                     setIsMenuOpen(false);
                                 }}
-                                className="flex flex-row items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.83vw] hover:bg-white/5 transition-colors group/item text-left"
+                                className="flex flex-row items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.83vw] hover:bg-white/5 transition-colors group/item text-left cursor-pointer"
                             >
                                 <span className="text-white opacity-60 group-hover/item:opacity-100 transition-opacity">{item.icon}</span>
                                 <span className="flex-grow text-white text-[0.73vw]  not-italic">{item.label}</span>

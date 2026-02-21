@@ -124,15 +124,15 @@ export default function SideNavigation() {
     };
 
     return (
-        <aside className="fixed left-[0.83vw] top-[0.83vw] bottom-[0.83vw] w-[15vw] flex flex-col bg-transparent z-[100] ">
+        <aside className="fixed left-[0.83vw] top-[1.66vh] bottom-[1.66vh] w-[15vw] flex flex-col bg-transparent z-[40] ">
             {/* Side Menu Container */}
             <div className="flex flex-col w-full h-full bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[1.25vw] overflow-hidden">
 
                 {/* Logo Container - Decreased height to increase bottom gap (10% adjustment) */}
-                <div className="flex flex-col justify-center items-start pl-[2vw] w-full h-[5.25vw] shrink-0 gap-[0.42vw]">
-                    <div className="flex items-center gap-[0.65vw]">
+                <div className="flex flex-col justify-center items-start px-[2vw] w-full h-[10.5vh] shrink-0 gap-[0.84vh]">
+                    <div className="flex flex-row items-center gap-[0.65vw] ">
                         {/* Logo Image */}
-                        <div className="w-[2.6vw] h-[2.6vw] flex-none order-0 grow-0 shrink-0 relative">
+                        <div className="w-[2.6vw] h-[5.2vh] flex-none order-0 grow-0 shrink-0 relative">
                             <Image
                                 src="/assets/fennec_logo.png"
                                 alt="Fennec Logo"
@@ -142,7 +142,7 @@ export default function SideNavigation() {
                         </div>
 
                         {/* Fennec Text */}
-                        <span className="font-['Michroma'] font-normal not-italic text-[1.4vw] leading-[2.1vw] text-[#EEEEEE]">
+                        <span className="font-['Michroma'] font-normal not-italic text-[2.8vh] leading-[4.2vh] text-[#EEEEEE]">
                             Fennec
                         </span>
                     </div>
@@ -154,8 +154,8 @@ export default function SideNavigation() {
                         <div key={idx} className="flex flex-col w-full shrink-0">
                             {/* Section Heading - Decreased height and text size */}
                             {section.title && (
-                                <div className="flex items-center px-[0.83vw] w-full h-[2.15vw] shrink-0">
-                                    <span className=" font-medium not-italic text-[0.65vw] leading-[0.82vw] uppercase text-white opacity-50">
+                                <div className="flex items-center px-[0.83vw] w-full h-[4.3vh] shrink-0">
+                                    <span className=" font-medium not-italic text-[1.3vh] leading-[1.64vh] uppercase text-white opacity-50">
                                         {section.title}
                                     </span>
                                 </div>
@@ -185,15 +185,15 @@ export default function SideNavigation() {
                                             key={item.id}
                                             href={getPath(item.id)}
                                             className={cn(
-                                                // Updated height to 2.45vw
-                                                "flex flex-row items-center px-[0.83vw] gap-[0.65vw] w-full h-[2.45vw] transition-all shrink-0",
+                                                // Updated height to 4.9vh
+                                                "flex flex-row items-center px-[0.83vw] gap-[0.65vw] w-full h-[4.9vh] transition-all shrink-0",
                                                 isActive
                                                     ? "bg-gradient-to-r from-[#5F00DB] to-[rgba(22,0,63,0)] text-white"
                                                     : "bg-transparent text-[#FFFFFF] hover:bg-gradient-to-r hover:from-[#5F00DB]/40 hover:to-[rgba(22,0,63,0)]"
                                             )}
                                         >
                                             {/* Icon - Decreased size */}
-                                            <div className="relative shrink-0 w-[1.05vw] h-[1.05vw]">
+                                            <div className="relative shrink-0 w-[1.05vw] h-[2.1vh]">
                                                 <Image
                                                     src={item.icon}
                                                     alt={item.label}
@@ -203,14 +203,14 @@ export default function SideNavigation() {
                                             </div>
 
                                             {/* Label - Decreased size */}
-                                            <span className="flex-grow text-left  font-normal not-italic text-[0.75vw] leading-[1.1vw]">
+                                            <span className="flex-grow text-left  font-normal not-italic text-[1.5vh] leading-[2.2vh]">
                                                 {item.label}
                                             </span>
 
                                             {/* Chevron - Decreased size */}
                                             {item.hasChevron && (
                                                 <ChevronRight
-                                                    className={cn("opacity-50 w-[0.75vw] h-[0.75vw]", isActive && "opacity-100")}
+                                                    className={cn("opacity-50 w-[0.75vw] h-[1.5vh]", isActive && "opacity-100")}
                                                 />
                                             )}
                                         </Link>
@@ -222,14 +222,14 @@ export default function SideNavigation() {
                 </div>
 
                 {/* Bottom Div (Logout) - Adjusted height */}
-                <div className="w-full h-[8vw] shrink-0 flex flex-col justify-end pb-[0.83vw]">
+                <div className="w-full h-[16vh] shrink-0 flex flex-col justify-end pb-[1.66vh]">
                     <button
                         onClick={handleLogout}
                         className={cn(
-                            "flex flex-row items-center px-[0.83vw] gap-[0.65vw] w-full h-[2.45vw] transition-all text-[#FFFFFF] hover:bg-gradient-to-r hover:from-[#5F00DB]/40 hover:to-[rgba(22,0,63,0)]"
+                            "flex flex-row items-center px-[0.83vw] gap-[0.65vw] w-full h-[4.9vh] transition-all text-[#FFFFFF] hover:bg-gradient-to-r hover:from-[#5F00DB]/40 hover:to-[rgba(22,0,63,0)] cursor-pointer"
                         )}
                     >
-                        <div className="relative w-[1.05vw] h-[1.05vw]">
+                        <div className="relative w-[1.05vw] h-[2.1vh]">
                             <Image
                                 src="/assets/Icons_figma/log-out.svg"
                                 alt="Logout"
@@ -237,10 +237,10 @@ export default function SideNavigation() {
                                 className="object-contain"
                             />
                         </div>
-                        <span className="flex-grow text-left  font-normal not-italic text-[0.75vw] leading-[1.1vw]">
+                        <span className="flex-grow text-left  font-normal not-italic text-[1.5vh] leading-[2.2vh]">
                             Logout
                         </span>
-                        <ChevronRight className="opacity-50 w-[0.75vw] h-[0.75vw]" />
+                        <ChevronRight className="opacity-50 w-[0.75vw] h-[1.5vh]" />
                     </button>
                 </div>
 

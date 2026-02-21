@@ -17,7 +17,7 @@ const FAQDetailsPopCard: React.FC<FAQDetailsPopCardProps> = ({ question, answer,
     `;
 
     return (
-        <PopCardWrapper>
+        <PopCardWrapper onClose={onClose}>
             <div className="relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden w-[49.79vw] min-w-[600px] min-h-[300px]">
                 {/* Header Row */}
                 <div className="flex flex-row justify-between items-center w-full h-[2.5vw] shrink-0 relative">
@@ -28,7 +28,7 @@ const FAQDetailsPopCard: React.FC<FAQDetailsPopCardProps> = ({ question, answer,
                     </div>
                     <button
                         onClick={onClose}
-                        className="ml-auto w-[2.5vw] h-[2.5vw] flex items-center justify-center rounded-full bg-[#5F00DB] shadow-[0px_0px_0.21vw_rgba(95,0,219,0.25),0px_0.21vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 transition-all"
+                        className="ml-auto w-[2.5vw] h-[2.5vw] flex items-center justify-center rounded-full bg-[#5F00DB] shadow-[0px_0px_0.21vw_rgba(95,0,219,0.25),0px_0.21vw_0.63vw_rgba(95,0,219,0.25)] hover:brightness-110 transition-all cursor-pointer"
                     >
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[1.25vw] h-[1.25vw]">
                             <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

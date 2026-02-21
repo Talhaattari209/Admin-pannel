@@ -10,7 +10,7 @@ const ForgotPasswordCard: React.FC<ForgotPasswordCardProps> = ({ onSendLink, onB
   const [email, setEmail] = useState('');
 
   return (
-    <PopCardWrapper>
+    <PopCardWrapper onClose={onBack}>
       <div className="relative flex flex-col items-center p-[1.67vw] gap-[1.67vw] w-[25vw] min-w-[320px] max-w-[480px] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.67vw]">
 
         {/* Icon Section */}
@@ -79,7 +79,7 @@ const ForgotPasswordCard: React.FC<ForgotPasswordCardProps> = ({ onSendLink, onB
         <div className="flex items-center justify-center gap-[1.25vw] w-full mt-[0.5vw]">
           <button
             onClick={() => onSendLink(email)}
-            className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] gap-[0.625vw] hover:brightness-110 transition-all active:scale-[0.98]"
+            className="w-full flex justify-center items-center bg-[#5F00DB] shadow-[0px_8px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] py-[0.83vw] px-[1.25vw] gap-[0.625vw] hover:brightness-110 transition-all active:scale-[0.98] cursor-pointer"
           >
             <span className=" font-medium not-italic text-[0.83vw] leading-[1.5] text-white text-center">
               Send Link

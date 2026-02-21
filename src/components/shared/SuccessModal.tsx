@@ -9,8 +9,14 @@ interface SuccessModalProps {
 
 const SuccessModal: React.FC<SuccessModalProps> = ({ title, description, onDone }) => {
   return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="relative flex flex-col items-center p-[1.67vw] gap-[1.67vw] w-[22.92vw] bg-[#16003F] border border-white/20 rounded-[1.67vw] shadow-2xl animate-in zoom-in-95 duration-300">
+    <div
+      className="fixed inset-0 z-[110] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-300 cursor-pointer"
+      onClick={onDone}
+    >
+      <div
+        className="relative flex flex-col items-center p-[1.67vw] gap-[1.67vw] w-[22.92vw] bg-[#16003F] border border-white/20 rounded-[1.67vw] shadow-2xl animate-in zoom-in-95 duration-300 cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
 
         {/* Animated Check Icon */}
         <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] flex-none order-0 flex-grow-0 relative">
@@ -54,7 +60,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ title, description, onDone 
 
         <button
           onClick={onDone}
-          className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-inter not-italic"
+          className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-medium not-italic shadow-[0px_4px_12px_rgba(95,0,219,0.3)] hover:brightness-110 active:scale-95 transition-all font-inter not-italic cursor-pointer"
         >
           Done
         </button>

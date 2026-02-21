@@ -152,7 +152,7 @@ export default function LoginDashboard() {
                     <button
                         key={filter}
                         onClick={() => setActiveFilter(filter)}
-                        className={`flex-shrink-0 px-[1.25vw] py-[0.26vw] rounded-full text-[0.72vw] font-medium not-italic transition-all duration-300 border ${activeFilter === filter
+                        className={`flex-shrink-0 px-[1.25vw] py-[0.26vw] rounded-full text-[0.72vw] font-medium not-italic transition-all duration-300 border cursor-pointer ${activeFilter === filter
                             ? 'bg-[#5F00DB] border-[#5F00DB] text-white shadow-[0_0_15px_rgba(95,0,219,0.4)]'
                             : 'bg-[#16003F] border-[#5F00DB]/30 text-white/70 hover:border-[#5F00DB] hover:text-white'
                             }`}

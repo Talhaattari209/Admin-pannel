@@ -85,7 +85,7 @@ const MatchesOverTimeCard: React.FC = () => {
                   dataKey="matches"
                   fill="#5F00DB"
                   radius={[20, 20, 0, 0]}
-                  barSize={50}
+                  barSize={38}
                   background={{ fill: 'rgba(214, 219, 237, 0.08)' }}
                 />
                 <Legend

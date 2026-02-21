@@ -173,8 +173,8 @@ const UserTableRow = ({ user }: { user: User }) => {
                 <span className="text-white font-sans not-italic font-normal text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{user.phone || 'N/A'}</span>
             </div>
             <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
-                <div className="flex items-center justify-center gap-[0.52vw] w-[4.32vw] h-[1.67vw] bg-[#5F00DB] rounded-[0.83vw]">
-                    <span className="text-white font-sans not-italic font-normal text-[0.73vw] leading-[0.83vw] whitespace-nowrap">Free</span>
+                <div className={`flex items-center justify-center gap-[0.52vw] w-[4.32vw] h-[1.67vw] rounded-[0.83vw] ${user.status === 'premium' ? 'bg-[#3ADC60]' : 'bg-[#5F00DB]'}`}>
+                    <span className="text-white font-sans not-italic font-normal text-[0.73vw] leading-[0.83vw] whitespace-nowrap capitalize">{user.status || 'Free'}</span>
                 </div>
             </div>
             <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
@@ -192,16 +192,32 @@ const UserTableRow = ({ user }: { user: User }) => {
 
 const UserTableSection = () => {
     const [searchValue, setSearchValue] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [subFilter, setSubFilter] = useState('');
     const [joinedFilter, setJoinedFilter] = useState('');
     const [activeFilter, setActiveFilter] = useState('');
 
-    const { data, isLoading, error } = useUsers({ page: currentPage, limit: 10, search: searchValue || undefined });
+    // Debounce search to avoid firing API calls on every keystroke
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            console.log('[Users Page] Setting debounced search:', searchValue);
+            setDebouncedSearch(searchValue);
+            setCurrentPage(1);
+        }, 400);
+        return () => clearTimeout(timer);
+    }, [searchValue]);
+
+    const { data, isLoading, error } = useUsers({ page: currentPage, limit: 10, search: debouncedSearch || undefined });
 
     const filteredUsers = useMemo(() => {
         if (!data?.data) return [];
         return data.data.filter((user: User) => {
+            // Subscription filter
+            if (subFilter) {
+                if (!user.status) return false;
+                if (user.status.toLowerCase() !== subFilter.toLowerCase()) return false;
+            }
             if (joinedFilter) {
                 if (!user.created_at) return false;
                 const joinedDate = new Date(user.created_at);

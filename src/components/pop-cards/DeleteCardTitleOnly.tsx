@@ -17,7 +17,7 @@ const DeleteCardTitleOnly: React.FC<DeleteCardTitleOnlyProps> = ({
     className
 }) => {
     return (
-        <PopCardWrapper>
+        <PopCardWrapper onClose={onCancel}>
             <div
                 className={`relative flex flex-col items-center p-[1.66vw] gap-[1.66vw] w-[25vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[1.66vw] box-border shadow-2xl overflow-hidden ${className || ''}`}
             >
@@ -64,13 +64,13 @@ const DeleteCardTitleOnly: React.FC<DeleteCardTitleOnlyProps> = ({
                 <div className="flex flex-row items-center justify-center gap-[1.25vw] self-stretch mt-auto">
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-[3.5vw] border border-white/20 bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.94vw] hover:bg-white/10 filter drop-shadow(0px 0.63vw 2.08vw rgba(0, 0, 0, 0.05)) backdrop-blur-[6px] transition-all"
+                        className="flex-1 h-[3.5vw] border border-white/20 bg-transparent rounded-[2.71vw] text-white font-medium not-italic text-[0.94vw] hover:bg-white/10 filter drop-shadow(0px 0.63vw 2.08vw rgba(0, 0, 0, 0.05)) backdrop-blur-[6px] transition-all cursor-pointer"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={onConfirm}
-                        className="flex-1 h-[3.5vw] bg-[#FF4E4E] rounded-[2.71vw] text-white font-medium not-italic text-[0.94vw] shadow-[0px_-0.42vw_0.63vw_rgba(255,78,78,0.25),0px_0.42vw_0.63vw_rgba(255,78,78,0.25)] hover:bg-[#ff6666] transition-all"
+                        className="flex-1 h-[3.5vw] bg-[#FF4E4E] rounded-[2.71vw] text-white font-medium not-italic text-[0.94vw] shadow-[0px_-0.42vw_0.63vw_rgba(255,78,78,0.25),0px_0.42vw_0.63vw_rgba(255,78,78,0.25)] hover:bg-[#ff6666] transition-all cursor-pointer"
                     >
                         {confirmText}
                     </button>

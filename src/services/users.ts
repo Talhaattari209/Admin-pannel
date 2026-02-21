@@ -11,7 +11,7 @@ const transformUser = (apiUser: any): User => {
         last_name: apiUser.lastName || '',
         email: apiUser.email || '',
         phone: apiUser.phone || undefined,
-        status: apiUser.isVerified ? 'active' : 'pending',
+        status: apiUser.status || 'free',
         verified: apiUser.isVerified || false,
         created_at: apiUser.createdAt || apiUser.created_at || '',
         last_active: apiUser.updatedAt || apiUser.last_active || null,

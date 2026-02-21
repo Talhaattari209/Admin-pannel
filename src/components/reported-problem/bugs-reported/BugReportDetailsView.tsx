@@ -44,7 +44,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
             <div className="flex flex-row items-center gap-[0.83vw] w-full h-[4.17vw] mb-[2.08vw] shrink-0">
                 <button
                     onClick={onBack}
-                    className="w-[2.5vw] h-[2.5vw] flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all"
+                    className="w-[2.5vw] h-[2.5vw] flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all cursor-pointer"
                 >
                     <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <polyline points="15 18 9 12 15 6" />
@@ -99,7 +99,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                                             <div className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-500 ${revealedImages[i] ? 'bg-transparent' : 'bg-black/40'}`}>
                                                 <button
                                                     onClick={() => toggleReveal(i)}
-                                                    className="w-[3.33vw] h-[3.33vw] rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center border border-white/20 hover:scale-110 active:scale-95 transition-all shadow-2xl"
+                                                    className="w-[3.33vw] h-[3.33vw] rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center border border-white/20 hover:scale-110 active:scale-95 transition-all shadow-2xl cursor-pointer"
                                                 >
                                                     <svg viewBox="0 0 24 24" className={`w-[2.08vw] h-[2.08vw] text-white transition-all duration-300 ${revealedImages[i] ? 'opacity-40' : 'opacity-100'}`} fill="none" stroke="currentColor" strokeWidth="2">
                                                         {revealedImages[i] ? (
@@ -219,7 +219,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
                         {/* Update Button */}
                         <button
-                            className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw]"
+                            className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw] cursor-pointer"
                         >
                             Update Status
                         </button>

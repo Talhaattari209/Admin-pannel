@@ -106,7 +106,7 @@ const SupportTable: React.FC<SupportTableProps> = ({ onAction }) => {
                 {isError && (
                     <div className="flex flex-col items-center justify-center h-[10vw] gap-[0.83vw]">
                         <span className="text-white/50 text-[0.83vw]">Failed to load support requests.</span>
-                        <button onClick={() => refetch()} className="text-[#5F00DB] text-[0.73vw] underline">Retry</button>
+                        <button onClick={() => refetch()} className="text-[#5F00DB] text-[0.73vw] underline cursor-pointer">Retry</button>
                     </div>
                 )}
 

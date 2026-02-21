@@ -177,7 +177,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
             <button
               key={filter}
               onClick={() => handleFilterClick(filter)}
-              className={`flex flex-row justify-center items-center px-[0.625vw] py-[0.21vw] gap-[0.42vw] h-[1.67vw] rounded-[1.25vw] transition-all font-normal not-italic text-[0.83vw] leading-[150%] text-white ${activeFilter === filter ? 'bg-[#8022FF] ring-1 ring-white/50' : 'bg-[#5F00DB] hover:bg-[#7010F0]'}`}
+              className={`flex flex-row justify-center items-center px-[0.625vw] py-[0.21vw] gap-[0.42vw] h-[1.67vw] rounded-[1.25vw] transition-all font-normal not-italic text-[0.83vw] leading-[150%] text-white cursor-pointer ${activeFilter === filter ? 'bg-[#8022FF] ring-1 ring-white/50' : 'bg-[#5F00DB] hover:bg-[#7010F0]'}`}
             >
               {filter}
             </button>
@@ -193,7 +193,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
             {/* Trigger */}
             <button
               onClick={() => setFormatOpen((o) => !o)}
-              className="box-border flex flex-row items-center justify-between py-[0.42vw] w-[21.67vw] h-[2.5vw] border-b border-white text-white w-full"
+              className="box-border flex flex-row items-center justify-between py-[0.42vw] w-[21.67vw] h-[2.5vw] border-b border-white text-white w-full cursor-pointer"
             >
               <span className="font-normal not-italic text-[0.83vw]">{format}</span>
               <svg viewBox="0 0 24 24" className={`w-[1.25vw] h-[1.25vw] transition-transform ${formatOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2">
@@ -207,7 +207,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
                   <button
                     key={opt}
                     onClick={() => { setFormat(opt); setFormatOpen(false); }}
-                    className={`w-full px-[0.83vw] py-[0.63vw] text-left text-[0.83vw] font-normal not-italic transition-colors ${format === opt ? 'bg-[#5F00DB] text-white' : 'text-white hover:bg-white/10'
+                    className={`w-full px-[0.83vw] py-[0.63vw] text-left text-[0.83vw] font-normal not-italic transition-colors cursor-pointer ${format === opt ? 'bg-[#5F00DB] text-white' : 'text-white hover:bg-white/10'
                       }`}
                   >
                     {opt}

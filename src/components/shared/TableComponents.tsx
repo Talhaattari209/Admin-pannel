@@ -66,7 +66,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, placehold
             {value.length > 0 && (
                 <button
                     onClick={() => onChange('')}
-                    className="absolute right-[0.83vw] flex items-center justify-center hover:bg-white/10 rounded-full p-1 transition-colors"
+                    className="absolute right-[0.83vw] flex items-center justify-center hover:bg-white/10 rounded-full p-1 transition-colors cursor-pointer"
                     style={{ width: toVw(24), height: toVw(24), zIndex: 20 }}
                 >
                     <X className="text-white w-full h-full" />
@@ -93,12 +93,7 @@ interface FilterSelectProps {
 }
 
 export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, options, onChange, required, className, style }) => {
-    // Add dummy options for display/demo purposes as requested
-    const displayOptions = [
-        ...options,
-        { label: 'Dummy Opt 1', value: 'dummy1' },
-        { label: 'Dummy Opt 2', value: 'dummy2' }
-    ];
+    const displayOptions = options;
 
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
@@ -379,7 +374,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
         <button
             onClick={onClick}
             disabled={disabled}
-            className={`flex items-center justify-center rounded-full transition-all duration-200 ${isNav
+            className={`flex items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${isNav
                 ? 'bg-[#5F00DB] hover:bg-[#4a00aa] disabled:opacity-50 disabled:hover:bg-[#5F00DB]'
                 : isActive
                     ? 'bg-[#16003F] border border-[#5F00DB] text-white'

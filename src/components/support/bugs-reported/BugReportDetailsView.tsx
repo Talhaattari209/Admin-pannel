@@ -34,12 +34,12 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
   return (
     <div className="flex flex-col w-full max-w-[1520px] mx-auto p-4 md:p-8 animate-in fade-in duration-500">
-      
+
       {/* Window Header - No buttons on right as requested */}
       <div className="flex flex-row items-center gap-4 w-full h-[80px] mb-10">
-        <button 
+        <button
           onClick={onBack}
-          className="w-12 h-12 flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all"
+          className="w-12 h-12 flex items-center justify-center bg-[#5F00DB] rounded-full shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all cursor-pointer"
         >
           <svg viewBox="0 0 24 24" className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2.5">
             <polyline points="15 18 9 12 15 6" />
@@ -56,7 +56,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
       <div className="flex flex-row gap-6 w-full items-start">
         <div className="flex flex-col gap-6 flex-[3] min-w-0">
-          
+
           {/* Reported Bug Card - With Vertical Scrolling */}
           <div className="flex flex-col p-8 bg-[#222222] border border-[#666666]/30 rounded-[24px] max-h-[630px] overflow-y-auto no-scrollbar">
             <div className="flex items-center justify-between">
@@ -64,13 +64,13 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
               {getStatusBadge(bug.status)}
             </div>
             <GradientLine />
-            
+
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-2">
                 <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Subject</label>
                 <p className="text-white text-[18px] font-normal not-italic">{bug.subject}</p>
               </div>
-              
+
               <div className="flex flex-col gap-2">
                 <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Message</label>
                 <p className="text-white text-[18px] font-normal not-italic leading-relaxed opacity-90">{bug.message}</p>
@@ -80,14 +80,14 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                 <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Attachments</label>
                 <div className="flex flex-wrap gap-4">
                   {(bug.attachments || ['https://picsum.photos/320/320']).map((img, i) => (
-                    <div 
-                      key={i} 
+                    <div
+                      key={i}
                       className="relative w-[320px] h-[320px] rounded-[12px] border border-[#666666]/50 overflow-hidden group/img cursor-pointer"
                     >
                       <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105" alt="Attachment" />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
                         <svg viewBox="0 0 24 24" className="w-12 h-12 text-white" fill="none" stroke="currentColor" strokeWidth="2">
-                           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
                         </svg>
                       </div>
                     </div>
@@ -103,12 +103,12 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
             <GradientLine />
             <div className="flex flex-col relative pl-8 gap-10">
               <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-white/20 rounded-full" />
-              
+
               <div className="relative flex flex-col items-start gap-3">
                 <div className="absolute -left-[30px] top-1 w-6 h-6 bg-[#5F00DB] rounded-full border-2 border-white z-10" />
                 <span className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Reported Submitted</span>
                 <span className="text-white/60 text-[16px]">{bug.submittedOn}</span>
-                
+
                 <div className="flex flex-col p-4 bg-[#16003F] border border-white/5 rounded-[16px] w-[245px] gap-3 mt-2 hover:border-[#5F00DB]/40 transition-colors cursor-pointer group/card">
                   <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider opacity-60">Submitted By</label>
                   <div className="flex items-center gap-3">
@@ -134,8 +134,8 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
           <div className="flex flex-col gap-2">
             <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Status</label>
             <div className="relative border-b border-white py-2 group">
-              <select 
-                value={status} 
+              <select
+                value={status}
                 onChange={(e) => setStatus(e.target.value as any)}
                 className="w-full bg-transparent text-white text-[18px] appearance-none focus:outline-none cursor-pointer"
               >
@@ -145,20 +145,20 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                 <option className="bg-[#222222]" value="Closed">Closed</option>
               </select>
               <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-white/60 group-hover:text-white transition-colors">
-                 <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
+                <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
               </div>
             </div>
           </div>
           <div className="flex flex-col gap-2 flex-grow mt-4">
             <label className="text-white text-[12px] font-bold not-italic uppercase tracking-wider">Notes</label>
-            <textarea 
+            <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Type here.."
               className="w-full h-[180px] bg-transparent text-white text-[16px] leading-[150%] focus:outline-none border-b border-white py-2 resize-none placeholder:text-white/40"
             />
           </div>
-          <button className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold not-italic text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-4">
+          <button className="w-full h-[56px] bg-[#5F00DB] rounded-[52px] text-white font-semibold not-italic text-[16px] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-4 cursor-pointer">
             Update Status
           </button>
         </div>

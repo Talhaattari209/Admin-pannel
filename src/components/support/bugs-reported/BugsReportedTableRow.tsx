@@ -87,7 +87,7 @@ const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAct
               <button
                 key={item.id}
                 onClick={() => { onAction(item.id as any, data); setIsMenuOpen(false); }}
-                className="flex flex-row items-center w-full px-4 py-3 gap-4 hover:bg-white/5 transition-colors group/item text-left"
+                className="flex flex-row items-center w-full px-4 py-3 gap-4 hover:bg-white/5 transition-colors group/item text-left cursor-pointer"
               >
                 <span className="text-white opacity-60 group-hover/item:opacity-100 transition-opacity">{item.icon}</span>
                 <span className="flex-grow text-white text-[14px]">{item.label}</span>
