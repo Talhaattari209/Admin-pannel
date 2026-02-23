@@ -4,10 +4,11 @@ import { ArrowLeft, MapPin, Navigation, GraduationCap, Briefcase, Check, Downloa
 // --- Shared Utility Components ---
 
 // Button styles derived from CSS
-const PrimaryButton = ({ label, onClick, icon }: { label: string; onClick?: () => void; icon?: React.ReactNode }) => (
+const PrimaryButton = ({ label, onClick, icon, disabled }: { label: string; onClick?: () => void; icon?: React.ReactNode; disabled?: boolean }) => (
     <button
         onClick={onClick}
-        className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] bg-[#5F00DB] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] hover:bg-[#4a00aa] transition-all flex-none"
+        disabled={disabled}
+        className="flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] bg-[#5F00DB] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] rounded-[2.7vw] hover:bg-[#4a00aa] transition-all flex-none disabled:opacity-50 disabled:cursor-not-allowed"
     >
         <span className=" font-medium not-italic text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
             {label}
@@ -16,10 +17,11 @@ const PrimaryButton = ({ label, onClick, icon }: { label: string; onClick?: () =
     </button>
 );
 
-const SecondaryButton = ({ label, onClick, icon }: { label: string; onClick?: () => void; icon?: React.ReactNode }) => (
+const SecondaryButton = ({ label, onClick, icon, disabled }: { label: string; onClick?: () => void; icon?: React.ReactNode; disabled?: boolean }) => (
     <button
         onClick={onClick}
-        className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)]"
+        disabled={disabled}
+        className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] h-[2.91vw] border-[0.05vw] border-white backdrop-blur-[6px] rounded-[2.7vw] hover:bg-white/10 transition-all flex-none filter drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)] disabled:opacity-50 disabled:cursor-not-allowed"
     >
         {icon && <span className="text-white w-[1.25vw] h-[1.25vw] flex items-center justify-center">{icon}</span>}
         <span className=" font-medium not-italic text-[0.83vw] leading-[1.25vw] text-white text-center flex items-end">
@@ -35,6 +37,7 @@ interface ActionButton {
     label: string;
     onClick?: () => void;
     icon?: React.ReactNode;
+    disabled?: boolean;
 }
 
 interface PageHeaderProps {
@@ -86,6 +89,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                             label={secondaryAction.label}
                             onClick={secondaryAction.onClick}
                             icon={secondaryAction.icon}
+                            disabled={secondaryAction.disabled}
                         />
                     )}
 
@@ -95,6 +99,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                             label={primaryAction.label}
                             onClick={primaryAction.onClick}
                             icon={primaryAction.icon}
+                            disabled={primaryAction.disabled}
                         />
                     )}
                 </div>

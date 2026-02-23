@@ -179,3 +179,75 @@ export interface FAQUpdate {
     answer?: string;
     status?: string;
 }
+
+// === App Settings Types (GET/PUT /admin/app-settings) ===
+
+export interface MobileAppPlatform {
+    version: string;
+    storeUrl: string;
+}
+
+export interface AppSettingsMobileApps {
+    ios: MobileAppPlatform;
+    android: MobileAppPlatform;
+}
+
+export interface AppSettingsGeneral {
+    minGroupSize: number;
+    maxGroupSize: number;
+    weeklyPokesFree: number;
+    weeklyPokesPremium: number;
+    dailyLikesLimit: number;
+}
+
+export interface PokeProduct {
+    name: string;
+    pokeCount: number;
+    priceUsd: number;
+}
+
+export interface AppSettingsContentModeration {
+    enableProfileScanning: boolean;
+    enableMediaScanning: boolean;
+    enableMessagesScanning: boolean;
+    automaticallyHideFlaggedProfiles: boolean;
+    autoFlagThreshold: number;
+    maxReportsBeforeSuspension: number;
+}
+
+export interface AppSettingsMaintenanceMode {
+    enabled: boolean;
+    notifyUsers: boolean;
+    message: string;
+    startTime: string;
+    endTime: string;
+    startDate: string; // ISO or YYYY-MM-DD
+    endDate: string;
+}
+
+export interface AppSettings {
+    key?: string;
+    mobileApps: AppSettingsMobileApps;
+    general: AppSettingsGeneral;
+    pokeProducts: PokeProduct[];
+    contentModeration: AppSettingsContentModeration;
+    blockedWords: string[];
+    maintenanceMode: AppSettingsMaintenanceMode;
+    _id?: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export type AppSettingsUpdate = Omit<AppSettings, 'key' | '_id' | 'createdAt' | 'updatedAt'>;
+
+// === Account Settings: current user profile & change password ===
+
+export interface TeamMemberMeUpdate {
+    name: string;
+    email: string;
+}
+
+export interface ChangePasswordRequest {
+    currentPassword: string;
+    newPassword: string;
+}

@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import PopCardWrapper from '../pop-cards/PopCardWrapper';
+import IconBackgroundAnimation from '../shared/IconBackgroundAnimation';
 
 interface ExportModalProps {
     onClose: () => void;
@@ -16,28 +17,8 @@ const ExportPopCard: React.FC<ExportModalProps> = ({ onClose, onExport }) => {
             <div className="relative flex flex-col items-center p-[2.5vw] gap-[2.5vw] bg-[#16003F] border border-[#666666]/50 backdrop-blur-[12px] rounded-[2.5vw] box-border shadow-2xl overflow-hidden w-[25vw] min-w-[320px]">
                 {/* Icon Section */}
                 <div className="flex flex-col justify-center items-center p-[0.83vw] gap-[0.83vw] isolation-auto w-[6.25vw] h-[6.25vw] rounded-[1.25vw] flex-none order-0 flex-grow-0 relative">
-                    {/* Rotating Border Animation & Glow */}
-                    <div className="absolute inset-0 z-[1] rounded-full">
-                        {/* Glow Layer */}
-                        <div
-                            className="absolute -inset-[0.5vw] rounded-full animate-[spin_3s_linear_infinite]"
-                            style={{
-                                background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%)',
-                                filter: 'blur(0.25vw)',
-                                WebkitMask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)',
-                                mask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)'
-                            }}
-                        />
-                        {/* Sharp Border Layer */}
-                        <div
-                            className="absolute inset-0 rounded-full animate-[spin_3s_linear_infinite]"
-                            style={{
-                                background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 1) 50%, transparent 100%)',
-                                WebkitMask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))',
-                                mask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))'
-                            }}
-                        />
-                    </div>
+                    {/* Lottie Icon Animation */}
+                    <IconBackgroundAnimation />
                     {/* Icon BG */}
                     <div className="box-border absolute w-[6.25vw] h-[6.25vw] left-[calc(50%-3.125vw)] top-[calc(50%-3.125vw)] backdrop-blur-[0.31vw] rounded-[6.25vw] bg-white/5 border border-white/10 z-0"></div>
                     {/* Icon Content */}

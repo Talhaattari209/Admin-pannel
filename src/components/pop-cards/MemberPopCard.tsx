@@ -1,6 +1,7 @@
 
 import React, { useRef, useState } from 'react';
 import PopCardWrapper from './PopCardWrapper';
+import IconBackgroundAnimation from '../shared/IconBackgroundAnimation';
 import { Role } from '@/types/api';
 import apiClient from '@/lib/api-client';
 import { Eye, EyeOff } from 'lucide-react';
@@ -181,28 +182,8 @@ const MemberPopCard: React.FC<MemberPopCardProps> = ({ onCancel, onInvite, roles
                         onChange={handleFileChange}
                         className="hidden"
                     />
-                    {/* Rotating Border Animation & Glow */}
-                    <div className="absolute inset-0 z-[1] rounded-full pointer-events-none">
-                        {/* Glow Layer */}
-                        <div
-                            className="absolute -inset-[0.5vw] rounded-full animate-[spin_3s_linear_infinite]"
-                            style={{
-                                background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%)',
-                                filter: 'blur(0.25vw)',
-                                WebkitMask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)',
-                                mask: 'radial-gradient(closest-side, transparent 75%, black 80%, black 80%, transparent 85%)'
-                            }}
-                        />
-                        {/* Sharp Border Layer */}
-                        <div
-                            className="absolute inset-0 rounded-full animate-[spin_3s_linear_infinite]"
-                            style={{
-                                background: 'conic-gradient(from 0deg, transparent 0%, rgba(255, 255, 255, 1) 50%, transparent 100%)',
-                                WebkitMask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))',
-                                mask: 'radial-gradient(closest-side, transparent calc(100% - 0.1vw), black calc(100% - 0.1vw))'
-                            }}
-                        />
-                    </div>
+                    {/* Lottie Icon Animation */}
+                    <IconBackgroundAnimation />
                     {/* Icon BG - Clickable for upload */}
                     <button
                         type="button"

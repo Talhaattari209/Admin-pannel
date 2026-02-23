@@ -10,6 +10,7 @@ interface AuthState {
     refreshToken: string | null;
 
     setAuth: (user: AdminUserInfo, permissions: ResourcePermission[], accessToken: string, refreshToken: string) => void;
+    updateUser: (partial: Partial<Pick<AdminUserInfo, 'name' | 'email'>>) => void;
     clearAuth: () => void;
     hasPermission: (module: string, permission: string) => boolean;
 }
@@ -35,6 +36,12 @@ export const useAuthStore = create<AuthState>()(
                     accessToken,
                     refreshToken,
                 });
+            },
+
+            updateUser: (partial) => {
+                const { user } = get();
+                if (!user) return;
+                set({ user: { ...user, ...partial } });
             },
 
             clearAuth: () => {

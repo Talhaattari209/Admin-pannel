@@ -1,12 +1,33 @@
-
 import React from 'react';
+import type { AppSettingsMobileApps } from '@/types/api';
 
 interface MobileAppsCardProps {
   canEdit?: boolean;
+  value: AppSettingsMobileApps;
+  onChange: (value: AppSettingsMobileApps) => void;
 }
 
-const MobileAppsCard: React.FC<MobileAppsCardProps> = ({ canEdit = true }) => {
-  const AppTile = ({ platform, version, isAndroid }: { platform: string, version: string, isAndroid: boolean }) => (
+const MobileAppsCard: React.FC<MobileAppsCardProps> = ({ canEdit = true, value, onChange }) => {
+  const updatePlatform = (platform: 'ios' | 'android', field: 'version' | 'storeUrl', val: string) => {
+    onChange({
+      ...value,
+      [platform]: { ...value[platform], [field]: val },
+    });
+  };
+
+  const AppTile = ({
+    platform,
+    platformKey,
+    version,
+    storeUrl,
+    isAndroid,
+  }: {
+    platform: string;
+    platformKey: 'ios' | 'android';
+    version: string;
+    storeUrl: string;
+    isAndroid: boolean;
+  }) => (
     <div className="flex-1 flex flex-row items-center p-[0.83vw] bg-[#16003F] border border-white/5 rounded-[0.83vw] gap-[0.83vw] group">
       <div className="w-[3.75vw] h-[3.75vw] bg-[#5F00DB] rounded-[0.83vw] flex items-center justify-center shrink-0 shadow-xl overflow-hidden relative">
         <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 transition-colors"></div>
@@ -29,7 +50,17 @@ const MobileAppsCard: React.FC<MobileAppsCardProps> = ({ canEdit = true }) => {
 
       <div className="flex flex-col flex-grow min-w-0">
         <span className="text-white text-[1.04vw] font-bold not-italic font-inter not-italic leading-none mb-[0.21vw]">{platform}</span>
-        <span className="text-white/40 text-[0.73vw] font-inter not-italic font-light not-italic">Version {version}</span>
+        {canEdit ? (
+          <input
+            type="text"
+            value={version}
+            onChange={(e) => updatePlatform(platformKey, 'version', e.target.value)}
+            className="bg-transparent border-none text-white/40 text-[0.73vw] font-inter w-full focus:outline-none"
+            placeholder="Version"
+          />
+        ) : (
+          <span className="text-white/40 text-[0.73vw] font-inter not-italic font-light not-italic">Version {version}</span>
+        )}
       </div>
 
       <div className="flex flex-row items-center gap-[0.83vw]">
@@ -44,26 +75,28 @@ const MobileAppsCard: React.FC<MobileAppsCardProps> = ({ canEdit = true }) => {
             </svg>
           )}
         </div>
-        <button
-          disabled={!canEdit}
-          className={`flex items-center gap-[0.42vw] px-[0.83vw] py-[0.42vw] bg-[#5F00DB] rounded-[2.71vw] text-white text-[0.73vw] font-medium not-italic shadow-lg whitespace-nowrap ${canEdit ? 'hover:brightness-110' : 'opacity-50 cursor-not-allowed'}`}
+        <a
+          href={storeUrl || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`flex items-center gap-[0.42vw] px-[0.83vw] py-[0.42vw] bg-[#5F00DB] rounded-[2.71vw] text-white text-[0.73vw] font-medium not-italic shadow-lg whitespace-nowrap ${canEdit && !storeUrl ? 'pointer-events-none opacity-70' : ''} hover:brightness-110`}
         >
           {isAndroid ? 'Play Store' : 'App Store'}
           <svg viewBox="0 0 24 24" className="w-[0.83vw] h-[0.83vw]" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" /></svg>
-        </button>
+        </a>
       </div>
     </div>
   );
 
   return (
-    <div className="flex flex-col p-[1.25vw] bg-[#222222] border border-[# 666666]/30 rounded-[0.83vw] gap-[1.67vw] shrink-0 shadow-lg">
+    <div className="flex flex-col p-[1.25vw] bg-[#222222] border border-[#666666]/30 rounded-[0.83vw] gap-[1.67vw] shrink-0 shadow-lg">
       <div className="flex flex-col gap-[0.42vw]">
         <h3 className="text-white text-[1.46vw] font-bold not-italic font-inter not-italic leading-none tracking-tight">Mobile Apps</h3>
         <p className="text-[#CCCCCC] text-[0.83vw] opacity-60">Latest versions of your iOS and Android Mobile Apps</p>
       </div>
       <div className="flex flex-row gap-[0.83vw]">
-        <AppTile platform="iOS" version="1.0.0" isAndroid={false} />
-        <AppTile platform="Android" version="1.0.0" isAndroid={true} />
+        <AppTile platform="iOS" platformKey="ios" version={value.ios.version} storeUrl={value.ios.storeUrl} isAndroid={false} />
+        <AppTile platform="Android" platformKey="android" version={value.android.version} storeUrl={value.android.storeUrl} isAndroid />
       </div>
     </div>
   );

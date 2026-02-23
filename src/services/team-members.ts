@@ -1,5 +1,5 @@
 import apiClient from '@/lib/api-client';
-import { TeamMember, TeamMemberCreate, TeamMemberUpdate, PaginatedResponse } from '@/types/api';
+import { TeamMember, TeamMemberCreate, TeamMemberUpdate, TeamMemberMeUpdate, ChangePasswordRequest, PaginatedResponse } from '@/types/api';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
@@ -78,6 +78,27 @@ export const teamMembersService = {
     delete: async (id: string): Promise<void> => {
         await apiClient.delete(`/admin/team-members/${id}`);
     },
+
+    getMe: async (): Promise<TeamMember> => {
+        const { data } = await apiClient.get<{ data: { members: any[] } }>('/admin/team-members/me');
+        const members = data.data?.members || [];
+        if (members.length === 0) throw new Error('No current user');
+        return transformTeamMember(members[0]);
+    },
+
+    updateMe: async (payload: TeamMemberMeUpdate): Promise<TeamMember> => {
+        const { data } = await apiClient.put<{ data: { members: any[] } }>('/admin/team-members/me', payload);
+        const members = data.data?.members || [];
+        if (members.length === 0) throw new Error('No current user');
+        return transformTeamMember(members[0]);
+    },
+
+    changePassword: async (payload: ChangePasswordRequest): Promise<TeamMember> => {
+        const { data } = await apiClient.put<{ data: { members: any[] } }>('/admin/team-members/change-password', payload);
+        const members = data.data?.members || [];
+        if (members.length === 0) throw new Error('No current user');
+        return transformTeamMember(members[0]);
+    },
 };
 
 // React Query Hooks
@@ -128,6 +149,38 @@ export const useDeleteTeamMember = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['team-members'] });
             queryClient.invalidateQueries({ queryKey: ['roles'] }); // Refresh roles to update member counts
+        },
+    });
+};
+
+// Account Settings: current user (me) and change password
+const ME_QUERY_KEY = ['team-member', 'me'];
+
+export const useTeamMemberMe = () => {
+    return useQuery<TeamMember, AxiosError>({
+        queryKey: ME_QUERY_KEY,
+        queryFn: teamMembersService.getMe,
+    });
+};
+
+export const useUpdateTeamMemberMe = () => {
+    const queryClient = useQueryClient();
+    return useMutation<TeamMember, AxiosError, TeamMemberMeUpdate>({
+        mutationFn: teamMembersService.updateMe,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ME_QUERY_KEY });
+            queryClient.invalidateQueries({ queryKey: ['team-members'] });
+        },
+    });
+};
+
+export const useChangePassword = () => {
+    const queryClient = useQueryClient();
+    return useMutation<TeamMember, AxiosError, ChangePasswordRequest>({
+        mutationFn: teamMembersService.changePassword,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ME_QUERY_KEY });
+            queryClient.invalidateQueries({ queryKey: ['team-members'] });
         },
     });
 };

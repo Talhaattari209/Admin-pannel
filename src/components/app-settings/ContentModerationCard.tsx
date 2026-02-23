@@ -1,32 +1,24 @@
-
-import React, { useState } from 'react';
+import React from 'react';
+import type { AppSettingsContentModeration } from '@/types/api';
 
 interface ContentModerationCardProps {
   canEdit?: boolean;
+  value: AppSettingsContentModeration;
+  onChange: (value: AppSettingsContentModeration) => void;
 }
 
-const ContentModerationCard: React.FC<ContentModerationCardProps> = ({ canEdit = true }) => {
-  const [toggles, setToggles] = useState({
-    profile: true,
-    media: true,
-    messages: true,
-    hideFlagged: true
-  });
-
-  const [thresholds, setThresholds] = useState({
-    autoFlag: '5',
-    maxReports: '10'
-  });
-
-  const toggleHandler = (key: keyof typeof toggles) => {
-    setToggles(prev => ({ ...prev, [key]: !prev[key] }));
+const ContentModerationCard: React.FC<ContentModerationCardProps> = ({ canEdit = true, value, onChange }) => {
+  const toggleHandler = (key: keyof AppSettingsContentModeration, val: boolean) => {
+    if (key === 'autoFlagThreshold' || key === 'maxReportsBeforeSuspension') return;
+    onChange({ ...value, [key]: val });
   };
 
-  const inputHandler = (key: keyof typeof thresholds, val: string) => {
-    setThresholds(prev => ({ ...prev, [key]: val }));
+  const inputHandler = (key: 'autoFlagThreshold' | 'maxReportsBeforeSuspension', val: string) => {
+    const num = parseInt(val, 10) || 0;
+    onChange({ ...value, [key]: num });
   };
 
-  const Switch = ({ active, onClick }: { active: boolean, onClick: () => void }) => (
+  const Switch = ({ active, onClick }: { active: boolean; onClick: () => void }) => (
     <button
       onClick={onClick}
       disabled={!canEdit}
@@ -45,14 +37,14 @@ const ContentModerationCard: React.FC<ContentModerationCardProps> = ({ canEdit =
 
       <div className="flex flex-col gap-[1.25vw]">
         {[
-          { id: 'profile', label: 'Enable Profile Scanning' },
-          { id: 'media', label: 'Enable Media Scanning' },
-          { id: 'messages', label: 'Enable Messages Scanning' },
-          { id: 'hideFlagged', label: 'Automatically Hide Flagged Profiles' }
+          { id: 'enableProfileScanning' as const, label: 'Enable Profile Scanning' },
+          { id: 'enableMediaScanning' as const, label: 'Enable Media Scanning' },
+          { id: 'enableMessagesScanning' as const, label: 'Enable Messages Scanning' },
+          { id: 'automaticallyHideFlaggedProfiles' as const, label: 'Automatically Hide Flagged Profiles' },
         ].map((item) => (
           <div key={item.id} className="flex items-center justify-between">
             <span className="text-white text-[0.83vw] font-inter not-italic">{item.label}</span>
-            <Switch active={toggles[item.id as keyof typeof toggles]} onClick={() => toggleHandler(item.id as any)} />
+            <Switch active={value[item.id]} onClick={() => toggleHandler(item.id, !value[item.id])} />
           </div>
         ))}
       </div>
@@ -61,9 +53,9 @@ const ContentModerationCard: React.FC<ContentModerationCardProps> = ({ canEdit =
         <div className="flex-1 flex flex-col gap-[0.21vw] border-b border-white py-[0.21vw]">
           <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-widest font-inter not-italic opacity-80">Auto-Flag Threshold</label>
           <input
-            type="text"
-            value={thresholds.autoFlag}
-            onChange={(e) => inputHandler('autoFlag', e.target.value)}
+            type="number"
+            value={value.autoFlagThreshold}
+            onChange={(e) => inputHandler('autoFlagThreshold', e.target.value)}
             disabled={!canEdit}
             className={`bg-transparent border-none text-white text-[0.94vw] focus:outline-none font-inter not-italic py-[0.21vw] ${!canEdit ? 'opacity-50 cursor-not-allowed' : ''}`}
           />
@@ -71,9 +63,9 @@ const ContentModerationCard: React.FC<ContentModerationCardProps> = ({ canEdit =
         <div className="flex-1 flex flex-col gap-[0.21vw] border-b border-white py-[0.21vw]">
           <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-widest font-inter not-italic opacity-80">Max Reports Before Suspension</label>
           <input
-            type="text"
-            value={thresholds.maxReports}
-            onChange={(e) => inputHandler('maxReports', e.target.value)}
+            type="number"
+            value={value.maxReportsBeforeSuspension}
+            onChange={(e) => inputHandler('maxReportsBeforeSuspension', e.target.value)}
             disabled={!canEdit}
             className={`bg-transparent border-none text-white text-[0.94vw] focus:outline-none font-inter not-italic py-[0.21vw] ${!canEdit ? 'opacity-50 cursor-not-allowed' : ''}`}
           />

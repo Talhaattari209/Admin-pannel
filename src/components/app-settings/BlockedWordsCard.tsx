@@ -1,24 +1,21 @@
-
 import React, { useState } from 'react';
 
 interface BlockedWordsCardProps {
   canEdit?: boolean;
+  value: string[];
+  onChange: (value: string[]) => void;
 }
 
-const BlockedWordsCard: React.FC<BlockedWordsCardProps> = ({ canEdit = true }) => {
-  const [words, setWords] = useState([
-    'Word 1', 'Word 2', 'Word 3', 'Word 4', 'Word 5', 'Word 6', 'Word 7', 'Word 8',
-    'Word 9', 'Word 10', 'Word 11', 'Word 12', 'Word 13', 'Word 14', 'Word 15', 'Word 16'
-  ]);
+const BlockedWordsCard: React.FC<BlockedWordsCardProps> = ({ canEdit = true, value, onChange }) => {
   const [inputValue, setInputValue] = useState('');
 
   const removeWord = (index: number) => {
-    setWords(words.filter((_, i) => i !== index));
+    onChange(value.filter((_, i) => i !== index));
   };
 
   const addWord = () => {
     if (inputValue.trim()) {
-      setWords([...words, inputValue.trim()]);
+      onChange([...value, inputValue.trim()]);
       setInputValue('');
     }
   };
@@ -32,7 +29,7 @@ const BlockedWordsCard: React.FC<BlockedWordsCardProps> = ({ canEdit = true }) =
 
       <div className="flex flex-col w-full border-b border-white pb-[0.42vw]">
         <div className="flex flex-wrap gap-[0.42vw] pt-[0.42vw] mb-[0.42vw]">
-          {words.map((word, idx) => (
+          {value.map((word, idx) => (
             <div
               key={idx}
               className="flex items-center gap-[0.42vw] px-[0.83vw] py-[0.31vw] bg-[#5F00DB] rounded-full text-white text-[0.83vw] animate-in zoom-in-75 duration-200"
@@ -59,7 +56,7 @@ const BlockedWordsCard: React.FC<BlockedWordsCardProps> = ({ canEdit = true }) =
           }}
           disabled={!canEdit}
           placeholder="Type word and press Enter.."
-          className={`bg-transparent border-none text-white text-[0.83 vw] focus:outline-none p-[0.42vw] font-inter not-italic ${!canEdit ? 'opacity-50 cursor-not-allowed placeholder:text-white/30' : 'placeholder:text-white/30'}`}
+          className={`bg-transparent border-none text-white text-[0.83vw] focus:outline-none p-[0.42vw] font-inter not-italic ${!canEdit ? 'opacity-50 cursor-not-allowed placeholder:text-white/30' : 'placeholder:text-white/30'}`}
         />
       </div>
     </div>
