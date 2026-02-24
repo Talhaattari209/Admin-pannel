@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useTeamMemberMe, useUpdateTeamMemberMe } from '@/services/team-members';
+import { useAdmin } from '@/services/auth';
+import { useUpdateTeamMemberMe } from '@/services/team-members';
 import { useAuthStore } from '@/store/auth-store';
+import { AxiosError } from 'axios';
 
 interface EditProfileContentProps {
     onSuccess: () => void;
@@ -9,7 +11,13 @@ interface EditProfileContentProps {
 const EditProfileContent: React.FC<EditProfileContentProps> = ({ onSuccess }) => {
     const updateUser = useAuthStore((state) => state.updateUser);
 
-    const { data: profile, isLoading, isError, error, refetch } = useTeamMemberMe();
+    const { data: profile, isLoading, isError, error, refetch } = useAdmin() as {
+        data: any;
+        isLoading: boolean;
+        isError: boolean;
+        error: AxiosError | null;
+        refetch: () => void
+    };
     const updateMutation = useUpdateTeamMemberMe();
 
     const [name, setName] = useState('');

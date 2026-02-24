@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import apiClient from '@/lib/api-client';
 import { LoginRequest, LoginResponse } from '@/types/api';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '@/store/auth-store';
 import { AxiosError } from 'axios';
 
@@ -22,6 +23,11 @@ export const authService = {
 
     updatePassword: async (newPassword: string): Promise<void> => {
         await apiClient.post('/admin/auth/super-admin/update-password', { newPassword });
+    },
+
+    getCurrentAdmin: async (): Promise<any> => {
+        const { data } = await apiClient.get('/admin/auth/me');
+        return data;
     },
 };
 
@@ -115,6 +121,56 @@ export const useLogin = () => {
             console.log('[Login Success] setAuth complete, redirecting should follow...');
         },
     });
+};
+
+export const useAdmin = () => {
+    const setAuth = useAuthStore((state) => state.setAuth);
+    const user = useAuthStore((state) => state.user);
+    const permissions = useAuthStore((state) => state.permissions);
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+    const query = useQuery<any, AxiosError>({
+        queryKey: ['admin-me'],
+        queryFn: authService.getCurrentAdmin,
+        enabled: isAuthenticated,
+        select: (response: any) => {
+            const data = response?.data || response;
+            // Map the API response to our AdminUserInfo interface
+            return {
+                id: data.id || data._id,
+                email: data.email,
+                name: data.name || data.email?.split('@')[0] || 'Admin',
+                isSuperAdmin: data.role === 'super_admin' || !!data.isSuperAdmin,
+                role: data.role || null
+            };
+        },
+        staleTime: 1000 * 60 * 5, // 5 minutes
+    });
+
+    // Keep auth store in sync with fetched profile
+    useEffect(() => {
+        if (query.data && isAuthenticated) {
+            // If we already have a user in the store, only update if generic fields changed
+            if (user) {
+                const hasChanged = user.name !== query.data.name || user.email !== query.data.email;
+                if (hasChanged) {
+                    console.log('[useAdmin] Syncing profile changes to store');
+                    useAuthStore.getState().updateUser({
+                        name: query.data.name,
+                        email: query.data.email,
+                    });
+                }
+            } else {
+                // Initial load, if we have token but no user object yet
+                console.log('[useAdmin] Initializing store with fetched profile');
+                const accessToken = localStorage.getItem('accessToken') || '';
+                const refreshToken = localStorage.getItem('refreshToken') || '';
+                setAuth(query.data, permissions, accessToken, refreshToken);
+            }
+        }
+    }, [query.data, isAuthenticated, user?.name, user?.email, setAuth, permissions]);
+
+    return query;
 };
 
 // Deprecated: use useLogin instead

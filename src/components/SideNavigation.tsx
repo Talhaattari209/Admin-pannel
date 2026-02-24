@@ -20,6 +20,7 @@ import Image from 'next/image';
 import { cn } from "@/lib/utils";
 import { useAuthStore } from '@/store/auth-store';
 import { canViewModule } from '@/utils/permissions';
+import { useAdmin } from '@/services/auth';
 
 type SideNavItem = {
     id: string;
@@ -93,6 +94,9 @@ const sections: SideNavSection[] = [
 ];
 
 export default function SideNavigation() {
+    // Sync current admin data in background
+    useAdmin();
+
     const router = useRouter();
     const pathname = usePathname();
     const activeId = getActiveId(pathname);
