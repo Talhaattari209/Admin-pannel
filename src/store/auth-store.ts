@@ -25,9 +25,11 @@ export const useAuthStore = create<AuthState>()(
             refreshToken: null,
 
             setAuth: (user, permissions, accessToken, refreshToken) => {
+                console.log('[Auth Store] setAuth', { email: user?.email, hasToken: !!accessToken });
+
                 // Store tokens in localStorage for API client interceptor
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('refreshToken', refreshToken);
+                if (accessToken) localStorage.setItem('accessToken', accessToken);
+                if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
 
                 set({
                     user,

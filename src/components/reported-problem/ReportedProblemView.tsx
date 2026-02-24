@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import UserReportedTable from './user-reported/UserReportedTable';
 import BugsReportedTable from './bugs-reported/BugsReportedTable';
@@ -7,11 +6,12 @@ import { BugReportData } from './bugs-reported/BugsReportedTableRow';
 import { Button } from '../shared/Button';
 import { useAuthStore } from '@/store/auth-store';
 import { canExportModule } from '@/utils/permissions';
+import { useUserReportsStats, useBugsStats, useUserReports, useBugsReports } from '@/services/reported-problems';
 
 interface ReportedProblemViewProps {
     onViewReportDetail: (report: UserReportData) => void;
     onViewBugDetail: (bug: BugReportData) => void;
-    onExport?: () => void;
+    onExport?: (exportType: 'users' | 'bugs') => void;
 }
 
 const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
@@ -23,15 +23,25 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
     const permissions = useAuthStore((state) => state.permissions);
     const isSuperAdmin = useAuthStore((state) => state.user?.isSuperAdmin);
 
+    const { data: userStats, isLoading: userStatsLoading } = useUserReportsStats();
+    const { data: bugsStats, isLoading: bugsStatsLoading } = useBugsStats();
+    const { data: userReportsData } = useUserReports({ page: 1, limit: 1 });
+    const { data: bugsReportsData } = useBugsReports({ page: 1, limit: 1 });
+
+    const statsSource = activeTab === 'reported' ? userStats : bugsStats;
+    const statsLoading = activeTab === 'reported' ? userStatsLoading : bugsStatsLoading;
+    const stats = [
+        { label: 'Total User Reports', value: statsLoading ? '...' : String(statsSource?.totalUserReports ?? statsSource?.totalBugsReports ?? 0) },
+        { label: 'Pending Review', value: statsLoading ? '...' : String(statsSource?.pendingReviews ?? 0) },
+        { label: 'Resolved Reports', value: statsLoading ? '...' : String(statsSource?.resolvedReports ?? 0) },
+        { label: 'Repeat Offenders', value: statsLoading ? '...' : String(statsSource?.repeatOffenders ?? statsSource?.repeatReports ?? 0) }
+    ];
+
+    const userReportsCount = userReportsData?.pagination?.total ?? 0;
+    const bugsReportsCount = bugsReportsData?.pagination?.total ?? 0;
+
     // Permission checks
     const canExport = isSuperAdmin || canExportModule(permissions, 'reported problems');
-
-    const stats = [
-        { label: 'Total User Reports', value: '248' },
-        { label: 'Pending Review', value: '37' },
-        { label: 'Resolved Reports', value: '197' },
-        { label: 'Repeat Offenders', value: '8' }
-    ];
 
     return (
         <div className="flex flex-col items-center w-full animate-in fade-in duration-700 ">
@@ -45,7 +55,7 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
                 <div className="flex flex-row items-center gap-[0.83vw] h-[2.92vw]">
                     {canExport && (
                         <Button
-                            onClick={onExport}
+                            onClick={() => onExport?.(activeTab === 'reported' ? 'users' : 'bugs')}
                             variant="glass"
                             className="!px-[1.25vw] !py-[0.83vw] h-full gap-[0.63vw] text-[0.83vw] rounded-[2.71vw] border border-white backdrop-blur-[6px] shadow-[0px_12px_40px_rgba(0,0,0,0.05)] not-italic"
                             iconRight={
@@ -76,8 +86,8 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
 
             <div className="flex flex-row gap-[0.42vw] pl-[1.25vw] w-full mb-[-1px] z-10 shrink-0">
                 {[
-                    { id: 'reported', label: 'Users Reported', count: 4 },
-                    { id: 'bugs', label: 'Bugs Reported', count: 4 }
+                    { id: 'reported', label: 'Users Reported', count: userReportsCount },
+                    { id: 'bugs', label: 'Bugs Reported', count: bugsReportsCount }
                 ].map((tab) => (
                     <button
                         key={tab.id}

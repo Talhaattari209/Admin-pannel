@@ -96,12 +96,18 @@ export default function SideNavigation() {
     const router = useRouter();
     const pathname = usePathname();
     const activeId = getActiveId(pathname);
+    const user = useAuthStore((state) => state.user);
     const permissions = useAuthStore((state) => state.permissions);
-    const isSuperAdmin = useAuthStore((state) => state.user?.isSuperAdmin);
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    // Super Admin sees all. Fallback: no teamMember permissions = Super Admin; or authenticated with no user yet (rehydration).
+    const isSuperAdmin = !!(
+        user?.isSuperAdmin === true ||
+        (user && (!permissions || permissions.length === 0)) ||
+        (isAuthenticated && (!permissions || permissions.length === 0))
+    );
 
     // Filter items based on permissions
     const filterItemsByPermissions = (items: SideNavItem[]): SideNavItem[] => {
-        // Super admin sees everything
         if (isSuperAdmin) return items;
 
         // Filter items based on view permission

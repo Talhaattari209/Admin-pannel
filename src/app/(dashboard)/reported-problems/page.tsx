@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import ReportedProblemView from '@/components/reported-problem/ReportedProblemView';
 import UserReportDetailsView from '@/components/reported-problem/user-reported/UserReportDetailsView';
 import BugReportDetailsView from '@/components/reported-problem/bugs-reported/BugReportDetailsView';
@@ -9,19 +9,51 @@ import { BugReportData } from '@/components/reported-problem/bugs-reported/BugsR
 import ExportModal from '@/components/shared/ExportModal';
 import DeactivationCard from '@/components/pop-cards/DeactivationCard';
 import SuccessCard from '@/components/pop-cards/SuccessCard';
+import {
+    useUserReportDetail,
+    useBugReportDetail,
+    useUpdateUserReportStatus,
+    useUpdateBugReportStatus,
+    useExportUserReports,
+    useExportBugReports,
+    activeFilterToTimelaps,
+} from '@/services/reported-problems';
 
 export default function ReportedProblemsPage() {
     const [viewState, setViewState] = useState<'list' | 'user-detail' | 'bug-detail'>('list');
     const [selectedUserReport, setSelectedUserReport] = useState<UserReportData | null>(null);
     const [selectedBugReport, setSelectedBugReport] = useState<BugReportData | null>(null);
     const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+    const [exportType, setExportType] = useState<'users' | 'bugs'>('users');
     const [isDeactivationModalOpen, setIsDeactivationModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState({ title: '', description: '' });
 
+    const { data: userReportDetail } = useUserReportDetail(selectedUserReport?.id ?? null);
+    const { data: bugReportDetail } = useBugReportDetail(selectedBugReport?.id ?? null);
+
+    const updateUserStatus = useUpdateUserReportStatus();
+    const updateBugStatus = useUpdateBugReportStatus();
+    const exportUserReports = useExportUserReports();
+    const exportBugReports = useExportBugReports();
+
+    const userReportToShow = useMemo((): UserReportData | null => {
+        if (!selectedUserReport) return null;
+        const age = userReportDetail?.reportedUser?.age ?? selectedUserReport.reportedUser.age;
+        return {
+            ...selectedUserReport,
+            reportedUser: { ...selectedUserReport.reportedUser, age },
+        };
+    }, [selectedUserReport, userReportDetail]);
+
     const handleViewUserReport = (report: UserReportData) => { setSelectedUserReport(report); setViewState('user-detail'); };
     const handleViewBugReport = (bug: BugReportData) => { setSelectedBugReport(bug); setViewState('bug-detail'); };
     const handleBack = () => { setViewState('list'); setSelectedUserReport(null); setSelectedBugReport(null); };
+
+    const handleOpenExport = (type: 'users' | 'bugs') => {
+        setExportType(type);
+        setIsExportModalOpen(true);
+    };
 
     const confirmDeactivation = () => {
         setIsDeactivationModalOpen(false);
@@ -29,10 +61,53 @@ export default function ReportedProblemsPage() {
         setIsSuccessModalOpen(true);
     };
 
-    const handleUpdateStatus = (status: string, notes: string) => {
-        console.log("Updating status to", status, "with notes:", notes);
-        setSuccessMessage({ title: "Status Updated", description: `The report status has been updated to ${status}.` });
-        setIsSuccessModalOpen(true);
+    const handleUpdateUserStatus = (status: string, notes: string) => {
+        if (!selectedUserReport?.id) return;
+        updateUserStatus.mutate(
+            { id: selectedUserReport.id, status, notes },
+            {
+                onSuccess: () => {
+                    setSelectedUserReport((prev) => prev ? { ...prev, status: status as UserReportData['status'] } : null);
+                    setSuccessMessage({ title: "Status Updated", description: `The report status has been updated to ${status}.` });
+                    setIsSuccessModalOpen(true);
+                },
+            }
+        );
+    };
+
+    const handleUpdateBugStatus = (status: string, notes: string) => {
+        if (!selectedBugReport?.id) return;
+        updateBugStatus.mutate(
+            { id: selectedBugReport.id, status, notes },
+            {
+                onSuccess: () => {
+                    setSelectedBugReport((prev) => prev ? { ...prev, status: status as BugReportData['status'] } : null);
+                    setSuccessMessage({ title: "Status Updated", description: `The report status has been updated to ${status}.` });
+                    setIsSuccessModalOpen(true);
+                },
+            }
+        );
+    };
+
+    const handleExportDownload = (config: { startDate: string; endDate: string; format: string; activeFilter: string }) => {
+        const timelaps = activeFilterToTimelaps[config.activeFilter] || 'allTime';
+        const format = (config.format || 'JSON').toLowerCase() === 'csv' ? 'csv' : 'json';
+        const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
+        if (exportType === 'users') {
+            exportUserReports.mutate(params, {
+                onSuccess: (data) => {
+                    if (data?.fileUrl) window.open(data.fileUrl, '_blank');
+                    setIsExportModalOpen(false);
+                },
+            });
+        } else {
+            exportBugReports.mutate(params, {
+                onSuccess: (data) => {
+                    if (data?.fileUrl) window.open(data.fileUrl, '_blank');
+                    setIsExportModalOpen(false);
+                },
+            });
+        }
     };
 
     return (
@@ -42,24 +117,31 @@ export default function ReportedProblemsPage() {
                     <ReportedProblemView
                         onViewReportDetail={handleViewUserReport}
                         onViewBugDetail={handleViewBugReport}
-                        onExport={() => setIsExportModalOpen(true)}
+                        onExport={handleOpenExport}
                     />
                 )}
                 {viewState === 'user-detail' && (
                     <UserReportDetailsView
-                        report={selectedUserReport}
+                        report={userReportToShow}
                         onBack={handleBack}
                         onDeactivate={() => setIsDeactivationModalOpen(true)}
-                        onUpdateStatus={handleUpdateStatus}
+                        onUpdateStatus={handleUpdateUserStatus}
                     />
                 )}
                 {viewState === 'bug-detail' && (
-                    <BugReportDetailsView bug={selectedBugReport} onBack={handleBack} />
+                    <BugReportDetailsView
+                        bug={selectedBugReport}
+                        onBack={handleBack}
+                        onUpdateStatus={handleUpdateBugStatus}
+                    />
                 )}
             </div>
 
             {isExportModalOpen && (
-                <ExportModal onCancel={() => setIsExportModalOpen(false)} onDownload={(config) => { console.log('Exporting', config); setIsExportModalOpen(false); }} />
+                <ExportModal
+                    onCancel={() => setIsExportModalOpen(false)}
+                    onDownload={handleExportDownload}
+                />
             )}
             {isDeactivationModalOpen && (
                 <DeactivationCard onCancel={() => setIsDeactivationModalOpen(false)} onDeactivate={confirmDeactivation} />

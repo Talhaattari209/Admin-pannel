@@ -31,51 +31,88 @@ export const useLogin = () => {
 
     return useMutation<LoginResponse, AxiosError, LoginRequest>({
         mutationFn: authService.superAdminLogin, // Both point to the same endpoint
-        onSuccess: (data) => {
-            const transformedData: any = data as any;
+        onSuccess: (responseBody: any) => {
+            // Support responses wrapped in a "data" property
+            const data = responseBody?.data || responseBody;
+            console.log('[Login Success] Response Body keys:', Object.keys(responseBody));
+            console.log('[Login Success] Data keys:', Object.keys(data));
 
-            // 1. Identify User and isSuperAdmin status
-            let user = transformedData.user;
-            let isSuperAdmin = !!user?.isSuperAdmin;
+            // 1. Extract Tokens (support camelCase and snake_case)
+            let accessToken = data.accessToken || data.access_token || responseBody.accessToken || responseBody.access_token;
+            let refreshToken = data.refreshToken || data.refresh_token || responseBody.refreshToken || responseBody.refresh_token;
 
-            if (transformedData.superAdmin) {
+            // Trim tokens to avoid potential whitespace issues
+            if (typeof accessToken === 'string') accessToken = accessToken.trim();
+            if (typeof refreshToken === 'string') refreshToken = refreshToken.trim();
+
+            console.log(`[Login Success] Tokens found - Access: ${!!accessToken}, Refresh: ${!!refreshToken}`);
+            if (accessToken) {
+                console.log(`[Login Success] Access Token Preview: ${accessToken.substring(0, 10)}...`);
+            }
+
+            // 2. Identify User and isSuperAdmin status
+            let userObj = data.user || data.User || data.superAdmin || data.super_admin || data.teamMember || data.team_member || data.admin;
+
+            // If no user object is found but we have tokens, the root object might be the user (minimal response)
+            if (!userObj && (accessToken || refreshToken) && (data.email || data.id)) {
+                userObj = data;
+                console.log('[Login Success] Using root data as user object');
+            }
+
+            if (!userObj) {
+                console.error('[Login Success] FATAL: Could not find user object in response body');
+                console.log('[Login Success] Data inspected:', JSON.stringify(data).substring(0, 500));
+                return;
+            }
+
+            // Determine if this is the unique Super Admin
+            const hasTeamMemberKey = !!(data.teamMember || data.team_member);
+            const isSuperAdminFlag = !!(userObj.isSuperAdmin || userObj.is_super_admin || data.isSuperAdmin || data.is_super_admin);
+            const isSuperAdmin = (!!(data.superAdmin || data.super_admin)) || (!hasTeamMemberKey && isSuperAdminFlag) || (!hasTeamMemberKey && !!accessToken);
+
+            console.log(`[Login Success] Super Admin Detection: isSuperAdmin=${isSuperAdmin}, hasTeamMemberKey=${hasTeamMemberKey}, isSuperAdminFlag=${isSuperAdminFlag}`);
+
+            let user;
+            if (isSuperAdmin) {
                 user = {
-                    id: transformedData.superAdmin.id,
-                    email: transformedData.superAdmin.email,
-                    name: transformedData.superAdmin.name || 'Super Admin',
+                    id: userObj.id || userObj._id || 'super-admin',
+                    email: userObj.email || '',
+                    name: userObj.name || userObj.email || 'Super Admin',
                     isSuperAdmin: true,
                     role: null
                 };
-                isSuperAdmin = true;
-            } else if (transformedData.teamMember) {
+            } else {
                 user = {
-                    id: transformedData.teamMember.id,
-                    email: transformedData.teamMember.email,
-                    name: transformedData.teamMember.name || transformedData.teamMember.email,
+                    id: userObj.id || userObj._id,
+                    email: userObj.email,
+                    name: userObj.name || userObj.email,
                     isSuperAdmin: false,
-                    role: transformedData.teamMember.role_id || transformedData.teamMember.role || null
+                    role: userObj.role_id || userObj.role || null
                 };
-                isSuperAdmin = false;
             }
 
-            // 2. Extract Permissions
-            // Permissions can be in: 
-            // - top-level 'permissions'
-            // - teamMember.role.resources
-            // - teamMember.resources
-            // - user.role.resources
-            const permissions = transformedData.permissions
-                || (transformedData.teamMember?.role?.resources)
-                || (transformedData.teamMember?.resources)
-                || (user?.role?.resources)
+            // 3. Extract Permissions
+            const permissions = data.permissions
+                || (data.teamMember?.role?.resources)
+                || (data.teamMember?.resources)
+                || (userObj.role?.resources)
+                || (userObj.resources)
                 || [];
+
+            console.log(`[Login Success] Extracted ${permissions.length} permission modules`);
+
+            if (!accessToken) {
+                console.warn('[Login Success] WARNING: No access token found in response. API calls will likely fail.');
+            }
 
             setAuth(
                 user,
                 permissions,
-                transformedData.accessToken,
-                transformedData.refreshToken
+                accessToken,
+                refreshToken
             );
+
+            console.log('[Login Success] setAuth complete, redirecting should follow...');
         },
     });
 };

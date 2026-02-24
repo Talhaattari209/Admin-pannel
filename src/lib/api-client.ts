@@ -10,23 +10,22 @@ export const apiClient: AxiosInstance = axios.create({
     baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
     },
 });
 
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-        // Log request details for debugging
-        console.log('[API Request]', {
-            method: config.method?.toUpperCase(),
-            url: config.url,
-            baseURL: config.baseURL,
-            fullURL: `${config.baseURL || ''}${config.url || ''}`,
-            params: config.params,
-            data: config.data
+        const token = localStorage.getItem('accessToken');
+
+        // Log request details for debugging (redacting most of the token)
+        console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`, {
+            hasToken: !!token,
+            tokenPreview: token ? `${token.substring(0, 10)}...${token.substring(token.length - 10)}` : 'none',
+            headers: config.headers ? Object.keys(config.headers) : 'none'
         });
 
-        const token = localStorage.getItem('accessToken');
         if (token && config.headers) {
             config.headers.Authorization = `Bearer ${token}`;
         }

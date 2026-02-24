@@ -5,9 +5,10 @@ import { BugReportData } from './BugsReportedTableRow';
 interface BugReportDetailsViewProps {
     bug: BugReportData | null;
     onBack: () => void;
+    onUpdateStatus?: (status: string, notes: string) => void;
 }
 
-const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack }) => {
+const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack, onUpdateStatus }) => {
     const [status, setStatus] = useState(bug?.status || 'New');
     const [notes, setNotes] = useState('');
     const [revealedImages, setRevealedImages] = useState<Record<number, boolean>>({});
@@ -219,6 +220,7 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
                         {/* Update Button */}
                         <button
+                            onClick={() => onUpdateStatus?.(status, notes)}
                             className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw] cursor-pointer"
                         >
                             Update Status

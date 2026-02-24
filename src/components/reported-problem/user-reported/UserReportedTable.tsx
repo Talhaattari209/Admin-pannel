@@ -1,31 +1,8 @@
-
 import React, { useState } from 'react';
 import SearchInput from '@/components/app-content/shared/SearchInput';
 import { Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import UserReportedTableRow, { UserReportData } from './UserReportedTableRow';
-
-const MOCK_REPORTS: UserReportData[] = [
-    {
-        id: 'rep-1',
-        reportedBy: { name: 'Jackson Scott', email: 'jacksonscott@email.com', avatar: 'https://i.pravatar.cc/150?u=jack' },
-        reportedUser: { name: 'Mason Green', email: 'masongreen@email.com', avatar: 'https://i.pravatar.cc/150?u=mason', age: 24 },
-        category: 'Inadequate profile info',
-        reports: 4,
-        description: 'Profile lacks necessary details.',
-        status: 'New',
-        submittedOn: 'Jun 25, 2026 • 11:45 AM'
-    },
-    {
-        id: 'rep-2',
-        reportedBy: { name: 'Emily Johnson', email: 'emilyjohnson@email.com', avatar: 'https://i.pravatar.cc/150?u=emily' },
-        reportedUser: { name: 'Michael Davis', email: 'michaeldavis@email.com', avatar: 'https://i.pravatar.cc/150?u=mike', age: 28 },
-        category: 'Inappropriate content',
-        reports: 4,
-        description: 'Offensive language in posts.',
-        status: 'Pending',
-        submittedOn: 'Feb 02, 2026 • 03:45 PM'
-    }
-];
+import { useUserReports } from '@/services/reported-problems';
 
 interface UserReportedTableProps {
     onViewDetail: (report: UserReportData) => void;
@@ -37,6 +14,16 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
     const [repFilter, setRepFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+
+    const { data, isLoading } = useUserReports({
+        page: currentPage,
+        limit: 20,
+        search: search || undefined,
+        status: statusFilter || undefined,
+        category: catFilter || undefined,
+    });
+    const reports = data?.reports ?? [];
+    const pagination = data?.pagination ?? { page: 1, limit: 20, total: 0, totalPages: 1 };
 
     const ColumnHeader = ({ label, width = "auto", grow = false }: { label: string, width?: string, grow?: boolean }) => (
         <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
@@ -96,9 +83,15 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
                             display: none;
                         }
                     `}</style>
-                    {MOCK_REPORTS.map((report) => (
-                        <UserReportedTableRow key={report.id} data={report} onAction={() => onViewDetail(report)} />
-                    ))}
+                    {isLoading ? (
+                        <div className="flex items-center justify-center py-[3vw] text-white/60 text-[0.83vw]">Loading...</div>
+                    ) : reports.length === 0 ? (
+                        <div className="flex items-center justify-center py-[3vw] text-white/60 text-[0.83vw]">No reports found.</div>
+                    ) : (
+                        reports.map((report) => (
+                            <UserReportedTableRow key={report.id} data={report} onAction={(_action, r) => onViewDetail(r)} />
+                        ))
+                    )}
                 </div>
 
                 {/* Gap */}
@@ -107,8 +100,8 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
                 {/* Pagination */}
                 <div className="shrink-0">
                     <Pagination
-                        currentPage={currentPage}
-                        totalPages={10}
+                        currentPage={pagination.page}
+                        totalPages={Math.max(1, pagination.totalPages)}
                         onPageChange={setCurrentPage}
                         className="w-full px-[1.25vw] pb-[1.25vw]"
                     />
