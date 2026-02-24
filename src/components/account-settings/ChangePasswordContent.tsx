@@ -56,7 +56,7 @@ const ChangePasswordContent: React.FC<ChangePasswordContentProps> = ({ onSuccess
 
             {changePasswordMutation.isError && (
                 <p className="text-red-400 text-[0.73vw] w-full">
-                    {changePasswordMutation.error?.response?.data?.message || changePasswordMutation.error?.message || 'Failed to change password.'}
+                    {(changePasswordMutation.error?.response?.data as any)?.message || (changePasswordMutation.error?.response?.data as any)?.detail || changePasswordMutation.error?.message || 'Failed to change password.'}
                 </p>
             )}
 

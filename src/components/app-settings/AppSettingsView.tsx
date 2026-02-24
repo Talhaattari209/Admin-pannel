@@ -72,7 +72,7 @@ const AppSettingsView: React.FC = () => {
       <div className="flex flex-col w-full animate-in fade-in duration-500">
         <PageHeader title="App Settings" description="Control platform-wide configurations." />
         <div className="mt-[1.49vw] p-[1.25vw] bg-red-500/10 border border-red-500/30 rounded-[0.83vw] text-red-400 text-[0.83vw]">
-          Failed to load app settings. {error?.response?.data?.message || error?.message || 'Unknown error.'}
+          Failed to load app settings. {(error?.response?.data as any)?.message || (error?.response?.data as any)?.detail || error?.message || 'Unknown error.'}
           <button onClick={() => refetch()} className="ml-2 underline">Retry</button>
         </div>
       </div>
@@ -100,7 +100,7 @@ const AppSettingsView: React.FC = () => {
 
       {updateMutation.isError && (
         <div className="mt-[1.25vw] p-[0.83vw] bg-red-500/10 border border-red-500/30 rounded-[0.83vw] text-red-400 text-[0.83vw]">
-          {updateMutation.error?.response?.data?.message || updateMutation.error?.message || 'Failed to save app settings.'}
+          {(updateMutation.error?.response?.data as any)?.message || (updateMutation.error?.response?.data as any)?.detail || updateMutation.error?.message || 'Failed to save app settings.'}
         </div>
       )}
 

@@ -165,7 +165,7 @@ export const useTeamMemberMe = () => {
 
 export const useUpdateTeamMemberMe = () => {
     const queryClient = useQueryClient();
-    return useMutation<TeamMember, AxiosError, TeamMemberMeUpdate>({
+    return useMutation<TeamMember, AxiosError<any>, TeamMemberMeUpdate>({
         mutationFn: teamMembersService.updateMe,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ME_QUERY_KEY });
@@ -176,7 +176,7 @@ export const useUpdateTeamMemberMe = () => {
 
 export const useChangePassword = () => {
     const queryClient = useQueryClient();
-    return useMutation<TeamMember, AxiosError, ChangePasswordRequest>({
+    return useMutation<TeamMember, AxiosError<any>, ChangePasswordRequest>({
         mutationFn: teamMembersService.changePassword,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ME_QUERY_KEY });

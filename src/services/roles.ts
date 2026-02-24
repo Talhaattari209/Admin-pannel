@@ -104,7 +104,7 @@ export const useRole = (id: string) => {
 export const useCreateRole = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<Role, AxiosError, RoleCreate>({
+    return useMutation<Role, AxiosError<any>, RoleCreate>({
         mutationFn: rolesService.create,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['roles'] });
@@ -115,7 +115,7 @@ export const useCreateRole = () => {
 export const useUpdateRole = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<Role, AxiosError, { id: string; data: RoleUpdate }>({
+    return useMutation<Role, AxiosError<any>, { id: string; data: RoleUpdate }>({
         mutationFn: ({ id, data }) => rolesService.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['roles'] });
@@ -126,7 +126,7 @@ export const useUpdateRole = () => {
 export const useDeleteRole = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<void, AxiosError, string>({
+    return useMutation<void, AxiosError<any>, string>({
         mutationFn: rolesService.delete,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['roles'] });

@@ -31,10 +31,10 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
     const statsSource = activeTab === 'reported' ? userStats : bugsStats;
     const statsLoading = activeTab === 'reported' ? userStatsLoading : bugsStatsLoading;
     const stats = [
-        { label: 'Total User Reports', value: statsLoading ? '...' : String(statsSource?.totalUserReports ?? statsSource?.totalBugsReports ?? 0) },
+        { label: 'Total User Reports', value: statsLoading ? '...' : String((statsSource as any)?.totalUserReports ?? (statsSource as any)?.totalBugsReports ?? 0) },
         { label: 'Pending Review', value: statsLoading ? '...' : String(statsSource?.pendingReviews ?? 0) },
         { label: 'Resolved Reports', value: statsLoading ? '...' : String(statsSource?.resolvedReports ?? 0) },
-        { label: 'Repeat Offenders', value: statsLoading ? '...' : String(statsSource?.repeatOffenders ?? statsSource?.repeatReports ?? 0) }
+        { label: 'Repeat Offenders', value: statsLoading ? '...' : String((statsSource as any)?.repeatOffenders ?? (statsSource as any)?.repeatReports ?? 0) }
     ];
 
     const userReportsCount = userReportsData?.pagination?.total ?? 0;

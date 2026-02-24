@@ -57,7 +57,7 @@ const EditProfileContent: React.FC<EditProfileContentProps> = ({ onSuccess }) =>
         return (
             <div className="flex flex-col items-start p-[1.67vw] gap-[1.67vw] w-[39.17vw] min-h-[19.69vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw]">
                 <h3 className="text-white text-[1.46vw] font-bold">Edit Profile</h3>
-                <p className="text-red-400 text-[0.83vw]">{error?.response?.data?.message || error?.message || 'Failed to load profile.'}</p>
+                <p className="text-red-400 text-[0.83vw]">{(error?.response?.data as any)?.message || (error?.response?.data as any)?.detail || error?.message || 'Failed to load profile.'}</p>
                 <button onClick={() => refetch()} className="text-[#5F00DB] text-[0.83vw] underline">Retry</button>
             </div>
         );
@@ -102,7 +102,7 @@ const EditProfileContent: React.FC<EditProfileContentProps> = ({ onSuccess }) =>
 
             {updateMutation.isError && (
                 <p className="text-red-400 text-[0.73vw] w-full">
-                    {updateMutation.error?.response?.data?.message || updateMutation.error?.message || 'Failed to update profile.'}
+                    {(updateMutation.error?.response?.data as any)?.message || (updateMutation.error?.response?.data as any)?.detail || updateMutation.error?.message || 'Failed to update profile.'}
                 </p>
             )}
 

@@ -29,7 +29,7 @@ export const authService = {
 export const useLogin = () => {
     const setAuth = useAuthStore((state) => state.setAuth);
 
-    return useMutation<LoginResponse, AxiosError, LoginRequest>({
+    return useMutation<LoginResponse, AxiosError<any>, LoginRequest>({
         mutationFn: authService.superAdminLogin, // Both point to the same endpoint
         onSuccess: (responseBody: any) => {
             // Support responses wrapped in a "data" property

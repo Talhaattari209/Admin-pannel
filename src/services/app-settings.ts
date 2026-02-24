@@ -56,7 +56,7 @@ export const appSettingsService = {
 };
 
 export const useAppSettings = () => {
-    return useQuery<AppSettings, AxiosError>({
+    return useQuery<AppSettings, AxiosError<any>>({
         queryKey: [QUERY_KEY],
         queryFn: appSettingsService.get,
     });
@@ -64,7 +64,7 @@ export const useAppSettings = () => {
 
 export const useUpdateAppSettings = () => {
     const queryClient = useQueryClient();
-    return useMutation<AppSettings, AxiosError, AppSettingsUpdate>({
+    return useMutation<AppSettings, AxiosError<any>, AppSettingsUpdate>({
         mutationFn: appSettingsService.update,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
