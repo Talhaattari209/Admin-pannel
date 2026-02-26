@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { cn } from "@/lib/utils";
 import ExportModal from '@/components/shared/ExportModal';
+import { useExportDashboard } from '@/services/dashboard';
+import { downloadFileFromUrl } from '@/utils/download';
+import { activeFilterToTimelaps } from '@/services/reported-problems'; // Reusing mapping logic if consistent
 
 // Chart Components from Dashboard
 import DAUChartCard from '@/components/dashboard/DAUChartCard';
@@ -100,6 +103,23 @@ const FILTERS = [
 export default function LoginDashboard() {
     const [activeFilter, setActiveFilter] = useState('Last 7 days');
     const [showExportModal, setShowExportModal] = useState(false);
+    const exportMutation = useExportDashboard();
+
+    const handleDownload = (config: { startDate: string; endDate: string; format: string; activeFilter: string }) => {
+        const timelaps = activeFilterToTimelaps[config.activeFilter] || 'allTime';
+        const format = (config.format || 'JSON').toLowerCase() === 'csv' ? 'csv' : 'json';
+        const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
+
+        exportMutation.mutate(params, {
+            onSuccess: (data) => {
+                if (data?.fileUrl) {
+                    const dateStr = new Date().toISOString().split('T')[0];
+                    downloadFileFromUrl(data.fileUrl, `dashboard-export-${dateStr}.${format}`);
+                }
+                setShowExportModal(false);
+            },
+        });
+    };
 
     return (
         <div
@@ -134,7 +154,7 @@ export default function LoginDashboard() {
                         />
                     </div>
                     <span className="text-white text-[0.83vw] font-medium leading-[120%]">
-                        Export
+                        {exportMutation.isPending ? 'Exporting...' : 'Export'}
                     </span>
                 </button>
             </div>
@@ -203,10 +223,7 @@ export default function LoginDashboard() {
             {showExportModal && (
                 <ExportModal
                     onCancel={() => setShowExportModal(false)}
-                    onDownload={(config) => {
-                        console.log("Exporting Dashboard with config:", config);
-                        setShowExportModal(false);
-                    }}
+                    onDownload={handleDownload}
                 />
             )}
         </div>

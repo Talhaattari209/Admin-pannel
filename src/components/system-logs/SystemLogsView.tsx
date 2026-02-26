@@ -2,17 +2,70 @@
 import React, { useState } from 'react';
 import SystemLogsTable from './SystemLogsTable';
 import ExportModal from '../shared/ExportModal';
-import { Button } from '../shared/Button';
 import { useAuthStore } from '@/store/auth-store';
 import { canExportModule } from '@/utils/permissions';
+import { useExportSystemLogs } from '@/services/system-logs';
+
+
 
 const SystemLogsView: React.FC = () => {
     const [showExportModal, setShowExportModal] = useState(false);
+    const { mutateAsync: exportLogs, isPending: isExporting } = useExportSystemLogs();
 
     // Permission checks
     const permissions = useAuthStore((state) => state.permissions);
     const isSuperAdmin = useAuthStore((state) => state.user?.isSuperAdmin);
     const canExport = isSuperAdmin || canExportModule(permissions, 'system logs');
+
+    const handleDownload = async (config: { startDate: string; endDate: string; format: string; activeFilter: string }) => {
+        try {
+            console.log('Exporting System Logs:', config);
+
+            // Map quick filter to backend 'timelaps' parameter
+            const timelapsMap: Record<string, string> = {
+                'Last 7 days': 'last7Days',
+                'This Month': 'thisMonth',
+                'Last Month': 'lastMonth',
+                'Last 3 Months': 'last3Months',
+                'Last 6 Months': 'last6Months',
+                'This Year': 'thisYear',
+                'Last Year': 'lastYear',
+                'All Time': 'allTime'
+            };
+
+            const response = await exportLogs({
+                format: config.format.toLowerCase(),
+                timelaps: timelapsMap[config.activeFilter] || 'custom',
+                startDate: config.startDate,
+                endDate: config.endDate
+            });
+
+            if (response.fileUrl) {
+                // Fetch the file to force download
+                const fileResponse = await fetch(response.fileUrl);
+                const blob = await fileResponse.blob();
+                const downloadUrl = window.URL.createObjectURL(blob);
+
+                // Get filename from URL
+                const filename = response.fileUrl.split('/').pop() || `system-logs-${new Date().toISOString()}.${config.format.toLowerCase()}`;
+
+                // Trigger download
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+
+                // Cleanup
+                window.URL.revokeObjectURL(downloadUrl);
+                setShowExportModal(false);
+            }
+        } catch (error) {
+            console.error('Failed to export system logs:', error);
+            // You might want to show a toast error here
+        }
+    };
 
     return (
         <div className="flex flex-col w-full h-full animate-in fade-in duration-500 overflow-x-hidden  [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -36,10 +89,11 @@ const SystemLogsView: React.FC = () => {
                         {/* Button - Export */}
                         <button
                             onClick={() => setShowExportModal(true)}
-                            className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] w-[7.03vw] h-[2.92vw] border border-white backdrop-blur-[6px] rounded-[2.71vw] flex-none order-0 flex-grow-0 drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)] cursor-pointer"
+                            disabled={isExporting}
+                            className="box-border flex flex-row justify-center items-center px-[1.25vw] py-[0.83vw] gap-[0.625vw] w-[7.03vw] h-[2.92vw] border border-white backdrop-blur-[6px] rounded-[2.71vw] flex-none order-0 flex-grow-0 drop-shadow-[0px_12px_40px_rgba(0,0,0,0.05)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <span className="w-[2.66vw] h-[1.25vw]  font-medium text-[0.83vw] leading-[1.25vw] flex items-end text-center text-white flex-none order-1 flex-grow-0">
-                                Export
+                                {isExporting ? '...' : 'Export'}
                             </span>
                             {/* Download Icon */}
                             <div className="w-[1.25vw] h-[1.25vw] flex-none order-2 flex-grow-0">
@@ -65,10 +119,7 @@ const SystemLogsView: React.FC = () => {
             {showExportModal && (
                 <ExportModal
                     onCancel={() => setShowExportModal(false)}
-                    onDownload={(config) => {
-                        console.log('Exporting', config);
-                        setShowExportModal(false);
-                    }}
+                    onDownload={handleDownload}
                 />
             )}
         </div>
@@ -76,3 +127,4 @@ const SystemLogsView: React.FC = () => {
 };
 
 export default SystemLogsView;
+

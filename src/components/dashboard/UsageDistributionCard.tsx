@@ -130,7 +130,7 @@ const UsageDistributionCard: React.FC = () => {
               align="center"
               height={36}
               content={({ payload }) => (
-                <div className="flex items-center justify-center gap-[1.25vw] mt-[0.83vw]">
+                <div className="flex items-center justify-center gap-[1.25vw] mt-[1.83vw]">
                   {payload?.map((entry: any, index: number) => (
                     <div key={index} className="flex items-center gap-[0.41vw]">
                       <div

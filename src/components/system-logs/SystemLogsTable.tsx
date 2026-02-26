@@ -1,20 +1,8 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useState, useMemo } from 'react';
 import SearchInput from '../app-content/shared/SearchInput';
-// import FilterSelect from '../app-content/shared/FilterSelect'; // Removed
-import SystemLogsTableRow, { LogEntryData } from './SystemLogsTableRow';
-import { TableFrame, Pagination, FilterSelect } from '@/components/shared/TableComponents'; // Updated import
-
-const MOCK_LOGS: LogEntryData[] = [
-    { id: '1', timestamp: 'Dec 31, 2025 • 11:59 PM', user: 'System', role: '—', action: 'Scheduled Backup', details: 'Daily database backup completed successfully.' },
-    { id: '2', timestamp: 'Dec 31, 2025 • 11:59 PM', user: 'John Doe', role: 'Admin', action: 'User Suspension', details: 'Suspended account of user “matt.wilson@example.com” for policy violation.' },
-    { id: '3', timestamp: 'Dec 31, 2025 • 11:59 PM', user: 'System', role: '—', action: 'Login Attempt', details: '3 failed login attempts detected from IP 172.16.8.44.' },
-    { id: '4', timestamp: 'Dec 31, 2025 • 11:59 PM', user: 'Sarah Li', role: 'Moderator', action: 'Content Removal', details: 'Deleted image reported for inappropriate content.' },
-    { id: '5', timestamp: 'Dec 31, 2025 • 11:59 PM', user: 'System', role: '—', action: 'Maintenance Mode', details: 'Platform entered maintenance mode for scheduled update.' },
-    { id: '6', timestamp: 'Dec 31, 2025 • 11:59 PM', user: 'Sarah Li', role: 'Editor', action: 'FAQ Update', details: 'Updated “How to Join a Group” section in Help Center.' },
-    { id: '7', timestamp: 'Jan 01, 2026 • 12:01 AM', user: 'System', role: '—', action: 'System Restart', details: 'Successfully restarted server after maintenance.' },
-    { id: '8', timestamp: 'Jan 01, 2026 • 12:05 AM', user: 'John Doe', role: 'Admin', action: 'User Creation', details: 'Created new user account for “alice.johnson@example.com”.' },
-];
+import SystemLogsTableRow from './SystemLogsTableRow';
+import { TableFrame, Pagination, FilterSelect } from '@/components/shared/TableComponents';
+import { useSystemLogs, useSystemLogFilters } from '@/services/system-logs';
 
 const SystemLogsTable: React.FC = () => {
     const [search, setSearch] = useState('');
@@ -22,10 +10,24 @@ const SystemLogsTable: React.FC = () => {
     const [roleFilter, setRoleFilter] = useState('');
     const [actionFilter, setActionFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const limit = 20;
+
+    // Fetch Filters
+    const { data: filters, isLoading: isLoadingFilters } = useSystemLogFilters();
+
+    // Fetch Logs
+    const { data: logsData, isLoading: isLoadingLogs } = useSystemLogs({
+        page: currentPage,
+        limit,
+        search: search || undefined,
+        userOrSystem: userFilter || undefined,
+        role: roleFilter || undefined,
+        action: actionFilter || undefined,
+    });
 
     const ColumnHeader = ({ label, width, sortable = true }: { label: string; width: string; sortable?: boolean }) => (
         <div className="flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer shrink-0" style={{ width }}>
-            <span className="text-[#AAAAAA] font-sans not-italic font-medium not-italic text-[0.63vw] opacity-100 group-hover:text-white transition-opacity whitespace-nowrap">
+            <span className="text-[#AAAAAA] font-sans not-italic font-medium text-[0.63vw] opacity-100 group-hover:text-white transition-opacity whitespace-nowrap">
                 {label}
             </span>
             {sortable && (
@@ -39,28 +41,47 @@ const SystemLogsTable: React.FC = () => {
         </div>
     );
 
+    const formattedLogs = useMemo(() => {
+        if (!logsData?.logs) return [];
+        return logsData.logs.map(log => ({
+            id: log._id,
+            timestamp: new Date(log.timestamp).toLocaleString('en-US', {
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            }).replace(',', ' •'),
+            user: log.userOrSystem,
+            role: log.role || '—',
+            action: log.action,
+            details: log.details
+        }));
+    }, [logsData]);
+
     return (
         <TableFrame
-            searchBar={<SearchInput value={search} onChange={setSearch} placeholder="Search" />}
+            searchBar={<SearchInput value={search} onChange={(val) => { setSearch(val); setCurrentPage(1); }} placeholder="Search" />}
             filterBar={
                 <>
                     <FilterSelect
                         label="User / System"
                         value={userFilter}
-                        options={['System', 'John Doe', 'Sarah Li'].map(opt => ({ label: opt, value: opt }))}
-                        onChange={setUserFilter}
+                        options={(filters?.userOrSystem || []).map(opt => ({ label: opt, value: opt }))}
+                        onChange={(val) => { setUserFilter(val); setCurrentPage(1); }}
                     />
                     <FilterSelect
                         label="Role"
                         value={roleFilter}
-                        options={['Admin', 'Moderator', 'Editor', '—'].map(opt => ({ label: opt, value: opt }))}
-                        onChange={setRoleFilter}
+                        options={(filters?.role || []).map(opt => ({ label: opt, value: opt }))}
+                        onChange={(val) => { setRoleFilter(val); setCurrentPage(1); }}
                     />
                     <FilterSelect
                         label="Action"
                         value={actionFilter}
-                        options={['Backup', 'Suspension', 'Login', 'Removal', 'Creation'].map(opt => ({ label: opt, value: opt }))}
-                        onChange={setActionFilter}
+                        options={(filters?.action || []).map(opt => ({ label: opt, value: opt }))}
+                        onChange={(val) => { setActionFilter(val); setCurrentPage(1); }}
                     />
                 </>
             }
@@ -75,24 +96,37 @@ const SystemLogsTable: React.FC = () => {
                 <ColumnHeader label="Details" width="35%" />
             </div>
 
-            <div className="flex flex-col">
-                {MOCK_LOGS.map((log) => (
-                    <SystemLogsTableRow key={log.id} data={log} />
-                ))}
+            <div className="flex flex-col min-h-[10vw]">
+                {isLoadingLogs ? (
+                    <div className="flex items-center justify-center w-full py-[5vw] text-[#AAAAAA] text-[0.83vw]">
+                        Loading logs...
+                    </div>
+                ) : formattedLogs.length > 0 ? (
+                    formattedLogs.map((log) => (
+                        <SystemLogsTableRow key={log.id} data={log} />
+                    ))
+                ) : (
+                    <div className="flex items-center justify-center w-full py-[5vw] text-[#AAAAAA] text-[0.83vw]">
+                        No logs found.
+                    </div>
+                )}
             </div>
 
             {/* Gap */}
             <div className="w-full h-[2.5vw]" />
 
             {/* Pagination */}
-            <Pagination
-                currentPage={currentPage}
-                totalPages={10}
-                onPageChange={setCurrentPage}
-                className="w-full px-[1.25vw] pb-[1.25vw]"
-            />
+            {logsData && logsData.pagination.totalPages > 1 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={logsData.pagination.totalPages}
+                    onPageChange={setCurrentPage}
+                    className="w-full px-[1.25vw] pb-[1.25vw]"
+                />
+            )}
         </TableFrame>
     );
 };
 
 export default SystemLogsTable;
+

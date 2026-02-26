@@ -6,7 +6,9 @@ import { SearchBar, Pagination, FilterSelect } from '@/components/shared/TableCo
 import { ArrowUp, ArrowDown, ChevronDown, MoreVertical, Eye, ChevronRight } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
-import { useUsers, useUserStatistics } from '@/services/users';
+import { useUsers, useUserStatistics, useExportUsers } from '@/services/users';
+import { downloadFileFromUrl } from '@/utils/download';
+import ExportModal from '@/components/shared/ExportModal';
 import { User } from '@/types/api';
 import { useAuthStore } from '@/store/auth-store';
 import { canDeleteModule } from '@/utils/permissions';
@@ -312,15 +314,48 @@ const UserTableSection = () => {
 
 export default function UserManagementPage() {
     const [selectedUserForDeactivation, setSelectedUserForDeactivation] = useState<string | null>(null);
+    const [isExportModalOpen, setIsExportModalOpen] = useState(false);
     const deactivateUserMutation = useDeactivateUser();
+    const exportUsersMutation = useExportUsers();
+
+    const handleExportDownload = (config: { format: string; activeFilter: string; startDate: string; endDate: string }) => {
+        const timelaps = config.activeFilter === 'All Time' ? 'allTime' :
+            config.activeFilter === 'Last 7 days' ? 'last7days' :
+                config.activeFilter === 'This Month' ? 'thisMonth' :
+                    config.activeFilter === 'Last Month' ? 'lastMonth' :
+                        config.activeFilter === 'Last 3 Months' ? 'last3Months' :
+                            config.activeFilter === 'Last 6 Months' ? 'last6Months' :
+                                config.activeFilter === 'This Year' ? 'thisYear' :
+                                    config.activeFilter === 'Last Year' ? 'lastYear' : 'allTime';
+
+        const format = config.format.toLowerCase() === 'json' ? 'json' : 'csv';
+        const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
+
+        exportUsersMutation.mutate(params, {
+            onSuccess: (data) => {
+                if (data?.fileUrl) {
+                    const dateStr = new Date().toISOString().split('T')[0];
+                    downloadFileFromUrl(data.fileUrl, `users-export-${dateStr}.${format}`);
+                }
+                setIsExportModalOpen(false);
+            },
+        });
+    };
 
     return (
         <UserActionContext.Provider value={{ onDeactivate: (id) => setSelectedUserForDeactivation(id) }}>
             <div className="flex flex-col items-start w-full max-w-[83.33vw]"
                 style={{ paddingLeft: '2.08vw', paddingTop: '1.77vw', paddingBottom: '2.08vw', paddingRight: '2.08vw' }}
             >
-                <div className="w-[79.17vw]">
+                <div className="w-[79.17vw] flex items-center justify-between">
                     <PageHeader title="Users Management" description="View, verify, and manage all registered users — including KYC status, bans, and account details." />
+                    <button
+                        onClick={() => setIsExportModalOpen(true)}
+                        className="flex items-center justify-center gap-[0.62vw] px-[1.25vw] py-[0.41vw] rounded-full border border-white backdrop-blur-[6px] cursor-pointer hover:bg-white/10 transition-all shrink-0"
+                    >
+                        <img src="/assets/Icons_figma/download.svg" alt="Export" className="w-[1.25vw] h-[1.25vw]" />
+                        <span className="text-white text-[0.83vw] font-medium leading-[120%]">{exportUsersMutation.isPending ? 'Exporting...' : 'Export'}</span>
+                    </button>
                 </div>
                 <div className="h-[1.49vw]" />
                 <StatRow />
@@ -341,6 +376,13 @@ export default function UserManagementPage() {
                         }}
                     />
                 </div>
+            )}
+
+            {isExportModalOpen && (
+                <ExportModal
+                    onCancel={() => setIsExportModalOpen(false)}
+                    onDownload={handleExportDownload}
+                />
             )}
         </UserActionContext.Provider>
     );

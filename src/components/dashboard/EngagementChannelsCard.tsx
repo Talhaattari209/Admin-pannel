@@ -80,7 +80,8 @@ const EngagementChannelsCard: React.FC = () => {
               verticalAlign="bottom"
               align="center"
               content={({ payload }) => (
-                <div className="flex flex-wrap items-center justify-center gap-x-[1.25vw] gap-y-[0.41vw] mt-[0.83vw] px-[1.66vw]">
+                <div className="flex flex-wrap items-center justify-center gap-x-[1.25vw] gap-y-[0.41vw] mt-[0.8 
+                3vw] px-[1.66vw]">
                   {payload?.map((entry: any, index: number) => (
                     <div key={index} className="flex items-center gap-[0.41vw]">
                       <div className="w-[0.62vw] h-[0.62vw] rounded-full" style={{ backgroundColor: entry.color }} />

@@ -8,6 +8,18 @@ import {
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
+export interface ExportResponse {
+    fileUrl: string;
+    format: string;
+}
+
+export interface ExportParams {
+    format?: string;
+    timelaps?: string;
+    startDate?: string;
+    endDate?: string;
+}
+
 // =============================================
 // Transform helpers — map API _id → id
 // =============================================
@@ -83,6 +95,13 @@ export const individualPromptsService = {
     delete: async (id: string): Promise<void> => {
         await apiClient.delete(`/admin/app-content/individual-prompts/${id}`);
     },
+
+    export: async (params?: ExportParams): Promise<ExportResponse> => {
+        const { data } = await apiClient.get<any>('/admin/app-content/individual-prompts/export', {
+            params: { format: 'csv', timelaps: 'allTime', ...params }
+        });
+        return data.data as ExportResponse;
+    },
 };
 
 // =============================================
@@ -122,6 +141,13 @@ export const groupPromptsService = {
 
     delete: async (id: string): Promise<void> => {
         await apiClient.delete(`/admin/app-content/group-prompts/${id}`);
+    },
+
+    export: async (params?: ExportParams): Promise<ExportResponse> => {
+        const { data } = await apiClient.get<any>('/admin/app-content/group-prompts/export', {
+            params: { format: 'csv', timelaps: 'allTime', ...params }
+        });
+        return data.data as ExportResponse;
     },
 };
 
@@ -163,6 +189,13 @@ export const legalContentService = {
     delete: async (id: string): Promise<void> => {
         await apiClient.delete(`/admin/app-content/legal-content/${id}`);
     },
+
+    export: async (params?: ExportParams): Promise<ExportResponse> => {
+        const { data } = await apiClient.get<any>('/admin/app-content/legal-content/export', {
+            params: { format: 'csv', timelaps: 'allTime', ...params }
+        });
+        return data.data as ExportResponse;
+    },
 };
 
 // =============================================
@@ -203,6 +236,13 @@ export const faqsService = {
     delete: async (id: string): Promise<void> => {
         await apiClient.delete(`/admin/app-content/faqs/${id}`);
     },
+
+    export: async (params?: ExportParams): Promise<ExportResponse> => {
+        const { data } = await apiClient.get<any>('/admin/app-content/faqs/export', {
+            params: { format: 'csv', timelaps: 'allTime', ...params }
+        });
+        return data.data as ExportResponse;
+    },
 };
 
 // =============================================
@@ -237,6 +277,12 @@ export const useDeleteIndividualPrompt = () => {
     return useMutation<void, AxiosError, string>({
         mutationFn: individualPromptsService.delete,
         onSuccess: () => { qc.invalidateQueries({ queryKey: ['individual-prompts'] }); },
+    });
+};
+
+export const useExportIndividualPrompts = () => {
+    return useMutation<ExportResponse, AxiosError, ExportParams | undefined>({
+        mutationFn: individualPromptsService.export,
     });
 };
 
@@ -275,6 +321,12 @@ export const useDeleteGroupPrompt = () => {
     });
 };
 
+export const useExportGroupPrompts = () => {
+    return useMutation<ExportResponse, AxiosError, ExportParams | undefined>({
+        mutationFn: groupPromptsService.export,
+    });
+};
+
 // =============================================
 // React Query Hooks — Legal Content
 // =============================================
@@ -310,6 +362,12 @@ export const useDeleteLegalContent = () => {
     });
 };
 
+export const useExportLegalContents = () => {
+    return useMutation<ExportResponse, AxiosError, ExportParams | undefined>({
+        mutationFn: legalContentService.export,
+    });
+};
+
 // =============================================
 // React Query Hooks — FAQs
 // =============================================
@@ -342,5 +400,11 @@ export const useDeleteFAQ = () => {
     return useMutation<void, AxiosError, string>({
         mutationFn: faqsService.delete,
         onSuccess: () => { qc.invalidateQueries({ queryKey: ['faqs'] }); },
+    });
+};
+
+export const useExportFAQs = () => {
+    return useMutation<ExportResponse, AxiosError, ExportParams | undefined>({
+        mutationFn: faqsService.export,
     });
 };

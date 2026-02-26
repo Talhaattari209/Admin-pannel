@@ -9,6 +9,7 @@ import { BugReportData } from '@/components/reported-problem/bugs-reported/BugsR
 import ExportModal from '@/components/shared/ExportModal';
 import DeactivationCard from '@/components/pop-cards/DeactivationCard';
 import SuccessCard from '@/components/pop-cards/SuccessCard';
+import { downloadFileFromUrl } from '@/utils/download';
 import {
     useUserReportDetail,
     useBugReportDetail,
@@ -93,17 +94,24 @@ export default function ReportedProblemsPage() {
         const timelaps = activeFilterToTimelaps[config.activeFilter] || 'allTime';
         const format = (config.format || 'JSON').toLowerCase() === 'csv' ? 'csv' : 'json';
         const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
+
+        const dateStr = new Date().toISOString().split('T')[0];
+
         if (exportType === 'users') {
             exportUserReports.mutate(params, {
                 onSuccess: (data) => {
-                    if (data?.fileUrl) window.open(data.fileUrl, '_blank');
+                    if (data?.fileUrl) {
+                        downloadFileFromUrl(data.fileUrl, `user-reports-${dateStr}.${format}`);
+                    }
                     setIsExportModalOpen(false);
                 },
             });
         } else {
             exportBugReports.mutate(params, {
                 onSuccess: (data) => {
-                    if (data?.fileUrl) window.open(data.fileUrl, '_blank');
+                    if (data?.fileUrl) {
+                        downloadFileFromUrl(data.fileUrl, `bug-reports-${dateStr}.${format}`);
+                    }
                     setIsExportModalOpen(false);
                 },
             });

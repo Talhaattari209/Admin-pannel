@@ -23,6 +23,7 @@ import AddFAQModal from './faq/modals/AddFAQModal';
 import EditFAQModal from './faq/modals/EditFAQModal';
 import FAQDetailsModal from './faq/modals/FAQDetailsModal';
 import ExportModal from '@/components/shared/ExportModal';
+import { downloadFileFromUrl } from '@/utils/download';
 
 // API Hooks
 import {
@@ -30,6 +31,7 @@ import {
     useGroupPrompts, useCreateGroupPrompt, useUpdateGroupPrompt, useDeleteGroupPrompt,
     useLegalContents, useCreateLegalContent, useUpdateLegalContent, useDeleteLegalContent,
     useFAQs, useCreateFAQ, useUpdateFAQ, useDeleteFAQ,
+    useExportIndividualPrompts, useExportGroupPrompts, useExportLegalContents, useExportFAQs,
 } from '@/services/app-content';
 
 const PromptsTable: React.FC = () => {
@@ -74,6 +76,11 @@ const PromptsTable: React.FC = () => {
     const createFAQ = useCreateFAQ();
     const updateFAQ = useUpdateFAQ();
     const deleteFAQ = useDeleteFAQ();
+
+    const exportIndividual = useExportIndividualPrompts();
+    const exportGroup = useExportGroupPrompts();
+    const exportLegal = useExportLegalContents();
+    const exportFAQ = useExportFAQs();
 
     // ---------- Resolve active query ----------
     const activeQuery = activeTab === 'individual' ? individualQuery
@@ -292,8 +299,49 @@ const PromptsTable: React.FC = () => {
                         <ExportModal
                             onCancel={() => setActiveModal(null)}
                             onDownload={(config) => {
-                                console.log('Exporting', config);
-                                setActiveModal(null);
+                                const timelaps = config.activeFilter === 'All Time' ? 'allTime' :
+                                    config.activeFilter === 'Last 7 days' ? 'last7days' :
+                                        config.activeFilter === 'This Month' ? 'thisMonth' :
+                                            config.activeFilter === 'Last Month' ? 'lastMonth' :
+                                                config.activeFilter === 'Last 3 Months' ? 'last3Months' :
+                                                    config.activeFilter === 'Last 6 Months' ? 'last6Months' :
+                                                        config.activeFilter === 'This Year' ? 'thisYear' :
+                                                            config.activeFilter === 'Last Year' ? 'lastYear' : 'allTime';
+
+                                const format = config.format.toLowerCase() === 'json' ? 'json' : 'csv';
+                                const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
+
+                                let mutation;
+                                let prefix = 'app-content';
+
+                                switch (activeTab) {
+                                    case 'individual':
+                                        mutation = exportIndividual;
+                                        prefix = 'individual-prompts';
+                                        break;
+                                    case 'group':
+                                        mutation = exportGroup;
+                                        prefix = 'group-prompts';
+                                        break;
+                                    case 'legal':
+                                        mutation = exportLegal;
+                                        prefix = 'legal-content';
+                                        break;
+                                    case 'faq':
+                                        mutation = exportFAQ;
+                                        prefix = 'faqs';
+                                        break;
+                                    default:
+                                        mutation = exportIndividual;
+                                }
+
+                                mutation.mutate(params, {
+                                    onSuccess: (data) => {
+                                        const dateStr = new Date().toISOString().split('T')[0];
+                                        downloadFileFromUrl(data.fileUrl, `${prefix}-${dateStr}.${format}`);
+                                        setActiveModal(null);
+                                    }
+                                });
                             }}
                         />
                     )}

@@ -3,6 +3,18 @@ import { User, UserStatistics, PaginatedResponse } from '@/types/api';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
+export interface ExportResponse {
+    fileUrl: string;
+    format: string;
+}
+
+export interface ExportParams {
+    format?: string;
+    timelaps?: string;
+    startDate?: string;
+    endDate?: string;
+}
+
 // Helper function to transform API response to frontend format
 const transformUser = (apiUser: any): User => {
     return {
@@ -66,6 +78,13 @@ export const usersService = {
     deactivateUser: async (id: string): Promise<void> => {
         await apiClient.delete(`/admin/users/${id}`);
     },
+
+    export: async (params?: ExportParams): Promise<ExportResponse> => {
+        const { data } = await apiClient.get<any>('/admin/users/export', {
+            params: { format: 'csv', timelaps: 'allTime', ...params }
+        });
+        return data.data as ExportResponse;
+    },
 };
 
 // React Query Hooks
@@ -100,5 +119,11 @@ export const useUserStatistics = () => {
     return useQuery<UserStatistics, AxiosError>({
         queryKey: ['user-statistics'],
         queryFn: usersService.getStatistics,
+    });
+};
+
+export const useExportUsers = () => {
+    return useMutation<ExportResponse, AxiosError, ExportParams | undefined>({
+        mutationFn: usersService.export,
     });
 };

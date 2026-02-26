@@ -67,7 +67,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
 
                 <div className="flex gap-[0.83vw]">
                     <button className="px-[1.67vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all cursor-pointer">
-                        View User's Profile
+                        Warn User
                     </button>
                     {canDelete && (
                         <button

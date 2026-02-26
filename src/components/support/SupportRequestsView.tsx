@@ -8,6 +8,7 @@ import { useAuthStore } from '@/store/auth-store';
 import { canExportModule } from '@/utils/permissions';
 import { useExportSupportRequests } from '@/services/support';
 import ExportModal from '@/components/shared/ExportModal';
+import { downloadFileFromUrl } from '@/utils/download';
 
 interface SupportRequestsViewProps {
     onViewDetail: (ticket: SupportTicketData) => void;
@@ -43,13 +44,8 @@ const SupportRequestsView: React.FC<SupportRequestsViewProps> = ({ onViewDetail 
             { format, timelaps, startDate: config.startDate, endDate: config.endDate },
             {
                 onSuccess: (result) => {
-                    // Programmatically trigger a file download from the returned S3 URL
-                    const a = document.createElement('a');
-                    a.href = result.fileUrl;
-                    a.download = `support-requests.${format.toLowerCase()}`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
+                    const filename = `support-requests-${new Date().toISOString().split('T')[0]}.${format}`;
+                    downloadFileFromUrl(result.fileUrl, filename);
                     setShowExportModal(false);
                 },
             }
