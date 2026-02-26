@@ -68,10 +68,10 @@ const StatRow = () => {
     const stats = [
         { label: "Total Users", value: (statistics?.totalUsers ?? 0).toLocaleString(), change: "12" },
         { label: "Active This Week", value: (statistics?.activeThisWeek ?? 0).toLocaleString(), change: "12", isUp: false },
-        { label: "Pending KYC", value: (statistics?.pendingKYC ?? 0).toLocaleString(), change: "12" },
+        { label: "Pending KYC", value: (statistics?.pendingKyc ?? 0).toLocaleString(), change: "12" },
         { label: "Suspended Accounts", value: (statistics?.suspendedAccounts ?? 0).toLocaleString(), change: "12", isUp: false },
         { label: "Verified Accounts", value: (statistics?.verifiedAccounts ?? 0).toLocaleString(), change: "12" },
-        { label: "Premium Subscribers", value: (statistics?.premiumSubscriptions ?? 0).toLocaleString(), change: "12", isUp: false },
+        { label: "Premium Subscribers", value: (statistics?.premiumSubscription ?? 0).toLocaleString(), change: "12", isUp: false },
     ];
 
     if (isLoading) {
@@ -129,7 +129,7 @@ const RowActions = ({ userId }: { userId: string }) => {
 
             {isOpen && (
                 <div className="absolute right-0 mt-[0.42vw] w-[12.5vw] bg-[#222222] backdrop-blur-[12px] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] z-50 py-[0.42vw] shadow-2xl animate-in fade-in zoom-in duration-150 flex flex-col">
-                    <button onClick={() => router.push(`/users/profile`)} className="flex items-center justify-between w-full h-[2.19vw] px-[0.63vw] hover:bg-white/10 transition-colors">
+                    <button onClick={() => router.push(`/users/profile?id=${userId}`)} className="flex items-center justify-between w-full h-[2.19vw] px-[0.63vw] hover:bg-white/10 transition-colors">
                         <div className="flex items-center gap-[0.83vw]">
                             <Eye className="w-[0.83vw] h-[0.83vw] text-white" />
                             <span className="font-normal text-[0.73vw] leading-[0.94vw] text-white whitespace-nowrap">View Details</span>

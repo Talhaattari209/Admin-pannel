@@ -17,6 +17,8 @@ import {
     useUpdateBugReportStatus,
     useExportUserReports,
     useExportBugReports,
+    useWarnUser,
+    useUpdateAccountStatus,
     activeFilterToTimelaps,
 } from '@/services/reported-problems';
 
@@ -37,6 +39,8 @@ export default function ReportedProblemsPage() {
     const updateBugStatus = useUpdateBugReportStatus();
     const exportUserReports = useExportUserReports();
     const exportBugReports = useExportBugReports();
+    const warnUserMutation = useWarnUser();
+    const accountStatusMutation = useUpdateAccountStatus();
 
     const userReportToShow = useMemo((): UserReportData | null => {
         if (!selectedUserReport) return null;
@@ -57,9 +61,33 @@ export default function ReportedProblemsPage() {
     };
 
     const confirmDeactivation = () => {
-        setIsDeactivationModalOpen(false);
-        setSuccessMessage({ title: "User Deactivated", description: "The account has been successfully deactivated. You can reactivate it anytime from the user's detail page." });
-        setIsSuccessModalOpen(true);
+        if (!selectedUserReport?.id) {
+            setIsDeactivationModalOpen(false);
+            return;
+        }
+        accountStatusMutation.mutate(
+            { reportId: selectedUserReport.id, status: 'deactivate' },
+            {
+                onSuccess: () => {
+                    setIsDeactivationModalOpen(false);
+                    setSuccessMessage({ title: "User Deactivated", description: "The account has been successfully deactivated. You can reactivate it anytime from the user's detail page." });
+                    setIsSuccessModalOpen(true);
+                },
+            }
+        );
+    };
+
+    const handleWarnUser = () => {
+        if (!selectedUserReport?.id) return;
+        warnUserMutation.mutate(
+            { reportId: selectedUserReport.id },
+            {
+                onSuccess: () => {
+                    setSuccessMessage({ title: "User Warned", description: "A warning has been sent to the user successfully." });
+                    setIsSuccessModalOpen(true);
+                },
+            }
+        );
     };
 
     const handleUpdateUserStatus = (status: string, notes: string) => {
@@ -134,6 +162,7 @@ export default function ReportedProblemsPage() {
                         onBack={handleBack}
                         onDeactivate={() => setIsDeactivationModalOpen(true)}
                         onUpdateStatus={handleUpdateUserStatus}
+                        onWarnUser={handleWarnUser}
                     />
                 )}
                 {viewState === 'bug-detail' && (

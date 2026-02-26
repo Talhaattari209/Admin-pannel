@@ -28,7 +28,7 @@ export interface SupportStats {
     totalRequests: number;
     openRequests: number;
     closedRequests: number;
-    avgResolutionTimeMs: number | null;
+    avgResolutionTimeMs: number;
 }
 
 // Returned by GET /admin/support-requests/:id (detail)

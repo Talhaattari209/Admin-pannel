@@ -1,15 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { UserProfileHeader } from '@/components/Headers';
 import { ProfileOverview, ProfileInfoCard, ProfileTabs } from '@/components/ProfileComponents';
 import { DeactivationCard, SuccessCard } from '@/components/PopCards';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/store/auth-store';
 import { canDeleteModule } from '@/utils/permissions';
+import { useUser, useDeactivateUser } from '@/services/users';
 
-export default function UserProfilePage() {
+function UserProfilePageContent() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const userId = searchParams.get('id') || '';
+
     const [activeTab, setActiveTab] = useState("Overview");
     const [isDeactivateOpen, setIsDeactivateOpen] = useState(false);
     const [isSuccessOpen, setIsSuccessOpen] = useState(false);
@@ -18,10 +22,21 @@ export default function UserProfilePage() {
     const isSuperAdmin = useAuthStore((state) => state.user?.isSuperAdmin);
     const canDeactivate = isSuperAdmin || canDeleteModule(permissions, 'users management');
 
+    const { data: user, isLoading } = useUser(userId);
+    const deactivateUserMutation = useDeactivateUser();
+
     const handleDeactivate = () => {
-        setIsDeactivateOpen(false);
-        setTimeout(() => setIsSuccessOpen(true), 300);
+        if (!userId) return;
+        deactivateUserMutation.mutate(userId, {
+            onSuccess: () => {
+                setIsDeactivateOpen(false);
+                setTimeout(() => setIsSuccessOpen(true), 300);
+            },
+        });
     };
+
+    const userName = user ? `${user.first_name} ${user.last_name}` : 'Loading...';
+    const userAge = user?.dob ? Math.floor((Date.now() - new Date(user.dob).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) : undefined;
 
     return (
         <div className="flex flex-col items-start w-full max-w-[83.33vw]"
@@ -29,15 +44,15 @@ export default function UserProfilePage() {
         >
             <div className="mb-[1.67vw] w-[79.17vw]">
                 <UserProfileHeader
-                    name="M. Abubakar"
-                    age={24}
-                    avatarUrl="/8.png"
-                    sex="Straight"
-                    religion="Muslim"
-                    location="Austin, TX"
-                    distance="2 miles"
-                    university="Stanford University"
-                    occupation="Software Engineer"
+                    name={userName}
+                    age={userAge}
+                    avatarUrl={user?.bestShorts?.[0] || '/8.png'}
+                    sex={user?.sexualOrientation?.join(', ') || ''}
+                    religion=""
+                    location=""
+                    distance=""
+                    university={user?.education || ''}
+                    occupation={user?.jobTitle || ''}
                     onBack={() => router.back()}
                     action={
                         canDeactivate ? (
@@ -59,8 +74,8 @@ export default function UserProfilePage() {
             </div>
 
             <div className="flex flex-row gap-[1.67vw] w-[79.17vw] items-start">
-                <ProfileOverview activeTab={activeTab} height="calc((100vh - 11.25vw - 58px) * 1.13)" />
-                <ProfileInfoCard />
+                <ProfileOverview activeTab={activeTab} height="calc((100vh - 11.25vw - 58px) * 1.13)" user={user} />
+                <ProfileInfoCard user={user} />
             </div>
 
             <DeactivationCard
@@ -75,5 +90,13 @@ export default function UserProfilePage() {
                 description="The account has been successfully deactivated. You can reactivate it anytime from the user's detail page."
             />
         </div>
+    );
+}
+
+export default function UserProfilePage() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center w-full h-full text-white/50">Loading...</div>}>
+            <UserProfilePageContent />
+        </Suspense>
     );
 }

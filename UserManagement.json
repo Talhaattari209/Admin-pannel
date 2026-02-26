@@ -1,4 +1,79 @@
-{
+GETBYID "/admin/users/699e46d1c0daf8eb32e218f7"
+
+response {
+    "success": true,
+    "message": "Success",
+    "statusCode": 200,
+    "data": {
+        "users": [
+            {
+                "_id": "699e46d1c0daf8eb32e218f7",
+                "firstName": "Ali",
+                "lastName": "Site",
+                "email": "wajahtali2k19bscs129@gmail.com",
+                "authType": "google",
+                "firebaseUserId": "1ia5Ngs03fVuqvF6BJ8X9gBvVd82",
+                "isPhoneVerified": false,
+                "isVerified": true,
+                "verifiedAt": "2026-02-25T00:48:17.401Z",
+                "sexualOrientation": [
+                    "straight"
+                ],
+                "lifestyleLikes": [
+                    "gym lover"
+                ],
+                "bestShorts": [
+                    "https://lh3.googleusercontent.com/a/ACg8ocJPO-uTSSxOfiMwbPqGloUSnsNFwwgYYSlrdnPtLlxkRcFb3_g=s96-c"
+                ],
+                "subscriptionActive": false,
+                "pokeBalance": 0,
+                "accountStatus": "active",
+                "createdAt": "2026-02-25T00:48:17.402Z",
+                "updatedAt": "2026-02-26T08:00:07.428Z",
+                "__v": 2,
+                "dob": "2001-05-05T00:00:00.000Z",
+                "education": "fgghh",
+                "gender": "male",
+                "jobTitle": "tuhhhb",
+                "pronouns": "She/Her",
+                "shortBio": "hhvfc",
+                "vibes": {
+                    "sports and outdoor": [
+                        "football"
+                    ],
+                    "food and drink": [
+                        "coffee lover"
+                    ],
+                    "music and arts": [
+                        "live concerts"
+                    ],
+                    "travel and adventure": [
+                        "van life"
+                    ],
+                    "tech and gaming": [
+                        "crypto & web"
+                    ],
+                    "reading and learning": null,
+                    "other fun interests": null
+                },
+                "id": "699e46d1c0daf8eb32e218f7",
+                "prompts": [
+                    {
+                        "id": "699e47e9c0daf8eb32e21926",
+                        "promptTitle": "hwjwjj",
+                        "promptAnswer": "https://fennec-bucket.s3.us-east-1.amazonaws.com/b0da2639-71af-4df3-8cf0-3bc0fed577f8.jpg",
+                        "type": "audio",
+                        "groupId": null,
+                        "createdAt": "2026-02-25T00:52:57.300Z",
+                        "updatedAt": "2026-02-25T00:52:57.300Z"
+                    }
+                ]
+            }
+        ]
+    }
+} 
+GET "stats"
+response {
     "data": [
         {
             "_id": "698bb873847715b1f69867fb",

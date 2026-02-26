@@ -7,6 +7,7 @@ import { RemoveMediaCard, RemovePromptResponseCard, SuccessCard } from './PopCar
 import { Pagination } from './shared/TableComponents';
 import { useAuthStore } from '@/store/auth-store';
 import { canDeleteModule } from '@/utils/permissions';
+import { User } from '@/types/api';
 
 
 // Import Swiper styles
@@ -62,7 +63,7 @@ export const ProfileTabs = ({ activeTab, onTabChange }: { activeTab: string, onT
 
 // --- ProfileMedia Component ---
 
-const ProfileMedia = () => {
+const ProfileMedia = ({ user }: { user?: User | null }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
     const [prevEl, setPrevEl] = useState<HTMLElement | null>(null);
     const [nextEl, setNextEl] = useState<HTMLElement | null>(null);
@@ -80,18 +81,13 @@ const ProfileMedia = () => {
         setTimeout(() => setIsSuccessOpen(true), 300);
     };
 
-    // Initial dummy images - using provided placeholders or generic ones
-    const images = [
-        '/8.png',
-        '/8.png',
-        '/8.png',
-        '/8.png',
-        '/8.png',
-        '/8.png'
-    ];
+    // Use bestShorts from the API response; fallback to placeholder if empty
+    const images = user?.bestShorts && user.bestShorts.length > 0
+        ? user.bestShorts
+        : ['/8.png'];
 
     return (
-        <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw]" style={{ minHeight: '35.5vw' }}> {/* Fine-tuned to 35.5vw */}
+        <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw]" style={{ minHeight: '35.5vw' }}>
 
             {/* Header */}
             <div className="flex flex-col gap-[0.83vw] w-[57.51vw]">
@@ -102,10 +98,10 @@ const ProfileMedia = () => {
             </div>
 
             {/* Main Content Area */}
-            <div className="flex flex-col gap-[1.15vw] w-full items-center"> {/* Reduced vertical spacing */}
+            <div className="flex flex-col gap-[1.15vw] w-full items-center">
 
                 {/* Upper Section: Arrows + Main Image */}
-                <div className="flex flex-row items-center justify-between w-[57.51vw]"> {/* Keeping arrows wide, aligning center */}
+                <div className="flex flex-row items-center justify-between w-[57.51vw]">
 
                     {/* Left Arrow */}
                     <button ref={(node) => setPrevEl(node)} className="flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full bg-[#16003F] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#2a0075] transition-colors z-10 cursor-pointer">
@@ -115,7 +111,7 @@ const ProfileMedia = () => {
                     {/* Main Swiper */}
                     <div className="w-[24.0vw] h-[24.0vw] rounded-[0.83vw] overflow-hidden relative group bg-black/20">
                         <Swiper
-                            loop={true}
+                            loop={images.length > 1}
                             spaceBetween={10}
                             navigation={{
                                 prevEl,
@@ -132,7 +128,7 @@ const ProfileMedia = () => {
 
                                         {/* Overlay Info */}
                                         <div className="absolute bottom-0 left-0 w-full h-[3.75vw] bg-gradient-to-t from-[#111111] to-transparent flex items-center justify-between px-[0.83vw]">
-                                            <span className="text-[0.73vw] text-white">Added: Nov 10, 2025 • 08:00 PM</span>
+                                            <span className="text-[0.73vw] text-white">Photo {index + 1} of {images.length}</span>
                                             {canDelete && (
                                                 <button
                                                     onClick={() => setIsRemoveOpen(true)}
@@ -159,9 +155,9 @@ const ProfileMedia = () => {
                 <div className="w-[24.0vw] h-[3.5vw]">
                     <Swiper
                         onSwiper={setThumbsSwiper}
-                        loop={true}
+                        loop={images.length > 1}
                         spaceBetween={8}
-                        slidesPerView={6}
+                        slidesPerView={Math.min(6, images.length)}
                         freeMode={true}
                         watchSlidesProgress={true}
                         modules={[FreeMode, Navigation, Thumbs]}
@@ -197,7 +193,7 @@ const ProfileMedia = () => {
 
 // --- ProfilePrompts Component ---
 
-export const ProfilePrompts = () => {
+export const ProfilePrompts = ({ user }: { user?: User | null }) => {
     const [isRemoveOpen, setIsRemoveOpen] = useState(false);
     const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
@@ -211,90 +207,89 @@ export const ProfilePrompts = () => {
         setTimeout(() => setIsSuccessOpen(true), 300);
     };
 
+    const formatDateTime = (dateStr?: string) => {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        return 'Added: ' + d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) + ' • ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    };
+
+    const prompts = user?.prompts || [];
+
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] h-[28.44vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw]"> {/* Reverted to original 28.44vw */}
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] min-h-[28.44vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw]">
             {/* Heading */}
             <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] h-[4.69vw] relative">
                 <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] w-full">
                     <h3 className="font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Prompts</h3>
-                    <p className="font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Review and moderate the user’s responses to personality and icebreaker prompts.</p>
+                    <p className="font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Review and moderate the user's responses to personality and icebreaker prompts.</p>
                 </div>
                 {/* Gradient Line */}
                 <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, #FFFFFF 100%)' }} />
             </div>
 
             {/* Prompts List */}
-            <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] h-[20.42vw]"> {/* Reverted to original 20.42vw */}
-                {/* Voice Prompt */}
-                <div className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] h-[7.08vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
-                    {/* Top Row: Question + Date + Trash */}
-                    <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
-                        <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">A perfect weekend for me looks like...</span>
-                        <span className="font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
-                        {canDelete && (
-                            <div
-                                className="flex justify-center items-center w-[1.67vw] h-[1.67vw] bg-[#FF4E4E] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] rounded-full cursor-pointer hover:bg-[#ff3333] transition-colors"
-                                onClick={() => setIsRemoveOpen(true)}
-                            >
-                                <Trash2 className="w-[0.83vw] h-[0.83vw] text-white" />
+            <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                {prompts.length === 0 ? (
+                    <div className="flex items-center justify-center w-full h-[15vw] text-white/50">
+                        <p>No prompts found for this user.</p>
+                    </div>
+                ) : (
+                    prompts.map((prompt) => (
+                        prompt.type === 'audio' ? (
+                            /* Audio Prompt */
+                            <div key={prompt.id} className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
+                                {/* Top Row: Question + Date + Trash */}
+                                <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
+                                    <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">{prompt.promptTitle}</span>
+                                    <span className="font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">{formatDateTime(prompt.createdAt)}</span>
+                                    {canDelete && (
+                                        <div
+                                            className="flex justify-center items-center w-[1.67vw] h-[1.67vw] bg-[#FF4E4E] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] rounded-full cursor-pointer hover:bg-[#ff3333] transition-colors"
+                                            onClick={() => setIsRemoveOpen(true)}
+                                        >
+                                            <Trash2 className="w-[0.83vw] h-[0.83vw] text-white" />
+                                        </div>
+                                    )}
+                                </div>
+                                {/* Audio Player */}
+                                <div className="flex flex-row items-center p-[0.21vw] gap-[0.63vw] w-[55.83vw] h-[2.92vw] bg-[#16003F] rounded-[2.5vw]">
+                                    <div className="flex justify-center items-center w-[2.5vw] h-[2.5vw] bg-[#5F00DB] rounded-full pl-[0.2vw] flex-shrink-0 cursor-pointer hover:bg-[#7000ff] transition-colors">
+                                        <Play className="w-[1.04vw] h-[1.04vw] text-white fill-white ml-[0.1vw]" />
+                                    </div>
+                                    <div className="flex-grow h-[1.88vw] relative flex items-center overflow-hidden">
+                                        <img src="/Audio Preview.png" alt="Audio Wave" className="w-[52vw] h-full object-contain opacity-50 ml-[-2vw]" />
+                                    </div>
+                                    <div className="w-[2.29vw] h-[0.73vw] flex items-center justify-center mr-[0.63vw] flex-shrink-0">
+                                        <span className="font-normal not-italic text-[0.63vw] leading-[0.73vw] text-white text-center">00:16</span>
+                                    </div>
+                                </div>
                             </div>
-                        )}
-                    </div>
-                    {/* Audio Player */}
-                    <div className="flex flex-row items-center p-[0.21vw] gap-[0.63vw] w-[55.83vw] h-[2.92vw] bg-[#16003F] rounded-[2.5vw]">
-                        {/* Play Button */}
-                        <div className="flex justify-center items-center w-[2.5vw] h-[2.5vw] bg-[#5F00DB] rounded-full pl-[0.2vw] flex-shrink-0 cursor-pointer hover:bg-[#7000ff] transition-colors">
-                            <Play className="w-[1.04vw] h-[1.04vw] text-white fill-white ml-[0.1vw]" />
-                        </div>
-                        {/* Wave Image */}
-                        <div className="flex-grow h-[1.88vw] relative flex items-center overflow-hidden">
-                            {/* Using the image provided by user */}
-                            <img src="/Audio Preview.png" alt="Audio Wave" className="w-[52vw] h-full object-contain opacity-50 ml-[-2vw]" />
-                        </div>
-                        {/* Time */}
-                        <div className="w-[2.29vw] h-[0.73vw] flex items-center justify-center mr-[0.63vw] flex-shrink-0">
-                            <span className="font-normal not-italic text-[0.63vw] leading-[0.73vw] text-white text-center">00:16</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Text Prompt 1 */}
-                <div className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] h-[5.83vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
-                    <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
-                        <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">My friends describe me as...</span>
-                        <span className="font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
-                        {canDelete && (
-                            <div
-                                className="flex justify-center items-center w-[1.67vw] h-[1.67vw] bg-[#FF4E4E] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] rounded-full cursor-pointer hover:bg-[#ff3333] transition-colors"
-                                onClick={() => setIsRemoveOpen(true)}
-                            >
-                                <Trash2 className="w-[0.83vw] h-[0.83vw] text-white" />
+                        ) : (
+                            /* Text / Image Prompt */
+                            <div key={prompt.id} className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
+                                <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
+                                    <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">{prompt.promptTitle}</span>
+                                    <span className="font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">{formatDateTime(prompt.createdAt)}</span>
+                                    {canDelete && (
+                                        <div
+                                            className="flex justify-center items-center w-[1.67vw] h-[1.67vw] bg-[#FF4E4E] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] rounded-full cursor-pointer hover:bg-[#ff3333] transition-colors"
+                                            onClick={() => setIsRemoveOpen(true)}
+                                        >
+                                            <Trash2 className="w-[0.83vw] h-[0.83vw] text-white" />
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="w-[55.83vw]">
+                                    {prompt.promptAnswer.startsWith('http') ? (
+                                        <img src={prompt.promptAnswer} alt="Prompt response" className="max-w-[20vw] max-h-[10vw] rounded-[0.63vw] object-cover" />
+                                    ) : (
+                                        <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-[#CCCCCC]">{prompt.promptAnswer}</span>
+                                    )}
+                                </div>
                             </div>
-                        )}
-                    </div>
-                    <div className="w-[55.83vw] h-[1.67vw]">
-                        <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-[#CCCCCC]">Quiet at first, but the funniest one once you know me.</span>
-                    </div>
-                </div>
-
-                {/* Text Prompt 2 */}
-                <div className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] h-[5.83vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
-                    <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
-                        <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">Two truths and a lie...</span>
-                        <span className="font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">Added: Nov 10, 2025 • 08:00 PM</span>
-                        {canDelete && (
-                            <div
-                                className="flex justify-center items-center w-[1.67vw] h-[1.67vw] bg-[#FF4E4E] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] rounded-full cursor-pointer hover:bg-[#ff3333] transition-colors"
-                                onClick={() => setIsRemoveOpen(true)}
-                            >
-                                <Trash2 className="w-[0.83vw] h-[0.83vw] text-white" />
-                            </div>
-                        )}
-                    </div>
-                    <div className="w-[55.83vw] h-[1.67vw]">
-                        <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-[#CCCCCC]">I’ve skydived, I hate pizza, I can juggle three oranges.</span>
-                    </div>
-                </div>
+                        )
+                    ))
+                )}
             </div>
 
             <RemovePromptResponseCard
@@ -332,11 +327,11 @@ const TagChip = ({ label, icon, color = "#5F00DB" }: { label: string, icon?: Rea
     </div>
 );
 
-export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: string, height?: string }) => {
-    if (activeTab === "Media") return <ProfileMedia />;
+export const ProfileOverview = ({ activeTab, height = "auto", user }: { activeTab: string, height?: string, user?: User | null }) => {
+    if (activeTab === "Media") return <ProfileMedia user={user} />;
     if (activeTab === "Groups") return <FullGroupCard />;
     if (activeTab === "Matches") return <ProfileMatches />;
-    if (activeTab === "Prompts") return <ProfilePrompts />;
+    if (activeTab === "Prompts") return <ProfilePrompts user={user} />;
     if (activeTab === "Pokes Activity") return <ProfilePokesActivity />;
     if (activeTab === "Subscription & Payments") return <ProfileSubscription />;
 
@@ -345,6 +340,15 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
             <span className="text-white/40">Content for {activeTab}</span>
         </div>
     );
+
+    const formatDate = (dateStr?: string) => {
+        if (!dateStr) return 'N/A';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    };
+
+    const lifestyleTags = user?.lifestyleLikes || [];
+    const vibesEntries = user?.vibes ? Object.entries(user.vibes).flatMap(([, values]) => values || []) : [];
 
     return (
         <div
@@ -367,28 +371,28 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
             <div className="flex flex-col flex-grow-0 gap-[0.73vw]">
                 {/* Row 1 */}
                 <div className="flex flex-row gap-[0.83vw]">
-                    <InfoField label="First Name" value="John" />
-                    <InfoField label="Last Name" value="Doe" />
+                    <InfoField label="First Name" value={user?.first_name || 'N/A'} />
+                    <InfoField label="Last Name" value={user?.last_name || 'N/A'} />
                 </div>
                 {/* Row 2 */}
                 <div className="flex flex-row gap-[0.83vw]">
-                    <InfoField label="Email" value="johndoe@email.com" />
-                    <InfoField label="Phone Number" value="+1 (234) 567 8900" />
+                    <InfoField label="Email" value={user?.email || 'N/A'} />
+                    <InfoField label="Phone Number" value={user?.phone || 'N/A'} />
                 </div>
                 {/* Row 3 */}
                 <div className="flex flex-row gap-[0.83vw]">
-                    <InfoField label="Date of Birth" value="Apr 16, 2003" />
-                    <InfoField label="Gender" value="Male" />
+                    <InfoField label="Date of Birth" value={formatDate(user?.dob)} />
+                    <InfoField label="Gender" value={user?.gender || 'N/A'} />
                 </div>
                 {/* Row 4 */}
                 <div className="flex flex-row gap-[0.83vw]">
-                    <InfoField label="Your Sexual Orientation" value="Straight" />
-                    <InfoField label="Your Pronouns" value="He/Him" />
+                    <InfoField label="Sexual Orientation" value={user?.sexualOrientation?.join(', ') || 'N/A'} />
+                    <InfoField label="Pronouns" value={user?.pronouns || 'N/A'} />
                 </div>
                 {/* Row 5 */}
                 <div className="flex flex-row gap-[0.83vw]">
-                    <InfoField label="Job Title / Occupation" value="Software Engineer" />
-                    <InfoField label="Education / School" value="Stanford University" />
+                    <InfoField label="Job Title / Occupation" value={user?.jobTitle || 'N/A'} />
+                    <InfoField label="Education / School" value={user?.education || 'N/A'} />
                 </div>
 
                 {/* Bio */}
@@ -397,67 +401,41 @@ export const ProfileOverview = ({ activeTab, height = "auto" }: { activeTab: str
                         Short Bio
                     </label>
                     <span className="font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white">
-                        Code, climb, repeat. Always up for a challenge — unless it's karaoke.
+                        {user?.shortBio || 'No bio provided.'}
                     </span>
                 </div>
 
                 {/* Lifestyle Tags */}
-                <div className="flex flex-col gap-[0.63vw] w-full mb-[0.53vw]">
-                    <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
-                        Lifestyle Tags
-                    </label>
-                    <div className="flex flex-row flex-wrap gap-[0.73vw]">
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.73vw] text-white">Adventure seeker</span>
-                            <CompressIcon className="w-[0.83vw] h-[0.83vw] text-white" />
-                        </div>
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.73vw] text-white">Nature explorer</span>
-                            <LeafIcon className="w-[0.83vw] h-[0.83vw] text-[#3ADC60]" />
-                        </div>
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.73vw] text-white">Foodie</span>
-                            <CoffeeIcon className="w-[0.83vw] h-[0.83vw] text-white" />
-                        </div>
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.73vw] text-white">Dog parent</span>
-                            <span className="text-[0.83vw]">🐶</span>
-                        </div>
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.73vw] text-white">Early riser</span>
-                            <span className="text-[0.83vw]">🌅</span>
+                {lifestyleTags.length > 0 && (
+                    <div className="flex flex-col gap-[0.63vw] w-full mb-[0.53vw]">
+                        <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
+                            Lifestyle Tags
+                        </label>
+                        <div className="flex flex-row flex-wrap gap-[0.73vw]">
+                            {lifestyleTags.map((tag, i) => (
+                                <div key={i} className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                                    <span className="text-[0.73vw] text-white">{tag}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </div>
+                )}
 
-                {/* Interests */}
-                <div className="flex flex-col gap-[0.63vw] w-full">
-                    <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
-                        Interests
-                    </label>
-                    <div className="flex flex-row flex-wrap gap-[0.73vw]">
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.83vw]">🎸</span>
-                            <span className="text-[0.73vw] text-white">Music Festivals</span>
-                        </div>
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.83vw]">🌭</span>
-                            <span className="text-[0.73vw] text-white">Street Food Explorer</span>
-                        </div>
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.83vw]">📸</span>
-                            <span className="text-[0.73vw] text-white">Photography</span>
-                        </div>
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.83vw]">⛺</span>
-                            <span className="text-[0.73vw] text-white">Weekend Escapes</span>
-                        </div>
-                        <div className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                            <span className="text-[0.83vw]">🎨</span>
-                            <span className="text-[0.73vw] text-white">Art & Design</span>
+                {/* Vibes / Interests */}
+                {vibesEntries.length > 0 && (
+                    <div className="flex flex-col gap-[0.63vw] w-full">
+                        <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
+                            Interests
+                        </label>
+                        <div className="flex flex-row flex-wrap gap-[0.73vw]">
+                            {vibesEntries.map((vibe, i) => (
+                                <div key={i} className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
+                                    <span className="text-[0.73vw] text-white">{vibe}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );
@@ -484,29 +462,40 @@ const InfoRow = ({ label, value, isBadge = false }: { label: string, value: stri
     </div>
 );
 
-export const ProfileInfoCard = () => (
-    <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[19.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] h-fit">
-        {/* Heading */}
-        <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] relative">
-            <h3 className="font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">
-                Profile Info
-            </h3>
-            {/* Gradient Line */}
-            <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, #FFFFFF 100%)' }} />
-        </div>
+export const ProfileInfoCard = ({ user }: { user?: User | null }) => {
+    const formatDateTime = (dateStr?: string | null) => {
+        if (!dateStr) return 'N/A';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) + ' • ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    };
 
-        {/* Content */}
-        <div className="flex flex-col gap-[0.83vw]">
-            <InfoRow label="Membership" value="Premium" isBadge={true} />
-            <InfoRow label="Groups" value="3" />
-            <InfoRow label="Matches" value="12" />
-            <InfoRow label="Pokes Sent" value="15" />
-            <InfoRow label="Reports" value="0" />
-            <InfoRow label="Last Active" value="Nov 10, 2025 • 8:42 PM" />
-            <InfoRow label="Joined" value="Nov 01, 2025 • 8:42 PM" />
+    return (
+        <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[19.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] h-fit">
+            {/* Heading */}
+            <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] relative">
+                <h3 className="font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">
+                    Profile Info
+                </h3>
+                {/* Gradient Line */}
+                <div className="absolute bottom-0 left-0 w-full h-[1px]" style={{ background: 'linear-gradient(90deg, #5F00DB 0%, #FFFFFF 100%)' }} />
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col gap-[0.83vw]">
+                <InfoRow label="Membership" value={user?.subscriptionActive ? 'Premium' : 'Free'} isBadge={true} />
+                <InfoRow label="Account Status" value={user?.accountStatus || 'active'} />
+                <InfoRow label="Auth Type" value={user?.authType || 'N/A'} />
+                <InfoRow label="Poke Balance" value={String(user?.pokeBalance ?? 0)} />
+                <InfoRow label="Verified" value={user?.verified ? 'Yes' : 'No'} />
+                <InfoRow label="Verified At" value={user?.verifiedAt ? formatDateTime(user.verifiedAt) : 'N/A'} />
+                <InfoRow label="Phone Verified" value={user?.isPhoneVerified ? 'Yes' : 'No'} />
+                <InfoRow label="Country" value={user?.countryCode || 'N/A'} />
+                <InfoRow label="Last Active" value={formatDateTime(user?.last_active)} />
+                <InfoRow label="Joined" value={formatDateTime(user?.created_at)} />
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 // --- Dummy Icons ---
 const CompressIcon = (props: any) => <Compass {...props} />;

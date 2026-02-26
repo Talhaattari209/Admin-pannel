@@ -85,15 +85,33 @@ export interface User {
     verified: boolean;
     created_at: string;
     last_active?: string | null;
+    dob?: string;
+    gender?: string;
+    sexualOrientation?: string[];
+    pronouns?: string;
+    shortBio?: string;
+    jobTitle?: string;
+    education?: string;
+    lifestyleLikes?: string[];
+    vibes?: Record<string, string[] | null>;
+    bestShorts?: string[];
+    accountStatus?: string;
+    authType?: string;
+    subscriptionActive?: boolean;
+    pokeBalance?: number;
+    countryCode?: string;
+    isPhoneVerified?: boolean;
+    verifiedAt?: string;
+    prompts?: { id: string; promptTitle: string; promptAnswer: string; type: string; groupId?: string | null; createdAt: string; updatedAt: string }[];
 }
 
 export interface UserStatistics {
     totalUsers: number;
     activeThisWeek: number;
-    pendingKYC: number;
+    pendingKyc: number;
     suspendedAccounts: number;
     verifiedAccounts: number;
-    premiumSubscriptions: number;
+    premiumSubscription: number;
 }
 
 export interface PaginatedResponse<T = any> {

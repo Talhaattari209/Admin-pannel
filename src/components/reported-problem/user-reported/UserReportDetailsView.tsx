@@ -10,9 +10,10 @@ interface UserReportDetailsViewProps {
     onBack: () => void;
     onDeactivate: () => void;
     onUpdateStatus: (status: string, notes: string) => void;
+    onWarnUser?: () => void;
 }
 
-const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, onBack, onDeactivate, onUpdateStatus }) => {
+const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, onBack, onDeactivate, onUpdateStatus, onWarnUser }) => {
     const [status, setStatus] = useState(report?.status || 'New');
     const [notes, setNotes] = useState('');
     const [showDeactivateModal, setShowDeactivateModal] = useState(false);
@@ -66,7 +67,10 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                 </div>
 
                 <div className="flex gap-[0.83vw]">
-                    <button className="px-[1.67vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all cursor-pointer">
+                    <button
+                        onClick={() => onWarnUser?.()}
+                        className="px-[1.67vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all cursor-pointer"
+                    >
                         Warn User
                     </button>
                     {canDelete && (

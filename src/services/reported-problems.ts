@@ -104,6 +104,15 @@ export interface ExportResponse {
     format: string;
 }
 
+export interface WarnAccountStatusResponse {
+    user: {
+        id: string;
+        email: string;
+        accountStatus: string;
+        previousStatus: string;
+    };
+}
+
 // =============================================
 // UI types (match existing table row components)
 // =============================================
@@ -240,6 +249,24 @@ export const reportedProblemsService = {
         const { data } = await apiClient.get<{ data: ExportResponse }>('/admin/reported-problems/users/export', {
             params: { format: 'csv', timelaps: 'allTime', ...params },
         });
+        return data.data;
+    },
+
+    // Warn a reported user
+    warnUser: async (reportId: string, note?: string): Promise<WarnAccountStatusResponse> => {
+        const { data } = await apiClient.put<{ data: WarnAccountStatusResponse }>(
+            `/admin/reported-problems/users/${reportId}/warn`,
+            { note: note || '' }
+        );
+        return data.data;
+    },
+
+    // Change reported user account status (active / deactivate)
+    updateAccountStatus: async (reportId: string, status: string): Promise<WarnAccountStatusResponse> => {
+        const { data } = await apiClient.put<{ data: WarnAccountStatusResponse }>(
+            `/admin/reported-problems/users/${reportId}/account-status`,
+            { status }
+        );
         return data.data;
     },
 
@@ -406,5 +433,29 @@ export const useExportBugReports = () => {
         { format?: string; timelaps?: string; startDate?: string; endDate?: string } | undefined
     >({
         mutationFn: (params) => reportedProblemsService.exportBugReports(params),
+    });
+};
+
+// =============================================
+// React Query hooks – Warn User & Account Status
+// =============================================
+
+export const useWarnUser = () => {
+    const qc = useQueryClient();
+    return useMutation<WarnAccountStatusResponse, AxiosError, { reportId: string; note?: string }>({
+        mutationFn: ({ reportId, note }) => reportedProblemsService.warnUser(reportId, note),
+        onSuccess: () => {
+            qc.invalidateQueries({ queryKey: ['reported-problems', 'users'] });
+        },
+    });
+};
+
+export const useUpdateAccountStatus = () => {
+    const qc = useQueryClient();
+    return useMutation<WarnAccountStatusResponse, AxiosError, { reportId: string; status: string }>({
+        mutationFn: ({ reportId, status }) => reportedProblemsService.updateAccountStatus(reportId, status),
+        onSuccess: () => {
+            qc.invalidateQueries({ queryKey: ['reported-problems', 'users'] });
+        },
     });
 };

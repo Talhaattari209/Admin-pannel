@@ -23,10 +23,36 @@ const transformUser = (apiUser: any): User => {
         last_name: apiUser.lastName || '',
         email: apiUser.email || '',
         phone: apiUser.phone || undefined,
-        status: apiUser.status || 'free',
+        status: apiUser.subscriptionActive ? 'premium' : 'free',
         verified: apiUser.isVerified || false,
         created_at: apiUser.createdAt || apiUser.created_at || '',
         last_active: apiUser.updatedAt || apiUser.last_active || null,
+        dob: apiUser.dob || undefined,
+        gender: apiUser.gender || undefined,
+        sexualOrientation: apiUser.sexualOrientation || [],
+        pronouns: apiUser.pronouns || undefined,
+        shortBio: apiUser.shortBio || undefined,
+        jobTitle: apiUser.jobTitle || undefined,
+        education: apiUser.education || undefined,
+        lifestyleLikes: apiUser.lifestyleLikes || [],
+        vibes: apiUser.vibes || undefined,
+        bestShorts: apiUser.bestShorts || [],
+        accountStatus: apiUser.accountStatus || 'active',
+        authType: apiUser.authType || undefined,
+        subscriptionActive: apiUser.subscriptionActive || false,
+        pokeBalance: apiUser.pokeBalance || 0,
+        countryCode: apiUser.countryCode || undefined,
+        isPhoneVerified: apiUser.isPhoneVerified || false,
+        verifiedAt: apiUser.verifiedAt || undefined,
+        prompts: (apiUser.prompts || []).map((p: any) => ({
+            id: p.id || p._id,
+            promptTitle: p.promptTitle || '',
+            promptAnswer: p.promptAnswer || '',
+            type: p.type || 'text',
+            groupId: p.groupId || null,
+            createdAt: p.createdAt || '',
+            updatedAt: p.updatedAt || '',
+        })),
     };
 };
 
@@ -67,12 +93,16 @@ export const usersService = {
 
     getById: async (id: string): Promise<User> => {
         const { data } = await apiClient.get<any>(`/admin/users/${id}`);
-        return transformUser(data);
+        // API returns: { data: { users: [...] } } with a single-element array
+        const users = data.data?.users || [];
+        if (users.length > 0) return transformUser(users[0]);
+        throw new Error('User not found');
     },
 
     getStatistics: async (): Promise<UserStatistics> => {
-        const { data } = await apiClient.get<UserStatistics>('/admin/users/stats');
-        return data;
+        const { data } = await apiClient.get<any>('/admin/users/stats');
+        // API returns: { data: { totalUsers, activeThisWeek, ... } }
+        return (data.data || data) as UserStatistics;
     },
 
     deactivateUser: async (id: string): Promise<void> => {
