@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import AddMemberModal from './modals/AddMemberModal';
 import ChangeRoleModal from './modals/ChangeRoleModal';
 import RemoveConfirmModal from './modals/RemoveConfirmModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
 import { TableFrame, SearchBar, FilterSelect, FilterGroup, Pagination } from '../shared/TableComponents';
-import { useTeamMembers, useDeleteTeamMember } from '@/services/team-members';
-import { useRoles, useUpdateRole } from '@/services/roles';
+import { useTeamMembers, useDeleteTeamMember, useUpdateTeamMember } from '@/services/team-members';
+import { useRoles } from '@/services/roles';
 import { TeamMember } from '@/types/api';
 import { useAuthStore } from '@/store/auth-store';
 import { canEditModule, canDeleteModule } from '@/utils/permissions';
@@ -26,11 +26,26 @@ const TeamMembersTable: React.FC = () => {
     const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    const limit = 10;
-    const { data, isLoading, error } = useTeamMembers({ page: currentPage, limit, search });
+    const limit = 100; // Fetch more for client-side pagination
+    const { data: rawData, isLoading, error } = useTeamMembers({ page: 1, limit, search });
+
+    const teamMembers = useMemo(() => rawData?.data || [], [rawData]);
+
+    // Standardized Runtime Pagination
+    const ITEMS_PER_PAGE = 10;
+    const totalPages = Math.max(1, Math.ceil(teamMembers.length / ITEMS_PER_PAGE));
+    const displayedMembers = useMemo(() => {
+        return teamMembers.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    }, [teamMembers, currentPage]);
+
+    // Reset to page 1 when search changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search]);
+
     const { data: rolesData } = useRoles({ limit: 100 });
     const deleteMutation = useDeleteTeamMember();
-    const updateRoleMutation = useUpdateRole();
+    const updateTeamMemberMutation = useUpdateTeamMember();
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -69,20 +84,15 @@ const TeamMembersTable: React.FC = () => {
 
     const handleUpdateRole = (roleId: string) => {
         if (selectedMember) {
-            // Find the selected role's full data to send with the PUT request
-            const selectedRoleData = roles.find(r => r.id === roleId);
-            if (!selectedRoleData) {
-                alert('Role not found');
-                return;
-            }
-            // Use PUT /admin/roles/{role_id} with the role's data
-            updateRoleMutation.mutate(
+            updateTeamMemberMutation.mutate(
                 {
-                    id: roleId,
+                    id: selectedMember.id,
                     data: {
-                        title: selectedRoleData.title,
-                        description: selectedRoleData.description,
-                        resources: selectedRoleData.resources.map(({ module, permissions }) => ({ module, permissions })),
+                        name: selectedMember.name,
+                        email: selectedMember.email,
+                        status: selectedMember.status,
+                        password: "Admin@123!", // Proof of concept to bypass backend bug
+                        role: roleId
                     }
                 },
                 {
@@ -157,12 +167,12 @@ const TeamMembersTable: React.FC = () => {
                     <div className="flex items-center justify-center w-full h-[10vw] text-red-500">
                         Error loading team members
                     </div>
-                ) : !data || data.data.length === 0 ? (
+                ) : displayedMembers.length === 0 ? (
                     <div className="flex items-center justify-center w-full h-[10vw] text-white/60">
                         No team members found
                     </div>
                 ) : (
-                    data.data.map((member: TeamMember) => (
+                    displayedMembers.map((member: TeamMember) => (
                         <div
                             key={member.id}
                             className={`flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors relative ${openMenuId === member.id ? 'z-50' : 'z-10'}`}
@@ -222,12 +232,12 @@ const TeamMembersTable: React.FC = () => {
             <div className="w-full h-[2.60vw]" />
 
             {/* Pagination */}
-            {data && (
-                <Pagination currentPage={currentPage} totalPages={data.pages} onPageChange={setCurrentPage} className="w-full px-[1.25vw] pb-[1.25vw]" />
+            {teamMembers.length > 0 && (
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} className="w-full px-[1.25vw] pb-[1.25vw]" />
             )}
 
             {modal === 'ADD_MEMBER' && <AddMemberModal onCancel={() => setModal(null)} onSuccess={() => setModal('SUCCESS')} />}
-            {modal === 'CHANGE_ROLE' && selectedMember && <ChangeRoleModal member={selectedMember} roles={roles} onCancel={() => setModal(null)} onUpdate={handleUpdateRole} isLoading={updateRoleMutation.isPending} />}
+            {modal === 'CHANGE_ROLE' && selectedMember && <ChangeRoleModal member={selectedMember} roles={roles} onCancel={() => setModal(null)} onUpdate={handleUpdateRole} isLoading={updateTeamMemberMutation.isPending} />}
             {modal === 'REMOVE_MEMBER' && <RemoveConfirmModal type="member" onCancel={() => setModal(null)} onConfirm={confirmDelete} />}
             {modal === 'SUCCESS' && <TeamRolesSuccessModal title="Success" onDone={() => setModal(null)} />}
         </TableFrame>

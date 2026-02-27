@@ -20,9 +20,10 @@ interface FAQTableRowProps {
     data: FAQRowData;
     onEdit: (data: FAQRowData) => void;
     onDelete: (id: string) => void;
+    onViewDetails?: (data: FAQRowData) => void;
 }
 
-const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete }) => {
+const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete, onViewDetails }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +35,7 @@ const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete }) => 
     const canDelete = isSuperAdmin || canDeleteModule(permissions, 'app content');
 
     // Show menu only if at least one action is available
-    const showActionMenu = canEdit || canDelete;
+    const showActionMenu = canEdit || canDelete || !!onViewDetails;
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -75,11 +76,11 @@ const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete }) => 
                     className="w-[1.88vw] h-[1.88vw] rounded-full bg-cover bg-center shrink-0"
                     style={{ backgroundImage: `url(${data.updatedBy.avatar})` }}
                 />
-                <div className="flex flex-col justify-center items-start gap-[0.21vw]">
+                <div className="flex flex-col justify-center items-start truncate gap-[0.21vw]">
                     <span className="text-white  font-normal not-italic text-[0.73vw] leading-[0.83vw]">
                         {data.updatedBy.name}
                     </span>
-                    <span className="text-white/50  font-light not-italic text-[0.57vw] leading-[0.83vw] tracking-[0.02em]">
+                    <span className="text-white/50  font-light truncate not-italic text-[0.57vw] leading-[0.83vw] tracking-[0.02em]">
                         {data.updatedBy.email}
                     </span>
                 </div>
@@ -109,16 +110,22 @@ const FAQTableRow: React.FC<FAQTableRowProps> = ({ data, onEdit, onDelete }) => 
 
                         {isMenuOpen && (
                             <div ref={menuRef} className="absolute top-[80%] right-full mr-[0.42vw] w-[11.46vw] bg-[#1a1a1a] border border-[#666666]/50 rounded-[0.63vw] shadow-2xl z-50 overflow-hidden py-[0.42vw] animate-in fade-in slide-in-from-right-2 duration-200">
+                                {onViewDetails && (
+                                    <button onClick={() => { setIsMenuOpen(false); onViewDetails(data); }} className="flex items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.63vw] hover:bg-white/5 transition-colors text-left text-white text-[0.73vw] font-inter not-italic">
+                                        <img src="/assets/View_details.svg" alt="View" className="w-[0.83vw] h-[0.83vw] opacity-60" />
+                                        View details
+                                    </button>
+                                )}
                                 {canEdit && (
                                     <button onClick={() => { setIsMenuOpen(false); onEdit(data); }} className="flex items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.63vw] hover:bg-white/5 transition-colors text-left text-white text-[0.73vw] font-inter not-italic">
                                         <Edit2 className="w-[0.83vw] h-[0.83vw] opacity-60" />
-                                        Edit
+                                        Edit FAQ
                                     </button>
                                 )}
                                 {canDelete && (
                                     <button onClick={() => { setIsMenuOpen(false); onDelete(data.id); }} className="flex items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.63vw] hover:bg-white/5 transition-colors text-left text-[#FF4E4E] text-[0.73vw] font-inter not-italic">
                                         <Trash2 className="w-[0.83vw] h-[0.83vw] opacity-60" />
-                                        Delete
+                                        Delete FAQ
                                     </button>
                                 )}
                             </div>

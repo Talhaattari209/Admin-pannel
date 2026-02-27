@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import SearchInput from '@/components/app-content/shared/SearchInput';
 import { Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import BugsReportedTableRow, { BugReportData } from './BugsReportedTableRow';
@@ -6,23 +6,37 @@ import { useBugsReports } from '@/services/reported-problems';
 
 interface BugsReportedTableProps {
     onViewDetail: (bug: BugReportData) => void;
+    canEdit?: boolean;
 }
 
-const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) => {
+const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail, canEdit = false }) => {
     const [search, setSearch] = useState('');
     const [issueTypeFilter, setIssueTypeFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
-    const { data, isLoading } = useBugsReports({
-        page: currentPage,
-        limit: 20,
+    const limit = 100; // Fetch more for client-side pagination
+    const { data: rawData, isLoading } = useBugsReports({
+        page: 1, // Always fetch first 100
+        limit,
         search: search || undefined,
         status: statusFilter || undefined,
         issueType: issueTypeFilter || undefined,
     });
-    const reports = data?.reports ?? [];
-    const pagination = data?.pagination ?? { page: 1, limit: 20, total: 0, totalPages: 1 };
+
+    const reports = useMemo(() => rawData?.reports ?? [], [rawData]);
+
+    // Standardized Runtime Pagination
+    const ITEMS_PER_PAGE = 20;
+    const totalPages = Math.max(1, Math.ceil(reports.length / ITEMS_PER_PAGE));
+    const displayedBugs = useMemo(() => {
+        return reports.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    }, [reports, currentPage]);
+
+    // Reset to page 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, statusFilter, issueTypeFilter]);
 
     const ColumnHeader = ({ label, grow = false, width = "auto" }: { label: string, grow?: boolean, width?: string }) => (
         <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
@@ -70,11 +84,11 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
             <div className="flex flex-col overflow-visible">
                 {isLoading ? (
                     <div className="flex items-center justify-center py-[3vw] text-white/60 text-[0.83vw]">Loading...</div>
-                ) : reports.length === 0 ? (
+                ) : displayedBugs.length === 0 ? (
                     <div className="flex items-center justify-center py-[3vw] text-white/60 text-[0.83vw]">No reports found.</div>
                 ) : (
-                    reports.map((bug) => (
-                        <BugsReportedTableRow key={bug.id} data={bug} onAction={(_action, b) => onViewDetail(b)} />
+                    displayedBugs.map((bug) => (
+                        <BugsReportedTableRow key={bug.id} data={bug} onAction={(_action, b) => onViewDetail(b)} canEdit={canEdit} />
                     ))
                 )}
 
@@ -82,12 +96,14 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail }) =
                 <div className="mt-auto w-full h-[2.5vw]" />
 
                 {/* Pagination */}
-                <Pagination
-                    currentPage={pagination.page}
-                    totalPages={Math.max(1, pagination.totalPages)}
-                    onPageChange={setCurrentPage}
-                    className="w-full px-[1.25vw] pb-[1.25vw]"
-                />
+                {reports.length > 0 && (
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                        className="w-full px-[1.25vw] pb-[1.25vw]"
+                    />
+                )}
             </div>
         </div>
     );

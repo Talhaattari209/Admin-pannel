@@ -6,9 +6,10 @@ interface BugReportDetailsViewProps {
     bug: BugReportData | null;
     onBack: () => void;
     onUpdateStatus?: (status: string, notes: string) => void;
+    canEdit?: boolean;
 }
 
-const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack, onUpdateStatus }) => {
+const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack, onUpdateStatus, canEdit = false }) => {
     const [status, setStatus] = useState(bug?.status || 'New');
     const [notes, setNotes] = useState('');
     const [revealedImages, setRevealedImages] = useState<Record<number, boolean>>({});
@@ -61,10 +62,10 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
             </div>
 
             {/* Main Layout Row */}
-            <div className="flex flex-row gap-[0.83vw] w-full items-start justify-center">
+            <div className="flex flex-row gap-[0.83vw] w-full items-start justify-start">
 
                 {/* Left Column: Details & Activity */}
-                <div className="flex flex-col gap-[1.67vw] w-full flex-grow flex-shrink">
+                <div className="flex flex-col gap-[1.67vw] w-full max-w-[calc(100%-20vw)] flex-shrink">
 
                     {/* Reported Bug Card */}
                     <div className="flex flex-col p-[1.67vw] bg-[#222222] border border-[#666666]/30 rounded-[1.25vw]">
@@ -180,54 +181,56 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
 
                 </div>
 
-                {/* Right Column: Actions Sidebar */}
-                <div className="flex flex-col gap-[0.52vw] w-[19.17vw] shrink-0 sticky top-[1.67vw]">
-                    <div className="flex flex-col p-[0.83vw] gap-[0.83vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] h-auto">
-                        <h3 className="text-white text-[1.46vw] font-bold not-italic">Actions</h3>
-                        <GradientLine />
+                {/* Right Column: Actions Sidebar — only visible with edit permission */}
+                {canEdit && (
+                    <div className="flex flex-col gap-[0.52vw] w-[19.17vw] shrink-0 sticky top-[1.67vw]">
+                        <div className="flex flex-col p-[0.83vw] gap-[0.83vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] h-auto">
+                            <h3 className="text-white text-[1.46vw] font-bold not-italic">Actions</h3>
+                            <GradientLine />
 
-                        {/* Status Dropdown */}
-                        <div className="flex flex-col gap-[0.42vw]">
-                            <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Status</label>
-                            <div className="relative border-b border-white py-[0.42vw] group">
-                                <select
-                                    value={status}
-                                    onChange={(e) => setStatus(e.target.value as any)}
-                                    className="w-full bg-transparent text-white text-[0.94vw] appearance-none focus:outline-none cursor-pointer"
-                                >
-                                    <option className="bg-[#222222]" value="New">New</option>
-                                    <option className="bg-[#222222]" value="Pending">Pending</option>
-                                    <option className="bg-[#222222]" value="Reviewing">Reviewing</option>
-                                    <option className="bg-[#222222]" value="Resolved">Resolved</option>
-                                    <option className="bg-[#222222]" value="Closed">Closed</option>
-                                </select>
-                                <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-white/60 group-hover:text-white transition-colors">
-                                    <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw]" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
+                            {/* Status Dropdown */}
+                            <div className="flex flex-col gap-[0.42vw]">
+                                <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Status</label>
+                                <div className="relative border-b border-white py-[0.42vw] group">
+                                    <select
+                                        value={status}
+                                        onChange={(e) => setStatus(e.target.value as any)}
+                                        className="w-full bg-transparent text-white text-[0.94vw] appearance-none focus:outline-none cursor-pointer"
+                                    >
+                                        <option className="bg-[#222222]" value="New">New</option>
+                                        <option className="bg-[#222222]" value="Pending">Pending</option>
+                                        <option className="bg-[#222222]" value="Reviewing">Reviewing</option>
+                                        <option className="bg-[#222222]" value="Resolved">Resolved</option>
+                                        <option className="bg-[#222222]" value="Closed">Closed</option>
+                                    </select>
+                                    <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-white/60 group-hover:text-white transition-colors">
+                                        <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw]" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </div>
                                 </div>
                             </div>
+
+                            {/* Notes Textarea */}
+                            <div className="flex flex-col gap-[0.42vw] flex-grow mt-[0.83vw]">
+                                <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Notes</label>
+                                <textarea
+                                    value={notes}
+                                    onChange={(e) => setNotes(e.target.value)}
+                                    placeholder="Type here.."
+                                    className="w-full h-[9.38vw] bg-transparent text-white text-[0.83vw] leading-[150%] focus:outline-none border-b border-white py-[0.42vw] resize-none placeholder:text-white/40"
+                                />
+                            </div>
+
+                            {/* Update Button */}
+                            <button
+                                onClick={() => onUpdateStatus?.(status, notes)}
+                                className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw] cursor-pointer"
+                            >
+                                Update Status
+                            </button>
                         </div>
 
-                        {/* Notes Textarea */}
-                        <div className="flex flex-col gap-[0.42vw] flex-grow mt-[0.83vw]">
-                            <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Notes</label>
-                            <textarea
-                                value={notes}
-                                onChange={(e) => setNotes(e.target.value)}
-                                placeholder="Type here.."
-                                className="w-full h-[9.38vw] bg-transparent text-white text-[0.83vw] leading-[150%] focus:outline-none border-b border-white py-[0.42vw] resize-none placeholder:text-white/40"
-                            />
-                        </div>
-
-                        {/* Update Button */}
-                        <button
-                            onClick={() => onUpdateStatus?.(status, notes)}
-                            className="w-full h-[2.92vw] bg-[#5F00DB] rounded-[2.71vw] text-white font-semibold not-italic text-[0.83vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:brightness-110 active:scale-95 transition-all mt-[0.83vw] cursor-pointer"
-                        >
-                            Update Status
-                        </button>
                     </div>
-
-                </div>
+                )}
             </div>
         </div>
     );

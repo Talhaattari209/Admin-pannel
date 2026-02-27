@@ -108,13 +108,13 @@ const PromptsTableRow: React.FC<PromptsTableRowProps> = ({ data, onEdit, onDelet
                                 {canEdit && (
                                     <button onClick={() => { setIsMenuOpen(false); onEdit(data); }} className="flex items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.63vw] hover:bg-white/5 transition-colors text-left text-white text-[0.73vw] font-inter not-italic">
                                         <Edit2 className="w-[0.83vw] h-[0.83vw] opacity-60" />
-                                        Edit
+                                        Edit prompt
                                     </button>
                                 )}
                                 {canDelete && (
                                     <button onClick={() => { setIsMenuOpen(false); onDelete(data.id); }} className="flex items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.63vw] hover:bg-white/5 transition-colors text-left text-[#FF4E4E] text-[0.73vw] font-inter not-italic">
                                         <Trash2 className="w-[0.83vw] h-[0.83vw] opacity-60" />
-                                        Delete
+                                        Delete prompt
                                     </button>
                                 )}
                             </div>

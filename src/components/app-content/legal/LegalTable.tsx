@@ -27,6 +27,7 @@ const LegalTable: React.FC<LegalTableProps> = ({ data, onEdit, onDelete, onViewD
                         data={row}
                         onEdit={() => onEdit({ ...item, ...row })}
                         onDelete={onDelete}
+                        onViewDetails={() => onViewDetails({ ...item, ...row })}
                     />
                 );
             })}

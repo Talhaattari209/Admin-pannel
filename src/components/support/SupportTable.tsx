@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import SearchInput from '../app-content/shared/SearchInput';
 import { Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import SupportTableRow, { SupportTicketData } from './SupportTableRow';
@@ -44,15 +44,27 @@ const SupportTable: React.FC<SupportTableProps> = ({ onAction }) => {
     const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
+    const limit = 100; // Fetch more for client-side pagination
     const { data, isLoading, isError, refetch } = useSupportRequests({
-        page: currentPage,
-        limit: 20,
+        page: 1, // Always fetch first 100
+        limit,
         search: search || undefined,
         status: statusFilter ? statusFilter.toLowerCase() : undefined,
     });
 
-    const tickets = (data?.supportRequests ?? []).map(toTableRow);
-    const totalPages = data?.pagination.totalPages ?? 1;
+    const allTickets = useMemo(() => (data?.supportRequests ?? []).map(toTableRow), [data]);
+
+    // Standardized Runtime Pagination
+    const ITEMS_PER_PAGE = 10;
+    const totalPages = Math.max(1, Math.ceil(allTickets.length / ITEMS_PER_PAGE));
+    const displayedTickets = useMemo(() => {
+        return allTickets.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    }, [allTickets, currentPage]);
+
+    // Reset to page 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, statusFilter]);
 
     const ColumnHeader = ({ label, width = 'auto', grow = false }: { label: string; width?: string; grow?: boolean }) => (
         <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
@@ -110,13 +122,13 @@ const SupportTable: React.FC<SupportTableProps> = ({ onAction }) => {
                     </div>
                 )}
 
-                {!isLoading && !isError && tickets.length === 0 && (
+                {!isLoading && !isError && displayedTickets.length === 0 && (
                     <div className="flex items-center justify-center h-[10vw] text-white/50 text-[0.83vw]">
                         No support requests found.
                     </div>
                 )}
 
-                {!isLoading && !isError && tickets.map((ticket) => (
+                {!isLoading && !isError && displayedTickets.map((ticket) => (
                     <SupportTableRow
                         key={ticket.id}
                         data={ticket}
@@ -127,12 +139,14 @@ const SupportTable: React.FC<SupportTableProps> = ({ onAction }) => {
 
             <div className="w-full h-[2.5vw]" />
 
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-                className="w-full px-[1.25vw] pb-[1.25vw]"
-            />
+            {allTickets.length > 0 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                    className="w-full px-[1.25vw] pb-[1.25vw]"
+                />
+            )}
         </div>
     );
 };

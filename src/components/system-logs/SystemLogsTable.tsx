@@ -10,14 +10,14 @@ const SystemLogsTable: React.FC = () => {
     const [roleFilter, setRoleFilter] = useState('');
     const [actionFilter, setActionFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const limit = 20;
+    const limit = 100; // Fetch more for runtime pagination
 
     // Fetch Filters
     const { data: filters, isLoading: isLoadingFilters } = useSystemLogFilters();
 
     // Fetch Logs
     const { data: logsData, isLoading: isLoadingLogs } = useSystemLogs({
-        page: currentPage,
+        page: 1, // Always fetch first 100
         limit,
         search: search || undefined,
         userOrSystem: userFilter || undefined,
@@ -60,6 +60,12 @@ const SystemLogsTable: React.FC = () => {
         }));
     }, [logsData]);
 
+    const ITEMS_PER_PAGE = 20;
+    const totalPages = Math.max(1, Math.ceil(formattedLogs.length / ITEMS_PER_PAGE));
+    const displayedLogs = useMemo(() => {
+        return formattedLogs.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    }, [formattedLogs, currentPage]);
+
     return (
         <TableFrame
             searchBar={<SearchInput value={search} onChange={(val) => { setSearch(val); setCurrentPage(1); }} placeholder="Search" />}
@@ -101,8 +107,8 @@ const SystemLogsTable: React.FC = () => {
                     <div className="flex items-center justify-center w-full py-[5vw] text-[#AAAAAA] text-[0.83vw]">
                         Loading logs...
                     </div>
-                ) : formattedLogs.length > 0 ? (
-                    formattedLogs.map((log) => (
+                ) : displayedLogs.length > 0 ? (
+                    displayedLogs.map((log) => (
                         <SystemLogsTableRow key={log.id} data={log} />
                     ))
                 ) : (
@@ -116,10 +122,10 @@ const SystemLogsTable: React.FC = () => {
             <div className="w-full h-[2.5vw]" />
 
             {/* Pagination */}
-            {logsData && logsData.pagination.totalPages > 1 && (
+            {formattedLogs.length > 0 && (
                 <Pagination
                     currentPage={currentPage}
-                    totalPages={logsData.pagination.totalPages}
+                    totalPages={totalPages}
                     onPageChange={setCurrentPage}
                     className="w-full px-[1.25vw] pb-[1.25vw]"
                 />

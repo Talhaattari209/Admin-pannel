@@ -84,10 +84,10 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
             </div>
 
             {/* Main Layout Row */}
-            <div className="flex flex-row gap-[0.83vw] w-full items-start justify-center">
+            <div className="flex flex-row gap-[0.83vw] w-full items-start justify-start">
 
                 {/* Left Column: Details & Activity */}
-                <div className="flex flex-col gap-[1.67vw] w-full flex-grow flex-shrink">
+                <div className="flex flex-col gap-[1.67vw] w-full max-w-[calc(100%-20vw)] flex-shrink">
 
                     {/* Reported User Card */}
                     <div className="flex flex-col p-[1.67vw] bg-[#222222] border border-[#666666]/30 rounded-[1.25vw]">

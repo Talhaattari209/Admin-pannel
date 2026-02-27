@@ -3,12 +3,12 @@ import LegalContentPopCard from '@/components/pop-cards/LegalContentPopCard';
 
 interface AddContentModalProps {
     onCancel: () => void;
-    onSave: (title: string, content: string) => void;
+    onSave: (title: string, content: string, status: string) => void;
 }
 
 const AddContentModal: React.FC<AddContentModalProps> = ({ onCancel, onSave }) => {
-    const handleSave = (title: string, content: string) => {
-        onSave(title, content);
+    const handleSave = (title: string, content: string, status: string) => {
+        onSave(title, content, status);
     };
 
     return (

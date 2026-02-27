@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import AddRoleModal from './modals/AddRoleModal';
 import RemoveConfirmModal from './modals/RemoveConfirmModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
@@ -22,8 +22,23 @@ const RolesTable: React.FC = () => {
     const [selectedRole, setSelectedRole] = useState<Role | null>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    const limit = 10;
-    const { data, isLoading, error } = useRoles({ page: currentPage, limit, search });
+    const limit = 100; // Fetch more for client-side pagination
+    const { data: rawData, isLoading, error } = useRoles({ page: 1, limit, search });
+
+    const roles = useMemo(() => rawData?.data || [], [rawData]);
+
+    // Standardized Runtime Pagination
+    const ITEMS_PER_PAGE = 10;
+    const totalPages = Math.max(1, Math.ceil(roles.length / ITEMS_PER_PAGE));
+    const displayedRoles = useMemo(() => {
+        return roles.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    }, [roles, currentPage]);
+
+    // Reset to page 1 when search changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search]);
+
     const deleteRoleMutation = useDeleteRole();
 
     useEffect(() => {
@@ -115,12 +130,12 @@ const RolesTable: React.FC = () => {
                     <div className="flex items-center justify-center w-full h-[10vw] text-red-500">
                         Error loading roles: {error.message}
                     </div>
-                ) : !data || data.data.length === 0 ? (
+                ) : displayedRoles.length === 0 ? (
                     <div className="flex items-center justify-center w-full h-[10vw] text-white/60">
                         No roles found
                     </div>
                 ) : (
-                    data.data.map((role: Role) => (
+                    displayedRoles.map((role: Role) => (
                         <div
                             key={role.id}
                             className={`flex flex-row items-center w-full h-[2.92vw] border-b border-[rgba(102,102,102,0.5)] bg-[#222222] hover:bg-white/[0.05] transition-colors relative ${openMenuId === role.id ? 'z-50' : 'z-10'}`}
@@ -177,14 +192,16 @@ const RolesTable: React.FC = () => {
             <div className="w-full h-[2.60vw]" />
 
             {/* Pagination */}
-            {data && (
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={data.pages}
-                    onPageChange={setCurrentPage}
-                    className="w-full px-[1.25vw] pb-[1.25vw]"
-                />
-            )}
+            {
+                roles.length > 0 && (
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                        className="w-full px-[1.25vw] pb-[1.25vw]"
+                    />
+                )
+            }
 
             {modal === 'ADD_ROLE' && <AddRoleModal onCancel={() => setModal(null)} onSuccess={handleModalSuccess} mode="add" />}
             {modal === 'EDIT_ROLE' && selectedRole && <AddRoleModal onCancel={() => setModal(null)} onSuccess={handleModalSuccess} initialData={selectedRole} mode="edit" />}
@@ -192,7 +209,7 @@ const RolesTable: React.FC = () => {
             {modal === 'SUCCESS_ADD' && <TeamRolesSuccessModal title="Role Added" onDone={() => setModal(null)} />}
             {modal === 'SUCCESS_EDIT' && <TeamRolesSuccessModal title="Role Updated" onDone={() => setModal(null)} />}
             {modal === 'SUCCESS_DELETE' && <TeamRolesSuccessModal title="Role Deleted" onDone={() => setModal(null)} />}
-        </TableFrame>
+        </TableFrame >
     );
 };
 

@@ -15,6 +15,7 @@ const ChangeRoleModal: React.FC<ChangeRoleModalProps> = ({ member, roles, onCanc
     const [selectedRole, setSelectedRole] = useState<string>(member.role_id || '');
 
     const handleUpdate = () => {
+        console.log("🛠️ ChangeRoleModal handleUpdate CLICKED. selectedRole:", selectedRole);
         if (!selectedRole) {
             alert('Please select a role');
             return;

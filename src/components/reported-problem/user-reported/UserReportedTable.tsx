@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import SearchInput from '@/components/app-content/shared/SearchInput';
 import { Pagination, FilterSelect } from '@/components/shared/TableComponents';
 import UserReportedTableRow, { UserReportData } from './UserReportedTableRow';
@@ -15,15 +15,28 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
     const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
-    const { data, isLoading } = useUserReports({
-        page: currentPage,
-        limit: 20,
+    const limit = 100; // Fetch more for client-side pagination
+    const { data: rawData, isLoading } = useUserReports({
+        page: 1, // Always fetch first 100
+        limit,
         search: search || undefined,
         status: statusFilter || undefined,
         category: catFilter || undefined,
     });
-    const reports = data?.reports ?? [];
-    const pagination = data?.pagination ?? { page: 1, limit: 20, total: 0, totalPages: 1 };
+
+    const reports = useMemo(() => rawData?.reports ?? [], [rawData]);
+
+    // Standardized Runtime Pagination
+    const ITEMS_PER_PAGE = 20;
+    const totalPages = Math.max(1, Math.ceil(reports.length / ITEMS_PER_PAGE));
+    const displayedReports = useMemo(() => {
+        return reports.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    }, [reports, currentPage]);
+
+    // Reset to page 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, statusFilter, catFilter, repFilter]);
 
     const ColumnHeader = ({ label, width = "auto", grow = false }: { label: string, width?: string, grow?: boolean }) => (
         <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>
@@ -85,10 +98,10 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
                     `}</style>
                     {isLoading ? (
                         <div className="flex items-center justify-center py-[3vw] text-white/60 text-[0.83vw]">Loading...</div>
-                    ) : reports.length === 0 ? (
+                    ) : displayedReports.length === 0 ? (
                         <div className="flex items-center justify-center py-[3vw] text-white/60 text-[0.83vw]">No reports found.</div>
                     ) : (
-                        reports.map((report) => (
+                        displayedReports.map((report) => (
                             <UserReportedTableRow key={report.id} data={report} onAction={(_action, r) => onViewDetail(r)} />
                         ))
                     )}
@@ -99,12 +112,14 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
 
                 {/* Pagination */}
                 <div className="shrink-0">
-                    <Pagination
-                        currentPage={pagination.page}
-                        totalPages={Math.max(1, pagination.totalPages)}
-                        onPageChange={setCurrentPage}
-                        className="w-full px-[1.25vw] pb-[1.25vw]"
-                    />
+                    {reports.length > 0 && (
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                            className="w-full px-[1.25vw] pb-[1.25vw]"
+                        />
+                    )}
                 </div>
             </div>
         </div>

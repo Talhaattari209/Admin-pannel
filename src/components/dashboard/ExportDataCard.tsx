@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import IconBackgroundAnimation from '../shared/IconBackgroundAnimation';
+import CustomCalendar from '../shared/CustomCalendar';
 
 const QUICK_FILTERS = [
   'Last 7 days', 'This Month', 'Last Month',
@@ -58,6 +59,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
   const [endDate, setEndDate] = useState(() => computeDateRange('All Time')[1]);
   const [format, setFormat] = useState<'JSON' | 'CSV'>('JSON');
   const [formatOpen, setFormatOpen] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState<'start' | 'end' | null>(null);
 
   // When a chip is clicked — update both dates AND active filter
   const handleFilterClick = (filter: string) => {
@@ -107,7 +109,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
         <div className="flex flex-row items-start gap-[0.83vw] w-[21.67vw] h-[3.33vw] flex-none order-2 self-stretch flex-grow-0">
 
           {/* Start Date */}
-          <div className="flex flex-col items-start w-[10.42vw] h-[3.33vw] flex-none order-0 flex-grow-1">
+          <div className="flex flex-col items-start w-[10.42vw] h-[3.33vw] flex-none order-0 flex-grow-1 relative">
             <div className="flex flex-row items-start gap-[0.21vw] w-[10.42vw] h-[0.83vw] flex-none order-0 self-stretch flex-grow-0">
               <span className="h-[0.83vw] font-bold not-italic text-[0.625vw] leading-[0.83vw] text-white">Start Date</span>
             </div>
@@ -121,17 +123,30 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
               <span className="w-[8.33vw] h-[1.25vw] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">
                 {fmtDisplay(startDate)}
               </span>
-              <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
+              <button
+                onClick={(e) => { e.stopPropagation(); setCalendarOpen(calendarOpen === 'start' ? null : 'start'); }}
+                className="z-20 p-1 hover:bg-white/10 rounded-full transition-colors cursor-pointer"
+              >
+                <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </button>
             </div>
+            {calendarOpen === 'start' && (
+              <CustomCalendar
+                selectedDate={startDate}
+                onSelect={handleStartChange}
+                onClose={() => setCalendarOpen(null)}
+                className="top-full left-0 mt-2"
+              />
+            )}
           </div>
 
           {/* End Date */}
-          <div className="flex flex-col items-start w-[10.42vw] h-[3.33vw] flex-none order-1 flex-grow-1">
+          <div className="flex flex-col items-start w-[10.42vw] h-[3.33vw] flex-none order-1 flex-grow-1 relative">
             <div className="flex flex-row items-start gap-[0.21vw] w-[10.42vw] h-[0.83vw] flex-none order-0 self-stretch flex-grow-0">
               <span className="h-[0.83vw] font-bold not-italic text-[0.625vw] leading-[0.83vw] text-white">End Date</span>
             </div>
@@ -145,13 +160,26 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
               <span className="w-[8.33vw] h-[1.25vw] font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">
                 {fmtDisplay(endDate)}
               </span>
-              <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
+              <button
+                onClick={(e) => { e.stopPropagation(); setCalendarOpen(calendarOpen === 'end' ? null : 'end'); }}
+                className="z-20 p-1 hover:bg-white/10 rounded-full transition-colors cursor-pointer"
+              >
+                <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </button>
             </div>
+            {calendarOpen === 'end' && (
+              <CustomCalendar
+                selectedDate={endDate}
+                onSelect={handleEndChange}
+                onClose={() => setCalendarOpen(null)}
+                className="top-full right-0 mt-2"
+              />
+            )}
           </div>
         </div>
 

@@ -14,9 +14,10 @@ export interface BugReportData {
 interface BugsReportedTableRowProps {
     data: BugReportData;
     onAction: (action: 'DETAILS', data: BugReportData) => void;
+    canEdit?: boolean;
 }
 
-const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAction }) => {
+const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAction, canEdit = false }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -82,7 +83,7 @@ const BugsReportedTableRow: React.FC<BugsReportedTableRowProps> = ({ data, onAct
                     <div ref={menuRef} className="absolute top-[80%] right-full mr-[0.42vw] w-[14.58vw] bg-[#1a1a1a] border border-[#666666]/50 rounded-[0.83vw] shadow-2xl z-[1000] overflow-hidden py-[0.42vw] animate-in fade-in slide-in-from-right-2 duration-200">
                         {[
                             { id: 'DETAILS', label: 'View Details', icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg> },
-                            { id: 'UPDATE', label: 'Update Status', icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg> }
+                            ...(canEdit ? [{ id: 'UPDATE', label: 'Update Status', icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg> }] : [])
                         ].map((item, idx) => (
                             <button
                                 key={idx}

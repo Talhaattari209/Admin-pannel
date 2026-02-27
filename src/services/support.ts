@@ -106,10 +106,13 @@ export const supportService = {
     // Response: top-level { data:{}, user:{...}, supportRequest:{...}, activity:[...] }
     getById: async (id: string): Promise<SupportRequestDetail> => {
         const { data } = await apiClient.get<any>(`/admin/support-requests/${id}`);
+        // The API returns user, supportRequest, activity as siblings to the `data` key.
+        // Handle both direct access and nested `data.data` wrapping for robustness.
+        const root = data?.data && (data.data.user || data.data.supportRequest || data.data.activity) ? data.data : data;
         return {
-            user: data.user,
-            supportRequest: data.supportRequest,
-            activity: data.activity || [],
+            user: root.user || data.user,
+            supportRequest: root.supportRequest || data.supportRequest,
+            activity: root.activity || data.activity || [],
         };
     },
 

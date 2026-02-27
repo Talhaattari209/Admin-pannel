@@ -21,6 +21,8 @@ import {
     useUpdateAccountStatus,
     activeFilterToTimelaps,
 } from '@/services/reported-problems';
+import { useAuthStore } from '@/store/auth-store';
+import { canEditModule } from '@/utils/permissions';
 
 export default function ReportedProblemsPage() {
     const [viewState, setViewState] = useState<'list' | 'user-detail' | 'bug-detail'>('list');
@@ -41,6 +43,11 @@ export default function ReportedProblemsPage() {
     const exportBugReports = useExportBugReports();
     const warnUserMutation = useWarnUser();
     const accountStatusMutation = useUpdateAccountStatus();
+
+    // Permission checks for edit actions
+    const permissions = useAuthStore((state) => state.permissions);
+    const isSuperAdmin = useAuthStore((state) => state.user?.isSuperAdmin);
+    const canEdit = !!(isSuperAdmin || canEditModule(permissions, 'reported problems'));
 
     const userReportToShow = useMemo((): UserReportData | null => {
         if (!selectedUserReport) return null;
@@ -154,6 +161,7 @@ export default function ReportedProblemsPage() {
                         onViewReportDetail={handleViewUserReport}
                         onViewBugDetail={handleViewBugReport}
                         onExport={handleOpenExport}
+                        canEdit={canEdit}
                     />
                 )}
                 {viewState === 'user-detail' && (
@@ -170,6 +178,7 @@ export default function ReportedProblemsPage() {
                         bug={selectedBugReport}
                         onBack={handleBack}
                         onUpdateStatus={handleUpdateBugStatus}
+                        canEdit={canEdit}
                     />
                 )}
             </div>

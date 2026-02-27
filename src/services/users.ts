@@ -106,7 +106,7 @@ export const usersService = {
     },
 
     deactivateUser: async (id: string): Promise<void> => {
-        await apiClient.delete(`/admin/users/${id}`);
+        await apiClient.put(`/admin/users/${id}/account-status`, { status: 'deactivate' });
     },
 
     export: async (params?: ExportParams): Promise<ExportResponse> => {

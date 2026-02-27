@@ -5,13 +5,14 @@ interface EditContentModalProps {
     contentId: string;
     initialTitle: string;
     initialContent: string;
+    initialStatus?: string;
     onCancel: () => void;
-    onSave: (title: string, content: string) => void;
+    onSave: (title: string, content: string, status: string) => void;
 }
 
-const EditContentModal: React.FC<EditContentModalProps> = ({ contentId, initialTitle, initialContent, onCancel, onSave }) => {
-    const handleSave = (newTitle: string, newContent: string) => {
-        onSave(newTitle, newContent);
+const EditContentModal: React.FC<EditContentModalProps> = ({ contentId, initialTitle, initialContent, initialStatus = 'draft', onCancel, onSave }) => {
+    const handleSave = (newTitle: string, newContent: string, status: string) => {
+        onSave(newTitle, newContent, status);
     };
 
     return (
@@ -20,6 +21,7 @@ const EditContentModal: React.FC<EditContentModalProps> = ({ contentId, initialT
             onSave={handleSave}
             initialTitle={initialTitle}
             initialContent={initialContent}
+            initialStatus={initialStatus}
             mode="edit"
         />
     );

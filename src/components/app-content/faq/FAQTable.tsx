@@ -27,6 +27,7 @@ const FAQTable: React.FC<FAQTableProps> = ({ data, onEdit, onDelete, onViewDetai
                         data={row}
                         onEdit={() => onEdit({ ...item, ...row })}
                         onDelete={onDelete}
+                        onViewDetails={() => onViewDetails({ ...item, ...row })}
                     />
                 );
             })}

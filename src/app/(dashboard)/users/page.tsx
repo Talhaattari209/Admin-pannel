@@ -199,6 +199,7 @@ const UserTableSection = () => {
     const [subFilter, setSubFilter] = useState('');
     const [joinedFilter, setJoinedFilter] = useState('');
     const [activeFilter, setActiveFilter] = useState('');
+    const ITEMS_PER_PAGE = 10;
 
     // Debounce search to avoid firing API calls on every keystroke
     useEffect(() => {
@@ -210,10 +211,13 @@ const UserTableSection = () => {
         return () => clearTimeout(timer);
     }, [searchValue]);
 
-    const { data, isLoading, error } = useUsers({ page: currentPage, limit: 10, search: debouncedSearch || undefined });
+    // Increase limit to fetch a larger dataset for client-side filtering at runtime
+    const { data, isLoading, error } = useUsers({ page: 1, limit: 100, search: debouncedSearch || undefined });
 
     const filteredUsers = useMemo(() => {
         if (!data?.data) return [];
+        const now = new Date();
+
         return data.data.filter((user: User) => {
             // Subscription filter
             if (subFilter) {
@@ -223,18 +227,20 @@ const UserTableSection = () => {
             if (joinedFilter) {
                 if (!user.created_at) return false;
                 const joinedDate = new Date(user.created_at);
-                const now = new Date();
+
                 if (joinedFilter === 'this-week') {
                     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
                     if (joinedDate < weekAgo) return false;
                 } else if (joinedFilter === 'this-month') {
-                    if (joinedDate.getMonth() !== now.getMonth() || joinedDate.getFullYear() !== now.getFullYear()) return false;
+                    // Rolling 30 days as requested (Jan 28 - Feb 27 style)
+                    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    if (joinedDate < thirtyDaysAgo) return false;
                 }
             }
             if (activeFilter) {
                 if (!user.last_active) return false;
                 const lastActive = new Date(user.last_active);
-                const now = new Date();
+
                 if (activeFilter === 'today') {
                     if (lastActive.toDateString() !== now.toDateString()) return false;
                 } else if (activeFilter === '7-days') {
@@ -246,7 +252,16 @@ const UserTableSection = () => {
         });
     }, [data?.data, subFilter, joinedFilter, activeFilter]);
 
-    const totalPages = data?.pages || 1;
+    // Reset to page 1 when client-side filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [subFilter, joinedFilter, activeFilter]);
+
+    // Handle pagination entirely client-side 
+    const totalPages = Math.max(1, Math.ceil(filteredUsers.length / ITEMS_PER_PAGE));
+
+    // Slice results locally for the current page
+    const displayedUsers = filteredUsers.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
     return (
         <div className="flex flex-col w-full">
@@ -293,8 +308,8 @@ const UserTableSection = () => {
                         <div className="flex items-center justify-center w-full h-[20vw] text-red-400">
                             <p>Error loading users. Please try again later.</p>
                         </div>
-                    ) : filteredUsers && filteredUsers.length > 0 ? (
-                        filteredUsers.map((user: User, index: number) => (
+                    ) : displayedUsers && displayedUsers.length > 0 ? (
+                        displayedUsers.map((user: User, index: number) => (
                             <UserTableRow key={user.id || `user-${index}`} user={user} />
                         ))
                     ) : (
@@ -349,13 +364,13 @@ export default function UserManagementPage() {
             >
                 <div className="w-[79.17vw] flex items-center justify-between">
                     <PageHeader title="Users Management" description="View, verify, and manage all registered users — including KYC status, bans, and account details." />
-                    <button
+                    {/* <button
                         onClick={() => setIsExportModalOpen(true)}
                         className="flex items-center justify-center gap-[0.62vw] px-[1.25vw] py-[0.41vw] rounded-full border border-white backdrop-blur-[6px] cursor-pointer hover:bg-white/10 transition-all shrink-0"
                     >
                         <img src="/assets/Icons_figma/download.svg" alt="Export" className="w-[1.25vw] h-[1.25vw]" />
                         <span className="text-white text-[0.83vw] font-medium leading-[120%]">{exportUsersMutation.isPending ? 'Exporting...' : 'Export'}</span>
-                    </button>
+                    </button> */}
                 </div>
                 <div className="h-[1.49vw]" />
                 <StatRow />
