@@ -101,6 +101,8 @@ export interface User {
     subscriptionActive?: boolean;
     pokeBalance?: number;
     countryCode?: string;
+    isPhoneVerified?: boolean;
+    verifiedAt?: string;
     prompts?: any[];
 }
 
