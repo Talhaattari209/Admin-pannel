@@ -4,8 +4,8 @@ import ChangeRoleModal from './modals/ChangeRoleModal';
 import RemoveConfirmModal from './modals/RemoveConfirmModal';
 import TeamRolesSuccessModal from './modals/TeamRolesSuccessModal';
 import { TableFrame, SearchBar, FilterSelect, FilterGroup, Pagination } from '../shared/TableComponents';
-import { useTeamMembers, useDeleteTeamMember, useUpdateTeamMember } from '@/services/team-members';
-import { useRoles } from '@/services/roles';
+import { useTeamMembers, useDeleteTeamMember } from '@/services/team-members';
+import { useRoles, useUpdateRole } from '@/services/roles';
 import { TeamMember } from '@/types/api';
 import { useAuthStore } from '@/store/auth-store';
 import { canEditModule, canDeleteModule } from '@/utils/permissions';
@@ -30,7 +30,7 @@ const TeamMembersTable: React.FC = () => {
     const { data, isLoading, error } = useTeamMembers({ page: currentPage, limit, search });
     const { data: rolesData } = useRoles({ limit: 100 });
     const deleteMutation = useDeleteTeamMember();
-    const updateMutation = useUpdateTeamMember();
+    const updateRoleMutation = useUpdateRole();
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -69,15 +69,33 @@ const TeamMembersTable: React.FC = () => {
 
     const handleUpdateRole = (roleId: string) => {
         if (selectedMember) {
-            updateMutation.mutate(
-                { id: selectedMember.id, data: { role: roleId } },
+            // Find the selected role's full data to send with the PUT request
+            const selectedRoleData = roles.find(r => r.id === roleId);
+            if (!selectedRoleData) {
+                alert('Role not found');
+                return;
+            }
+            // Use PUT /admin/roles/{role_id} with the role's data
+            updateRoleMutation.mutate(
+                {
+                    id: roleId,
+                    data: {
+                        title: selectedRoleData.title,
+                        description: selectedRoleData.description,
+                        resources: selectedRoleData.resources.map(({ module, permissions }) => ({ module, permissions })),
+                    }
+                },
                 {
                     onSuccess: () => {
                         setModal('SUCCESS');
                         setSelectedMember(null);
                     },
                     onError: (error: any) => {
-                        alert(error?.response?.data?.detail || 'Failed to update role');
+                        const errorMessage = error?.response?.data?.detail
+                            || error?.response?.data?.message
+                            || error?.message
+                            || 'Failed to update role';
+                        alert(errorMessage);
                         setModal(null);
                     }
                 }
@@ -209,7 +227,7 @@ const TeamMembersTable: React.FC = () => {
             )}
 
             {modal === 'ADD_MEMBER' && <AddMemberModal onCancel={() => setModal(null)} onSuccess={() => setModal('SUCCESS')} />}
-            {modal === 'CHANGE_ROLE' && selectedMember && <ChangeRoleModal member={selectedMember} roles={roles} onCancel={() => setModal(null)} onUpdate={handleUpdateRole} isLoading={updateMutation.isPending} />}
+            {modal === 'CHANGE_ROLE' && selectedMember && <ChangeRoleModal member={selectedMember} roles={roles} onCancel={() => setModal(null)} onUpdate={handleUpdateRole} isLoading={updateRoleMutation.isPending} />}
             {modal === 'REMOVE_MEMBER' && <RemoveConfirmModal type="member" onCancel={() => setModal(null)} onConfirm={confirmDelete} />}
             {modal === 'SUCCESS' && <TeamRolesSuccessModal title="Success" onDone={() => setModal(null)} />}
         </TableFrame>

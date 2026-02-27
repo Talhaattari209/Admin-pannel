@@ -100,9 +100,7 @@ export interface User {
     subscriptionActive?: boolean;
     pokeBalance?: number;
     countryCode?: string;
-    isPhoneVerified?: boolean;
-    verifiedAt?: string;
-    prompts?: { id: string; promptTitle: string; promptAnswer: string; type: string; groupId?: string | null; createdAt: string; updatedAt: string }[];
+    prompts?: any[];
 }
 
 export interface UserStatistics {
