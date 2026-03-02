@@ -21,12 +21,10 @@ const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, options, onCh
                     onChange={(e) => onChange(e.target.value)}
                     className="w-full bg-transparent text-white text-[0.83vw] appearance-none focus:outline-none opacity-40 group-hover:opacity-100 transition-opacity pr-[1.67vw] font-inter not-italic h-full cursor-pointer"
                 >
-                    <option value="" disabled className="bg-[#222222]">Select</option>
+                    <option value="" className="bg-[#222222]">All</option>
                     {options.map(opt => (
                         <option key={opt} value={opt} className="bg-[#222222]">{opt}</option>
                     ))}
-                    <option value="dummy1" className="bg-[#222222]">Dummy Opt 1</option>
-                    <option value="dummy2" className="bg-[#222222]">Dummy Opt 2</option>
                 </select>
                 <div className="absolute right-0 pointer-events-none text-white w-[1.25vw] h-[1.25vw] flex items-center justify-center">
                     <ChevronDown className="w-[1.25vw] h-[1.25vw]" />

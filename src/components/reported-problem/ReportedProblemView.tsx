@@ -13,13 +13,15 @@ interface ReportedProblemViewProps {
     onViewBugDetail: (bug: BugReportData) => void;
     onExport?: (exportType: 'users' | 'bugs') => void;
     canEdit?: boolean;
+    onViewProfile?: (userId: string) => void;
 }
 
 const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
     onViewReportDetail,
     onViewBugDetail,
     onExport,
-    canEdit = false
+    canEdit = false,
+    onViewProfile,
 }) => {
     const [activeTab, setActiveTab] = useState<'reported' | 'bugs'>('reported');
     const permissions = useAuthStore((state) => state.permissions);
@@ -104,7 +106,7 @@ const ReportedProblemView: React.FC<ReportedProblemViewProps> = ({
             </div>
 
             <div className="w-full shrink-0">
-                {activeTab === 'reported' && <UserReportedTable onViewDetail={onViewReportDetail} />}
+                {activeTab === 'reported' && <UserReportedTable onViewDetail={onViewReportDetail} onViewProfile={onViewProfile} />}
                 {activeTab === 'bugs' && <BugsReportedTable onViewDetail={onViewBugDetail} canEdit={canEdit} />}
             </div>
 

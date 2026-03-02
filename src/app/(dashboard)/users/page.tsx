@@ -202,10 +202,11 @@ const UserTableSection = () => {
     const ITEMS_PER_PAGE = 10;
 
     // Debounce search to avoid firing API calls on every keystroke
+    // API only supports a single name token — take the first word when there's a space
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log('[Users Page] Setting debounced search:', searchValue);
-            setDebouncedSearch(searchValue);
+            const normalized = searchValue.trim().split(/\s+/)[0] || '';
+            setDebouncedSearch(normalized);
             setCurrentPage(1);
         }, 400);
         return () => clearTimeout(timer);
@@ -217,8 +218,17 @@ const UserTableSection = () => {
     const filteredUsers = useMemo(() => {
         if (!data?.data) return [];
         const now = new Date();
+        // Client-side post-filter: re-apply the full typed search string
+        // (the API only received the first word; here we narrow by the full query)
+        const fullSearch = searchValue.trim().toLowerCase();
 
         return data.data.filter((user: User) => {
+            // Full-name / email post-filter
+            if (fullSearch) {
+                const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim().toLowerCase();
+                const email = (user.email || '').toLowerCase();
+                if (!fullName.includes(fullSearch) && !email.includes(fullSearch)) return false;
+            }
             // Subscription filter
             if (subFilter) {
                 if (!user.status) return false;
@@ -232,7 +242,7 @@ const UserTableSection = () => {
                     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
                     if (joinedDate < weekAgo) return false;
                 } else if (joinedFilter === 'this-month') {
-                    // Rolling 30 days as requested (Jan 28 - Feb 27 style)
+                    // Rolling 30 days (Jan 28 - Feb 27 style)
                     const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
                     if (joinedDate < thirtyDaysAgo) return false;
                 }
@@ -250,7 +260,7 @@ const UserTableSection = () => {
             }
             return true;
         });
-    }, [data?.data, subFilter, joinedFilter, activeFilter]);
+    }, [data?.data, searchValue, subFilter, joinedFilter, activeFilter]);
 
     // Reset to page 1 when client-side filters change
     useEffect(() => {

@@ -41,18 +41,40 @@ const toTableRow = (sr: SupportRequest): SupportTicketData => ({
 
 const SupportTable: React.FC<SupportTableProps> = ({ onAction }) => {
     const [search, setSearch] = useState('');
+    const [debouncedApiSearch, setDebouncedApiSearch] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+
+    // Debounce search: send only the first word to the API (API only accepts single-token names)
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const firstWord = search.trim().split(/\s+/)[0] || '';
+            setDebouncedApiSearch(firstWord);
+            setCurrentPage(1);
+        }, 400);
+        return () => clearTimeout(timer);
+    }, [search]);
 
     const limit = 100; // Fetch more for client-side pagination
     const { data, isLoading, isError, refetch } = useSupportRequests({
         page: 1, // Always fetch first 100
         limit,
-        search: search || undefined,
+        search: debouncedApiSearch || undefined,
         status: statusFilter ? statusFilter.toLowerCase() : undefined,
     });
 
-    const allTickets = useMemo(() => (data?.supportRequests ?? []).map(toTableRow), [data]);
+    const allTickets = useMemo(() => {
+        const raw = (data?.supportRequests ?? []).map(toTableRow);
+        const fullSearch = search.trim().toLowerCase();
+        if (!fullSearch) return raw;
+
+        // Client-side post-filter: re-apply the full typed search string
+        return raw.filter(ticket =>
+            ticket.user.name.toLowerCase().includes(fullSearch) ||
+            ticket.user.email.toLowerCase().includes(fullSearch) ||
+            ticket.subject.toLowerCase().includes(fullSearch)
+        );
+    }, [data, search]);
 
     // Standardized Runtime Pagination
     const ITEMS_PER_PAGE = 10;
@@ -61,10 +83,10 @@ const SupportTable: React.FC<SupportTableProps> = ({ onAction }) => {
         return allTickets.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
     }, [allTickets, currentPage]);
 
-    // Reset to page 1 when filters change
+    // Reset to page 1 when status filter changes
     useEffect(() => {
         setCurrentPage(1);
-    }, [search, statusFilter]);
+    }, [statusFilter]);
 
     const ColumnHeader = ({ label, width = 'auto', grow = false }: { label: string; width?: string; grow?: boolean }) => (
         <div className={`flex flex-row items-center gap-[0.42vw] px-[0.63vw] h-full group cursor-pointer ${grow ? 'flex-grow' : ''}`} style={{ width: !grow ? width : undefined }}>

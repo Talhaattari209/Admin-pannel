@@ -8,7 +8,7 @@ export default function DashboardGroupLayout({ children }: { children: ReactNode
             <SideNavigation />
 
             {/* Main content area — offset by sidebar width */}
-            <main className="relative ml-[16.67vw] w-[83.33vw] h-screen overflow-y-auto scrollbar-hide">
+            <main className="relative ml-[15.67vw] w-[84.33vw] h-screen overflow-y-auto scrollbar-hide">
                 {children}
             </main>
         </div>

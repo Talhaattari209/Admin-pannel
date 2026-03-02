@@ -63,7 +63,7 @@ export const ProfileTabs = ({ activeTab, onTabChange }: { activeTab: string, onT
 
 // --- ProfileMedia Component ---
 
-const ProfileMedia = ({ user }: { user?: User | null }) => {
+const ProfileMedia = ({ user, height = "63vh" }: { user?: User | null, height?: string }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
     const [prevEl, setPrevEl] = useState<HTMLElement | null>(null);
     const [nextEl, setNextEl] = useState<HTMLElement | null>(null);
@@ -87,29 +87,27 @@ const ProfileMedia = ({ user }: { user?: User | null }) => {
         : ['/8.png'];
 
     return (
-        <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw]" style={{ minHeight: '35.5vw' }}>
+        <div className="flex flex-col px-[1.5vh] py-[1.5vh] gap-[2vh] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[2vh]" style={{ height }}>
 
             {/* Header */}
-            <div className="flex flex-col gap-[0.83vw] w-[57.51vw]">
-                <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] border-b border-[#333333]">
-                    <h3 className="font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Media</h3>
-                    <span className="font-normal not-italic text-[0.83vw] text-[#CCCCCC]">View and manage all photos and videos uploaded by the user.</span>
-                </div>
+            <div className="flex flex-col gap-[1.48vh] pb-[1.48vh] w-full border-b border-[#333333]">
+                <h3 className="font-bold not-italic text-[2.6vh] leading-[120%] tracking-[-0.04em] text-white">Media</h3>
+                <span className="font-normal not-italic text-[1.48vh] text-[#CCCCCC]">View and manage all photos and videos uploaded by the user.</span>
             </div>
 
             {/* Main Content Area */}
-            <div className="flex flex-col gap-[1.15vw] w-full items-center">
+            <div className="flex flex-col gap-[2.04vh] w-full items-center justify-center flex-grow">
 
                 {/* Upper Section: Arrows + Main Image */}
-                <div className="flex flex-row items-center justify-between w-[57.51vw]">
+                <div className="flex flex-row items-center justify-center w-full gap-[2vh]">
 
                     {/* Left Arrow */}
-                    <button ref={(node) => setPrevEl(node)} className="flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full bg-[#16003F] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#2a0075] transition-colors z-10 cursor-pointer">
-                        <ChevronLeft className="w-[1.25vw] h-[1.25vw] text-white" />
+                    <button ref={(node) => setPrevEl(node)} className="flex items-center justify-center w-[4.44vh] h-[4.44vh] rounded-full bg-[#16003F] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#2a0075] transition-colors z-10 cursor-pointer disabled:opacity-50">
+                        <ChevronLeft className="w-[4.22vw] h-[2.22vh] text-white" />
                     </button>
 
                     {/* Main Swiper */}
-                    <div className="w-[24.0vw] h-[24.0vw] rounded-[0.83vw] overflow-hidden relative group bg-black/20">
+                    <div className="w-[50vh] h-[50vh] rounded-[1.5vh] overflow-hidden relative group bg-black/20 shrink-0">
                         <Swiper
                             loop={images.length > 1}
                             spaceBetween={10}
@@ -127,15 +125,15 @@ const ProfileMedia = ({ user }: { user?: User | null }) => {
                                         <img src={img} className="w-full h-full object-cover" alt={`Slide ${index}`} />
 
                                         {/* Overlay Info */}
-                                        <div className="absolute bottom-0 left-0 w-full h-[3.75vw] bg-gradient-to-t from-[#111111] to-transparent flex items-center justify-between px-[0.83vw]">
-                                            <span className="text-[0.73vw] text-white">Photo {index + 1} of {images.length}</span>
+                                        <div className="absolute bottom-0 left-0 w-full h-[6.66vh] bg-gradient-to-t from-[#111111] to-transparent flex items-center justify-between px-[1.48vh]">
+                                            <span className="text-[1.3vh] text-white">Photo {index + 1} of {images.length}</span>
                                             {canDelete && (
                                                 <button
                                                     onClick={() => setIsRemoveOpen(true)}
-                                                    className="flex flex-row items-center gap-[0.42vw] px-[0.63vw] py-[0.42vw] bg-[#FF4E4E] rounded-[2.7vw] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#ff3333] transition-colors"
+                                                    className="flex flex-row items-center gap-[0.75vh] px-[1.12vh] py-[0.75vh] bg-[#FF4E4E] rounded-[4.8vh] shadow-[0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#ff3333] transition-colors"
                                                 >
-                                                    <Trash2 className="w-[0.83vw] h-[0.83vw] text-white" />
-                                                    <span className="text-[0.83vw] text-white font-medium not-italic">Remove</span>
+                                                    <Trash2 className="w-[1.48vh] h-[1.48vh] text-white" />
+                                                    <span className="text-[1.48vh] text-white font-medium not-italic">Remove</span>
                                                 </button>
                                             )}
                                         </div>
@@ -146,26 +144,29 @@ const ProfileMedia = ({ user }: { user?: User | null }) => {
                     </div>
 
                     {/* Right Arrow */}
-                    <button ref={(node) => setNextEl(node)} className="flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full bg-[#16003F] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#2a0075] transition-colors z-10 cursor-pointer">
-                        <ChevronRight className="w-[1.25vw] h-[1.25vw] text-white" />
+                    <button ref={(node) => setNextEl(node)} className="flex items-center justify-center w-[4.44vh] h-[4.44vh] rounded-full bg-[#16003F] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#2a0075] transition-colors z-10 cursor-pointer disabled:opacity-50">
+                        <ChevronRight className="w-[2.22vh] h-[2.22vh] text-white" />
                     </button>
                 </div>
 
                 {/* Thumbnails Reel */}
-                <div className="w-[24.0vw] h-[3.5vw]">
+                <div className="w-[50vh] h-[8vh] shrink-0 flex justify-center mx-auto">
                     <Swiper
                         onSwiper={setThumbsSwiper}
                         loop={images.length > 1}
                         spaceBetween={8}
-                        slidesPerView={Math.min(6, images.length)}
+                        slidesPerView="auto"
+                        centerInsufficientSlides={true}
+                        centeredSlides={true}
+                        centeredSlidesBounds={true}
                         freeMode={true}
                         watchSlidesProgress={true}
                         modules={[FreeMode, Navigation, Thumbs]}
-                        className="h-full w-full"
+                        className="h-full w-full mx-auto"
                     >
                         {images.map((img, index) => (
-                            <SwiperSlide key={index}>
-                                <div className="w-[3.5vw] h-[3.5vw] rounded-[0.63vw] overflow-hidden border-2 transition-all cursor-pointer border-transparent opacity-60 hover:opacity-100 [.swiper-slide-thumb-active_&]:border-white [.swiper-slide-thumb-active_&]:opacity-100">
+                            <SwiperSlide key={index} style={{ width: '8vh', height: '8vh', flexShrink: 0 }}>
+                                <div className="w-full h-full rounded-[1.17vh] overflow-hidden border-2 transition-all cursor-pointer border-transparent opacity-60 hover:opacity-100 [.swiper-slide-thumb-active_&]:border-white [.swiper-slide-thumb-active_&]:opacity-100">
                                     <img src={img} className="w-full h-full object-cover" alt={`Thumb ${index}`} />
                                 </div>
                             </SwiperSlide>
@@ -310,25 +311,25 @@ export const ProfilePrompts = ({ user }: { user?: User | null }) => {
 // --- ProfileOverview Component ---
 
 const InfoField = ({ label, value }: { label: string, value: string }) => (
-    <div className="flex flex-col gap-[0.63vw] w-[28.33vw]">
-        <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
+    <div className="flex flex-col gap-[1.17vh] w-[28.33vw]">
+        <label className="font-bold not-italic text-[1.17vh] leading-[1.56vh] text-white">
             {label}
         </label>
-        <span className="font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white">
+        <span className="font-normal not-italic text-[1.4vh] leading-[2vh] text-white">
             {value}
         </span>
     </div>
 );
 
 const TagChip = ({ label, icon, color = "#5F00DB" }: { label: string, icon?: React.ReactNode, color?: string }) => (
-    <div className="flex flex-row items-center px-[0.63vw] py-[0.42vw] gap-[0.21vw] border border-white/20 rounded-[1.25vw] bg-white/[0.02]">
-        <span className="text-[0.83vw] whitespace-nowrap">{label}</span>
-        {icon && <span className="text-[0.83vw]">{icon}</span>}
+    <div className="flex flex-row items-center px-[1.17vh] py-[0.78vh] gap-[0.39vh] border border-white/20 rounded-[2.3vh] bg-white/[0.02]">
+        <span className="text-[1.4vh] whitespace-nowrap">{label}</span>
+        {icon && <span className="text-[1.4vh]">{icon}</span>}
     </div>
 );
 
-export const ProfileOverview = ({ activeTab, height = "auto", user }: { activeTab: string, height?: string, user?: User | null }) => {
-    if (activeTab === "Media") return <ProfileMedia user={user} />;
+export const ProfileOverview = ({ activeTab, height = "75vh", user }: { activeTab: string, height?: string, user?: User | null }) => {
+    if (activeTab === "Media") return <ProfileMedia user={user} height={height} />;
     if (activeTab === "Groups") return <FullGroupCard />;
     if (activeTab === "Matches") return <ProfileMatches />;
     if (activeTab === "Prompts") return <ProfilePrompts user={user} />;
@@ -352,15 +353,15 @@ export const ProfileOverview = ({ activeTab, height = "auto", user }: { activeTa
 
     return (
         <div
-            className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] overflow-hidden"
+            className="flex flex-col px-[1.56vh] pt-[1.56vh] pb-[2vh] gap-[1.56vh] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[1.56vh] overflow-hidden"
             style={{ height }}
         >
             {/* Header */}
-            <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] relative">
-                <h3 className="font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">
+            <div className="flex flex-col gap-[1.56vh] pb-[1.56vh] relative">
+                <h3 className="font-bold not-italic text-[2.34vh] leading-[120%] tracking-[-0.04em] text-white">
                     Overview
                 </h3>
-                <p className="font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">
+                <p className="font-normal not-italic text-[1.4vh] leading-[150%] text-[#CCCCCC]">
                     Quick snapshot of the user's profile, activity, and engagement stats.
                 </p>
                 {/* Gradient Line */}
@@ -368,53 +369,53 @@ export const ProfileOverview = ({ activeTab, height = "auto", user }: { activeTa
             </div>
 
             {/* Form Grid */}
-            <div className="flex flex-col flex-grow-0 gap-[0.73vw]">
+            <div className="flex flex-col flex-grow-0 gap-[1.4vh]">
                 {/* Row 1 */}
-                <div className="flex flex-row gap-[0.83vw]">
+                <div className="flex flex-row gap-[1.56vh]">
                     <InfoField label="First Name" value={user?.first_name || 'N/A'} />
                     <InfoField label="Last Name" value={user?.last_name || 'N/A'} />
                 </div>
                 {/* Row 2 */}
-                <div className="flex flex-row gap-[0.83vw]">
+                <div className="flex flex-row gap-[1.56vh]">
                     <InfoField label="Email" value={user?.email || 'N/A'} />
                     <InfoField label="Phone Number" value={user?.phone || 'N/A'} />
                 </div>
                 {/* Row 3 */}
-                <div className="flex flex-row gap-[0.83vw]">
+                <div className="flex flex-row gap-[1.56vh]">
                     <InfoField label="Date of Birth" value={formatDate(user?.dob)} />
                     <InfoField label="Gender" value={user?.gender || 'N/A'} />
                 </div>
                 {/* Row 4 */}
-                <div className="flex flex-row gap-[0.83vw]">
+                <div className="flex flex-row gap-[1.56vh]">
                     <InfoField label="Sexual Orientation" value={user?.sexualOrientation?.join(', ') || 'N/A'} />
                     <InfoField label="Pronouns" value={user?.pronouns || 'N/A'} />
                 </div>
                 {/* Row 5 */}
-                <div className="flex flex-row gap-[0.83vw]">
+                <div className="flex flex-row gap-[1.56vh]">
                     <InfoField label="Job Title / Occupation" value={user?.jobTitle || 'N/A'} />
                     <InfoField label="Education / School" value={user?.education || 'N/A'} />
                 </div>
 
                 {/* Bio */}
-                <div className="flex flex-col gap-[0.63vw] w-full">
-                    <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
+                <div className="flex flex-col gap-[1.17vh] w-full">
+                    <label className="font-bold not-italic text-[1.17vh] leading-[1.56vh] text-white">
                         Short Bio
                     </label>
-                    <span className="font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white">
+                    <span className="font-normal not-italic text-[1.4vh] leading-[2vh] text-white">
                         {user?.shortBio || 'No bio provided.'}
                     </span>
                 </div>
 
                 {/* Lifestyle Tags */}
                 {lifestyleTags.length > 0 && (
-                    <div className="flex flex-col gap-[0.63vw] w-full mb-[0.53vw]">
-                        <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
+                    <div className="flex flex-col gap-[1.17vh] w-full mb-[0.78vh]">
+                        <label className="font-bold not-italic text-[1.17vh] leading-[1.56vh] text-white">
                             Lifestyle Tags
                         </label>
-                        <div className="flex flex-row flex-wrap gap-[0.73vw]">
+                        <div className="flex flex-row flex-wrap gap-[1.17vh]">
                             {lifestyleTags.map((tag, i) => (
-                                <div key={i} className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                                    <span className="text-[0.73vw] text-white">{tag}</span>
+                                <div key={i} className="px-[1.56vh] py-[0.39vh] rounded-[2.34vh] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.78vh]">
+                                    <span className="text-[1.25vh] text-white">{tag}</span>
                                 </div>
                             ))}
                         </div>
@@ -423,14 +424,14 @@ export const ProfileOverview = ({ activeTab, height = "auto", user }: { activeTa
 
                 {/* Vibes / Interests */}
                 {vibesEntries.length > 0 && (
-                    <div className="flex flex-col gap-[0.63vw] w-full">
-                        <label className="font-bold not-italic text-[0.63vw] leading-[0.83vw] text-white">
+                    <div className="flex flex-col gap-[1.17vh] w-full">
+                        <label className="font-bold not-italic text-[1.17vh] leading-[1.56vh] text-white">
                             Interests
                         </label>
-                        <div className="flex flex-row flex-wrap gap-[0.73vw]">
+                        <div className="flex flex-row flex-wrap gap-[1.17vh]">
                             {vibesEntries.map((vibe, i) => (
-                                <div key={i} className="px-[0.83vw] py-[0.05vw] rounded-[1.25vw] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.42vw]">
-                                    <span className="text-[0.73vw] text-white">{vibe}</span>
+                                <div key={i} className="px-[1.56vh] py-[0.39vh] rounded-[2.34vh] border border-[#5F00DB] bg-[#5F00DB]/10 flex items-center gap-[0.78vh]">
+                                    <span className="text-[1.25vh] text-white">{vibe}</span>
                                 </div>
                             ))}
                         </div>
@@ -444,18 +445,18 @@ export const ProfileOverview = ({ activeTab, height = "auto", user }: { activeTa
 // --- ProfileInfoCard Component ---
 
 const InfoRow = ({ label, value, isBadge = false }: { label: string, value: string | React.ReactNode, isBadge?: boolean }) => (
-    <div className="flex flex-row items-center justify-between w-full h-[1.67vw]">
-        <span className="font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">
+    <div className="flex flex-row items-center justify-between w-full h-[2.97vh]">
+        <span className="font-normal not-italic text-[1.48vh] leading-[150%] text-[#CCCCCC]">
             {label}
         </span>
         {isBadge ? (
-            <div className="flex flex-row justify-center items-center px-[0.63vw] py-[0.42vw] bg-[#5F00DB] rounded-[0.83vw]">
-                <span className="font-normal not-italic text-[0.73vw] leading-[0.83vw] text-white">
+            <div className="flex flex-row justify-center items-center px-[1.12vh] py-[0.75vh] bg-[#5F00DB] rounded-[1.48vh]">
+                <span className="font-normal not-italic text-[1.3vh] leading-[1.48vh] text-white">
                     {value}
                 </span>
             </div>
         ) : (
-            <span className="font-normal not-italic text-[0.83vw] leading-[150%] text-white text-right">
+            <span className="font-normal not-italic text-[1.48vh] leading-[150%] text-white text-right">
                 {value}
             </span>
         )}
@@ -470,10 +471,10 @@ export const ProfileInfoCard = ({ user }: { user?: User | null }) => {
     };
 
     return (
-        <div className="flex flex-col p-[0.83vw] gap-[0.83vw] w-[19.17vw] bg-[#222222] border border-[#666666]/50 rounded-[0.83vw] h-fit">
+        <div className="flex flex-col p-[1.48vh] gap-[1.48vh] w-[19.17vw] bg-[#222222] border border-[#666666]/50 rounded-[1.48vh] h-fit">
             {/* Heading */}
-            <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] relative">
-                <h3 className="font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">
+            <div className="flex flex-col gap-[1.48vh] pb-[1.48vh] relative">
+                <h3 className="font-bold not-italic text-[2.6vh] leading-[120%] tracking-[-0.04em] text-white">
                     Profile Info
                 </h3>
                 {/* Gradient Line */}
@@ -481,7 +482,7 @@ export const ProfileInfoCard = ({ user }: { user?: User | null }) => {
             </div>
 
             {/* Content */}
-            <div className="flex flex-col gap-[0.83vw]">
+            <div className="flex flex-col gap-[1.48vh]">
                 <InfoRow label="Membership" value={user?.subscriptionActive ? 'Premium' : 'Free'} isBadge={true} />
                 <InfoRow label="Account Status" value={user?.accountStatus || 'active'} />
                 <InfoRow label="Auth Type" value={user?.authType || 'N/A'} />

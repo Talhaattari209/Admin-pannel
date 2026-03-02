@@ -15,16 +15,40 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail, can
     const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
-    const limit = 100; // Fetch more for client-side pagination
+    // Reset to page 1 when search or filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, statusFilter, issueTypeFilter]);
+
+    const limit = 100; // Fetch more for client-side filtering
     const { data: rawData, isLoading } = useBugsReports({
         page: 1, // Always fetch first 100
         limit,
-        search: search || undefined,
         status: statusFilter || undefined,
         issueType: issueTypeFilter || undefined,
     });
 
-    const reports = useMemo(() => rawData?.reports ?? [], [rawData]);
+    const reports = useMemo(() => {
+        const raw = rawData?.reports ?? [];
+        const fullSearch = search.trim().toLowerCase();
+        if (!fullSearch) return raw;
+
+        // Client-side post-filter: The API 'search' parameter is currently unreliable/broken
+        // for this endpoint. We fetch a larger batch and filter everything locally.
+        return raw.filter((bug) => {
+            const reporterName = (bug.reportedBy?.name || '').toLowerCase();
+            const reporterEmail = (bug.reportedBy?.email || '').toLowerCase();
+            const subject = (bug.subject || '').toLowerCase();
+            const message = (bug.message || '').toLowerCase();
+
+            return (
+                reporterName.includes(fullSearch) ||
+                reporterEmail.includes(fullSearch) ||
+                subject.includes(fullSearch) ||
+                message.includes(fullSearch)
+            );
+        });
+    }, [rawData?.reports, search]);
 
     // Standardized Runtime Pagination
     const ITEMS_PER_PAGE = 20;

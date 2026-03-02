@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import ReportedProblemView from '@/components/reported-problem/ReportedProblemView';
 import UserReportDetailsView from '@/components/reported-problem/user-reported/UserReportDetailsView';
 import BugReportDetailsView from '@/components/reported-problem/bugs-reported/BugReportDetailsView';
@@ -25,6 +26,7 @@ import { useAuthStore } from '@/store/auth-store';
 import { canEditModule } from '@/utils/permissions';
 
 export default function ReportedProblemsPage() {
+    const router = useRouter();
     const [viewState, setViewState] = useState<'list' | 'user-detail' | 'bug-detail'>('list');
     const [selectedUserReport, setSelectedUserReport] = useState<UserReportData | null>(null);
     const [selectedBugReport, setSelectedBugReport] = useState<BugReportData | null>(null);
@@ -162,6 +164,7 @@ export default function ReportedProblemsPage() {
                         onViewBugDetail={handleViewBugReport}
                         onExport={handleOpenExport}
                         canEdit={canEdit}
+                        onViewProfile={(userId) => router.push(`/users/profile?id=${userId}`)}
                     />
                 )}
                 {viewState === 'user-detail' && (
@@ -171,6 +174,7 @@ export default function ReportedProblemsPage() {
                         onDeactivate={() => setIsDeactivationModalOpen(true)}
                         onUpdateStatus={handleUpdateUserStatus}
                         onWarnUser={handleWarnUser}
+                        onViewUserProfile={(userId) => userId ? router.push(`/users/profile?id=${userId}`) : router.push('/users')}
                     />
                 )}
                 {viewState === 'bug-detail' && (

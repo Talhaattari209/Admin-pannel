@@ -74,7 +74,7 @@ function UserProfilePageContent() {
             </div>
 
             <div className="flex flex-row gap-[1.67vw] w-[79.17vw] items-start">
-                <ProfileOverview activeTab={activeTab} height="calc((100vh - 11.25vw - 58px) * 1.13)" user={user} />
+                <ProfileOverview activeTab={activeTab} height="75vh" user={user} />
                 <ProfileInfoCard user={user} />
             </div>
 

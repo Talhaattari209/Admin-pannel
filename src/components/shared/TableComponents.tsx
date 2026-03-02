@@ -108,7 +108,7 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const selectedLabel = displayOptions.find(opt => opt.value === value)?.label || "Select";
+    const selectedLabel = value ? (displayOptions.find(opt => opt.value === value)?.label || 'All') : 'All';
 
     return (
         <div
@@ -189,6 +189,22 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
                             borderRadius: '0.66vw', // Rounded corners
                         }}
                     >
+                        {/* All option — clears filter */}
+                        <div
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onChange('');
+                                setIsOpen(false);
+                            }}
+                            className={`w-full text-white cursor-pointer hover:bg-white/10 transition-colors ${!value ? 'bg-white/5' : ''}`}
+                            style={{
+                                padding: '0.42vw 0.83vw',
+                                fontSize: '0.80vw',
+                                fontFamily: 'var(--font-sans)'
+                            }}
+                        >
+                            All
+                        </div>
                         {displayOptions.map(opt => (
                             <div
                                 key={opt.value}
@@ -197,7 +213,7 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, option
                                     onChange(opt.value);
                                     setIsOpen(false);
                                 }}
-                                className="w-full text-white cursor-pointer hover:bg-white/10 transition-colors"
+                                className={`w-full text-white cursor-pointer hover:bg-white/10 transition-colors ${value === opt.value ? 'bg-white/5' : ''}`}
                                 style={{
                                     padding: '0.42vw 0.83vw', // Padding for text
                                     fontSize: '0.80vw', // Options text size (increased from 0.73vw)

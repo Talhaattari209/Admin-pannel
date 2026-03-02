@@ -4,8 +4,8 @@ import { User } from 'lucide-react';
 
 export interface UserReportData {
     id: string;
-    reportedBy: { name: string; email: string; avatar: string };
-    reportedUser: { name: string; email: string; avatar: string; age: number };
+    reportedBy: { id?: string; name: string; email: string; avatar: string };
+    reportedUser: { id?: string; name: string; email: string; avatar: string; age: number };
     category: string;
     reports: number;
     description: string;
@@ -15,7 +15,7 @@ export interface UserReportData {
 
 interface UserReportedTableRowProps {
     data: UserReportData;
-    onAction: (action: 'DETAILS', data: UserReportData) => void;
+    onAction: (action: 'DETAILS' | 'UPDATE' | 'VIEW_REPORTER_PROFILE' | 'VIEW_REPORTED_PROFILE', data: UserReportData) => void;
 }
 
 const UserReportedTableRow: React.FC<UserReportedTableRowProps> = ({ data, onAction }) => {
@@ -89,14 +89,14 @@ const UserReportedTableRow: React.FC<UserReportedTableRowProps> = ({ data, onAct
                 {isMenuOpen && (
                     <div ref={menuRef} className="absolute top-[80%] right-full mr-[0.42vw] w-[14.58vw] bg-[#1a1a1a] border border-[#666666]/50 rounded-[0.83vw] shadow-2xl z-[1000] overflow-hidden py-[0.42vw] animate-in fade-in slide-in-from-right-2 duration-200">
                         {[
-                            { id: 'DETAILS', label: 'View Details', icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg> },
-                            { id: 'UPDATE', label: 'Update Status', icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg> },
-                            { id: 'PROFILE_REPORTER', label: "View User's Profile", icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg> },
-                            { id: 'PROFILE_REPORTED', label: "View Reported User's Profile", icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg> }
+                            { id: 'DETAILS' as const, label: 'View Details', icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg> },
+                            { id: 'UPDATE' as const, label: 'Update Status', icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg> },
+                            { id: 'VIEW_REPORTER_PROFILE' as const, label: "View User's Profile", icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg> },
+                            { id: 'VIEW_REPORTED_PROFILE' as const, label: "View Reported User's Profile", icon: <svg className="w-[0.83vw] h-[0.83vw]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg> }
                         ].map((item, idx) => (
                             <button
                                 key={idx}
-                                onClick={() => { onAction('DETAILS', data); setIsMenuOpen(false); }}
+                                onClick={() => { onAction(item.id, data); setIsMenuOpen(false); }}
                                 className="flex flex-row items-center w-full px-[0.83vw] py-[0.63vw] gap-[0.83vw] hover:bg-white/5 transition-colors group/item text-left"
                             >
                                 <span className="text-white opacity-60 group-hover/item:opacity-100 transition-opacity">{item.icon}</span>

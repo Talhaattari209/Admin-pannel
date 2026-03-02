@@ -11,9 +11,10 @@ interface UserReportDetailsViewProps {
     onDeactivate: () => void;
     onUpdateStatus: (status: string, notes: string) => void;
     onWarnUser?: () => void;
+    onViewUserProfile?: (userId: string) => void;
 }
 
-const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, onBack, onDeactivate, onUpdateStatus, onWarnUser }) => {
+const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, onBack, onDeactivate, onUpdateStatus, onWarnUser, onViewUserProfile }) => {
     const [status, setStatus] = useState(report?.status || 'New');
     const [notes, setNotes] = useState('');
     const [showDeactivateModal, setShowDeactivateModal] = useState(false);
@@ -94,6 +95,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                         <div className="flex items-center justify-between mb-[1.67vw]">
                             <h3 className="text-white text-[1.46vw] font-bold not-italic leading-tight">Reported User</h3>
                             {getStatusBadge(report.status)}
+
                         </div>
 
                         <div className="flex flex-col md:flex-row items-center gap-[2.08vw] mb-[2.08vw] w-full">
@@ -111,6 +113,7 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                                             <polyline points="20 6 9 17 4 12" />
                                         </svg>
                                     </div>
+
                                 </div>
                                 <div className="flex flex-wrap gap-[0.42vw] mt-[0.83vw]">
                                     {['Straight', 'He/Him', 'Austin, TX', '2 miles', 'Stanford University', 'Software Engineer'].map((chip) => (
@@ -120,7 +123,20 @@ const UserReportDetailsView: React.FC<UserReportDetailsViewProps> = ({ report, o
                                     ))}
                                 </div>
                             </div>
+                            <button
+                                onClick={() => {
+                                    if (onViewUserProfile) {
+                                        // Pass the userId if available; the handler will navigate
+                                        // to the profile page or fall back to the users list
+                                        onViewUserProfile(report?.reportedUser?.id ?? '');
+                                    }
+                                }}
+                                className="w-[13vw] h-[3vw] px-[1.07vw] py-[0.83vw] border border-white rounded-[2.71vw] text-white text-[0.83vw] font-medium not-italic hover:bg-white/10 backdrop-blur-[6px] transition-all cursor-pointer"
+                            >
+                                View User Profile
+                            </button>
                         </div>
+
 
                         <div className="flex flex-col gap-[0.42vw]">
                             <label className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider opacity-60">Reason</label>

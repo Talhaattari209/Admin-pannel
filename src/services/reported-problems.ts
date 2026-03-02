@@ -21,6 +21,7 @@ export interface BugsStats {
 }
 
 export interface ApiUserRef {
+    id?: string;
     name: string;
     email: string;
     image: string;
@@ -119,8 +120,8 @@ export interface WarnAccountStatusResponse {
 
 export type UserReportData = {
     id: string;
-    reportedBy: { name: string; email: string; avatar: string };
-    reportedUser: { name: string; email: string; avatar: string; age: number };
+    reportedBy: { id?: string; name: string; email: string; avatar: string };
+    reportedUser: { id?: string; name: string; email: string; avatar: string; age: number };
     category: string;
     reports: number;
     description: string;
@@ -169,11 +170,13 @@ export function mapApiUserReportToUi(r: ApiUserReportItem): UserReportData {
     return {
         id: r.id,
         reportedBy: {
+            id: r.reportedBy.id,
             name: r.reportedBy.name,
             email: r.reportedBy.email,
             avatar: r.reportedBy.image || '',
         },
         reportedUser: {
+            id: r.reportedUser.id,
             name: r.reportedUser.name,
             email: r.reportedUser.email,
             avatar: r.reportedUser.image || '',

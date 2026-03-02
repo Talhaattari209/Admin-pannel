@@ -6,25 +6,50 @@ import { useUserReports } from '@/services/reported-problems';
 
 interface UserReportedTableProps {
     onViewDetail: (report: UserReportData) => void;
+    onViewProfile?: (userId: string) => void;
 }
 
-const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) => {
+const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail, onViewProfile }) => {
     const [search, setSearch] = useState('');
     const [catFilter, setCatFilter] = useState('');
     const [repFilter, setRepFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
-    const limit = 100; // Fetch more for client-side pagination
+    // Reset to page 1 when search changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search]);
+
+    const limit = 100; // Fetch more for client-side filtering
     const { data: rawData, isLoading } = useUserReports({
         page: 1, // Always fetch first 100
         limit,
-        search: search || undefined,
         status: statusFilter || undefined,
         category: catFilter || undefined,
     });
 
-    const reports = useMemo(() => rawData?.reports ?? [], [rawData]);
+    const rawReports = useMemo(() => rawData?.reports ?? [], [rawData]);
+
+    // Client-side post-filter: The API 'search' parameter is currently unreliable/broken
+    // for this endpoint. We fetch a larger batch and filter everything locally.
+    const reports = useMemo(() => {
+        const fullSearch = search.trim().toLowerCase();
+        if (!fullSearch) return rawReports;
+        return rawReports.filter((r) => {
+            const reportedByName = (r.reportedBy?.name || '').toLowerCase();
+            const reportedByEmail = (r.reportedBy?.email || '').toLowerCase();
+            const reportedUserName = (r.reportedUser?.name || '').toLowerCase();
+            const reportedUserEmail = (r.reportedUser?.email || '').toLowerCase();
+
+            return (
+                reportedByName.includes(fullSearch) ||
+                reportedByEmail.includes(fullSearch) ||
+                reportedUserName.includes(fullSearch) ||
+                reportedUserEmail.includes(fullSearch)
+            );
+        });
+    }, [rawReports, search]);
 
     // Standardized Runtime Pagination
     const ITEMS_PER_PAGE = 20;
@@ -102,7 +127,19 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail }) =
                         <div className="flex items-center justify-center py-[3vw] text-white/60 text-[0.83vw]">No reports found.</div>
                     ) : (
                         displayedReports.map((report) => (
-                            <UserReportedTableRow key={report.id} data={report} onAction={(_action, r) => onViewDetail(r)} />
+                            <UserReportedTableRow
+                                key={report.id}
+                                data={report}
+                                onAction={(action, r) => {
+                                    if (action === 'VIEW_REPORTER_PROFILE' && onViewProfile && r.reportedBy.id) {
+                                        onViewProfile(r.reportedBy.id);
+                                    } else if (action === 'VIEW_REPORTED_PROFILE' && onViewProfile && r.reportedUser.id) {
+                                        onViewProfile(r.reportedUser.id);
+                                    } else {
+                                        onViewDetail(r);
+                                    }
+                                }}
+                            />
                         ))
                     )}
                 </div>
