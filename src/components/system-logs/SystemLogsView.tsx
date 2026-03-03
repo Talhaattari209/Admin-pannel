@@ -70,15 +70,15 @@ const SystemLogsView: React.FC = () => {
     return (
         <div className="flex flex-col w-full h-full animate-in fade-in duration-500 overflow-x-hidden  [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {/* Header matching page header_css.txt */}
-            <div className="flex flex-row items-end p-0 gap-[0.83vw] w-[79.17vw] h-[4.17vw] flex-none order-0 flex-grow-0">
+            <div className="flex flex-row items-end p-0 gap-[0.83vw] w-[80.67vw] h-[4.17vw] flex-none order-0 flex-grow-0">
                 {/* Text */}
                 <div className="flex flex-col justify-center items-start p-0 gap-[0.83vw] flex-1 h-[4.17vw] order-0">
                     {/* System Logs Title */}
-                    <div className="w-[71.30vw] h-[2.08vw]  font-bold text-[1.875vw] leading-[110%] flex items-center tracking-[-0.04em] text-white flex-none order-1 self-stretch flex-grow-0">
+                    <div className="w-[72.81vw] h-[2.08vw]  font-bold text-[1.875vw] leading-[110%] flex items-center tracking-[-0.04em] text-white flex-none order-1 self-stretch flex-grow-0">
                         System Logs
                     </div>
                     {/* Description */}
-                    <div className="w-[71.30vw] h-[1.25vw]  font-normal text-[0.83vw] leading-[150%] flex items-center text-[#CCCCCC] flex-none order-2 self-stretch flex-grow-0">
+                    <div className="w-[72.81vw] h-[1.25vw]  font-normal text-[0.83vw] leading-[150%] flex items-center text-[#CCCCCC] flex-none order-2 self-stretch flex-grow-0">
                         Monitor key admin activities, security events, and automated system actions.
                     </div>
                 </div>

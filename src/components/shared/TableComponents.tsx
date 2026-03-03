@@ -327,7 +327,7 @@ export const TableFrame: React.FC<TableFrameProps> = ({ children, searchBar, fil
             className={`flex flex-col items-start ${className || ''}`}
             style={{
                 width: '100%',
-                maxWidth: toVw(1520),
+                maxWidth: toVw(1549),
                 background: '#222222',
                 border: '1px solid rgba(102, 102, 102, 0.5)',
                 borderRadius: toVw(16),

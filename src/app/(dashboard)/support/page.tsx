@@ -9,7 +9,7 @@ export default function SupportPage() {
     const [selectedTicket, setSelectedTicket] = useState<SupportTicketData | null>(null);
 
     return (
-        <div className="flex flex-col items-start w-full max-w-[83.33vw] px-[2.08vw] py-[2.08vw]">
+        <div className="flex flex-col items-start w-full max-w-[84.83vw] px-[2.08vw] py-[2.08vw]">
             {selectedTicket ? (
                 <SupportTicketDetailView ticket={selectedTicket} onBack={() => setSelectedTicket(null)} />
             ) : (

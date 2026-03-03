@@ -58,7 +58,7 @@ const transformUser = (apiUser: any): User => {
 
 // API Functions
 export const usersService = {
-    getAll: async (params?: { page?: number; limit?: number; search?: string }): Promise<PaginatedResponse<User>> => {
+    getAll: async (params?: { page?: number; limit?: number; search?: string; joinedStartDate?: string; joinedEndDate?: string; lastActiveStartDate?: string; lastActiveEndDate?: string }): Promise<PaginatedResponse<User>> => {
         try {
             console.log('[Users Service] Fetching users with params:', params);
 
@@ -118,7 +118,7 @@ export const usersService = {
 };
 
 // React Query Hooks
-export const useUsers = (params?: { page?: number; limit?: number; search?: string }) => {
+export const useUsers = (params?: { page?: number; limit?: number; search?: string; joinedStartDate?: string; joinedEndDate?: string; lastActiveStartDate?: string; lastActiveEndDate?: string }) => {
     return useQuery<PaginatedResponse<User>, AxiosError>({
         queryKey: ['users', params],
         queryFn: () => usersService.getAll(params),

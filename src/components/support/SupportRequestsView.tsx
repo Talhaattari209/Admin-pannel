@@ -38,7 +38,8 @@ const SupportRequestsView: React.FC<SupportRequestsViewProps> = ({ onViewDetail 
     // Called when user clicks "Download" inside ExportModal → ExportDataCard
     const handleDownload = (config: { startDate: string; endDate: string; format: string; activeFilter: string }) => {
         const timelaps = QUICK_FILTER_MAP[config.activeFilter] ?? 'allTime';
-        const format = config.format.toLowerCase().includes('csv') ? 'csv' : 'json';
+        const fmt = config.format.toLowerCase();
+        const format = fmt === 'csv' ? 'csv' : fmt === 'pdf' ? 'pdf' : 'json';
 
         exportMutation.mutate(
             { format, timelaps, startDate: config.startDate, endDate: config.endDate },

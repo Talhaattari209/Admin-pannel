@@ -90,7 +90,12 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail, can
                     <FilterSelect
                         label="Status"
                         value={statusFilter}
-                        options={['New', 'Pending', 'Resolved', 'Closed'].map(opt => ({ label: opt, value: opt }))}
+                        options={[
+                            { label: 'Pending', value: 'pending' },
+                            { label: 'Reviewing', value: 'reviewing' },
+                            { label: 'Resolved', value: 'resolved' },
+                            { label: 'Closed', value: 'closed' },
+                        ]}
                         onChange={setStatusFilter}
                     />
                 </div>

@@ -39,10 +39,10 @@ function UserProfilePageContent() {
     const userAge = user?.dob ? Math.floor((Date.now() - new Date(user.dob).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) : undefined;
 
     return (
-        <div className="flex flex-col items-start w-full max-w-[83.33vw]"
+        <div className="flex flex-col items-start w-full max-w-[84.83vw]"
             style={{ paddingLeft: '2.08vw', paddingTop: '2.08vw', paddingBottom: '2.08vw', paddingRight: '2.08vw' }}
         >
-            <div className="mb-[1.67vw] w-[79.17vw]">
+            <div className="mb-[1.67vw] w-[80.67vw]">
                 <UserProfileHeader
                     name={userName}
                     age={userAge}
@@ -73,7 +73,7 @@ function UserProfilePageContent() {
                 <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab} />
             </div>
 
-            <div className="flex flex-row gap-[1.67vw] w-[79.17vw] items-start">
+            <div className="flex flex-row gap-[1.67vw] w-[80.67vw] items-start">
                 <ProfileOverview activeTab={activeTab} height="75vh" user={user} />
                 <ProfileInfoCard user={user} />
             </div>

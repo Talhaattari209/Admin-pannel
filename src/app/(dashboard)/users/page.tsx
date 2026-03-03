@@ -14,8 +14,167 @@ import { useAuthStore } from '@/store/auth-store';
 import { canDeleteModule } from '@/utils/permissions';
 import DeactivationCard from '@/components/pop-cards/DeactivationCard';
 import { useDeactivateUser } from '@/services/users';
+import CustomCalendar from '@/components/shared/CustomCalendar';
 
-// --- Stat Cards Components ---
+// Helper for date display format
+const fmtDisplay = (dateStr: string) => {
+    if (!dateStr) return '—';
+    const [year, month, day] = dateStr.split('-');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${day} ${months[parseInt(month) - 1]} ${year}`;
+};
+
+// ─── Date Range Filter (mimics FilterSelect style) ──────────────────────────
+const ChevronDownIcon = () => (
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 9L12 15L18 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+);
+
+interface DateRangeFilterSelectProps {
+    label: string;
+    startDate: string;
+    endDate: string;
+    onStartChange: (v: string) => void;
+    onEndChange: (v: string) => void;
+    onClear: () => void;
+    align?: 'left' | 'right';
+}
+
+const DateRangeFilterSelect: React.FC<DateRangeFilterSelectProps> = ({
+    label, startDate, endDate, onStartChange, onEndChange, onClear, align = 'left'
+}) => {
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [calendarOpen, setCalendarOpen] = React.useState<'start' | 'end' | null>(null);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+                setIsOpen(false);
+                setCalendarOpen(null);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const hasValue = !!(startDate || endDate);
+    const displayText = hasValue
+        ? `${startDate || '—'}  to  ${endDate || '—'}`
+        : 'All';
+
+    return (
+        <div
+            ref={containerRef}
+            className="flex flex-col items-start relative"
+            style={{ width: '10.1vw', height: '2.92vw', padding: 0 }}
+        >
+            {/* Label */}
+            <div className="flex flex-row items-start self-stretch" style={{ gap: '0.21vw', height: '0.66vw' }}>
+                <span className="font-sans font-bold not-italic" style={{ height: '0.66vw', fontSize: '0.70vw', lineHeight: '0.66vw' }}>
+                    {label}
+                </span>
+            </div>
+
+            {/* Trigger */}
+            <div
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex flex-row items-center border-b border-white box-border relative cursor-pointer"
+                style={{ width: '100%', height: '2.26vw', minHeight: '2.26vw', padding: 0, gap: '0.66vw' }}
+            >
+                <span
+                    className="flex-grow min-w-0 truncate pointer-events-none font-sans not-italic font-normal text-white"
+                    style={{ fontSize: '0.86vw', lineHeight: '1vw', opacity: hasValue ? 1 : 0.4, zIndex: 1 }}
+                >
+                    {displayText}
+                </span>
+                {hasValue && (
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onClear(); }}
+                        className="text-white/40 hover:text-white text-[0.7vw] leading-none cursor-pointer shrink-0"
+                        style={{ zIndex: 2 }}
+                    >✕</button>
+                )}
+                <div style={{ width: '1vw', height: '1vw', flexShrink: 0, pointerEvents: 'none', zIndex: 1 }}>
+                    <ChevronDownIcon />
+                </div>
+
+                {/* Dropdown Panel */}
+                {isOpen && (
+                    <div
+                        className={cn(
+                            "absolute bg-[#1C1C1E] border border-[#333333] z-50 shadow-xl",
+                            align === 'right' ? "right-0" : "left-0"
+                        )}
+                        style={{ top: '100%', marginTop: '0.2vw', borderRadius: '0.66vw', width: '15vw', padding: '0.83vw' }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Start Date */}
+                        <div className="flex flex-col gap-[0.21vw] mb-[0.63vw] relative">
+                            <span className="text-white/60 font-sans" style={{ fontSize: '0.63vw' }}>Start Date</span>
+                            <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-full h-[2.5vw] min-h-[2.5vw] border-b border-white/20 relative">
+                                <span className="flex-grow font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">
+                                    {fmtDisplay(startDate)}
+                                </span>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); setCalendarOpen(calendarOpen === 'start' ? null : 'start'); }}
+                                    className="p-1 hover:bg-white/10 rounded-full transition-colors cursor-pointer"
+                                >
+                                    <svg viewBox="0 0 24 24" className="w-[1vw] h-[1vw] text-white/60" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                </button>
+                            </div>
+                            {calendarOpen === 'start' && (
+                                <CustomCalendar
+                                    selectedDate={startDate}
+                                    onSelect={(date) => { onStartChange(date); setCalendarOpen(null); }}
+                                    onClose={() => setCalendarOpen(null)}
+                                    className={cn("top-[3vw] mt-2", align === 'right' ? "right-0" : "left-0")}
+                                />
+                            )}
+                        </div>
+                        {/* End Date */}
+                        <div className="flex flex-col gap-[0.21vw] relative">
+                            <span className="text-white/60 font-sans" style={{ fontSize: '0.63vw' }}>End Date</span>
+                            <div className="box-border flex flex-row items-center py-[0.42vw] gap-[0.83vw] w-full h-[2.5vw] min-h-[2.5vw] border-b border-white/20 relative">
+                                <span className="flex-grow font-normal not-italic text-[0.83vw] leading-[1.25vw] text-white flex items-center">
+                                    {fmtDisplay(endDate)}
+                                </span>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); setCalendarOpen(calendarOpen === 'end' ? null : 'end'); }}
+                                    className="p-1 hover:bg-white/10 rounded-full transition-colors cursor-pointer"
+                                >
+                                    <svg viewBox="0 0 24 24" className="w-[1vw] h-[1vw] text-white/60" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                </button>
+                            </div>
+                            {calendarOpen === 'end' && (
+                                <CustomCalendar
+                                    selectedDate={endDate}
+                                    onSelect={(date) => { onEndChange(date); setCalendarOpen(null); }}
+                                    onClose={() => setCalendarOpen(null)}
+                                    className={cn("top-[3vw] mt-2", align === 'right' ? "right-0" : "left-0")}
+                                />
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
+
 
 interface StatCardProps {
     label: string;
@@ -164,11 +323,11 @@ const UserTableRow = ({ user }: { user: User }) => {
             <div className="flex items-center px-[0.63vw] w-[6.77vw] h-full shrink-0">
                 <span className="text-white font-sans not-italic font-normal text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{user.id ? user.id.substring(0, 8) : 'N/A'}</span>
             </div>
-            <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[11.65vw] h-full shrink-0">
+            <div className="flex items-center gap-[0.42vw] px-[0.63vw] w-[12.15vw] h-full shrink-0">
                 <div className="w-[1.875vw] h-[1.875vw] rounded-full bg-cover bg-center shrink-0" style={{ backgroundImage: "url('/8.png')" }} />
                 <span className="text-white font-sans not-italic font-normal text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{user.first_name} {user.last_name}</span>
             </div>
-            <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
+            <div className="flex items-center px-[0.63vw] w-[12.15vw] h-full shrink-0">
                 <span className="text-white font-sans not-italic font-normal text-[0.73vw] leading-[0.83vw] whitespace-nowrap overflow-hidden text-ellipsis">{user.email}</span>
             </div>
             <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
@@ -179,7 +338,7 @@ const UserTableRow = ({ user }: { user: User }) => {
                     <span className="text-white font-sans not-italic font-normal text-[0.73vw] leading-[0.83vw] whitespace-nowrap capitalize">{user.status || 'Free'}</span>
                 </div>
             </div>
-            <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
+            <div className="flex items-center px-[0.63vw] w-[12.15vw] h-full shrink-0">
                 <span className="text-white font-sans not-italic font-normal text-[0.73vw] leading-[0.83vw] whitespace-nowrap">{formatDate(user.created_at)}</span>
             </div>
             <div className="flex items-center px-[0.63vw] w-[11.65vw] h-full shrink-0">
@@ -197,8 +356,10 @@ const UserTableSection = () => {
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [subFilter, setSubFilter] = useState('');
-    const [joinedFilter, setJoinedFilter] = useState('');
-    const [activeFilter, setActiveFilter] = useState('');
+    const [joinedStartDate, setJoinedStartDate] = useState('');
+    const [joinedEndDate, setJoinedEndDate] = useState('');
+    const [activeStartDate, setActiveStartDate] = useState('');
+    const [activeEndDate, setActiveEndDate] = useState('');
     const ITEMS_PER_PAGE = 10;
 
     // Debounce search to avoid firing API calls on every keystroke
@@ -212,12 +373,19 @@ const UserTableSection = () => {
         return () => clearTimeout(timer);
     }, [searchValue]);
 
-    // Increase limit to fetch a larger dataset for client-side filtering at runtime
-    const { data, isLoading, error } = useUsers({ page: 1, limit: 100, search: debouncedSearch || undefined });
+    // Fetch with all active API params — date filters go server-side
+    const { data, isLoading, error } = useUsers({
+        page: 1,
+        limit: 100,
+        search: debouncedSearch || undefined,
+        joinedStartDate: joinedStartDate || undefined,
+        joinedEndDate: joinedEndDate || undefined,
+        lastActiveStartDate: activeStartDate || undefined,
+        lastActiveEndDate: activeEndDate || undefined,
+    });
 
     const filteredUsers = useMemo(() => {
         if (!data?.data) return [];
-        const now = new Date();
         // Client-side post-filter: re-apply the full typed search string
         // (the API only received the first word; here we narrow by the full query)
         const fullSearch = searchValue.trim().toLowerCase();
@@ -229,43 +397,19 @@ const UserTableSection = () => {
                 const email = (user.email || '').toLowerCase();
                 if (!fullName.includes(fullSearch) && !email.includes(fullSearch)) return false;
             }
-            // Subscription filter
+            // Subscription filter (client-side — API doesn't have a subscription param yet)
             if (subFilter) {
                 if (!user.status) return false;
                 if (user.status.toLowerCase() !== subFilter.toLowerCase()) return false;
             }
-            if (joinedFilter) {
-                if (!user.created_at) return false;
-                const joinedDate = new Date(user.created_at);
-
-                if (joinedFilter === 'this-week') {
-                    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-                    if (joinedDate < weekAgo) return false;
-                } else if (joinedFilter === 'this-month') {
-                    // Rolling 30 days (Jan 28 - Feb 27 style)
-                    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-                    if (joinedDate < thirtyDaysAgo) return false;
-                }
-            }
-            if (activeFilter) {
-                if (!user.last_active) return false;
-                const lastActive = new Date(user.last_active);
-
-                if (activeFilter === 'today') {
-                    if (lastActive.toDateString() !== now.toDateString()) return false;
-                } else if (activeFilter === '7-days') {
-                    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-                    if (lastActive < weekAgo) return false;
-                }
-            }
             return true;
         });
-    }, [data?.data, searchValue, subFilter, joinedFilter, activeFilter]);
+    }, [data?.data, searchValue, subFilter]);
 
     // Reset to page 1 when client-side filters change
     useEffect(() => {
         setCurrentPage(1);
-    }, [subFilter, joinedFilter, activeFilter]);
+    }, [subFilter, joinedStartDate, joinedEndDate, activeStartDate, activeEndDate]);
 
     // Handle pagination entirely client-side 
     const totalPages = Math.max(1, Math.ceil(filteredUsers.length / ITEMS_PER_PAGE));
@@ -281,17 +425,30 @@ const UserTableSection = () => {
                     <div className="w-[10.1vw] h-[2.92vw] relative">
                         <FilterSelect label="Subscription" value={subFilter} options={[{ label: 'Premium', value: 'premium' }, { label: 'Free', value: 'free' }]} onChange={setSubFilter} />
                     </div>
-                    <div className="w-[10.1vw] h-[2.92vw] relative">
-                        <FilterSelect label="Joined Date Range" value={joinedFilter} options={[{ label: 'This Week', value: 'this-week' }, { label: 'This Month', value: 'this-month' }]} onChange={setJoinedFilter} />
-                    </div>
-                    <div className="w-[10.1vw] h-[2.92vw] relative">
-                        <FilterSelect label="Last Active" value={activeFilter} options={[{ label: 'Today', value: 'today' }, { label: '7 Days', value: '7-days' }]} onChange={setActiveFilter} />
-                    </div>
+                    {/* Joined Date Range – dropdown picker */}
+                    <DateRangeFilterSelect
+                        label="Joined Date Range"
+                        startDate={joinedStartDate}
+                        endDate={joinedEndDate}
+                        onStartChange={(v) => { setJoinedStartDate(v); setCurrentPage(1); }}
+                        onEndChange={(v) => { setJoinedEndDate(v); setCurrentPage(1); }}
+                        onClear={() => { setJoinedStartDate(''); setJoinedEndDate(''); }}
+                    />
+                    {/* Last Active Date Range – dropdown picker */}
+                    <DateRangeFilterSelect
+                        label="Last Active Date Range"
+                        startDate={activeStartDate}
+                        endDate={activeEndDate}
+                        onStartChange={(v) => { setActiveStartDate(v); setCurrentPage(1); }}
+                        onEndChange={(v) => { setActiveEndDate(v); setCurrentPage(1); }}
+                        onClear={() => { setActiveStartDate(''); setActiveEndDate(''); }}
+                        align="right"
+                    />
                 </div>
             </div>
 
             <div className="flex flex-row items-center w-full h-[48px] bg-[#1C1C1E] border-b border-[#333333] mt-0">
-                {[['User ID', '6.77vw'], ['Name', '11.65vw'], ['Email', '11.65vw'], ['Phone', '11.65vw'], ['Subscription', '11.65vw'], ['Joined On', '11.65vw'], ['Last Active', '11.65vw']].map(([label, width]) => (
+                {[['User ID', '6.77vw'], ['Name', '12.15vw'], ['Email', '12.15vw'], ['Phone', '11.65vw'], ['Subscription', '11.65vw'], ['Joined On', '12.15vw'], ['Last Active', '11.65vw']].map(([label, width]) => (
                     <div key={label} className={`flex items-center gap-[8px] px-[12px] w-[${width}] shrink-0 group cursor-pointer`}>
                         <span className="text-[#AAAAAA] font-sans not-italic font-medium text-[12px]">{label}</span>
                         <SortIcon />
@@ -353,7 +510,8 @@ export default function UserManagementPage() {
                                 config.activeFilter === 'This Year' ? 'thisYear' :
                                     config.activeFilter === 'Last Year' ? 'lastYear' : 'allTime';
 
-        const format = config.format.toLowerCase() === 'json' ? 'json' : 'csv';
+        const fmt = config.format.toLowerCase();
+        const format = fmt === 'json' ? 'json' : fmt === 'pdf' ? 'pdf' : 'csv';
         const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
 
         exportUsersMutation.mutate(params, {
@@ -369,10 +527,10 @@ export default function UserManagementPage() {
 
     return (
         <UserActionContext.Provider value={{ onDeactivate: (id) => setSelectedUserForDeactivation(id) }}>
-            <div className="flex flex-col items-start w-full max-w-[83.33vw]"
+            <div className="flex flex-col items-start w-full max-w-[84.83vw]"
                 style={{ paddingLeft: '2.08vw', paddingTop: '1.77vw', paddingBottom: '2.08vw', paddingRight: '2.08vw' }}
             >
-                <div className="w-[79.17vw] flex items-center justify-between">
+                <div className="w-[80.67vw] flex items-center justify-between">
                     <PageHeader title="Users Management" description="View, verify, and manage all registered users — including KYC status, bans, and account details." />
                     {/* <button
                         onClick={() => setIsExportModalOpen(true)}

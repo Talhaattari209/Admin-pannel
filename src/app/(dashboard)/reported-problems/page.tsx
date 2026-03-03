@@ -129,7 +129,8 @@ export default function ReportedProblemsPage() {
 
     const handleExportDownload = (config: { startDate: string; endDate: string; format: string; activeFilter: string }) => {
         const timelaps = activeFilterToTimelaps[config.activeFilter] || 'allTime';
-        const format = (config.format || 'JSON').toLowerCase() === 'csv' ? 'csv' : 'json';
+        const fmt = (config.format || 'JSON').toLowerCase();
+        const format = fmt === 'csv' ? 'csv' : fmt === 'pdf' ? 'pdf' : 'json';
         const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
 
         const dateStr = new Date().toISOString().split('T')[0];
@@ -157,7 +158,7 @@ export default function ReportedProblemsPage() {
 
     return (
         <>
-            <div className="w-full px-[2.08vw] pt-[1.77vw] pb-[2.08vw]">
+            <div className="w-full max-w-[84.83vw] px-[2.08vw] pt-[1.77vw] pb-[2.08vw]">
                 {viewState === 'list' && (
                     <ReportedProblemView
                         onViewReportDetail={handleViewUserReport}

@@ -42,7 +42,7 @@ export const ProfileTabs = ({ activeTab, onTabChange }: { activeTab: string, onT
     ];
 
     return (
-        <div className="flex flex-row items-center gap-[0.42vw] w-[59.17vw] h-[2.5vw] pl-[0.83vw]">
+        <div className="flex flex-row items-center gap-[0.42vw] w-[59.83vw] h-[2.5vw] pl-[0.83vw]">
             {tabs.map((tab) => (
                 <button
                     key={tab}
@@ -87,7 +87,7 @@ const ProfileMedia = ({ user, height = "63vh" }: { user?: User | null, height?: 
         : ['/8.png'];
 
     return (
-        <div className="flex flex-col px-[1.5vh] py-[1.5vh] gap-[2vh] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[2vh]" style={{ height }}>
+        <div className="flex flex-col px-[1.5vh] py-[1.5vh] gap-[2vh] w-[59.83vw] bg-[#222222] border border-[#666666]/50 rounded-[2vh]" style={{ height }}>
 
             {/* Header */}
             <div className="flex flex-col gap-[1.48vh] pb-[1.48vh] w-full border-b border-[#333333]">
@@ -99,7 +99,7 @@ const ProfileMedia = ({ user, height = "63vh" }: { user?: User | null, height?: 
             <div className="flex flex-col gap-[2.04vh] w-full items-center justify-center flex-grow">
 
                 {/* Upper Section: Arrows + Main Image */}
-                <div className="flex flex-row items-center justify-center w-full gap-[2vh]">
+                <div className="flex flex-row items-center justify-center w-full gap-[11vw]">
 
                     {/* Left Arrow */}
                     <button ref={(node) => setPrevEl(node)} className="flex items-center justify-center w-[4.44vh] h-[4.44vh] rounded-full bg-[#16003F] shadow-[0px_0px_4px_rgba(95,0,219,0.25),0px_4px_12px_rgba(95,0,219,0.25)] hover:bg-[#2a0075] transition-colors z-10 cursor-pointer disabled:opacity-50">
@@ -217,9 +217,9 @@ export const ProfilePrompts = ({ user }: { user?: User | null }) => {
     const prompts = user?.prompts || [];
 
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] min-h-[28.44vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw]">
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.83vw] min-h-[28.44vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw]">
             {/* Heading */}
-            <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] h-[4.69vw] relative">
+            <div className="flex flex-col items-start gap-[0.83vw] w-[58.17vw] h-[4.69vw] relative">
                 <div className="flex flex-col gap-[0.83vw] pb-[0.83vw] w-full">
                     <h3 className="font-bold not-italic text-[1.46vw] leading-[120%] tracking-[-0.04em] text-white">Prompts</h3>
                     <p className="font-normal not-italic text-[0.83vw] leading-[150%] text-[#CCCCCC]">Review and moderate the user's responses to personality and icebreaker prompts.</p>
@@ -229,7 +229,7 @@ export const ProfilePrompts = ({ user }: { user?: User | null }) => {
             </div>
 
             {/* Prompts List */}
-            <div className="flex flex-col items-start gap-[0.83vw] w-[57.5vw] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="flex flex-col items-start gap-[0.83vw] w-[58.17vw] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {prompts.length === 0 ? (
                     <div className="flex items-center justify-center w-full h-[15vw] text-white/50">
                         <p>No prompts found for this user.</p>
@@ -238,9 +238,9 @@ export const ProfilePrompts = ({ user }: { user?: User | null }) => {
                     prompts.map((prompt) => (
                         prompt.type === 'audio' ? (
                             /* Audio Prompt */
-                            <div key={prompt.id} className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
+                            <div key={prompt.id} className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[58.17vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
                                 {/* Top Row: Question + Date + Trash */}
-                                <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
+                                <div className="flex flex-row items-center w-[56.5vw] h-[1.67vw] gap-[0.83vw]">
                                     <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">{prompt.promptTitle}</span>
                                     <span className="font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">{formatDateTime(prompt.createdAt)}</span>
                                     {canDelete && (
@@ -253,7 +253,7 @@ export const ProfilePrompts = ({ user }: { user?: User | null }) => {
                                     )}
                                 </div>
                                 {/* Audio Player */}
-                                <div className="flex flex-row items-center p-[0.21vw] gap-[0.63vw] w-[55.83vw] h-[2.92vw] bg-[#16003F] rounded-[2.5vw]">
+                                <div className="flex flex-row items-center p-[0.21vw] gap-[0.63vw] w-[56.5vw] h-[2.92vw] bg-[#16003F] rounded-[2.5vw]">
                                     <div className="flex justify-center items-center w-[2.5vw] h-[2.5vw] bg-[#5F00DB] rounded-full pl-[0.2vw] flex-shrink-0 cursor-pointer hover:bg-[#7000ff] transition-colors">
                                         <Play className="w-[1.04vw] h-[1.04vw] text-white fill-white ml-[0.1vw]" />
                                     </div>
@@ -267,8 +267,8 @@ export const ProfilePrompts = ({ user }: { user?: User | null }) => {
                             </div>
                         ) : (
                             /* Text / Image Prompt */
-                            <div key={prompt.id} className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[57.5vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
-                                <div className="flex flex-row items-center w-[55.83vw] h-[1.67vw] gap-[0.83vw]">
+                            <div key={prompt.id} className="flex flex-col items-start p-[0.83vw] gap-[0.83vw] w-[58.17vw] bg-[#111111]/50 backdrop-blur-[6px] rounded-[1.25vw]">
+                                <div className="flex flex-row items-center w-[56.5vw] h-[1.67vw] gap-[0.83vw]">
                                     <span className="font-normal not-italic text-[0.94vw] leading-[1.67vw] text-white flex-grow">{prompt.promptTitle}</span>
                                     <span className="font-normal not-italic text-[0.73vw] leading-[150%] text-[#EEEEEE] opacity-50 text-right w-[11.35vw]">{formatDateTime(prompt.createdAt)}</span>
                                     {canDelete && (
@@ -280,7 +280,7 @@ export const ProfilePrompts = ({ user }: { user?: User | null }) => {
                                         </div>
                                     )}
                                 </div>
-                                <div className="w-[55.83vw]">
+                                <div className="w-[56.5vw]">
                                     {prompt.promptAnswer.startsWith('http') ? (
                                         <img src={prompt.promptAnswer} alt="Prompt response" className="max-w-[20vw] max-h-[10vw] rounded-[0.63vw] object-cover" />
                                     ) : (
@@ -337,7 +337,7 @@ export const ProfileOverview = ({ activeTab, height = "75vh", user }: { activeTa
     if (activeTab === "Subscription & Payments") return <ProfileSubscription />;
 
     if (activeTab !== "Overview") return (
-        <div className="w-[59.17vw] h-[45.0vw] flex items-center justify-center bg-[#222222] rounded-[0.83vw] border border-[#666666]/50">
+        <div className="w-[59.83vw] h-[45.0vw] flex items-center justify-center bg-[#222222] rounded-[0.83vw] border border-[#666666]/50">
             <span className="text-white/40">Content for {activeTab}</span>
         </div>
     );
@@ -353,7 +353,7 @@ export const ProfileOverview = ({ activeTab, height = "75vh", user }: { activeTa
 
     return (
         <div
-            className="flex flex-col px-[1.56vh] pt-[1.56vh] pb-[2vh] gap-[1.56vh] w-[59.17vw] bg-[#222222] border border-[#666666]/50 rounded-[1.56vh] overflow-hidden"
+            className="flex flex-col px-[1.56vh] pt-[1.56vh] pb-[2vh] gap-[1.56vh] w-[59.83vw] bg-[#222222] border border-[#666666]/50 rounded-[1.56vh] overflow-hidden"
             style={{ height }}
         >
             {/* Header */}
@@ -704,7 +704,7 @@ export const ProfileMatches = () => {
     ];
 
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[49.0vw]"> {/* Fine-tuned to 49vw */}
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.83vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[49.0vw]"> {/* Fine-tuned to 49vw */}
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw]">
                 <div className="flex flex-col gap-[0.83vw]">
@@ -745,7 +745,7 @@ export const FullGroupCard = () => {
     };
 
     return (
-        <div className="flex flex-col items-start p-[0.71vw] gap-[0.71vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[28.5vw]"> {/* Fine-tuned to 28.5vw */}
+        <div className="flex flex-col items-start p-[0.71vw] gap-[0.71vw] w-[59.83vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[28.5vw]"> {/* Fine-tuned to 28.5vw */}
             {/* Header Section */}
             <div className="w-full relative pb-[0.71vw]">
                 <div className="flex flex-col gap-[0.71vw]">
@@ -797,7 +797,7 @@ const PokeActivityRow = ({ item }: { item: PokeActivityItem }) => {
     };
 
     return (
-        <div className="flex flex-row items-center w-[57.5vw] h-[2.92vw] border-b border-[#333333] px-[0.63vw] bg-[#1a1a1a] hover:bg-[#FFFFFF]/5 transition-colors">
+        <div className="flex flex-row items-center w-[58.17vw] h-[2.92vw] border-b border-[#333333] px-[0.63vw] bg-[#1a1a1a] hover:bg-[#FFFFFF]/5 transition-colors">
             {/* User Column */}
             <div className="flex flex-row items-center gap-[0.42vw] w-[10.42vw]">
                 <div
@@ -970,7 +970,7 @@ export const ProfilePokesActivity = () => {
     const currentData = activeList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[49.0vw]"> {/* Fine-tuned to 49vw */}
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.83vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] h-[49.0vw]"> {/* Fine-tuned to 49vw */}
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw] flex-shrink-0">
                 <div className="flex flex-col gap-[0.83vw]">
@@ -1123,7 +1123,7 @@ export const ProfileSubscription = () => {
     const currentData = transactions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
-        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.17vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[49.0vw]"> {/* Fine-tuned to 49vw */}
+        <div className="flex flex-col items-start p-[0.83vw] gap-[1.67vw] w-[59.83vw] bg-[#222222] border border-[rgba(102,102,102,0.5)] rounded-[0.83vw] min-h-[49.0vw]"> {/* Fine-tuned to 49vw */}
             {/* Header Section */}
             <div className="w-full relative pb-[0.83vw]">
                 <div className="flex flex-col gap-[0.83vw]">
@@ -1136,7 +1136,7 @@ export const ProfileSubscription = () => {
 
             {/* Banner Card */}
             <div
-                className="relative w-[57.51vw] h-[4.58vw] rounded-[0.83vw] p-[0.83vw] flex flex-row items-center justify-between overflow-hidden"
+                className="relative w-[58.17vw] h-[4.58vw] rounded-[0.83vw] p-[0.83vw] flex flex-row items-center justify-between overflow-hidden"
                 style={{ background: 'linear-gradient(180deg, #16003F 0%, #111111 100%)' }}
             >
                 {/* Gradient Border */}

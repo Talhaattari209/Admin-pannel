@@ -272,7 +272,7 @@ const PromptsTable: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col w-full max-w-[79.17vw] mx-auto relative animate-in fade-in duration-700">
+        <div className="flex flex-col w-full max-w-[80.67vw] mx-auto relative animate-in fade-in duration-700">
 
             {/* --- Modals --- */}
             {activeModal && (
@@ -312,7 +312,8 @@ const PromptsTable: React.FC = () => {
                                                         config.activeFilter === 'This Year' ? 'thisYear' :
                                                             config.activeFilter === 'Last Year' ? 'lastYear' : 'allTime';
 
-                                const format = config.format.toLowerCase() === 'json' ? 'json' : 'csv';
+                                const fmt = config.format.toLowerCase();
+                                const format = fmt === 'json' ? 'json' : fmt === 'pdf' ? 'pdf' : 'csv';
                                 const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
 
                                 let mutation;

@@ -107,7 +107,8 @@ export default function LoginDashboard() {
 
     const handleDownload = (config: { startDate: string; endDate: string; format: string; activeFilter: string }) => {
         const timelaps = activeFilterToTimelaps[config.activeFilter] || 'allTime';
-        const format = (config.format || 'JSON').toLowerCase() === 'csv' ? 'csv' : 'json';
+        const fmt = (config.format || 'JSON').toLowerCase();
+        const format = fmt === 'csv' ? 'csv' : fmt === 'pdf' ? 'pdf' : 'json';
         const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
 
         exportMutation.mutate(params, {

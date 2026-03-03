@@ -97,7 +97,12 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail, onV
                     <FilterSelect
                         label="Status"
                         value={statusFilter}
-                        options={['New', 'Pending', 'Resolved', 'Dismissed'].map(opt => ({ label: opt, value: opt }))}
+                        options={[
+                            { label: 'Pending', value: 'pending' },
+                            { label: 'Reviewing', value: 'reviewing' },
+                            { label: 'Resolved', value: 'resolved' },
+                            { label: 'Closed', value: 'closed' },
+                        ]}
                         onChange={setStatusFilter}
                     />
                 </div>

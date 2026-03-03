@@ -57,7 +57,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
   const [activeFilter, setActiveFilter] = useState('All Time');
   const [startDate, setStartDate] = useState(() => computeDateRange('All Time')[0]);
   const [endDate, setEndDate] = useState(() => computeDateRange('All Time')[1]);
-  const [format, setFormat] = useState<'JSON' | 'CSV'>('JSON');
+  const [format, setFormat] = useState<'JSON' | 'CSV' | 'PDF'>('JSON');
   const [formatOpen, setFormatOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState<'start' | 'end' | null>(null);
 
@@ -215,7 +215,7 @@ const ExportDataCard: React.FC<ExportDataCardProps> = ({ onDownload, className }
             {/* Dropdown menu */}
             {formatOpen && (
               <div className="absolute top-full left-0 w-[21.67vw] bg-[#16003F] border border-white/20 rounded-[0.63vw] overflow-hidden z-50 shadow-xl">
-                {(['JSON', 'CSV'] as const).map((opt) => (
+                {(['JSON', 'CSV', 'PDF'] as const).map((opt) => (
                   <button
                     key={opt}
                     onClick={() => { setFormat(opt); setFormatOpen(false); }}
