@@ -9,8 +9,10 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
+import { DailyActiveUserEntry } from '@/services/dashboard';
 
-const data = [
+// Fallback dummy data if API returns nothing
+const DUMMY_DATA = [
   { day: '1', dau: 12931 },
   { day: '2', dau: 11075 },
   { day: '3', dau: 9171 },
@@ -27,6 +29,10 @@ const data = [
   { day: '14', dau: 12766 },
 ];
 
+interface DAUChartCardProps {
+  data?: DailyActiveUserEntry[];
+}
+
 const CustomDot = (props: any) => {
   const { cx, cy } = props;
   return (
@@ -37,7 +43,19 @@ const CustomDot = (props: any) => {
   );
 };
 
-const DAUChartCard: React.FC = () => {
+const DAUChartCard: React.FC<DAUChartCardProps> = ({ data }) => {
+  // Transform API data { date, count } → { day, dau } or fall back to dummy
+  const chartData = data && data.length > 0
+    ? data.map((entry, idx) => ({
+      day: entry.date ? entry.date.slice(5) : String(idx + 1), // e.g. "01-21"
+      dau: entry.count,
+    }))
+    : DUMMY_DATA;
+
+  const maxVal = Math.max(...chartData.map(d => d.dau), 0);
+  // Set yMax to 10% higher than peak value, with a sensible floor of 1000
+  const yMax = Math.max(0, Math.ceil(maxVal * 1.1));
+
   return (
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[27.2vw] shadow-2xl overflow-hidden border border-white/5 transition-all hover:border-white/10">
       <div className="flex flex-col items-start p-[0.83vw] gap-[0.41vw] w-full h-[3.84vw]">
@@ -53,7 +71,7 @@ const DAUChartCard: React.FC = () => {
         <div className="absolute inset-0 pl-[0.66vw] pr-[1.62vw] pt-[0.62vw] pb-[0.28vw]">
           <div className="w-full h-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorDauFull" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#5F00DB" stopOpacity={0.4} />
@@ -78,8 +96,7 @@ const DAUChartCard: React.FC = () => {
                   axisLine={false}
                   tickLine={false}
                   tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: '0.62vw' }}
-                  domain={[0, 20000]}
-                  ticks={[0, 5000, 10000, 15000, 20000]}
+                  domain={[0, yMax]}
                   width={45}
                 />
                 <Tooltip

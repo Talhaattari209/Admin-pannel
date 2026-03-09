@@ -6,14 +6,21 @@ import {
   ResponsiveContainer,
   Tooltip
 } from 'recharts';
+import { UserReportedEntry } from '@/services/dashboard';
 
-const data = [
-  { name: 'Harassment', value: 32, color: '#5F00DB' },
-  { name: 'Fake Profile', value: 25, color: '#3ADC60' },
-  { name: 'Inappropriate Media', value: 21, color: '#FF8754' },
-  { name: 'Spam / Scams', value: 15, color: '#1DF2FF' },
-  { name: 'Other', value: 7, color: '#FF4E4E' },
+const COLORS = ['#5F00DB', '#3ADC60', '#FF8754', '#1DF2FF', '#FF4E4E', '#FF932F'];
+
+const DUMMY_DATA = [
+  { name: 'Harassment', value: 32, color: COLORS[0] },
+  { name: 'Fake Profile', value: 25, color: COLORS[1] },
+  { name: 'Inappropriate Media', value: 21, color: COLORS[2] },
+  { name: 'Spam / Scams', value: 15, color: COLORS[3] },
+  { name: 'Other', value: 7, color: COLORS[4] },
 ];
+
+interface UsersReportedCardProps {
+  data?: UserReportedEntry[];
+}
 
 const renderCustomizedLabel = (props: any) => {
   const { cx, cy, midAngle, outerRadius, value, name, color } = props;
@@ -63,8 +70,17 @@ const renderCustomizedLabel = (props: any) => {
   );
 };
 
-const UsersReportedCard: React.FC = () => {
-  const total = data.reduce((acc, item) => acc + item.value, 0);
+const UsersReportedCard: React.FC<UsersReportedCardProps> = ({ data }) => {
+  // Use API data if available, otherwise fall back to dummy
+  const chartData = data && data.length > 0
+    ? data.map((entry, idx) => ({
+      name: entry.reason,
+      value: entry.count,
+      color: COLORS[idx % COLORS.length],
+    }))
+    : DUMMY_DATA;
+
+  const total = chartData.reduce((acc, item) => acc + item.value, 0);
   const chartRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
 
@@ -108,7 +124,7 @@ const UsersReportedCard: React.FC = () => {
                 labelStyle={{ display: 'none' }}
               />
               <Pie
-                data={data}
+                data={chartData}
                 cx="50%"
                 cy="50%"
                 innerRadius={innerRadius}
@@ -122,7 +138,7 @@ const UsersReportedCard: React.FC = () => {
                 cornerRadius={cornerRadius}
                 stroke="none"
               >
-                {data.map((entry, index) => (
+                {chartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
@@ -132,7 +148,7 @@ const UsersReportedCard: React.FC = () => {
 
         {/* Legend */}
         <div className="w-[7.19vw] flex flex-col justify-center gap-[0.21vw] pr-[1.25vw]">
-          {data.map((item, index) => (
+          {chartData.map((item, index) => (
             <div key={index} className="flex items-center gap-[0.62vw]">
               <div className="w-[0.62vw] h-[0.62vw] rounded-full border border-black/20" style={{ backgroundColor: item.color }} />
               <span className="text-white/80 text-[0.62vw] font-inter not-italic">{item.name}</span>

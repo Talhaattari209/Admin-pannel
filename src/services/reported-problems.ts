@@ -222,6 +222,7 @@ export const reportedProblemsService = {
         search?: string;
         status?: string;
         category?: string;
+        report?: string;
     }): Promise<{ pagination: { page: number; limit: number; total: number; totalPages: number }; reports: UserReportData[] }> => {
         const { data } = await apiClient.get<{
             data: { pagination: { page: number; limit: number; total: number; totalPages: number }; reports: ApiUserReportItem[] };
@@ -348,6 +349,7 @@ export const useUserReports = (params?: {
     search?: string;
     status?: string;
     category?: string;
+    report?: string;
 }) => {
     return useQuery(
         {

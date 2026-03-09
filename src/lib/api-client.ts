@@ -49,15 +49,19 @@ apiClient.interceptors.response.use(
         return response;
     },
     (error: AxiosError) => {
-        // Log error responses
-        console.error('[API Error Response]', {
-            url: error.config?.url,
-            status: error.response?.status,
+        // Log error responses with more detail
+        const errorData = error.response?.data;
+        const errorStatus = error.response?.status;
+        const errorUrl = error.config?.url;
+
+        console.error('[API Error Response Detail]', {
+            url: errorUrl,
+            status: errorStatus,
             message: error.message,
-            data: error.response?.data
+            data: errorData
         });
 
-        if (error.response?.status === 401) {
+        if (errorStatus === 401) {
             // Unauthorized - clear tokens and redirect to login
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');

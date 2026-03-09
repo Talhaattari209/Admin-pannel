@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Geist_Mono, Michroma } from "next/font/google";
+import { Geist_Mono, Michroma, Shrikhand } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 
@@ -25,6 +25,12 @@ const michroma = Michroma({
   variable: "--font-michroma",
 });
 
+const shrikhand = Shrikhand({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-shrikhand",
+});
+
 export const metadata: Metadata = {
   title: "Fennec Admin Panel",
   description: "Advanced admin panel built with Next.js and Tailwind CSS",
@@ -38,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sfProDisplay.variable} ${geistMono.variable} ${michroma.variable} font-sans antialiased bg-[#111111] text-white min-h-screen`}
+        className={`${sfProDisplay.variable} ${geistMono.variable} ${michroma.variable} ${shrikhand.variable} font-sans antialiased bg-[#111111] text-white min-h-screen`}
       >
         {/* Global background image - applied once for all pages */}
         <div

@@ -28,14 +28,27 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail, can
         issueType: issueTypeFilter || undefined,
     });
 
+    const rawReports = useMemo(() => rawData?.reports ?? [], [rawData]);
+
+    // Extract unique issue types (subjects) from rawReports to populate filter
+    const [availableIssueTypes, setAvailableIssueTypes] = useState<string[]>([]);
+    useEffect(() => {
+        if (rawReports.length > 0) {
+            const types = Array.from(new Set(rawReports.map(r => r.subject))).filter(Boolean);
+            setAvailableIssueTypes(prev => {
+                const combined = Array.from(new Set([...prev, ...types]));
+                return combined.sort();
+            });
+        }
+    }, [rawReports]);
+
     const reports = useMemo(() => {
-        const raw = rawData?.reports ?? [];
         const fullSearch = search.trim().toLowerCase();
-        if (!fullSearch) return raw;
+        if (!fullSearch) return rawReports;
 
         // Client-side post-filter: The API 'search' parameter is currently unreliable/broken
         // for this endpoint. We fetch a larger batch and filter everything locally.
-        return raw.filter((bug) => {
+        return rawReports.filter((bug) => {
             const reporterName = (bug.reportedBy?.name || '').toLowerCase();
             const reporterEmail = (bug.reportedBy?.email || '').toLowerCase();
             const subject = (bug.subject || '').toLowerCase();
@@ -48,7 +61,7 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail, can
                 message.includes(fullSearch)
             );
         });
-    }, [rawData?.reports, search]);
+    }, [rawReports, search]);
 
     // Standardized Runtime Pagination
     const ITEMS_PER_PAGE = 20;
@@ -84,7 +97,7 @@ const BugsReportedTable: React.FC<BugsReportedTableProps> = ({ onViewDetail, can
                     <FilterSelect
                         label="Issue Type"
                         value={issueTypeFilter}
-                        options={['UI', 'Security', 'Performance', 'Functional'].map(opt => ({ label: opt, value: opt }))}
+                        options={availableIssueTypes.map(opt => ({ label: opt, value: opt }))}
                         onChange={setIssueTypeFilter}
                     />
                     <FilterSelect

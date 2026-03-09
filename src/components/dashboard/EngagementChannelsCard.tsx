@@ -7,17 +7,35 @@ import {
   Legend,
   Tooltip
 } from 'recharts';
+import { TopEngagementChannelEntry } from '@/services/dashboard';
 
-const data = [
-  { name: 'Prompts Interaction', value: 38, color: '#5F00DB' },
-  { name: 'Group Activity', value: 24, color: '#3ADC60' },
-  { name: 'Swipes & Matches', value: 20, color: '#0099FF' },
-  { name: 'Media', value: 11, color: '#FF4E4E' },
-  { name: 'Pokes', value: 7, color: '#FF932F' },
+const COLORS = ['#5F00DB', '#3ADC60', '#0099FF', '#FF4E4E', '#FF932F', '#1DF2FF'];
+
+// Fallback dummy data since topEngagementChannel returns [] from API
+const DUMMY_DATA = [
+  { name: 'Prompts Interaction', value: 38, color: COLORS[0] },
+  { name: 'Group Activity', value: 24, color: COLORS[1] },
+  { name: 'Swipes & Matches', value: 20, color: COLORS[2] },
+  { name: 'Media', value: 11, color: COLORS[3] },
+  { name: 'Pokes', value: 7, color: COLORS[4] },
 ];
 
-const EngagementChannelsCard: React.FC = () => {
-  const total = 100;
+interface EngagementChannelsCardProps {
+  data?: TopEngagementChannelEntry[];
+}
+
+const EngagementChannelsCard: React.FC<EngagementChannelsCardProps> = ({ data }) => {
+  // Use API data if available, otherwise fall back to dummy
+  const chartData = data && data.length > 0
+    ? data.map((entry, idx) => ({
+      name: entry.channel,
+      value: entry.count,
+      color: COLORS[idx % COLORS.length],
+    }))
+    : DUMMY_DATA;
+
+  const total = chartData.reduce((acc, item) => acc + item.value, 0);
+
   const chartRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
 
@@ -60,7 +78,7 @@ const EngagementChannelsCard: React.FC = () => {
               labelStyle={{ display: 'none' }}
             />
             <Pie
-              data={data}
+              data={chartData}
               cx="50%"
               cy="50%"
               innerRadius={innerRadius}
@@ -72,7 +90,7 @@ const EngagementChannelsCard: React.FC = () => {
               cornerRadius={cornerRadius}
               stroke="none"
             >
-              {data.map((entry, index) => (
+              {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
@@ -80,8 +98,7 @@ const EngagementChannelsCard: React.FC = () => {
               verticalAlign="bottom"
               align="center"
               content={({ payload }) => (
-                <div className="flex flex-wrap items-center justify-center gap-x-[1.25vw] gap-y-[0.41vw] mt-[0.8 
-                3vw] px-[1.66vw]">
+                <div className="flex flex-wrap items-center justify-center gap-x-[1.25vw] gap-y-[0.41vw] mt-[0.83vw] px-[1.66vw]">
                   {payload?.map((entry: any, index: number) => (
                     <div key={index} className="flex items-center gap-[0.41vw]">
                       <div className="w-[0.62vw] h-[0.62vw] rounded-full" style={{ backgroundColor: entry.color }} />

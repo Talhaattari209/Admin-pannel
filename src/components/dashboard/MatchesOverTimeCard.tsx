@@ -10,8 +10,10 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
+import { MatchesOverTimeEntry } from '@/services/dashboard';
 
-const data = [
+// Fallback dummy data since matchesOverTime returns [] from API
+const DUMMY_DATA = [
   { month: 'Jan', matches: 111714 },
   { month: 'Feb', matches: 114449 },
   { month: 'Mar', matches: 117898 },
@@ -25,7 +27,23 @@ const data = [
   { month: 'Nov', matches: 113327 },
 ];
 
-const MatchesOverTimeCard: React.FC = () => {
+interface MatchesOverTimeCardProps {
+  data?: MatchesOverTimeEntry[];
+}
+
+const MatchesOverTimeCard: React.FC<MatchesOverTimeCardProps> = ({ data }) => {
+  // Use API data if available, otherwise fall back to dummy
+  const chartData = data && data.length > 0
+    ? data.map(entry => ({
+      month: entry.month ?? entry.date ?? '',
+      matches: entry.matches ?? entry.count ?? 0,
+    }))
+    : DUMMY_DATA;
+
+  const maxVal = Math.max(...chartData.map(d => d.matches), 0);
+  // Set yMax to 10% higher than peak value, with a sensible floor of 1000
+  const yMax = Math.max(0, Math.ceil(maxVal * 1.1));
+
   return (
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[27.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading Section */}
@@ -44,7 +62,7 @@ const MatchesOverTimeCard: React.FC = () => {
           <div className="w-full h-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
-                data={data}
+                data={chartData}
                 margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
                 barCategoryGap={0}
               >
@@ -61,13 +79,11 @@ const MatchesOverTimeCard: React.FC = () => {
                   tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: '0.62vw' }}
                   dy={10}
                 />
-                {/* Added explicit any casting for domain and ticks to solve Recharts type overload issues where number[] is mistakenly compared to string | number */}
                 <YAxis
                   axisLine={false}
                   tickLine={false}
                   tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: '0.62vw' }}
-                  domain={[0, 200000] as any}
-                  ticks={[0, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000] as any}
+                  domain={[0, yMax] as any}
                   width={53}
                 />
                 <Tooltip

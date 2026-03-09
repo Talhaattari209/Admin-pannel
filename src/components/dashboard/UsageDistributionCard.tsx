@@ -4,14 +4,16 @@ import {
   Pie,
   Cell,
   ResponsiveContainer,
-  Legend,
-  Tooltip
+  Tooltip,
+  Legend
 } from 'recharts';
+import { PlatformDistributions } from '@/services/dashboard';
 
-const data = [
-  { name: 'iOS', value: 12339, color: '#5F00DB' },
-  { name: 'Android', value: 10460, color: '#3ADC60' },
-];
+const COLORS = ['#5F00DB', '#3ADC60', '#FF8754'];
+
+interface UsageDistributionCardProps {
+  platformDistributions?: PlatformDistributions;
+}
 
 const renderCustomizedLabel = (props: any) => {
   const { cx, cy, midAngle, outerRadius, value, name } = props;
@@ -61,8 +63,23 @@ const renderCustomizedLabel = (props: any) => {
   );
 };
 
-const UsageDistributionCard: React.FC = () => {
-  const total = data.reduce((acc, item) => acc + item.value, 0);
+const UsageDistributionCard: React.FC<UsageDistributionCardProps> = ({ platformDistributions }) => {
+  // Build chart data from API or defaults
+  const raw = platformDistributions ?? { ios: 12339, android: 10460, other: 0 };
+
+  const chartData = [
+    { name: 'iOS', value: raw.ios, color: COLORS[0] },
+    { name: 'Android', value: raw.android, color: COLORS[1] },
+    ...(raw.other > 0 ? [{ name: 'Other', value: raw.other, color: COLORS[2] }] : []),
+  ].filter(item => item.value > 0);
+
+  // If all zero, show a placeholder slice
+  const displayData = chartData.length > 0
+    ? chartData
+    : [{ name: 'No Data', value: 1, color: '#333' }];
+
+  const total = chartData.reduce((acc, item) => acc + item.value, 0);
+
   const chartRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 180, height: 180 });
 
@@ -107,7 +124,7 @@ const UsageDistributionCard: React.FC = () => {
               labelStyle={{ display: 'none' }}
             />
             <Pie
-              data={data}
+              data={displayData}
               cx="50%"
               cy="50%"
               innerRadius={innerRadius}
@@ -117,11 +134,11 @@ const UsageDistributionCard: React.FC = () => {
               endAngle={-270}
               dataKey="value"
               labelLine={false}
-              label={renderCustomizedLabel}
+              label={chartData.length > 0 ? renderCustomizedLabel : undefined}
               cornerRadius={cornerRadius}
               stroke="none"
             >
-              {data.map((entry, index) => (
+              {displayData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>

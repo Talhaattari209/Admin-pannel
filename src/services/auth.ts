@@ -25,6 +25,14 @@ export const authService = {
         await apiClient.post('/admin/auth/super-admin/update-password', { newPassword });
     },
 
+    forgotPassword: async (email: string): Promise<void> => {
+        await apiClient.post('/admin/auth/forgot-password', { email });
+    },
+
+    resetPassword: async (email: string, token: string, password: string): Promise<void> => {
+        await apiClient.post('/admin/auth/reset-password', { email, token, password });
+    },
+
     getCurrentAdmin: async (): Promise<any> => {
         const { data } = await apiClient.get('/admin/auth/me');
         return data;
@@ -185,5 +193,17 @@ export const useLogout = () => {
         onSuccess: () => {
             clearAuth();
         },
+    });
+};
+
+export const useForgotPassword = () => {
+    return useMutation<void, AxiosError<any>, string>({
+        mutationFn: (email: string) => authService.forgotPassword(email),
+    });
+};
+
+export const useResetPassword = () => {
+    return useMutation<void, AxiosError<any>, { email: string; token: string; password: string }>({
+        mutationFn: ({ email, token, password }) => authService.resetPassword(email, token, password),
     });
 };

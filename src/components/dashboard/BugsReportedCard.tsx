@@ -6,13 +6,29 @@ import {
   ResponsiveContainer,
   Tooltip
 } from 'recharts';
+import { BugReportedEntry } from '@/services/dashboard';
 
-const data = [
-  { name: 'Critical', value: 32, color: '#5F00DB' },
-  { name: 'High', value: 25, color: '#3ADC60' },
-  { name: 'Medium', value: 21, color: '#FF8754' },
-  { name: 'Low', value: 15, color: '#1DF2FF' },
+const COLORS = ['#5F00DB', '#3ADC60', '#FF8754', '#1DF2FF', '#FF4E4E'];
+
+// Map known status names to friendly labels
+const STATUS_LABELS: Record<string, string> = {
+  pending: 'Pending',
+  new: 'New',
+  reviewing: 'Reviewing',
+  resolved: 'Resolved',
+  closed: 'Closed',
+};
+
+const DUMMY_DATA = [
+  { name: 'Critical', value: 32, color: COLORS[0] },
+  { name: 'High', value: 25, color: COLORS[1] },
+  { name: 'Medium', value: 21, color: COLORS[2] },
+  { name: 'Low', value: 15, color: COLORS[3] },
 ];
+
+interface BugsReportedCardProps {
+  data?: BugReportedEntry[];
+}
 
 const renderCustomizedLabel = (props: any) => {
   const { cx, cy, midAngle, outerRadius, value, name, color } = props;
@@ -62,8 +78,17 @@ const renderCustomizedLabel = (props: any) => {
   );
 };
 
-const BugsReportedCard: React.FC = () => {
-  const total = data.reduce((acc, item) => acc + item.value, 0);
+const BugsReportedCard: React.FC<BugsReportedCardProps> = ({ data }) => {
+  // Use API data if available, otherwise fall back to dummy
+  const chartData = data && data.length > 0
+    ? data.map((entry, idx) => ({
+      name: STATUS_LABELS[entry.status] ?? entry.status,
+      value: entry.count,
+      color: COLORS[idx % COLORS.length],
+    }))
+    : DUMMY_DATA;
+
+  const total = chartData.reduce((acc, item) => acc + item.value, 0);
   const chartRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
 
@@ -89,7 +114,7 @@ const BugsReportedCard: React.FC = () => {
           Bugs Reported
         </h4>
         <p className="text-[#CCCCCC] opacity-50 text-[0.83vw] leading-[150%] ">
-          Shows how reported bugs are categorized by severity, aiding development teams in assessing impact and response priority.
+          Shows how reported bugs are categorized by status, aiding development teams in assessing impact and response priority.
         </p>
       </div>
 
@@ -107,7 +132,7 @@ const BugsReportedCard: React.FC = () => {
                 labelStyle={{ display: 'none' }}
               />
               <Pie
-                data={data}
+                data={chartData}
                 cx="50%"
                 cy="50%"
                 innerRadius={innerRadius}
@@ -121,7 +146,7 @@ const BugsReportedCard: React.FC = () => {
                 cornerRadius={cornerRadius}
                 stroke="none"
               >
-                {data.map((entry, index) => (
+                {chartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
@@ -130,7 +155,7 @@ const BugsReportedCard: React.FC = () => {
         </div>
 
         <div className="w-[3.65vw] flex flex-col justify-center gap-[0.21vw] pr-[1.25vw]">
-          {data.map((item, index) => (
+          {chartData.map((item, index) => (
             <div key={index} className="flex items-center gap-[0.41vw]">
               <div
                 className="w-[0.62vw] h-[0.62vw] rounded-full border border-[#1A1F26]"

@@ -20,7 +20,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onForgotPassword }) => {
         <div className="w-[10.4vw] h-[10.4vw]">
           <Logo />
         </div>
-        <h1 className="font-michroma not-italic text-[2.5vw] leading-[3.5vw] text-white text-center">Fennec</h1>
+        <h1 className="font-shrikhand italic tracking-wider  text-[48px] leading-[70px] text-white text-center w-[179px] h-[70px] flex-none order-1 grow-0">Fennec</h1>
       </div>
 
       {/* Header Text */}

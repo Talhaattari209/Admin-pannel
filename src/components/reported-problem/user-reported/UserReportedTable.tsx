@@ -27,9 +27,22 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail, onV
         limit,
         status: statusFilter || undefined,
         category: catFilter || undefined,
+        report: repFilter || undefined,
     });
 
     const rawReports = useMemo(() => rawData?.reports ?? [], [rawData]);
+
+    // Extract unique categories from rawReports to populate filter
+    const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+    useEffect(() => {
+        if (rawReports.length > 0) {
+            const categories = Array.from(new Set(rawReports.map(r => r.category))).filter(Boolean);
+            setAvailableCategories(prev => {
+                const combined = Array.from(new Set([...prev, ...categories]));
+                return combined.sort();
+            });
+        }
+    }, [rawReports]);
 
     // Client-side post-filter: The API 'search' parameter is currently unreliable/broken
     // for this endpoint. We fetch a larger batch and filter everything locally.
@@ -85,13 +98,13 @@ const UserReportedTable: React.FC<UserReportedTableProps> = ({ onViewDetail, onV
                     <FilterSelect
                         label="Reports"
                         value={repFilter}
-                        options={['10+', '5-10', '1-5'].map(opt => ({ label: opt, value: opt }))}
+                        options={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10+'].map(opt => ({ label: opt, value: opt }))}
                         onChange={setRepFilter}
                     />
                     <FilterSelect
                         label="Category"
                         value={catFilter}
-                        options={['Inappropriate', 'Spam', 'Harassment'].map(opt => ({ label: opt, value: opt }))}
+                        options={availableCategories.map(cat => ({ label: cat, value: cat }))}
                         onChange={setCatFilter}
                     />
                     <FilterSelect

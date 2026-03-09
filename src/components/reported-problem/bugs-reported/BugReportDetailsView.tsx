@@ -1,15 +1,17 @@
 
 import React, { useState } from 'react';
 import { BugReportData } from './BugsReportedTableRow';
+import { ReportedProblemActivity } from '@/services/reported-problems';
 
 interface BugReportDetailsViewProps {
     bug: BugReportData | null;
     onBack: () => void;
     onUpdateStatus?: (status: string, notes: string) => void;
     canEdit?: boolean;
+    activity?: ReportedProblemActivity[];
 }
 
-const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack, onUpdateStatus, canEdit = false }) => {
+const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack, onUpdateStatus, canEdit = false, activity }) => {
     const [status, setStatus] = useState(bug?.status || 'New');
     const [notes, setNotes] = useState('');
     const [revealedImages, setRevealedImages] = useState<Record<number, boolean>>({});
@@ -125,57 +127,46 @@ const BugReportDetailsView: React.FC<BugReportDetailsViewProps> = ({ bug, onBack
                         <h3 className="text-white text-[1.46vw] font-bold not-italic leading-tight mb-[1.67vw]">Activity</h3>
 
                         <div className="flex flex-col">
-                            {/* Item 1: Ticket Created */}
-                            <div className="flex gap-[0.83vw] relative pb-[1.67vw]">
-                                {/* Line */}
-                                <div className="absolute left-[0.625vw] top-[0.625vw] bottom-0 w-[2px] bg-white rounded-full -translate-x-[50%]"></div>
-                                {/* Dot */}
-                                <div className="flex-shrink-0 w-[1.25vw] h-[1.25vw] rounded-full bg-[#5F00DB] border-[1.5px] border-white z-10 box-border"></div>
+                            {activity && activity.length > 0 ? (
+                                activity.map((item, idx) => (
+                                    <div key={idx} className={`flex gap-[0.83vw] relative ${idx < activity.length - 1 ? 'pb-[1.67vw]' : ''}`}>
+                                        {/* Line */}
+                                        {idx < activity.length - 1 && (
+                                            <div className="absolute left-[0.625vw] top-[0.625vw] bottom-0 w-[2px] bg-white rounded-full -translate-x-[50%]"></div>
+                                        )}
+                                        {/* Dot */}
+                                        <div className="flex-shrink-0 w-[1.25vw] h-[1.25vw] rounded-full bg-[#5F00DB] border-[1.5px] border-white z-10 box-border"></div>
 
-                                <div className="flex flex-col gap-[0.42vw]">
-                                    <span className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Report Submitted</span>
-                                    <span className="text-white text-[0.83vw] font-normal not-italic opacity-90">{bug.submittedOn}</span>
-                                </div>
-                            </div>
-
-                            {/* Item 2: Status Updated (New -> Pending) */}
-                            <div className="flex gap-[0.83vw] relative pb-[1.67vw]">
-                                {/* Line */}
-                                <div className="absolute left-[0.625vw] top-[0.625vw] bottom-0 w-[2px] bg-white rounded-full -translate-x-[50%]"></div>
-                                {/* Dot */}
-                                <div className="flex-shrink-0 w-[1.25vw] h-[1.25vw] rounded-full bg-[#5F00DB] border-[1.5px] border-white z-10 box-border"></div>
-
-                                <div className="flex flex-col gap-[0.42vw]">
-                                    <span className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Status Updated</span>
-                                    <span className="text-white text-[0.83vw] font-normal not-italic opacity-90">Jan 11, 2026 • 11:59 PM</span>
-                                    <div className="flex items-center gap-[0.63vw] mt-[0.21vw]">
-                                        {getStatusBadge('New')}
-                                        <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                                        {getStatusBadge('Pending')}
+                                        <div className="flex flex-col gap-[0.42vw]">
+                                            <span className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">{item.type.replace(/_/g, ' ')}</span>
+                                            <span className="text-white text-[0.83vw] font-normal not-italic opacity-90">
+                                                {new Date(item.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} • {new Date(item.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}
+                                            </span>
+                                            {item.fromStatus && item.toStatus && (
+                                                <div className="flex items-center gap-[0.63vw] mt-[0.21vw]">
+                                                    {getStatusBadge(item.fromStatus)}
+                                                    <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                                                    {getStatusBadge(item.toStatus)}
+                                                </div>
+                                            )}
+                                            {item.note && (
+                                                <div className="mt-[0.63vw] p-[0.83vw] bg-[#16003F] rounded-[0.63vw] self-start">
+                                                    <p className="text-white text-[0.73vw] italic font-normal">{item.note}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="flex gap-[0.83vw] relative">
+                                    {/* Dot */}
+                                    <div className="flex-shrink-0 w-[1.25vw] h-[1.25vw] rounded-full bg-[#5F00DB] border-[1.5px] border-white z-10 box-border"></div>
+                                    <div className="flex flex-col gap-[0.42vw]">
+                                        <span className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Report Submitted</span>
+                                        <span className="text-white text-[0.83vw] font-normal not-italic opacity-90">{bug.submittedOn}</span>
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* Item 3: Status Updated (Pending -> Resolved) + Note */}
-                            <div className="flex gap-[0.83vw] relative">
-                                {/* Dot */}
-                                <div className="flex-shrink-0 w-[1.25vw] h-[1.25vw] rounded-full bg-[#5F00DB] border-[1.5px] border-white z-10 box-border"></div>
-
-                                <div className="flex flex-col gap-[0.42vw]">
-                                    <span className="text-white text-[0.63vw] font-bold not-italic uppercase tracking-wider">Status Updated</span>
-                                    <span className="text-white text-[0.83vw] font-normal not-italic opacity-90">Jan 11, 2026 • 11:59 PM</span>
-                                    <div className="flex items-center gap-[0.63vw] mt-[0.21vw]">
-                                        {getStatusBadge('Pending')}
-                                        <svg viewBox="0 0 24 24" className="w-[1.25vw] h-[1.25vw] text-white" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                                        {getStatusBadge('Resolved')}
-                                    </div>
-
-                                    {/* Note */}
-                                    <div className="mt-[0.63vw] p-[0.83vw] bg-[#16003F] rounded-[0.63vw] self-start">
-                                        <p className="text-white text-[0.73vw] italic font-normal">No proof found in this report.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            )}
                         </div>
                     </div>
 

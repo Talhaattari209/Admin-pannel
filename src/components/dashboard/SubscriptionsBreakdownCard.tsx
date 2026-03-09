@@ -7,11 +7,19 @@ import {
   Tooltip,
   Legend
 } from 'recharts';
+import { SubscriptionBreakdownEntry } from '@/services/dashboard';
 
-const data = [
+// Fallback dummy data since subscriptionBreakdown returns [] from API
+const DUMMY_DATA = [
   { name: 'Free', value: 56, color: '#5F00DB' },
   { name: 'Premium', value: 44, color: '#3ADC60' },
 ];
+
+const COLORS = ['#5F00DB', '#3ADC60', '#FF8754', '#1DF2FF', '#FF4E4E'];
+
+interface SubscriptionsBreakdownCardProps {
+  data?: SubscriptionBreakdownEntry[];
+}
 
 const renderCustomizedLabel = (props: any) => {
   const { cx, cy, midAngle, outerRadius, value, name, color } = props;
@@ -40,7 +48,18 @@ const renderCustomizedLabel = (props: any) => {
   );
 };
 
-const SubscriptionsBreakdownCard: React.FC = () => {
+const SubscriptionsBreakdownCard: React.FC<SubscriptionsBreakdownCardProps> = ({ data }) => {
+  // Use API data if available, otherwise fall back to dummy
+  const chartData = data && data.length > 0
+    ? data.map((entry, idx) => ({
+      name: entry.type,
+      value: entry.count,
+      color: COLORS[idx % COLORS.length],
+    }))
+    : DUMMY_DATA;
+
+  const total = chartData.reduce((acc, item) => acc + item.value, 0);
+
   const chartRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
 
@@ -72,7 +91,7 @@ const SubscriptionsBreakdownCard: React.FC = () => {
 
       <div ref={chartRef} className="relative flex-grow w-full min-h-0 flex items-center justify-center p-[0.83vw]">
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-          <span className="text-white text-[1.66vw] font-bold not-italic">100</span>
+          <span className="text-white text-[1.66vw] font-bold not-italic">{total}</span>
         </div>
 
         <ResponsiveContainer width="100%" height="100%">
@@ -82,7 +101,7 @@ const SubscriptionsBreakdownCard: React.FC = () => {
               itemStyle={{ color: 'white' }}
             />
             <Pie
-              data={data}
+              data={chartData}
               cx="50%"
               cy="50%"
               innerRadius={innerRadius}
@@ -96,7 +115,7 @@ const SubscriptionsBreakdownCard: React.FC = () => {
               cornerRadius={cornerRadius}
               stroke="none"
             >
-              {data.map((entry, index) => (
+              {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>

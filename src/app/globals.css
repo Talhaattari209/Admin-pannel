@@ -73,6 +73,7 @@
   --font-sans: var(--font-sf-pro), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --font-michroma: var(--font-michroma);
+  --font-shrikhand: var(--font-shrikhand);
 }
 
 body {

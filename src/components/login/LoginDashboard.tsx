@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { cn } from "@/lib/utils";
 import ExportModal from '@/components/shared/ExportModal';
-import { useExportDashboard } from '@/services/dashboard';
+import { useExportDashboard, useDashboardStats, useDashboardCharts } from '@/services/dashboard';
 import { downloadFileFromUrl } from '@/utils/download';
-import { activeFilterToTimelaps } from '@/services/reported-problems'; // Reusing mapping logic if consistent
 
 // Chart Components from Dashboard
 import DAUChartCard from '@/components/dashboard/DAUChartCard';
@@ -18,7 +17,19 @@ import BugsReportedCard from '@/components/dashboard/BugsReportedCard';
 import SubscriptionsBreakdownCard from '@/components/dashboard/SubscriptionsBreakdownCard';
 import MonthlyRevenueCard from '@/components/dashboard/MonthlyRevenueCard';
 
-// --- Stat Cards Components (Reused from UserManagement) ---
+// timelaps filter label → API value map
+const FILTER_MAP: Record<string, string> = {
+    'Last 7 days': 'last7days',
+    'This Month': 'thisMonth',
+    'Last Month': 'lastMonth',
+    'Last 3 Months': 'last3months',
+    'Last 6 Months': 'last6months',
+    'This Year': 'thisYear',
+    'Last Year': 'lastYear',
+    'All Time': 'allTime',
+};
+
+// --- Stat Card Components ---
 
 interface StatCardProps {
     label: string;
@@ -29,7 +40,6 @@ interface StatCardProps {
 
 const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
     return (
-
         <div className="flex flex-col justify-end items-start p-[0.6vw] gap-[0.8vw] w-full h-[4.83vw] bg-[rgba(22,0,63,0.5)] border border-[rgba(102,102,102,0.5)] backdrop-blur-[12px] rounded-[0.83vw] ">
             {/* Label */}
             <h6 className="w-full text-[#CCCCCC] font-bold not-italic text-[0.83vw] leading-[120%] tracking-[-0.04em] flex items-center">
@@ -44,53 +54,35 @@ const StatCard = ({ label, value, change, isUp = true }: StatCardProps) => {
                 </span>
 
                 {/* Change Indicator */}
-                <div className="flex items-center gap-[0.42vw]">
-                    <div className={cn(
-                        "relative w-[1.25vw] h-[1.25vw]",
-                        !isUp && "rotate-180"
-                    )}>
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-full h-full"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M12 4C12.2652 4 12.5196 4.10536 12.7071 4.29289L19.7071 11.2929C20.0976 11.6834 20.0976 12.3166 19.7071 12.7071C19.3166 13.0976 18.6834 13.0976 18.2929 12.7071L13 7.41421V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V7.41422L5.70711 12.7071C5.31658 13.0976 4.68342 13.0976 4.29289 12.7071C3.90237 12.3166 3.90237 11.6834 4.29289 11.2929L11.2929 4.29289C11.4804 4.10536 11.7348 4 12 4Z"
-                                fill={isUp ? "#3ADC60" : "#FF4D4F"}
-                            />
-                        </svg>
+                {change && (
+                    <div className="flex items-center gap-[0.42vw]">
+                        <div className={cn(
+                            "relative w-[1.25vw] h-[1.25vw]",
+                            !isUp && "rotate-180"
+                        )}>
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-full h-full"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    clipRule="evenodd"
+                                    d="M12 4C12.2652 4 12.5196 4.10536 12.7071 4.29289L19.7071 11.2929C20.0976 11.6834 20.0976 12.3166 19.7071 12.7071C19.3166 13.0976 18.6834 13.0976 18.2929 12.7071L13 7.41421V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V7.41422L5.70711 12.7071C5.31658 13.0976 4.68342 13.0976 4.29289 12.7071C3.90237 12.3166 3.90237 11.6834 4.29289 11.2929L11.2929 4.29289C11.4804 4.10536 11.7348 4 12 4Z"
+                                    fill={isUp ? "#3ADC60" : "#FF4D4F"}
+                                />
+                            </svg>
+                        </div>
+                        <span className={cn(
+                            "font-bold not-italic text-[1.04vw] leading-[120%] tracking-[-0.04em]",
+                            isUp ? "text-[#3ADC60]" : "text-[#FF4D4F]"
+                        )}>
+                            {change}
+                        </span>
                     </div>
-                    <span className={cn(
-                        "font-bold not-italic text-[1.04vw] leading-[120%] tracking-[-0.04em]",
-                        isUp ? "text-[#3ADC60]" : "text-[#FF4D4F]"
-                    )}>
-                        {change}
-                    </span>
-                </div>
+                )}
             </div>
-        </div>
-    );
-};
-
-const StatRow = () => {
-    const stats = [
-        { label: "Active Users (30d)", value: "142,980", change: "8.2%" },
-        { label: "New Signups (7d)", value: "9,540", change: "6.8%" },
-        { label: "Revenue (30d)", value: "$124,500", change: "3.3%" },
-        { label: "Avg. Session", value: "14m 32s", change: "12.5%", isUp: false },
-        { label: "Total Downloads", value: "1,240", change: "5.2%" },
-    ];
-
-    return (
-        <div className="grid grid-cols-5 gap-[0.83vw] w-full min-h-[5.68vw]">
-            {stats.map((stat, index) => (
-                <div key={index} className="w-full">
-                    <StatCard {...stat} />
-                </div>
-            ))}
         </div>
     );
 };
@@ -101,15 +93,31 @@ const FILTERS = [
 ];
 
 export default function LoginDashboard() {
-    const [activeFilter, setActiveFilter] = useState('Last 7 days');
+    const [activeFilter, setActiveFilter] = useState('All Time');
     const [showExportModal, setShowExportModal] = useState(false);
+
     const exportMutation = useExportDashboard();
 
+    // Real API data
+    const timelaps = FILTER_MAP[activeFilter] ?? 'allTime';
+    const { data: stats, isLoading: statsLoading } = useDashboardStats();
+    const { data: charts, isLoading: chartsLoading } = useDashboardCharts(timelaps);
+
+    const fmt = (n?: number) => (n !== undefined && n !== null ? n.toLocaleString() : '—');
+
+    const statCards = [
+        { label: 'Active Users (30d)', value: statsLoading ? '...' : fmt(stats?.activeUsers30d), change: '' },
+        { label: 'New Signups (7d)', value: statsLoading ? '...' : fmt(stats?.newSignups7d), change: '' },
+        { label: 'Subscription Revenue', value: statsLoading ? '...' : `$${fmt(stats?.subscriptionRevenue)}`, change: '' },
+        { label: 'Daily Matches', value: statsLoading ? '...' : fmt(stats?.dailyMatchesCreated), change: '' },
+        { label: 'Total Groups', value: statsLoading ? '...' : fmt(stats?.totalGroupsCreated), change: '' },
+    ];
+
     const handleDownload = (config: { startDate: string; endDate: string; format: string; activeFilter: string }) => {
-        const timelaps = activeFilterToTimelaps[config.activeFilter] || 'allTime';
-        const fmt = (config.format || 'JSON').toLowerCase();
-        const format = fmt === 'csv' ? 'csv' : fmt === 'pdf' ? 'pdf' : 'json';
-        const params = { format, timelaps, startDate: config.startDate, endDate: config.endDate };
+        const tl = FILTER_MAP[config.activeFilter] || 'allTime';
+        const fmt2 = (config.format || 'JSON').toLowerCase();
+        const format = fmt2 === 'csv' ? 'csv' : fmt2 === 'pdf' ? 'pdf' : 'json';
+        const params = { format, timelaps: tl, startDate: config.startDate, endDate: config.endDate };
 
         exportMutation.mutate(params, {
             onSuccess: (data) => {
@@ -163,7 +171,13 @@ export default function LoginDashboard() {
             <div className="h-[1.33vw]" />
 
             {/* Stat Cards */}
-            <StatRow />
+            <div className="grid grid-cols-5 gap-[0.83vw] w-full min-h-[5.68vw]">
+                {statCards.map((stat, index) => (
+                    <div key={index} className="w-full">
+                        <StatCard {...stat} />
+                    </div>
+                ))}
+            </div>
 
             <div className="h-[1.03vw]" />
 
@@ -184,38 +198,38 @@ export default function LoginDashboard() {
             </div>
 
             {/* Analytics Grid */}
-            <div className="flex flex-col w-full animate-in fade-in duration-700">
+            <div className={`flex flex-col w-full animate-in fade-in duration-700 transition-opacity ${chartsLoading ? 'opacity-60' : 'opacity-100'}`}>
                 <div className="grid grid-cols-12 gap-[0.83vw] w-full">
                     {/* Row 1 */}
                     <div className="col-span-12 lg:col-span-8">
-                        <DAUChartCard />
+                        <DAUChartCard data={charts?.dailyActiveUsersData} />
                     </div>
                     <div className="col-span-12 lg:col-span-4">
-                        <UsageDistributionCard />
+                        <UsageDistributionCard platformDistributions={charts?.platformDistributions} />
                     </div>
 
                     {/* Row 2 */}
                     <div className="col-span-12 lg:col-span-8">
-                        <MatchesOverTimeCard />
+                        <MatchesOverTimeCard data={charts?.matchesOverTime} />
                     </div>
                     <div className="col-span-12 lg:col-span-4">
-                        <EngagementChannelsCard />
+                        <EngagementChannelsCard data={charts?.topEngagementChannel} />
                     </div>
 
                     {/* Row 3 */}
                     <div className="col-span-12 lg:col-span-6">
-                        <UsersReportedCard />
+                        <UsersReportedCard data={charts?.userReported} />
                     </div>
                     <div className="col-span-12 lg:col-span-6">
-                        <BugsReportedCard />
+                        <BugsReportedCard data={charts?.bugsReported} />
                     </div>
 
                     {/* Row 4 */}
                     <div className="col-span-12 lg:col-span-4">
-                        <SubscriptionsBreakdownCard />
+                        <SubscriptionsBreakdownCard data={charts?.subscriptionBreakdown} />
                     </div>
                     <div className="col-span-12 lg:col-span-8">
-                        <MonthlyRevenueCard />
+                        <MonthlyRevenueCard data={charts?.monthlyRevenue} />
                     </div>
                 </div>
             </div>

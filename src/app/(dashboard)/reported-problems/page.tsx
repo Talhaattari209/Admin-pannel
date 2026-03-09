@@ -176,6 +176,7 @@ export default function ReportedProblemsPage() {
                         onUpdateStatus={handleUpdateUserStatus}
                         onWarnUser={handleWarnUser}
                         onViewUserProfile={(userId) => userId ? router.push(`/users/profile?id=${userId}`) : router.push('/users')}
+                        activity={userReportDetail?.activity}
                     />
                 )}
                 {viewState === 'bug-detail' && (
@@ -184,6 +185,7 @@ export default function ReportedProblemsPage() {
                         onBack={handleBack}
                         onUpdateStatus={handleUpdateBugStatus}
                         canEdit={canEdit}
+                        activity={bugReportDetail?.activity}
                     />
                 )}
             </div>

@@ -10,8 +10,10 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
+import { MonthlyRevenueEntry } from '@/services/dashboard';
 
-const data = [
+// Fallback dummy data since monthlyRevenue returns [] from API
+const DUMMY_DATA = [
   { month: 'Jan', revenue: 24715 },
   { month: 'Feb', revenue: 26784 },
   { month: 'Mar', revenue: 26688 },
@@ -25,6 +27,10 @@ const data = [
   { month: 'Nov', revenue: 33230 },
 ];
 
+interface MonthlyRevenueCardProps {
+  data?: MonthlyRevenueEntry[];
+}
+
 const CustomDot = (props: any) => {
   const { cx, cy } = props;
   return (
@@ -37,7 +43,14 @@ const CustomDot = (props: any) => {
   );
 };
 
-const MonthlyRevenueCard: React.FC = () => {
+const MonthlyRevenueCard: React.FC<MonthlyRevenueCardProps> = ({ data }) => {
+  // Use API data if available, otherwise fall back to dummy
+  const chartData = data && data.length > 0 ? data : DUMMY_DATA;
+
+  const maxVal = Math.max(...chartData.map(d => d.revenue), 0);
+  // Set yMax to 10% higher than peak value, with a sensible floor of 1000
+  const yMax = Math.max(0, Math.ceil(maxVal * 1.1));
+
   return (
     <div className="flex flex-col items-start bg-[#222222] rounded-[0.83vw] w-full h-[27.2vw] shadow-2xl overflow-hidden border border-white/5">
       {/* Heading */}
@@ -56,7 +69,7 @@ const MonthlyRevenueCard: React.FC = () => {
           <div className="w-full h-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
-                data={data}
+                data={chartData}
                 margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
               >
                 <defs>
@@ -82,8 +95,7 @@ const MonthlyRevenueCard: React.FC = () => {
                   axisLine={false}
                   tickLine={false}
                   tick={{ fill: 'rgba(255, 255, 255, 0.8)', fontSize: '0.62vw' }}
-                  domain={[0, 40000]}
-                  ticks={[0, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000]}
+                  domain={[0, yMax]}
                   width={45}
                 />
                 <Tooltip
